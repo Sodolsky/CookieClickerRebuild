@@ -18,6 +18,10 @@ export const cookieCountSlice = createSlice({
       state.cookieCount += action.payload;
       localStorage.setItem("cookieCount", String(state.cookieCount.toFixed(2)));
     },
+    removeCookies: (state, action: PayloadAction<number>) => {
+      state.cookieCount -= action.payload;
+      localStorage.setItem("cookieCount", String(state.cookieCount.toFixed(2)));
+    },
     increaseCPS: (state, action: PayloadAction<number>) => {
       state.CPS += action.payload;
       localStorage.setItem("CPS", String(state.CPS.toFixed(2)));
@@ -31,6 +35,11 @@ export const cookieCountSlice = createSlice({
   },
 });
 
-export const { addCookie, setInitialCookieCount, setInitialCPS, increaseCPS } =
-  cookieCountSlice.actions;
+export const {
+  addCookie,
+  setInitialCookieCount,
+  setInitialCPS,
+  increaseCPS,
+  removeCookies,
+} = cookieCountSlice.actions;
 export default cookieCountSlice.reducer;
