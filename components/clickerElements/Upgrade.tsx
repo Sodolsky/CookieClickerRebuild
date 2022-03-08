@@ -1,3 +1,5 @@
+import { fill } from "lodash";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { increaseCPS, removeCookies } from "../../redux/cookieReducer";
@@ -11,6 +13,7 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
   cost,
   feeIndex,
   numberOfUpgrades,
+  image,
 }) => {
   const [price, setPrice] = useState<number>(cost);
   useEffect(() => {
@@ -18,7 +21,6 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
       setPrice((cost *= feeIndex * numberOfUpgrades));
     }
   }, [numberOfUpgrades]);
-  console.log(price);
   const dispatch = useDispatch();
   const currentCookies = useSelector(
     (state: RootState) => state.cookie.cookieCount
@@ -33,8 +35,21 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
     }
   };
   return (
-    <button className="btn" onClick={upgradeCPS}>
-      Increase CPS {price.toFixed(0)}
-    </button>
+    <section className="flex flex-col gap-2 justify-center items-center p-4 border border-primary rounded-xl">
+      <Image
+        onClick={upgradeCPS}
+        src={image}
+        width={"64px"}
+        height={"64px"}
+        alt="Upgrade for clicker"
+        className="cursor-pointer"
+      />
+      <span>Number of upgrades: {numberOfUpgrades}</span>
+      <div className="flex gap-2 items-center">
+        <span>CPS: {CookiesPerSecondBonus * numberOfUpgrades}</span>
+        <span>CPC: {CookiesPerClickBonus * numberOfUpgrades}</span>
+      </div>
+      <span>Cost: {price.toFixed(0)}</span>
+    </section>
   );
 };

@@ -15,7 +15,6 @@ import { CookieToClick } from "./clickerElements/CookieToClick";
 import { Upgrade } from "./clickerElements/Upgrade";
 import { CookiesDisplay } from "./layout/CookiesDisplay";
 import { Header } from "./layout/Header";
-
 export const MainPage = () => {
   const cookieCount = useSelector(
     (state: RootState) => state.cookie.cookieCount
@@ -31,9 +30,10 @@ export const MainPage = () => {
         Number(localStorage.getItem("cookieCount")) ?? 0;
       const localStorageCPSCount = Number(localStorage.getItem("CPS")) ?? 0;
       const localStorageUpgrades =
-        JSON.parse(localStorage.getItem("upgrades")!) ?? initialUpgradesState;
-      Object.values(localStorageUpgrades).forEach((item) => {
-        const obj = item as UpgradeInterface;
+        (JSON.parse(localStorage.getItem("upgrades")!) as UpgradesInterface) ??
+        initialUpgradesState;
+      Object.values(localStorageUpgrades.upgrades).forEach((item) => {
+        const obj = item;
         dispatch(
           setInitialNumberOfUpgradesForUpgrade({
             name: obj.upgradeName,
@@ -64,6 +64,7 @@ export const MainPage = () => {
         <Upgrade
           {...currentUpgrades.upgrades.upgrade1}
           upgradeName={"upgrade1"}
+          image={"/cookie.png"}
         />
       </div>
     </main>

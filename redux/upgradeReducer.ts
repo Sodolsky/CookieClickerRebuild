@@ -15,6 +15,7 @@ export const initialUpgradesState: UpgradesInterface = {
       feeIndex: 1.2,
       numberOfUpgrades: 0,
       upgradeName: "upgrade1",
+      image: "/cookie.png",
     },
   },
 };
@@ -28,9 +29,9 @@ export const upgradesSlice = createSlice({
     ) => {
       const { name, number } = action.payload;
       const oldUpgrade = state.upgrades[name];
-      state.upgrades = {
-        ...state.upgrades,
-        [name]: { ...oldUpgrade, numberOfUpgrades: number },
+      state.upgrades[name] = {
+        ...oldUpgrade,
+        numberOfUpgrades: number,
       };
     },
     buyUpgrade: (
@@ -47,7 +48,7 @@ export const upgradesSlice = createSlice({
         },
       };
       state = savedUpgrades;
-      localStorage.setItem("upgrades", JSON.stringify(state.upgrades));
+      localStorage.setItem("upgrades", JSON.stringify(state));
     },
   },
 });

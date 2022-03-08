@@ -6,7 +6,7 @@ export interface UpgradeInterface {
   numberOfUpgrades: number;
   feeIndex: number;
   upgradeName: upgradeNames;
-  image?: string;
+  image: string;
 }
 export interface UpgradesInterface {
   upgrades: {
