@@ -9,13 +9,24 @@ interface InitialNumberOfUpgradesInterface {
 export const initialUpgradesState: UpgradesInterface = {
   upgrades: {
     upgrade1: {
-      CookiesPerClickBonus: 1,
-      CookiesPerSecondBonus: 1,
-      cost: 100,
-      feeIndex: 1.2,
+      CookiesPerClickBonus: 0.2,
+      CookiesPerSecondBonus: 0.1,
+      cost: 50,
+      feeIndex: 1.08,
       numberOfUpgrades: 0,
       upgradeName: "upgrade1",
-      image: "/cookie.png",
+      upgradeNameForPlayer: "Friend",
+      image: "/upgrade1.png",
+    },
+    upgrade2: {
+      CookiesPerClickBonus: 1,
+      CookiesPerSecondBonus: 2,
+      cost: 800,
+      feeIndex: 1.06,
+      numberOfUpgrades: 0,
+      upgradeName: "upgrade2",
+      upgradeNameForPlayer: "Girlfriend",
+      image: "/upgrade2.png",
     },
   },
 };
