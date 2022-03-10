@@ -56,8 +56,8 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
       <Image
         onClick={upgradeCPS}
         src={image}
-        width={"64px"}
-        height={"64px"}
+        width={64}
+        height={64}
         alt="Upgrade for clicker"
         className={`cursor-pointer ${shakeImage ? "ShakeAnimation" : ""}`}
         onAnimationEnd={() => setShakeImage(false)}

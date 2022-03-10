@@ -17,6 +17,8 @@ export const CookieToClick: React.FC = () => {
       src={CoockieImage}
       className={"cursor-pointer transition-all"}
       onClick={handleClickIncrementation}
+      height={128}
+      width={128}
     />
   );
 };
