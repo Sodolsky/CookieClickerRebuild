@@ -1,4 +1,3 @@
-import { fill } from "lodash";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,6 +20,8 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
   upgradeNameForPlayer,
 }) => {
   const [price, setPrice] = useState<number>(cost);
+  //?We shake the image when user doesn't have enought cookie to buy an upgrade
+  const [shakeImage, setShakeImage] = useState<boolean>(false);
   useEffect(() => {
     if (numberOfUpgrades > 0) {
       //When we first load the component we need to calculate current price
@@ -47,28 +48,30 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
       dispatch(increaseCPC(CookiesPerClickBonus));
       dispatch(buyUpgrade({ name: upgradeName, number: 1 }));
     } else {
-      alert("Nie stac cie!");
+      setShakeImage(true);
     }
   };
   return (
-    <section className="flex flex-col gap-2 justify-center items-center p-4 border border-primary rounded-xl">
+    <section className="flex flex-col gap-2 justify-center items-center p-4 border-black  rounded-xl relative overflow-hidden">
       <Image
         onClick={upgradeCPS}
         src={image}
         width={"64px"}
         height={"64px"}
         alt="Upgrade for clicker"
-        className="cursor-pointer"
+        className={`cursor-pointer ${shakeImage ? "ShakeAnimation" : ""}`}
+        onAnimationEnd={() => setShakeImage(false)}
       />
       <span className="text-2xl font-bold">{upgradeNameForPlayer}</span>
       <span>Number of upgrades: {numberOfUpgrades}</span>
-      <div className="flex gap-2 items-center">
+      <div className="grid grid-cols-2 place-items-center gap-2 text-green-600">
+        <div className="text-xl col-span-2">Current Bonus </div>
         <span>
           CPS: {(CookiesPerSecondBonus * numberOfUpgrades).toFixed(2)}
         </span>
-        <span>CPC: {(CookiesPerClickBonus * numberOfUpgrades).toFixed(0)}</span>
+        <span>CPC: {(CookiesPerClickBonus * numberOfUpgrades).toFixed(2)}</span>
       </div>
-      <span>Cost: {price.toFixed(0)}</span>
+      <span className="text-xl text-red-600">Cost: {price.toFixed(0)}</span>
     </section>
   );
 };
