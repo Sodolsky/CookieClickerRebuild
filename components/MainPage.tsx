@@ -21,7 +21,7 @@ export const MainPage = () => {
   const cookieCount = useSelector(
     (state: RootState) => state.cookie.cookieCount
   );
-  const showReverseOrder = useMediaQuery("(max-width:768px)");
+  // const showReverseOrder = useMediaQuery("(max-width:768px)");
   const upgrades = useSelector((state: RootState) => state.upgrades.upgrades);
   const CPS = useSelector((state: RootState) => state.cookie.CPS);
   const CPC = useSelector((state: RootState) => state.cookie.CPC);
@@ -34,7 +34,6 @@ export const MainPage = () => {
         Number(localStorage.getItem("cookieCount")) ?? 0;
       const localStorageCPSCount = Number(localStorage.getItem("CPS") ?? 0);
       const localStorageCPCCount = Number(localStorage.getItem("CPC") ?? 1);
-      console.log(localStorageCPCCount);
       const localStorageUpgrades =
         (JSON.parse(localStorage.getItem("upgrades")!) as UpgradesInterface) ??
         initialUpgradesState;
@@ -70,15 +69,9 @@ export const MainPage = () => {
         />
         <CookieToClick />
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 grid-rows-1 gap-2 mt-6 ">
-          {!showReverseOrder
-            ? Object.values(currentUpgrades.upgrades).map((x) => {
-                return <Upgrade {...x} key={x.upgradeName} />;
-              })
-            : Object.values(currentUpgrades.upgrades)
-                .reverse()
-                .map((x) => {
-                  return <Upgrade {...x} key={x.upgradeName} />;
-                })}
+          {Object.values(currentUpgrades.upgrades).map((x) => {
+            return <Upgrade {...x} key={x.upgradeName} />;
+          })}
         </div>
       </div>
     </main>

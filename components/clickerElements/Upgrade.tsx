@@ -9,6 +9,7 @@ import {
 import { RootState } from "../../redux/store";
 import { buyUpgrade } from "../../redux/upgradeReducer";
 import { UpgradeInterface } from "../../utils/interfaces";
+import { GrCircleInformation } from "react-icons/gr";
 export const Upgrade: React.FC<UpgradeInterface> = ({
   CookiesPerClickBonus,
   CookiesPerSecondBonus,
@@ -52,7 +53,13 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
     }
   };
   return (
-    <section className="flex flex-col gap-2 justify-center items-center p-4 border-black  rounded-xl relative overflow-hidden">
+    <section className="flex flex-col gap-2 justify-center items-center p-4 border-black  rounded-xl relative">
+      <div
+        className="tooltip absolute right-2 top-2"
+        data-tip={`Gives: ${CookiesPerSecondBonus} CPS && ${CookiesPerClickBonus} CPC`}
+      >
+        <GrCircleInformation />
+      </div>
       <Image
         onClick={upgradeCPS}
         src={image}
