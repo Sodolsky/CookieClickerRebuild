@@ -55,7 +55,7 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
   return (
     <section className="flex flex-col gap-2 justify-center items-center p-4 border-black  rounded-xl relative">
       <div
-        className="tooltip absolute right-2 top-2"
+        className="tooltip absolute right-1 top-1"
         data-tip={`Gives: ${CookiesPerSecondBonus} CPS && ${CookiesPerClickBonus} CPC`}
       >
         <GrCircleInformation />
