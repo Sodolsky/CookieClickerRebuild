@@ -7,11 +7,11 @@
 }
 html,
 body {
-  /* background: linear-gradient(270deg, #a88beb, #f8ceec);
+  background: linear-gradient(270deg, #a88beb, #f8ceec);
   background-size: 400% 400%;
   -webkit-animation: AnimatedGradient 19s ease infinite;
   -moz-animation: AnimatedGradient 19s ease infinite;
-  animation: AnimatedGradient 19s ease infinite; */
+  animation: AnimatedGradient 19s ease infinite;
   @apply font-JosefinSans;
   @apply font-normal;
 }

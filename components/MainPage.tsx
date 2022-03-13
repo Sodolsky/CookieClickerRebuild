@@ -67,7 +67,7 @@ export const MainPage = () => {
           CPC={Number(CPC.toFixed(2))}
         />
         <CookieToClick />
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 grid-rows-1 gap-2 mt-6 ">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 grid-rows-1 gap-2 mt-6">
           {Object.values(currentUpgrades.upgrades).map((x) => {
             return <Upgrade {...x} key={x.upgradeName} />;
           })}
