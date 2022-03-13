@@ -10,6 +10,7 @@ import { RootState } from "../../redux/store";
 import { buyUpgrade } from "../../redux/upgradeReducer";
 import { UpgradeInterface } from "../../utils/interfaces";
 import { GrCircleInformation } from "react-icons/gr";
+import { abbreviateNumber } from "js-abbreviation-number";
 export const Upgrade: React.FC<UpgradeInterface> = ({
   CookiesPerClickBonus,
   CookiesPerSecondBonus,
@@ -74,11 +75,15 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
       <div className="grid grid-cols-2 place-items-center gap-2 text-green-600">
         <div className="text-xl col-span-2">Current Bonus </div>
         <span>
-          CPS: {(CookiesPerSecondBonus * numberOfUpgrades).toFixed(2)}
+          CPS: {abbreviateNumber(CookiesPerSecondBonus * numberOfUpgrades)}
         </span>
-        <span>CPC: {(CookiesPerClickBonus * numberOfUpgrades).toFixed(2)}</span>
+        <span>
+          CPC: {abbreviateNumber(CookiesPerClickBonus * numberOfUpgrades)}
+        </span>
       </div>
-      <span className="text-xl text-red-600">Cost: {price.toFixed(0)}</span>
+      <span className="text-xl text-red-600">
+        Cost: {abbreviateNumber(price)}
+      </span>
     </section>
   );
 };

@@ -1,3 +1,4 @@
+import { abbreviateNumber } from "js-abbreviation-number";
 import CountUp from "react-countup";
 
 interface CookiesDisplayProps {
@@ -14,10 +15,15 @@ export const CookiesDisplay: React.FC<CookiesDisplayProps> = ({
     <section className="flex flex-col items-center justify-center text-xl">
       <div className="text-2xl font-bold">
         Cookies:{" "}
-        <CountUp end={cookieCount} preserveValue={true} duration={0.35} />
+        <CountUp
+          end={cookieCount}
+          preserveValue={true}
+          duration={0.35}
+          separator={" "}
+        />
       </div>
-      <div>CPS: {CPS.toFixed(2)}/s</div>
-      <div>CPC: {CPC.toFixed(2)}</div>
+      <div>CPS: {abbreviateNumber(CPS)}/s</div>
+      <div>CPC: {abbreviateNumber(CPC)}</div>
     </section>
   );
 };

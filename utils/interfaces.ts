@@ -3,7 +3,8 @@ export type upgradeNames =
   | "upgrade2"
   | "upgrade3"
   | "upgrade4"
-  | "upgrade5";
+  | "upgrade5"
+  | "upgrade6";
 export interface UpgradeInterface {
   CookiesPerClickBonus: number;
   CookiesPerSecondBonus: number;
@@ -21,5 +22,6 @@ export interface UpgradesInterface {
     upgrade3: UpgradeInterface;
     upgrade4: UpgradeInterface;
     upgrade5: UpgradeInterface;
+    upgrade6: UpgradeInterface;
   };
 }

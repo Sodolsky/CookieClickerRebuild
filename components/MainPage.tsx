@@ -11,7 +11,6 @@ import {
   initialUpgradesState,
   setInitialNumberOfUpgradesForUpgrade,
 } from "../redux/upgradeReducer";
-import useMediaQuery from "../utils/hooks/useMediaQuery";
 import { UpgradesInterface } from "../utils/interfaces";
 import { CookieToClick } from "./clickerElements/CookieToClick";
 import { Upgrade } from "./clickerElements/Upgrade";
@@ -59,8 +58,8 @@ export const MainPage = () => {
     setCurrentUpgrades({ upgrades: upgrades });
   }, [upgrades]);
   return (
-    <main className="w-screen">
-      <div className="flex flex-col gap-2 justify-center items-center">
+    <main>
+      <div className="flex flex-col gap-2 justify-center items-center w-screen\">
         <Header />
         <CookiesDisplay
           cookieCount={Number(cookieCount.toFixed(2))}
