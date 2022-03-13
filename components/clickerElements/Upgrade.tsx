@@ -8,7 +8,7 @@ import {
 } from "../../redux/cookieReducer";
 import { RootState } from "../../redux/store";
 import { buyUpgrade } from "../../redux/upgradeReducer";
-import { UpgradeInterface } from "../../utils/interfaces";
+import { symbolsArray, UpgradeInterface } from "../../utils/interfaces";
 import { GrCircleInformation } from "react-icons/gr";
 import { abbreviateNumber } from "js-abbreviation-number";
 export const Upgrade: React.FC<UpgradeInterface> = ({
@@ -56,7 +56,7 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
   return (
     <section className="flex flex-col gap-2 justify-center items-center p-4 border-black  rounded-xl relative">
       <div
-        className="tooltip absolute right-1 top-1 tooltip-left"
+        className="tooltip absolute right-1 top-1 tooltip-left z-50"
         data-tip={`Gives: ${CookiesPerSecondBonus} CPS && ${CookiesPerClickBonus} CPC`}
       >
         <GrCircleInformation />
@@ -82,7 +82,7 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
         </span>
       </div>
       <span className="text-xl text-red-600">
-        Cost: {abbreviateNumber(price)}
+        Cost: {abbreviateNumber(price, 1, symbolsArray)}
       </span>
     </section>
   );

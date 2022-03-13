@@ -1,6 +1,5 @@
-import { abbreviateNumber } from "js-abbreviation-number";
 import CountUp from "react-countup";
-
+import { abbreviateNumber } from "js-abbreviation-number";
 interface CookiesDisplayProps {
   cookieCount: number;
   CPS: number;

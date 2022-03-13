@@ -4,7 +4,9 @@ export type upgradeNames =
   | "upgrade3"
   | "upgrade4"
   | "upgrade5"
-  | "upgrade6";
+  | "upgrade6"
+  | "upgrade7";
+export const symbolsArray: string[] = ["", "k", "M", "B", "T", "P", "E"];
 export interface UpgradeInterface {
   CookiesPerClickBonus: number;
   CookiesPerSecondBonus: number;
@@ -23,5 +25,6 @@ export interface UpgradesInterface {
     upgrade4: UpgradeInterface;
     upgrade5: UpgradeInterface;
     upgrade6: UpgradeInterface;
+    upgrade7: UpgradeInterface;
   };
 }
