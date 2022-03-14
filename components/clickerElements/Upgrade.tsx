@@ -111,7 +111,9 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
     </section>
   ) : (
     <section
-      className="grid place-items-center grid-cols-4 gap-2 border-primary border"
+      className={`grid place-items-center grid-cols-4 gap-2 border-primary border ${
+        currentCookies >= price ? "bg-green-500" : "bg-red-500"
+      }`}
       onClick={upgradeCPS}
     >
       <Image
@@ -140,7 +142,7 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
           )}
         </span>
       </div>
-      <span className=" text-red-600">
+      <span>
         Cost: {abbreviateNumber(Number(price.toFixed(0)), 1, symbolsArray)}
       </span>
     </section>

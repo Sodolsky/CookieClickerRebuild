@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addCookie,
@@ -11,14 +11,19 @@ import {
   initialUpgradesState,
   setInitialNumberOfUpgradesForUpgrade,
 } from "../redux/upgradeReducer";
-import { UpgradesInterface } from "../utils/interfaces";
+import { symbolsArray, UpgradesInterface } from "../utils/interfaces";
 import { CookieToClick } from "./clickerElements/CookieToClick";
 import { Upgrade } from "./clickerElements/Upgrade";
 import { CookiesDisplay } from "./layout/CookiesDisplay";
 import { Header } from "./layout/Header";
 import { AiOutlineMenu } from "react-icons/ai";
 import useMediaQuery from "../utils/hooks/useMediaQuery";
+import CountUp from "react-countup";
+import { abbreviateNumber } from "js-abbreviation-number";
 export const MainPage = () => {
+  const formatCookieCount = useCallback((n: number) => {
+    return abbreviateNumber(n, 2, symbolsArray);
+  }, []);
   const isMobile = useMediaQuery("(max-width:768px)");
   const cookieCount = useSelector(
     (state: RootState) => state.cookie.cookieCount
@@ -75,6 +80,16 @@ export const MainPage = () => {
           <div className="drawer-side">
             <label htmlFor="my-drawer" className="drawer-overlay"></label>
             <ul className="menu p-4 gap-2 overflow-y-auto w-80 bg-base-100 text-base-content">
+              <h1 className="text-2xl text-center">
+                Cookies:{" "}
+                <CountUp
+                  end={cookieCount}
+                  preserveValue={true}
+                  duration={0.35}
+                  separator={" "}
+                  formattingFn={formatCookieCount}
+                />
+              </h1>
               {Object.values(upgrades).map((x) => {
                 return (
                   <li key={x.upgradeName}>
