@@ -16,11 +16,13 @@ import { CookieToClick } from "./clickerElements/CookieToClick";
 import { Upgrade } from "./clickerElements/Upgrade";
 import { CookiesDisplay } from "./layout/CookiesDisplay";
 import { Header } from "./layout/Header";
+import { AiOutlineMenu } from "react-icons/ai";
+import useMediaQuery from "../utils/hooks/useMediaQuery";
 export const MainPage = () => {
+  const isMobile = useMediaQuery("(max-width:768px)");
   const cookieCount = useSelector(
     (state: RootState) => state.cookie.cookieCount
   );
-  // const showReverseOrder = useMediaQuery("(max-width:768px)");
   const upgrades = useSelector((state: RootState) => state.upgrades.upgrades);
   const CPS = useSelector((state: RootState) => state.cookie.CPS);
   const CPC = useSelector((state: RootState) => state.cookie.CPC);
@@ -58,21 +60,51 @@ export const MainPage = () => {
     setCurrentUpgrades({ upgrades: upgrades });
   }, [upgrades]);
   return (
-    <main>
-      <div className="flex flex-col gap-2 justify-center items-center w-screen\">
-        <Header />
-        <CookiesDisplay
-          cookieCount={Number(cookieCount.toFixed(2))}
-          CPS={Number(CPS.toFixed(2))}
-          CPC={Number(CPC.toFixed(2))}
-        />
-        <CookieToClick />
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 grid-rows-1 gap-2 mt-6">
-          {Object.values(currentUpgrades.upgrades).map((x) => {
-            return <Upgrade {...x} key={x.upgradeName} />;
-          })}
+    <>
+      {isMobile && (
+        <div className="drawer absolute w-full rounded">
+          <input id="my-drawer" type="checkbox" className="drawer-toggle" />
+          <div className="drawer-content">
+            <label
+              htmlFor="my-drawer"
+              className="cursor-pointer absolute top-4 left-4"
+            >
+              <AiOutlineMenu className="text-2xl" />
+            </label>
+          </div>
+          <div className="drawer-side">
+            <label htmlFor="my-drawer" className="drawer-overlay"></label>
+            <ul className="menu p-4 gap-2 overflow-y-auto w-80 bg-base-100 text-base-content">
+              {Object.values(upgrades).map((x) => {
+                return (
+                  <li key={x.upgradeName}>
+                    <Upgrade {...x} />
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
         </div>
-      </div>
-    </main>
+      )}
+      <main className="min-h-screen">
+        <div className="flex flex-col gap-2 justify-center items-center">
+          <Header />
+          <CookiesDisplay
+            cookieCount={Number(cookieCount.toFixed(2))}
+            CPS={Number(CPS.toFixed(2))}
+            CPC={Number(CPC.toFixed(2))}
+          />
+          <CookieToClick />
+
+          <div className="grid place-items-center  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 grid-rows-1 gap-2 mt-6 w-full xl:w-3/4">
+            {isMobile !== null &&
+              !isMobile &&
+              Object.values(currentUpgrades.upgrades).map((x) => {
+                return <Upgrade {...x} key={x.upgradeName} />;
+              })}
+          </div>
+        </div>
+      </main>
+    </>
   );
 };

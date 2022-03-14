@@ -11,6 +11,7 @@ import { buyUpgrade } from "../../redux/upgradeReducer";
 import { symbolsArray, UpgradeInterface } from "../../utils/interfaces";
 import { GrCircleInformation } from "react-icons/gr";
 import { abbreviateNumber } from "js-abbreviation-number";
+import useMediaQuery from "../../utils/hooks/useMediaQuery";
 export const Upgrade: React.FC<UpgradeInterface> = ({
   CookiesPerClickBonus,
   CookiesPerSecondBonus,
@@ -21,6 +22,7 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
   image,
   upgradeNameForPlayer,
 }) => {
+  const isMobile = useMediaQuery("(max-width:768px)");
   const [price, setPrice] = useState<number>(cost);
   //?We shake the image when user doesn't have enought cookie to buy an upgrade
   const [shakeImage, setShakeImage] = useState<boolean>(false);
@@ -53,16 +55,66 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
       setShakeImage(true);
     }
   };
-  return (
-    <section className="flex flex-col gap-2 justify-center items-center p-4 border-black  rounded-xl relative">
-      <div
-        className="tooltip absolute right-1 top-1 tooltip-left z-50"
-        data-tip={`Gives: ${CookiesPerSecondBonus} CPS && ${CookiesPerClickBonus} CPC`}
-      >
-        <GrCircleInformation />
+  return !isMobile ? (
+    <section className="flex  text-center flex-col gap-2 justify-center items-center p-4 border-black  rounded-xl relative">
+      <div className="relative">
+        <Image
+          onClick={upgradeCPS}
+          src={image}
+          width={64}
+          height={64}
+          alt="Upgrade for clicker"
+          className={`cursor-pointer ${shakeImage ? "ShakeAnimation" : ""}`}
+          onAnimationEnd={() => {
+            setShakeImage(false);
+          }}
+        />
+        <div
+          className="tooltip absolute -right-6 -top-2 tooltip-left z-10"
+          data-tip={`Gives: ${abbreviateNumber(
+            CookiesPerSecondBonus,
+            1,
+            symbolsArray
+          )} CPS && ${abbreviateNumber(
+            CookiesPerClickBonus,
+            1,
+            symbolsArray
+          )} CPC`}
+        >
+          <GrCircleInformation />
+        </div>
       </div>
+      <span className="text-2xl font-bold">{upgradeNameForPlayer}</span>
+      <span>Number of upgrades: {numberOfUpgrades}</span>
+      <div className="grid grid-cols-2 place-items-center gap-2 text-green-600">
+        <div className="text-xl col-span-2">Current Bonus </div>
+        <span>
+          CPS:{" "}
+          {abbreviateNumber(
+            CookiesPerSecondBonus * numberOfUpgrades,
+            1,
+            symbolsArray
+          )}
+        </span>
+        <span>
+          CPC:{" "}
+          {abbreviateNumber(
+            CookiesPerClickBonus * numberOfUpgrades,
+            1,
+            symbolsArray
+          )}
+        </span>
+      </div>
+      <span className="text-xl text-red-600">
+        Cost: {abbreviateNumber(Number(price.toFixed(0)), 1, symbolsArray)}
+      </span>
+    </section>
+  ) : (
+    <section
+      className="grid place-items-center grid-cols-4 gap-2 border-primary border"
+      onClick={upgradeCPS}
+    >
       <Image
-        onClick={upgradeCPS}
         src={image}
         width={64}
         height={64}
@@ -70,19 +122,26 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
         className={`cursor-pointer ${shakeImage ? "ShakeAnimation" : ""}`}
         onAnimationEnd={() => setShakeImage(false)}
       />
-      <span className="text-2xl font-bold">{upgradeNameForPlayer}</span>
-      <span>Number of upgrades: {numberOfUpgrades}</span>
-      <div className="grid grid-cols-2 place-items-center gap-2 text-green-600">
-        <div className="text-xl col-span-2">Current Bonus </div>
+      <div className="flex-col flex gap-2 items-end col-span-2">
         <span>
-          CPS: {abbreviateNumber(CookiesPerSecondBonus * numberOfUpgrades)}
+          CPS:{" "}
+          {abbreviateNumber(
+            CookiesPerSecondBonus * numberOfUpgrades,
+            1,
+            symbolsArray
+          )}
         </span>
         <span>
-          CPC: {abbreviateNumber(CookiesPerClickBonus * numberOfUpgrades)}
+          CPC:{" "}
+          {abbreviateNumber(
+            CookiesPerClickBonus * numberOfUpgrades,
+            1,
+            symbolsArray
+          )}
         </span>
       </div>
-      <span className="text-xl text-red-600">
-        Cost: {abbreviateNumber(price, 1, symbolsArray)}
+      <span className=" text-red-600">
+        Cost: {abbreviateNumber(Number(price.toFixed(0)), 1, symbolsArray)}
       </span>
     </section>
   );
