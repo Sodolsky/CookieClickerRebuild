@@ -20,6 +20,7 @@ import { AiOutlineMenu } from "react-icons/ai";
 import useMediaQuery from "../utils/hooks/useMediaQuery";
 import CountUp from "react-countup";
 import { abbreviateNumber } from "js-abbreviation-number";
+import { StoreButton } from "./clickerElements/store/StoreButton";
 export const MainPage = () => {
   const formatCookieCount = useCallback((n: number) => {
     return abbreviateNumber(n, 2, symbolsArray);
@@ -67,6 +68,7 @@ export const MainPage = () => {
   return (
     <>
       {isMobile && (
+        //?When user screen size is less than 768px we render drawer with upgrades
         <div className="drawer absolute w-full rounded">
           <input id="my-drawer" type="checkbox" className="drawer-toggle" />
           <div className="drawer-content">
@@ -101,6 +103,7 @@ export const MainPage = () => {
           </div>
         </div>
       )}
+      <StoreButton />
       <main className="min-h-screen">
         <div className="flex flex-col gap-2 justify-center items-center">
           <Header />
@@ -114,6 +117,7 @@ export const MainPage = () => {
           <div className="grid place-items-center  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 grid-rows-1 gap-2 mt-6 w-full xl:w-3/4">
             {isMobile !== null &&
               !isMobile &&
+              //Otherwise we render  upgrades in grid container
               Object.values(currentUpgrades.upgrades).map((x) => {
                 return <Upgrade {...x} key={x.upgradeName} />;
               })}
