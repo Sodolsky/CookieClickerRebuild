@@ -1,4 +1,4 @@
-export type upgradeNames =
+export type UpgradesNames =
   | "upgrade1"
   | "upgrade2"
   | "upgrade3"
@@ -9,6 +9,7 @@ export type upgradeNames =
   | "upgrade8"
   | "upgrade9"
   | "upgrade10";
+export type ShopUpgradesNames = "upgrade1Double";
 export const symbolsArray: string[] = ["", "k", "M", "B", "T", "P", "E"];
 export interface UpgradeInterface {
   CookiesPerClickBonus: number;
@@ -16,10 +17,20 @@ export interface UpgradeInterface {
   cost: number;
   numberOfUpgrades: number;
   feeIndex: number;
-  upgradeName: upgradeNames;
+  upgradeName: UpgradesNames;
   upgradeNameForPlayer: string;
   image: string;
 }
+export interface ShopItem {
+  name: ShopUpgradesNames;
+  nameInShop: string;
+  upgradeNameInShop: string;
+  wasBought: boolean;
+  price: number;
+  image: string;
+  type: UpgradesNames | "Other";
+}
+export type ShopItems = ShopItem[];
 export interface UpgradesInterface {
   upgrades: {
     upgrade1: UpgradeInterface;

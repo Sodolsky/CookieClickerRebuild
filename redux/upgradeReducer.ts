@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { upgradeNames, UpgradesInterface } from "../utils/interfaces";
+import { UpgradesNames, UpgradesInterface } from "../utils/interfaces";
 //? CPS is abbr. for Cookies Per Second
 interface InitialNumberOfUpgradesInterface {
   number: number;
-  name: upgradeNames;
+  name: UpgradesNames;
 }
 // Define the initial state using that type
 export const initialUpgradesState: UpgradesInterface = {

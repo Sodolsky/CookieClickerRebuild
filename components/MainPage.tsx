@@ -11,7 +11,11 @@ import {
   initialUpgradesState,
   setInitialNumberOfUpgradesForUpgrade,
 } from "../redux/upgradeReducer";
-import { symbolsArray, UpgradesInterface } from "../utils/interfaces";
+import {
+  ShopItems,
+  symbolsArray,
+  UpgradesInterface,
+} from "../utils/interfaces";
 import { CookieToClick } from "./clickerElements/CookieToClick";
 import { Upgrade } from "./clickerElements/Upgrade";
 import { CookiesDisplay } from "./layout/CookiesDisplay";
@@ -20,7 +24,11 @@ import { AiOutlineMenu } from "react-icons/ai";
 import useMediaQuery from "../utils/hooks/useMediaQuery";
 import CountUp from "react-countup";
 import { abbreviateNumber } from "js-abbreviation-number";
-import { StoreButton } from "./clickerElements/store/StoreButton";
+import { Store } from "./clickerElements/store/Store";
+import {
+  initialStateOfShopItems,
+  setInitialShopitems,
+} from "../redux/shopItemsReducer";
 export const MainPage = () => {
   const formatCookieCount = useCallback((n: number) => {
     return abbreviateNumber(n, 2, symbolsArray);
@@ -44,6 +52,9 @@ export const MainPage = () => {
       const localStorageUpgrades =
         (JSON.parse(localStorage.getItem("upgrades")!) as UpgradesInterface) ??
         initialUpgradesState;
+      const localStorageShopItems =
+        (JSON.parse(localStorage.getItem("shopItems")!) as ShopItems) ??
+        initialStateOfShopItems;
       Object.values(localStorageUpgrades.upgrades).forEach((item) => {
         const obj = item;
         dispatch(
@@ -53,6 +64,7 @@ export const MainPage = () => {
           })
         );
       });
+      dispatch(setInitialShopitems(localStorageShopItems));
       dispatch(setInitialCookieCount(localStorageCookieCount));
       dispatch(setInitialCPS(localStorageCPSCount));
       dispatch(setInitialCPC(localStorageCPCCount));
@@ -82,7 +94,7 @@ export const MainPage = () => {
           <div className="drawer-side">
             <label htmlFor="my-drawer" className="drawer-overlay"></label>
             <ul className="menu p-4 gap-2 overflow-y-auto w-80 bg-base-100 text-base-content">
-              <h1 className="text-2xl text-center">
+              <h2 className="text-2xl text-center">
                 Cookies:{" "}
                 <CountUp
                   end={cookieCount}
@@ -91,7 +103,7 @@ export const MainPage = () => {
                   separator={" "}
                   formattingFn={formatCookieCount}
                 />
-              </h1>
+              </h2>
               {Object.values(upgrades).map((x) => {
                 return (
                   <li key={x.upgradeName}>
@@ -103,7 +115,7 @@ export const MainPage = () => {
           </div>
         </div>
       )}
-      <StoreButton />
+      <Store />
       <main className="min-h-screen">
         <div className="flex flex-col gap-2 justify-center items-center">
           <Header />

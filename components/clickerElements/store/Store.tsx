@@ -2,12 +2,15 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
-export const StoreButton = () => {
+import { StoreItem } from "./StoreItem";
+export const Store = () => {
   const cookieCount = useSelector(
     (state: RootState) => state.cookie.cookieCount
   );
+  const shopItems = useSelector((state: RootState) => state.shopItems);
   const [fadeInStore, setFadeInStore] = useState<boolean>(false);
   const [showStore, setShowStore] = useState<boolean>(false);
+
   useEffect(() => {
     const wasStoreDiscovered = localStorage.getItem("storeDiscovered");
     if (wasStoreDiscovered === "true") return setShowStore(true);
@@ -35,7 +38,13 @@ export const StoreButton = () => {
       <input type="checkbox" id="my-modal" className="modal-toggle" />
       <label htmlFor="my-modal" className={`modal cursor-pointer`}>
         <label className="modal-box relative" htmlFor="">
-          Tu będzie sklep
+          <h2 className="text-xl text-center">SHOP</h2>
+          <div className="divider"></div>
+          <div className="flex flex-col">
+            {shopItems.map((x) => (
+              <StoreItem {...x} key={x.name} />
+            ))}
+          </div>
         </label>
       </label>
     </>
