@@ -37,7 +37,7 @@ export const initialStateOfShopItems: ShopItems = [
     nameInShop: "Best Friend",
     upgradeNameInShop: "Doubles Benefits from Friend",
     image: "/upgrade1Double.png",
-    price: 500,
+    price: 600,
     wasBought: false,
     type: "upgrade1",
   },
