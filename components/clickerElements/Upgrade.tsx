@@ -2,12 +2,12 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  buyUpgrade,
   increaseCPC,
   increaseCPS,
   removeCookies,
-} from "../../redux/cookieReducer";
+} from "../../redux/gameLogicReducer";
 import { RootState } from "../../redux/store";
-import { buyUpgrade } from "../../redux/upgradeReducer";
 import { symbolsArray, UpgradeInterface } from "../../utils/interfaces";
 import { GrCircleInformation } from "react-icons/gr";
 import { abbreviateNumber } from "js-abbreviation-number";
@@ -24,8 +24,19 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
 }) => {
   const isMobile = useMediaQuery("(max-width:768px)");
   const [price, setPrice] = useState<number>(cost);
+  const [multiplier, setMultiplier] = useState<number>(1);
   //?We shake the image when user doesn't have enought cookie to buy an upgrade
   const [shakeImage, setShakeImage] = useState<boolean>(false);
+  const shopItems = useSelector(
+    (state: RootState) => state.gameLogic.shopItems
+  );
+  useEffect(() => {
+    //?Here is the Shop item that doubles the bonuses from single upgrade we handle multiplier logic here
+    const doubleUpgrade = shopItems.find((x) => x.type === upgradeName);
+    if (doubleUpgrade) {
+      doubleUpgrade.wasBought && setMultiplier(2);
+    }
+  }, [shopItems]);
   useEffect(() => {
     if (numberOfUpgrades > 0) {
       //When we first load the component we need to calculate current price
@@ -43,7 +54,7 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
   }, [numberOfUpgrades]);
   const dispatch = useDispatch();
   const currentCookies = useSelector(
-    (state: RootState) => state.cookie.cookieCount
+    (state: RootState) => state.gameLogic.cookiesLogic.cookieCount
   );
   const upgradeCPS = () => {
     if (currentCookies >= price) {
@@ -91,7 +102,7 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
         <span>
           CPS:{" "}
           {abbreviateNumber(
-            CookiesPerSecondBonus * numberOfUpgrades,
+            CookiesPerSecondBonus * numberOfUpgrades * multiplier,
             1,
             symbolsArray
           )}
@@ -99,7 +110,7 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
         <span>
           CPC:{" "}
           {abbreviateNumber(
-            CookiesPerClickBonus * numberOfUpgrades,
+            CookiesPerClickBonus * numberOfUpgrades * multiplier,
             1,
             symbolsArray
           )}

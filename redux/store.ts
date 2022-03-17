@@ -1,17 +1,8 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import cookieReducer from "./cookieReducer";
-import shopItemsReducer from "./shopItemsReducer";
-import upgradeReducer from "./upgradeReducer";
+import { configureStore } from "@reduxjs/toolkit";
+import gameLogicReducer from "./gameLogicReducer";
 export const store = configureStore({
   reducer: {
-    rootReducer: combineReducers({
-      cookie: cookieReducer,
-      upgrades: upgradeReducer,
-      shopItems: shopItemsReducer,
-    }),
-    cookie: cookieReducer,
-    upgrades: upgradeReducer,
-    shopItems: shopItemsReducer,
+    gameLogic: gameLogicReducer,
   },
 });
 export type RootState = ReturnType<typeof store.getState>;

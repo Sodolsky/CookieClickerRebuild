@@ -1,15 +1,15 @@
 import { abbreviateNumber } from "js-abbreviation-number";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addBonusesForUpgrades,
-  buyShopItem,
-} from "../../../redux/shopItemsReducer";
 import { RootState } from "../../../redux/store";
 import { ShopItem, symbolsArray } from "../../../utils/interfaces";
 import { FcCheckmark } from "react-icons/fc";
 import { useState } from "react";
-import { removeCookies } from "../../../redux/cookieReducer";
+import {
+  addBonusesForUpgrades,
+  buyShopItem,
+  removeCookies,
+} from "../../../redux/gameLogicReducer";
 export const StoreItem: React.FC<ShopItem> = ({
   image,
   name,
@@ -35,7 +35,7 @@ export const StoreItem: React.FC<ShopItem> = ({
     }
   };
   const currentCookies = useSelector(
-    (state: RootState) => state.cookie.cookieCount
+    (state: RootState) => state.gameLogic.cookiesLogic.cookieCount
   );
   return (
     <section

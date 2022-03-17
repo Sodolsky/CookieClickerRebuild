@@ -5,13 +5,13 @@ import {
   setInitialCookieCount,
   setInitialCPC,
   setInitialCPS,
-} from "../redux/cookieReducer";
+  setInitialNumberOfUpgradesForUpgrade,
+  setInitialShopitems,
+} from "../redux/gameLogicReducer";
 import { RootState } from "../redux/store";
 import {
+  initialStateOfShopItems,
   initialUpgradesState,
-  setInitialNumberOfUpgradesForUpgrade,
-} from "../redux/upgradeReducer";
-import {
   ShopItems,
   symbolsArray,
   UpgradesInterface,
@@ -25,21 +25,21 @@ import useMediaQuery from "../utils/hooks/useMediaQuery";
 import CountUp from "react-countup";
 import { abbreviateNumber } from "js-abbreviation-number";
 import { Store } from "./clickerElements/store/Store";
-import {
-  initialStateOfShopItems,
-  setInitialShopitems,
-} from "../redux/shopItemsReducer";
 export const MainPage = () => {
   const formatCookieCount = useCallback((n: number) => {
     return abbreviateNumber(n, 2, symbolsArray);
   }, []);
   const isMobile = useMediaQuery("(max-width:768px)");
   const cookieCount = useSelector(
-    (state: RootState) => state.cookie.cookieCount
+    (state: RootState) => state.gameLogic.cookiesLogic.cookieCount
   );
-  const upgrades = useSelector((state: RootState) => state.upgrades.upgrades);
-  const CPS = useSelector((state: RootState) => state.cookie.CPS);
-  const CPC = useSelector((state: RootState) => state.cookie.CPC);
+  const upgrades = useSelector((state: RootState) => state.gameLogic.upgrades);
+  const CPS = useSelector(
+    (state: RootState) => state.gameLogic.cookiesLogic.CPS
+  );
+  const CPC = useSelector(
+    (state: RootState) => state.gameLogic.cookiesLogic.CPC
+  );
   const dispatch = useDispatch();
   const [currentUpgrades, setCurrentUpgrades] =
     useState<UpgradesInterface>(initialUpgradesState);
@@ -55,7 +55,7 @@ export const MainPage = () => {
       const localStorageShopItems =
         (JSON.parse(localStorage.getItem("shopItems")!) as ShopItems) ??
         initialStateOfShopItems;
-      Object.values(localStorageUpgrades.upgrades).forEach((item) => {
+      Object.values(localStorageUpgrades).forEach((item) => {
         const obj = item;
         dispatch(
           setInitialNumberOfUpgradesForUpgrade({
@@ -74,9 +74,6 @@ export const MainPage = () => {
     const gameLoopInterval = setInterval(() => dispatch(addCookie(CPS)), 1000);
     return () => clearInterval(gameLoopInterval);
   }, [CPS]);
-  useEffect(() => {
-    setCurrentUpgrades({ upgrades: upgrades });
-  }, [upgrades]);
   return (
     <>
       {isMobile && (
@@ -130,7 +127,7 @@ export const MainPage = () => {
             {isMobile !== null &&
               !isMobile &&
               //Otherwise we render  upgrades in grid container
-              Object.values(currentUpgrades.upgrades).map((x) => {
+              Object.values(upgrades).map((x) => {
                 return <Upgrade {...x} key={x.upgradeName} />;
               })}
           </div>

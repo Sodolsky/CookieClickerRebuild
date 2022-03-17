@@ -5,9 +5,11 @@ import { RootState } from "../../../redux/store";
 import { StoreItem } from "./StoreItem";
 export const Store = () => {
   const cookieCount = useSelector(
-    (state: RootState) => state.cookie.cookieCount
+    (state: RootState) => state.gameLogic.cookiesLogic.cookieCount
   );
-  const shopItems = useSelector((state: RootState) => state.shopItems);
+  const shopItems = useSelector(
+    (state: RootState) => state.gameLogic.shopItems
+  );
   const [fadeInStore, setFadeInStore] = useState<boolean>(false);
   const [showStore, setShowStore] = useState<boolean>(false);
 
@@ -15,7 +17,7 @@ export const Store = () => {
     const wasStoreDiscovered = localStorage.getItem("storeDiscovered");
     if (wasStoreDiscovered === "true") return setShowStore(true);
     if (!wasStoreDiscovered) localStorage.setItem("storeDiscovered", "false");
-    if (cookieCount >= 200) {
+    if (cookieCount >= 500) {
       setFadeInStore(true);
       localStorage.setItem("storeDiscovered", "true");
       setShowStore(true);

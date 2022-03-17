@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { addCookie } from "../../redux/cookieReducer";
+import { addCookie } from "../../redux/gameLogicReducer";
 import Image from "next/image";
 import CoockieImage from "../../public/cookie.png";
 import { RootState } from "../../redux/store";
@@ -7,7 +7,9 @@ import { RootState } from "../../redux/store";
 //   setCookieCount: React.Dispatch<React.SetStateAction<number>>;
 // }
 export const CookieToClick: React.FC = () => {
-  const CPC = useSelector((state: RootState) => state.cookie.CPC);
+  const CPC = useSelector(
+    (state: RootState) => state.gameLogic.cookiesLogic.CPC
+  );
   const dispatch = useDispatch();
   const handleClickIncrementation = () => {
     dispatch(addCookie(CPC));
