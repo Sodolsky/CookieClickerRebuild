@@ -9,7 +9,17 @@ export type UpgradesNames =
   | "upgrade8"
   | "upgrade9"
   | "upgrade10";
-export type ShopUpgradesNames = "upgrade1Double";
+export type ShopUpgradesNames =
+  | "upgrade1Double"
+  | "upgrade2Double"
+  | "upgrade3Double"
+  | "upgrade4Double"
+  | "upgrade5Double"
+  | "upgrade6Double"
+  | "upgrade7Double"
+  | "upgrade8Double"
+  | "upgrade9Double"
+  | "upgrade10Double";
 export const symbolsArray: string[] = ["", "k", "M", "B", "T", "P", "E"];
 export interface UpgradeInterface {
   CookiesPerClickBonus: number;
@@ -41,7 +51,89 @@ export const initialStateOfShopItems: ShopItems = [
     wasBought: false,
     type: "upgrade1",
   },
+  {
+    name: "upgrade2Double",
+    nameInShop: "Engagment Ring",
+    upgradeNameInShop: "Doubles Benefits from Girlfriend",
+    image: "/upgrade2Double.png",
+    price: 9000,
+    wasBought: false,
+    type: "upgrade2",
+  },
+  {
+    name: "upgrade3Double",
+    nameInShop: "Avalanche",
+    upgradeNameInShop: "Doubles Benefits from Snowflake",
+    image: "/upgrade3Double.png",
+    price: 210000,
+    wasBought: false,
+    type: "upgrade3",
+  },
+  {
+    name: "upgrade4Double",
+    nameInShop: "Mind Control",
+    upgradeNameInShop: "Doubles Benefits from Brain Power",
+    image: "/upgrade4Double.png",
+    price: 1500000,
+    wasBought: false,
+    type: "upgrade4",
+  },
+  {
+    name: "upgrade5Double",
+    nameInShop: "Vodka",
+    upgradeNameInShop: "Doubles Benefits from Cold Beer",
+    image: "/upgrade5Double.png",
+    price: 17500000,
+    wasBought: false,
+    type: "upgrade5",
+  },
+  {
+    name: "upgrade6Double",
+    nameInShop: "Lichwała's Neurology",
+    upgradeNameInShop: "Doubles Benefits from Lichwala",
+    image: "/upgrade6Double.png",
+    price: 179000000, // 179 000 000
+    wasBought: false,
+    type: "upgrade6",
+  },
+  {
+    name: "upgrade7Double",
+    nameInShop: "Abduction 😱",
+    upgradeNameInShop: "Doubles Benefits from UFO",
+    image: "/upgrade7Double.png",
+    price: 2400000000, // 2 400 000 000
+    wasBought: false,
+    type: "upgrade7",
+  },
+  {
+    name: "upgrade8Double",
+    nameInShop: "Warp Drive",
+    upgradeNameInShop: "Doubles Benefits from Black Hole",
+    image: "/upgrade8Double.png",
+    price: 140000000000, // 140 000 000 000
+    wasBought: false,
+    type: "upgrade8",
+  },
+  {
+    name: "upgrade9Double",
+    nameInShop: "Wormhole",
+    upgradeNameInShop: "Doubles Benefits from Universe",
+    image: "/upgrade9Double.png",
+    price: 5675000000000, // 5 675 000 000 000
+    wasBought: false,
+    type: "upgrade9",
+  },
+  {
+    name: "upgrade10Double",
+    nameInShop: "Blessing of the Eternal",
+    upgradeNameInShop: "Doubles Benefits from Eye of the Eternal",
+    image: "/upgrade10Double.png",
+    price: 50000000000000, // 50 000 000 000 000
+    wasBought: false,
+    type: "upgrade10",
+  },
 ];
+
 export interface UpgradesInterface {
   upgrade1: UpgradeInterface;
   upgrade2: UpgradeInterface;

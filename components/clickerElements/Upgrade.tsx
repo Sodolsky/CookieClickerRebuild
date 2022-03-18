@@ -139,7 +139,7 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
         <span>
           CPS:{" "}
           {abbreviateNumber(
-            CookiesPerSecondBonus * numberOfUpgrades,
+            CookiesPerSecondBonus * numberOfUpgrades * multiplier,
             1,
             symbolsArray
           )}
@@ -147,7 +147,7 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
         <span>
           CPC:{" "}
           {abbreviateNumber(
-            CookiesPerClickBonus * numberOfUpgrades,
+            CookiesPerClickBonus * numberOfUpgrades * multiplier,
             1,
             symbolsArray
           )}

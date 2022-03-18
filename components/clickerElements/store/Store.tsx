@@ -42,7 +42,7 @@ export const Store = () => {
         <label className="modal-box relative" htmlFor="">
           <h2 className="text-xl text-center">SHOP</h2>
           <div className="divider"></div>
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-2">
             {shopItems.map((x) => (
               <StoreItem {...x} key={x.name} />
             ))}
