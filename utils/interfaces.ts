@@ -98,7 +98,7 @@ export const initialStateOfShopItems: ShopItems = [
   },
   {
     name: "upgrade7Double",
-    nameInShop: "Abduction 😱",
+    nameInShop: "UFO Abduction 😱",
     upgradeNameInShop: "Doubles Benefits from UFO",
     image: "/upgrade7Double.png",
     price: 2400000000, // 2 400 000 000
