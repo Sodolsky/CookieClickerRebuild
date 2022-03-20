@@ -23,7 +23,7 @@ export const StoreItem: React.FC<ShopItem> = ({
   const dispatch = useDispatch();
   const buyItem = () => {
     if (!wasBought) {
-      if (currentCookies >= price) {
+      if (cookieCount >= price) {
         if (type !== "Other") {
           dispatch(addBonusesForUpgrades(type));
         }
@@ -34,7 +34,7 @@ export const StoreItem: React.FC<ShopItem> = ({
       }
     }
   };
-  const currentCookies = useSelector(
+  const cookieCount = useSelector(
     (state: RootState) => state.gameLogic.cookiesLogic.cookieCount
   );
   return (
@@ -42,7 +42,7 @@ export const StoreItem: React.FC<ShopItem> = ({
       className={`grid place-items-center transition-colors rounded-xl grid-cols-4 gap-2 border-primary cursor-pointer border ${
         wasBought
           ? "bg-blue-300"
-          : currentCookies >= price
+          : cookieCount >= price
           ? "bg-green-500"
           : "bg-red-500"
       }`}

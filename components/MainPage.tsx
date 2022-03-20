@@ -41,8 +41,6 @@ export const MainPage = () => {
     (state: RootState) => state.gameLogic.cookiesLogic.CPC
   );
   const dispatch = useDispatch();
-  const [currentUpgrades, setCurrentUpgrades] =
-    useState<UpgradesInterface>(initialUpgradesState);
   useEffect(() => {
     if (typeof window !== "undefined") {
       const localStorageCookieCount =

@@ -2,6 +2,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
+import { shouldShopItemBeShown } from "../../../utils/utils";
 import { StoreItem } from "./StoreItem";
 export const Store = () => {
   const cookieCount = useSelector(
@@ -12,8 +13,24 @@ export const Store = () => {
   );
   const [fadeInStore, setFadeInStore] = useState<boolean>(false);
   const [showStore, setShowStore] = useState<boolean>(false);
-
+  const [numberOfItemsThatAreShown, setNumberOfItemsThatAreShown] = useState<
+    number | null
+  >(null);
   useEffect(() => {
+    if (numberOfItemsThatAreShown && cookieCount > 0) {
+      const currentNumberOfShowedShopItems = shopItems.filter(
+        (x) => shouldShopItemBeShown(x.name, cookieCount) || x.wasBought
+      ).length;
+      if (currentNumberOfShowedShopItems > numberOfItemsThatAreShown) {
+        setNumberOfItemsThatAreShown(currentNumberOfShowedShopItems);
+        setFadeInStore(true);
+      }
+    } else if (cookieCount > 0) {
+      const initialNumberOfItemsThatCanBeShowed = shopItems.filter(
+        (x) => shouldShopItemBeShown(x.name, cookieCount) || x.wasBought
+      ).length;
+      setNumberOfItemsThatAreShown(initialNumberOfItemsThatCanBeShowed);
+    }
     const wasStoreDiscovered = localStorage.getItem("storeDiscovered");
     if (wasStoreDiscovered === "true") return setShowStore(true);
     if (!wasStoreDiscovered) localStorage.setItem("storeDiscovered", "false");
@@ -43,9 +60,15 @@ export const Store = () => {
           <h2 className="text-xl text-center">SHOP</h2>
           <div className="divider"></div>
           <div className="flex flex-col gap-2">
-            {shopItems.map((x) => (
-              <StoreItem {...x} key={x.name} />
-            ))}
+            {shopItems.map((x) => {
+              if (shouldShopItemBeShown(x.name, cookieCount) || x.wasBought) {
+                return <StoreItem {...x} key={x.name} />;
+              }
+            })}
+            <span className="text-xl text-center">
+              And {shopItems.length - (numberOfItemsThatAreShown ?? 0)} More
+              undiscovered...
+            </span>
           </div>
         </label>
       </label>
