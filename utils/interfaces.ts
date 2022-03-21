@@ -19,7 +19,9 @@ export type ShopUpgradesNames =
   | "upgrade7Double"
   | "upgrade8Double"
   | "upgrade9Double"
-  | "upgrade10Double";
+  | "upgrade10Double"
+  | "unlockSkillTree";
+export type shopUpgradeTypes = "double" | "unique";
 export const symbolsArray: string[] = ["", "k", "M", "B", "T", "P", "E"];
 export interface UpgradeInterface {
   CookiesPerClickBonus: number;
@@ -38,7 +40,8 @@ export interface ShopItem {
   wasBought: boolean;
   price: number;
   image: string;
-  type: UpgradesNames | "Other";
+  type: shopUpgradeTypes;
+  upgradeFor?: UpgradesNames;
 }
 export type ShopItems = ShopItem[];
 export const initialStateOfShopItems: ShopItems = [
@@ -49,7 +52,8 @@ export const initialStateOfShopItems: ShopItems = [
     image: "/upgrade1Double.png",
     price: 600,
     wasBought: false,
-    type: "upgrade1",
+    type: "double",
+    upgradeFor: "upgrade1",
   },
   {
     name: "upgrade2Double",
@@ -58,7 +62,8 @@ export const initialStateOfShopItems: ShopItems = [
     image: "/upgrade2Double.png",
     price: 9000,
     wasBought: false,
-    type: "upgrade2",
+    type: "double",
+    upgradeFor: "upgrade2",
   },
   {
     name: "upgrade3Double",
@@ -67,7 +72,8 @@ export const initialStateOfShopItems: ShopItems = [
     image: "/upgrade3Double.png",
     price: 210000,
     wasBought: false,
-    type: "upgrade3",
+    type: "double",
+    upgradeFor: "upgrade3",
   },
   {
     name: "upgrade4Double",
@@ -76,7 +82,8 @@ export const initialStateOfShopItems: ShopItems = [
     image: "/upgrade4Double.png",
     price: 1500000,
     wasBought: false,
-    type: "upgrade4",
+    type: "double",
+    upgradeFor: "upgrade4",
   },
   {
     name: "upgrade5Double",
@@ -85,7 +92,8 @@ export const initialStateOfShopItems: ShopItems = [
     image: "/upgrade5Double.png",
     price: 17500000,
     wasBought: false,
-    type: "upgrade5",
+    type: "double",
+    upgradeFor: "upgrade5",
   },
   {
     name: "upgrade6Double",
@@ -94,7 +102,8 @@ export const initialStateOfShopItems: ShopItems = [
     image: "/upgrade6Double.png",
     price: 179000000, // 179 000 000
     wasBought: false,
-    type: "upgrade6",
+    type: "double",
+    upgradeFor: "upgrade6",
   },
   {
     name: "upgrade7Double",
@@ -103,7 +112,8 @@ export const initialStateOfShopItems: ShopItems = [
     image: "/upgrade7Double.png",
     price: 2400000000, // 2 400 000 000
     wasBought: false,
-    type: "upgrade7",
+    type: "double",
+    upgradeFor: "upgrade7",
   },
   {
     name: "upgrade8Double",
@@ -112,7 +122,8 @@ export const initialStateOfShopItems: ShopItems = [
     image: "/upgrade8Double.png",
     price: 140000000000, // 140 000 000 000
     wasBought: false,
-    type: "upgrade8",
+    type: "double",
+    upgradeFor: "upgrade8",
   },
   {
     name: "upgrade9Double",
@@ -121,7 +132,8 @@ export const initialStateOfShopItems: ShopItems = [
     image: "/upgrade9Double.png",
     price: 5675000000000, // 5 675 000 000 000
     wasBought: false,
-    type: "upgrade9",
+    type: "double",
+    upgradeFor: "upgrade9",
   },
   {
     name: "upgrade10Double",
@@ -130,7 +142,17 @@ export const initialStateOfShopItems: ShopItems = [
     image: "/upgrade10Double.png",
     price: 50000000000000, // 50 000 000 000 000
     wasBought: false,
-    type: "upgrade10",
+    type: "double",
+    upgradeFor: "upgrade10",
+  },
+  {
+    name: "unlockSkillTree",
+    nameInShop: "Peak of Humanity",
+    upgradeNameInShop: "Doubles Benefits from Eye of the Eternal",
+    image: "/unlockSkillTree.png",
+    price: 100000000000000, // 100 000 000 000 000
+    wasBought: false,
+    type: "unique",
   },
 ];
 

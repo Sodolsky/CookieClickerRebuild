@@ -11,6 +11,9 @@ export const Store = () => {
   const shopItems = useSelector(
     (state: RootState) => state.gameLogic.shopItems
   );
+  const currentUpgrades = useSelector(
+    (state: RootState) => state.gameLogic.upgrades
+  );
   const [fadeInStore, setFadeInStore] = useState<boolean>(false);
   const [showStore, setShowStore] = useState<boolean>(false);
   const [numberOfItemsThatAreShown, setNumberOfItemsThatAreShown] = useState<
@@ -19,7 +22,9 @@ export const Store = () => {
   useEffect(() => {
     if (numberOfItemsThatAreShown && cookieCount > 0) {
       const currentNumberOfShowedShopItems = shopItems.filter(
-        (x) => shouldShopItemBeShown(x.name, cookieCount) || x.wasBought
+        (x) =>
+          shouldShopItemBeShown(x.name, cookieCount, currentUpgrades) ||
+          x.wasBought
       ).length;
       if (currentNumberOfShowedShopItems > numberOfItemsThatAreShown) {
         setNumberOfItemsThatAreShown(currentNumberOfShowedShopItems);
@@ -27,7 +32,9 @@ export const Store = () => {
       }
     } else if (cookieCount > 0) {
       const initialNumberOfItemsThatCanBeShowed = shopItems.filter(
-        (x) => shouldShopItemBeShown(x.name, cookieCount) || x.wasBought
+        (x) =>
+          shouldShopItemBeShown(x.name, cookieCount, currentUpgrades) ||
+          x.wasBought
       ).length;
       setNumberOfItemsThatAreShown(initialNumberOfItemsThatCanBeShowed);
     }
@@ -58,17 +65,23 @@ export const Store = () => {
       <label htmlFor="my-modal" className={`modal cursor-pointer`}>
         <label className="modal-box relative" htmlFor="">
           <h2 className="text-xl text-center">SHOP</h2>
+
           <div className="divider"></div>
           <div className="flex flex-col gap-2">
             {shopItems.map((x) => {
-              if (shouldShopItemBeShown(x.name, cookieCount) || x.wasBought) {
+              if (
+                shouldShopItemBeShown(x.name, cookieCount, currentUpgrades) ||
+                x.wasBought
+              ) {
                 return <StoreItem {...x} key={x.name} />;
               }
             })}
-            <span className="text-xl text-center">
-              And {shopItems.length - (numberOfItemsThatAreShown ?? 0)} More
-              undiscovered...
-            </span>
+            {numberOfItemsThatAreShown !== shopItems.length && (
+              <span className="text-xl text-center">
+                And {shopItems.length - (numberOfItemsThatAreShown ?? 0)} More
+                undiscovered...
+              </span>
+            )}
           </div>
         </label>
       </label>

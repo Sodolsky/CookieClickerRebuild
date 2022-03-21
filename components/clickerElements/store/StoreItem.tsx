@@ -18,14 +18,15 @@ export const StoreItem: React.FC<ShopItem> = ({
   upgradeNameInShop,
   wasBought,
   type,
+  upgradeFor,
 }) => {
   const [shakeImage, setShakeImage] = useState(false);
   const dispatch = useDispatch();
   const buyItem = () => {
     if (!wasBought) {
       if (cookieCount >= price) {
-        if (type !== "Other") {
-          dispatch(addBonusesForUpgrades(type));
+        if (type === "double") {
+          upgradeFor && dispatch(addBonusesForUpgrades(upgradeFor));
         }
         dispatch(removeCookies(price));
         dispatch(buyShopItem(name));

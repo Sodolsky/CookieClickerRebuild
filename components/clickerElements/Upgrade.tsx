@@ -32,7 +32,7 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
   );
   useEffect(() => {
     //?Here is the Shop item that doubles the bonuses from single upgrade we handle multiplier logic here
-    const doubleUpgrade = shopItems.find((x) => x.type === upgradeName);
+    const doubleUpgrade = shopItems.find((x) => x.upgradeFor === upgradeName);
     if (doubleUpgrade) {
       doubleUpgrade.wasBought && setMultiplier(2);
     }

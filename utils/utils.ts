@@ -1,8 +1,9 @@
-import { ShopUpgradesNames } from "./interfaces";
+import { ShopUpgradesNames, UpgradesInterface } from "./interfaces";
 
 export const shouldShopItemBeShown = (
   name: ShopUpgradesNames,
-  currentCookies: number
+  currentCookies: number,
+  currentUpgrades: UpgradesInterface
 ): boolean => {
   let returnResult: boolean = false;
   switch (name) {
@@ -10,46 +11,50 @@ export const shouldShopItemBeShown = (
       returnResult = true;
       break;
     case "upgrade2Double":
-      if (currentCookies > 9000) {
+      if (currentCookies > 6000) {
         returnResult = true;
       }
       break;
     case "upgrade3Double":
-      if (currentCookies > 210000) {
+      if (currentCookies > 140000) {
         returnResult = true;
       }
       break;
     case "upgrade4Double":
-      if (currentCookies > 1500000) {
+      if (currentCookies > 900000) {
         returnResult = true;
       }
       break;
     case "upgrade5Double":
-      if (currentCookies > 17500000) {
+      if (currentCookies > 12000000) {
         returnResult = true;
       }
       break;
     case "upgrade6Double":
-      if (currentCookies > 179000000) {
+      if (currentCookies > 139000000) {
         returnResult = true;
       }
       break;
     case "upgrade7Double":
-      if (currentCookies > 2400000000) {
+      if (currentCookies > 2000000000) {
         returnResult = true;
       }
     case "upgrade8Double":
-      if (currentCookies > 140000000000) {
+      if (currentCookies > 100000000000) {
         returnResult = true;
       }
       break;
     case "upgrade9Double":
-      if (currentCookies > 5675000000000) {
+      if (currentCookies > 4500000000000) {
         returnResult = true;
       }
       break;
     case "upgrade10Double":
-      if (currentCookies > 50000000000000) {
+      if (currentCookies > 35000000000000) {
+        returnResult = true;
+      }
+    case "unlockSkillTree":
+      if (currentUpgrades.upgrade10.numberOfUpgrades !== 0) {
         returnResult = true;
       }
       break;
