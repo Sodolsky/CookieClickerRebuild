@@ -41,6 +41,7 @@ export interface ShopItem {
   price: number;
   image: string;
   type: shopUpgradeTypes;
+  wasShown: boolean;
   upgradeFor?: UpgradesNames;
 }
 export type ShopItems = ShopItem[];
@@ -54,6 +55,7 @@ export const initialStateOfShopItems: ShopItems = [
     wasBought: false,
     type: "double",
     upgradeFor: "upgrade1",
+    wasShown: false,
   },
   {
     name: "upgrade2Double",
@@ -64,6 +66,7 @@ export const initialStateOfShopItems: ShopItems = [
     wasBought: false,
     type: "double",
     upgradeFor: "upgrade2",
+    wasShown: false,
   },
   {
     name: "upgrade3Double",
@@ -74,6 +77,7 @@ export const initialStateOfShopItems: ShopItems = [
     wasBought: false,
     type: "double",
     upgradeFor: "upgrade3",
+    wasShown: false,
   },
   {
     name: "upgrade4Double",
@@ -84,6 +88,7 @@ export const initialStateOfShopItems: ShopItems = [
     wasBought: false,
     type: "double",
     upgradeFor: "upgrade4",
+    wasShown: false,
   },
   {
     name: "upgrade5Double",
@@ -94,6 +99,7 @@ export const initialStateOfShopItems: ShopItems = [
     wasBought: false,
     type: "double",
     upgradeFor: "upgrade5",
+    wasShown: false,
   },
   {
     name: "upgrade6Double",
@@ -104,6 +110,7 @@ export const initialStateOfShopItems: ShopItems = [
     wasBought: false,
     type: "double",
     upgradeFor: "upgrade6",
+    wasShown: false,
   },
   {
     name: "upgrade7Double",
@@ -114,6 +121,7 @@ export const initialStateOfShopItems: ShopItems = [
     wasBought: false,
     type: "double",
     upgradeFor: "upgrade7",
+    wasShown: false,
   },
   {
     name: "upgrade8Double",
@@ -124,6 +132,7 @@ export const initialStateOfShopItems: ShopItems = [
     wasBought: false,
     type: "double",
     upgradeFor: "upgrade8",
+    wasShown: false,
   },
   {
     name: "upgrade9Double",
@@ -134,6 +143,7 @@ export const initialStateOfShopItems: ShopItems = [
     wasBought: false,
     type: "double",
     upgradeFor: "upgrade9",
+    wasShown: false,
   },
   {
     name: "upgrade10Double",
@@ -144,6 +154,7 @@ export const initialStateOfShopItems: ShopItems = [
     wasBought: false,
     type: "double",
     upgradeFor: "upgrade10",
+    wasShown: false,
   },
   {
     name: "unlockSkillTree",
@@ -153,6 +164,7 @@ export const initialStateOfShopItems: ShopItems = [
     price: 100000000000000, // 100 000 000 000 000
     wasBought: false,
     type: "unique",
+    wasShown: false,
   },
 ];
 
