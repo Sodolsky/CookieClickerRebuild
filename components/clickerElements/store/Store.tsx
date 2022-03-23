@@ -1,7 +1,10 @@
+import { difference } from "lodash";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { showShopItem } from "../../../redux/gameLogicReducer";
 import { RootState } from "../../../redux/store";
+import { ShopItem, ShopUpgradesNames } from "../../../utils/interfaces";
 import { shouldShopItemBeShown } from "../../../utils/utils";
 import { StoreItem } from "./StoreItem";
 export const Store = () => {
@@ -14,29 +17,37 @@ export const Store = () => {
   const currentUpgrades = useSelector(
     (state: RootState) => state.gameLogic.upgrades
   );
+  const dispatch = useDispatch();
   const [fadeInStore, setFadeInStore] = useState<boolean>(false);
   const [showStore, setShowStore] = useState<boolean>(false);
   const [numberOfItemsThatAreShown, setNumberOfItemsThatAreShown] = useState<
-    number | null
+    ShopItem[] | null
   >(null);
+  const showUpgrade = (name: ShopUpgradesNames) => {
+    dispatch(showShopItem(name));
+  };
   useEffect(() => {
     if (numberOfItemsThatAreShown && cookieCount > 0) {
-      const currentNumberOfShowedShopItems = shopItems.filter(
+      const filteredShopItems = shopItems.filter(
         (x) =>
           shouldShopItemBeShown(x.name, cookieCount, currentUpgrades) ||
-          x.wasBought
-      ).length;
-      if (currentNumberOfShowedShopItems > numberOfItemsThatAreShown) {
-        setNumberOfItemsThatAreShown(currentNumberOfShowedShopItems);
+          x.wasBought ||
+          x.wasShown
+      );
+      if (filteredShopItems.length > numberOfItemsThatAreShown.length) {
+        const diff = difference(filteredShopItems, numberOfItemsThatAreShown);
+        diff.forEach((item) => showUpgrade(item.name));
+        setNumberOfItemsThatAreShown(filteredShopItems);
         setFadeInStore(true);
       }
     } else if (cookieCount > 0) {
-      const initialNumberOfItemsThatCanBeShowed = shopItems.filter(
+      const initalItemsThatCanBeShowed = shopItems.filter(
         (x) =>
           shouldShopItemBeShown(x.name, cookieCount, currentUpgrades) ||
-          x.wasBought
-      ).length;
-      setNumberOfItemsThatAreShown(initialNumberOfItemsThatCanBeShowed);
+          x.wasBought ||
+          x.wasShown
+      );
+      setNumberOfItemsThatAreShown(initalItemsThatCanBeShowed);
     }
     const wasStoreDiscovered = localStorage.getItem("storeDiscovered");
     if (wasStoreDiscovered === "true") return setShowStore(true);
@@ -71,15 +82,17 @@ export const Store = () => {
             {shopItems.map((x) => {
               if (
                 shouldShopItemBeShown(x.name, cookieCount, currentUpgrades) ||
-                x.wasBought
+                x.wasBought ||
+                x.wasShown
               ) {
                 return <StoreItem {...x} key={x.name} />;
               }
             })}
-            {numberOfItemsThatAreShown !== shopItems.length && (
+            {numberOfItemsThatAreShown?.length !== shopItems.length && (
               <span className="text-xl text-center">
-                And {shopItems.length - (numberOfItemsThatAreShown ?? 0)} More
-                undiscovered...
+                And{" "}
+                {shopItems.length - (numberOfItemsThatAreShown?.length ?? 0)}{" "}
+                More undiscovered...
               </span>
             )}
           </div>

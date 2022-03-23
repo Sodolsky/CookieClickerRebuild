@@ -1,9 +1,26 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@layer components {
+  .EternalTalk-FadeInImage {
+    animation: FadeIn 1.5s;
+  }
+  .EternalTalk-FadeInText {
+    opacity: 0;
+    animation: FadeIn 1s 2s forwards;
+  }
+}
 @font-face {
   font-family: "JosefinSans";
   src: url("/JosefinSans-VariableFont_wght.ttf");
+}
+@keyframes FadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 html,
 body {

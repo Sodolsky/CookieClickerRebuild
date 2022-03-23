@@ -159,7 +159,7 @@ export const initialStateOfShopItems: ShopItems = [
   {
     name: "unlockSkillTree",
     nameInShop: "Peak of Humanity",
-    upgradeNameInShop: "Doubles Benefits from Eye of the Eternal",
+    upgradeNameInShop: "The Eternal wants to meet you",
     image: "/unlockSkillTree.png",
     price: 100000000000000, // 100 000 000 000 000
     wasBought: false,

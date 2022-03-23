@@ -130,6 +130,17 @@ export const gameMechanicSlice = createSlice({
       localStorage.setItem("shopItems", JSON.stringify(newShopItems));
       return { ...state, shopItems: newShopItems };
     },
+    showShopItem: (state, action: PayloadAction<ShopUpgradesNames>) => {
+      const stateCopy = cloneDeep(state.shopItems);
+      const newShopItems = stateCopy.map((x) => {
+        if (x.name === action.payload) {
+          return { ...x, wasShown: true };
+        }
+        return x;
+      });
+      localStorage.setItem("shopItems", JSON.stringify(newShopItems));
+      return { ...state, shopItems: newShopItems };
+    },
   },
 });
 
@@ -146,5 +157,6 @@ export const {
   addBonusesForUpgrades,
   buyShopItem,
   setInitialShopitems,
+  showShopItem,
 } = gameMechanicSlice.actions;
 export default gameMechanicSlice.reducer;

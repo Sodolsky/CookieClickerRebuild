@@ -25,6 +25,7 @@ import useMediaQuery from "../utils/hooks/useMediaQuery";
 import CountUp from "react-countup";
 import { abbreviateNumber } from "js-abbreviation-number";
 import { Store } from "./clickerElements/store/Store";
+import { EternalTalk } from "./skillTree/EternalTalk";
 export const MainPage = () => {
   const formatCookieCount = useCallback((n: number) => {
     return abbreviateNumber(n, 2, symbolsArray);
@@ -34,6 +35,9 @@ export const MainPage = () => {
     (state: RootState) => state.gameLogic.cookiesLogic.cookieCount
   );
   const upgrades = useSelector((state: RootState) => state.gameLogic.upgrades);
+  const shopItems = useSelector(
+    (state: RootState) => state.gameLogic.shopItems
+  );
   const CPS = useSelector(
     (state: RootState) => state.gameLogic.cookiesLogic.CPS
   );
@@ -111,6 +115,7 @@ export const MainPage = () => {
         </div>
       )}
       <Store />
+      <EternalTalk />
       <main className="min-h-screen">
         <div className="flex flex-col gap-2 justify-center items-center">
           <Header />
