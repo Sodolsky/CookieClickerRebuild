@@ -63,3 +63,11 @@ export const shouldShopItemBeShown = (
   }
   return returnResult;
 };
+export const clearLocalStorageFromPreviousState = () => {
+  localStorage.removeItem("CPS");
+  localStorage.removeItem("CPC");
+  localStorage.removeItem("shopItems");
+  localStorage.removeItem("upgrades");
+  localStorage.removeItem("storeDiscovered");
+  localStorage.removeItem("cookieCount");
+};

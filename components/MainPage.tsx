@@ -1,7 +1,8 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addCookie,
+  resetGameAndAddSkillPoints,
   setInitialCookieCount,
   setInitialCPC,
   setInitialCPS,
@@ -30,10 +31,19 @@ export const MainPage = () => {
   const formatCookieCount = useCallback((n: number) => {
     return abbreviateNumber(n, 2, symbolsArray);
   }, []);
+  const resetGameLogic = () => {
+    intervalRef.current && clearInterval(intervalRef.current);
+    dispatch(resetGameAndAddSkillPoints(10));
+    setIsSkillTreeUnlocked(true);
+  };
   const isMobile = useMediaQuery("(max-width:768px)");
+  const intervalRef = useRef<null | NodeJS.Timer>(null);
   const cookieCount = useSelector(
     (state: RootState) => state.gameLogic.cookiesLogic.cookieCount
   );
+  const [isSkillTreeUnlocked, setIsSkillTreeUnlocked] =
+    useState<boolean>(false);
+
   const upgrades = useSelector((state: RootState) => state.gameLogic.upgrades);
   const shopItems = useSelector(
     (state: RootState) => state.gameLogic.shopItems
@@ -57,6 +67,8 @@ export const MainPage = () => {
       const localStorageShopItems =
         (JSON.parse(localStorage.getItem("shopItems")!) as ShopItems) ??
         initialStateOfShopItems;
+      const localStorageSkillTreeUnlocked =
+        localStorage.getItem("skillTreeUnlocked") === "true" ? true : false;
       Object.values(localStorageUpgrades).forEach((item) => {
         const obj = item;
         dispatch(
@@ -70,10 +82,12 @@ export const MainPage = () => {
       dispatch(setInitialCookieCount(localStorageCookieCount));
       dispatch(setInitialCPS(localStorageCPSCount));
       dispatch(setInitialCPC(localStorageCPCCount));
+      setIsSkillTreeUnlocked(localStorageSkillTreeUnlocked);
     }
   }, []);
   useEffect(() => {
     const gameLoopInterval = setInterval(() => dispatch(addCookie(CPS)), 1000);
+    intervalRef.current = gameLoopInterval;
     return () => clearInterval(gameLoopInterval);
   }, [CPS]);
   return (
@@ -115,7 +129,11 @@ export const MainPage = () => {
         </div>
       )}
       <Store />
-      <EternalTalk />
+
+      {shopItems.find((x) => x.name === "unlockSkillTree")?.wasBought ? (
+        <EternalTalk resetGameLogic={resetGameLogic} />
+      ) : null}
+
       <main className="min-h-screen">
         <div className="flex flex-col gap-2 justify-center items-center">
           <Header />

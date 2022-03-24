@@ -8,6 +8,7 @@ import {
   UpgradesInterface,
   UpgradesNames,
 } from "../utils/interfaces";
+import { clearLocalStorageFromPreviousState } from "../utils/utils";
 //? CPS is abbr. for Cookies Per Second
 interface InitialGameLogicStateInterface {
   cookiesLogic: {
@@ -17,6 +18,7 @@ interface InitialGameLogicStateInterface {
   };
   upgrades: UpgradesInterface;
   shopItems: ShopItems;
+  skillPoints: number;
 }
 interface InitialNumberOfUpgradesInterface {
   number: number;
@@ -31,6 +33,7 @@ const initialState: InitialGameLogicStateInterface = {
   },
   upgrades: initialUpgradesState,
   shopItems: initialStateOfShopItems,
+  skillPoints: 0,
 };
 export const gameMechanicSlice = createSlice({
   name: "gameMechanicReducer",
@@ -141,6 +144,12 @@ export const gameMechanicSlice = createSlice({
       localStorage.setItem("shopItems", JSON.stringify(newShopItems));
       return { ...state, shopItems: newShopItems };
     },
+    resetGameAndAddSkillPoints(state, action: PayloadAction<number>) {
+      localStorage.setItem("skillTreeUnlocked", "true");
+      localStorage.setItem("skillPoints", `${action.payload}`);
+      clearLocalStorageFromPreviousState();
+      return { ...initialState, skillPoints: action.payload };
+    },
   },
 });
 
@@ -158,5 +167,6 @@ export const {
   buyShopItem,
   setInitialShopitems,
   showShopItem,
+  resetGameAndAddSkillPoints,
 } = gameMechanicSlice.actions;
 export default gameMechanicSlice.reducer;

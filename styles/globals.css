@@ -9,6 +9,23 @@
     opacity: 0;
     animation: FadeIn 1s 2s forwards;
   }
+  .EternalTalk-FadeInButton {
+    opacity: 0;
+    pointer-events: none;
+    animation: FadeIn 1s 6s forwards;
+  }
+  .EternalTalk-FadeInSkillTreeImage {
+    opacity: 0;
+    animation: FadeIn 1s 4s forwards;
+  }
+  .EternalTalk-FadeInButtons {
+    opacity: 0;
+    pointer-events: none;
+    animation: FadeIn 1s 8s forwards;
+  }
+  .CoolButton {
+    @apply bg-white text-black hover:translate-y-2.5 hover:border-b-4 transition-transform border-b-8 border-primary px-3 py-2 bg-bottom rounded-lg;
+  }
 }
 @font-face {
   font-family: "JosefinSans";
@@ -20,6 +37,7 @@
   }
   to {
     opacity: 1;
+    pointer-events: auto;
   }
 }
 html,
