@@ -19,6 +19,7 @@ interface InitialGameLogicStateInterface {
   upgrades: UpgradesInterface;
   shopItems: ShopItems;
   skillPoints: number;
+  isSkillTreeUnlocked: boolean;
 }
 interface InitialNumberOfUpgradesInterface {
   number: number;
@@ -34,6 +35,7 @@ const initialState: InitialGameLogicStateInterface = {
   upgrades: initialUpgradesState,
   shopItems: initialStateOfShopItems,
   skillPoints: 0,
+  isSkillTreeUnlocked: false,
 };
 export const gameMechanicSlice = createSlice({
   name: "gameMechanicReducer",
@@ -144,6 +146,10 @@ export const gameMechanicSlice = createSlice({
       localStorage.setItem("shopItems", JSON.stringify(newShopItems));
       return { ...state, shopItems: newShopItems };
     },
+    setisSkillTreeUnlocked: (state, action: PayloadAction<boolean>) => {
+      return { ...state, isSkillTreeUnlocked: action.payload };
+    },
+    //? Here is the reducer for reseting the game
     resetGameAndAddSkillPoints(state, action: PayloadAction<number>) {
       localStorage.setItem("skillTreeUnlocked", "true");
       localStorage.setItem("skillPoints", `${action.payload}`);
@@ -168,5 +174,6 @@ export const {
   setInitialShopitems,
   showShopItem,
   resetGameAndAddSkillPoints,
+  setisSkillTreeUnlocked,
 } = gameMechanicSlice.actions;
 export default gameMechanicSlice.reducer;

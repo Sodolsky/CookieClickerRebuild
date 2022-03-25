@@ -8,6 +8,7 @@ import {
   setInitialCPS,
   setInitialNumberOfUpgradesForUpgrade,
   setInitialShopitems,
+  setisSkillTreeUnlocked,
 } from "../redux/gameLogicReducer";
 import { RootState } from "../redux/store";
 import {
@@ -27,6 +28,7 @@ import CountUp from "react-countup";
 import { abbreviateNumber } from "js-abbreviation-number";
 import { Store } from "./clickerElements/store/Store";
 import { EternalTalk } from "./skillTree/EternalTalk";
+import Image from "next/image";
 export const MainPage = () => {
   const formatCookieCount = useCallback((n: number) => {
     return abbreviateNumber(n, 2, symbolsArray);
@@ -34,16 +36,13 @@ export const MainPage = () => {
   const resetGameLogic = () => {
     intervalRef.current && clearInterval(intervalRef.current);
     dispatch(resetGameAndAddSkillPoints(10));
-    setIsSkillTreeUnlocked(true);
+    dispatch(setisSkillTreeUnlocked(true));
   };
   const isMobile = useMediaQuery("(max-width:768px)");
   const intervalRef = useRef<null | NodeJS.Timer>(null);
   const cookieCount = useSelector(
     (state: RootState) => state.gameLogic.cookiesLogic.cookieCount
   );
-  const [isSkillTreeUnlocked, setIsSkillTreeUnlocked] =
-    useState<boolean>(false);
-
   const upgrades = useSelector((state: RootState) => state.gameLogic.upgrades);
   const shopItems = useSelector(
     (state: RootState) => state.gameLogic.shopItems
@@ -53,6 +52,9 @@ export const MainPage = () => {
   );
   const CPC = useSelector(
     (state: RootState) => state.gameLogic.cookiesLogic.CPC
+  );
+  const isSkillTreeUnlocked = useSelector(
+    (state: RootState) => state.gameLogic.isSkillTreeUnlocked
   );
   const dispatch = useDispatch();
   useEffect(() => {
@@ -78,11 +80,11 @@ export const MainPage = () => {
           })
         );
       });
+      dispatch(setisSkillTreeUnlocked(localStorageSkillTreeUnlocked));
       dispatch(setInitialShopitems(localStorageShopItems));
       dispatch(setInitialCookieCount(localStorageCookieCount));
       dispatch(setInitialCPS(localStorageCPSCount));
       dispatch(setInitialCPC(localStorageCPCCount));
-      setIsSkillTreeUnlocked(localStorageSkillTreeUnlocked);
     }
   }, []);
   useEffect(() => {
@@ -132,7 +134,16 @@ export const MainPage = () => {
 
       {shopItems.find((x) => x.name === "unlockSkillTree")?.wasBought ? (
         <EternalTalk resetGameLogic={resetGameLogic} />
-      ) : null}
+      ) : (
+        <figure className="absolute bottom-2 left-2 md:top-4 md:left-4 cursor-pointer">
+          <Image
+            className="absolute t-2 l-2"
+            src={"/skillTree.png"}
+            height={64}
+            width={64}
+          />
+        </figure>
+      )}
 
       <main className="min-h-screen">
         <div className="flex flex-col gap-2 justify-center items-center">
