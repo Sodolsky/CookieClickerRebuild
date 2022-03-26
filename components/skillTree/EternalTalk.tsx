@@ -67,9 +67,9 @@ export const EternalTalk: React.FC<EternalTalkProps> = ({ resetGameLogic }) => {
           {currentStep === 1 && (
             <>
               <p className={`${showModal && "EternalTalk-FadeInText"}`}>
-                That's intresting i did not expect someone to reach this level
-                of Power. Let me show you something, just a small fraction of
-                what you can become.
+                Thats intresting i did not expect someone to reach this level of
+                Power. Let me show you something, just a small fraction of what
+                you can become.
               </p>
               <div className="divider"></div>
               <div className="modal-action">
@@ -87,7 +87,7 @@ export const EternalTalk: React.FC<EternalTalkProps> = ({ resetGameLogic }) => {
           {currentStep === 2 && (
             <>
               <p className={`${showModal && "EternalTalk-FadeInImage"}`}>
-                I offer you a deal. I'll let you borrow some of my Power in
+                I offer you a deal. I will let you borrow some of my Power in
                 exchange for your Cookies.
               </p>
               <div className="divider"></div>
