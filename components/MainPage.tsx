@@ -29,6 +29,7 @@ import { abbreviateNumber } from "js-abbreviation-number";
 import { Store } from "./clickerElements/store/Store";
 import { EternalTalk } from "./skillTree/EternalTalk";
 import Image from "next/image";
+import { SkillTreeModal } from "./skillTree/SkillTreeModal";
 export const MainPage = () => {
   const formatCookieCount = useCallback((n: number) => {
     return abbreviateNumber(n, 2, symbolsArray);
@@ -132,17 +133,11 @@ export const MainPage = () => {
       )}
       <Store />
 
-      {shopItems.find((x) => x.name === "unlockSkillTree")?.wasBought ? (
+      {shopItems.find((x) => x.name === "unlockSkillTree")?.wasBought &&
+      !isSkillTreeUnlocked ? (
         <EternalTalk resetGameLogic={resetGameLogic} />
       ) : (
-        <figure className="absolute bottom-2 left-2 md:top-4 md:left-4 cursor-pointer">
-          <Image
-            className="absolute t-2 l-2"
-            src={"/skillTree.png"}
-            height={64}
-            width={64}
-          />
-        </figure>
+        isSkillTreeUnlocked && <SkillTreeModal />
       )}
 
       <main className="min-h-screen">
