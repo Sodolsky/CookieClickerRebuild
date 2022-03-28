@@ -15,11 +15,9 @@ export const SkillTreeModal = () => {
       <input type="checkbox" id="skillTreeModal" className="modal-toggle" />
       <label htmlFor="skillTreeModal" className={`modal cursor-pointer`}>
         <label className="modal-box relative" htmlFor="">
-          <h2 className="text-xl text-center">Test</h2>
-          <div className="w-full relative h-40">
-            <div className="h-10 w-10 bg-green-400 absolute"></div>
-            <div className="h-10 w-10 bg-red-400 absolute top-2 right-2"></div>
-          </div>
+          <h2 className="text-xl text-center">
+            Here is going to be skill tree.
+          </h2>
         </label>
       </label>
     </>
