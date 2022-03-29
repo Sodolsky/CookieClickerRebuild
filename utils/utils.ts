@@ -53,6 +53,12 @@ export const shouldShopItemBeShown = (
       if (currentCookies > 35000000000000) {
         returnResult = true;
       }
+      break;
+    case "doubleClick":
+      if (currentCookies > 100000000) {
+        returnResult = true;
+      }
+      break;
     case "unlockSkillTree":
       if (currentUpgrades.upgrade10.numberOfUpgrades !== 0) {
         returnResult = true;

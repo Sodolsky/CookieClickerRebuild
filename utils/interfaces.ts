@@ -20,7 +20,8 @@ export type ShopUpgradesNames =
   | "upgrade8Double"
   | "upgrade9Double"
   | "upgrade10Double"
-  | "unlockSkillTree";
+  | "unlockSkillTree"
+  | "doubleClick";
 export type shopUpgradeTypes = "double" | "unique";
 export const symbolsArray: string[] = ["", "k", "M", "B", "T", "P", "E"];
 export interface UpgradeInterface {
@@ -164,6 +165,16 @@ export const initialStateOfShopItems: ShopItems = [
     price: 100000000000000, // 100 000 000 000 000
     wasBought: false,
     type: "unique",
+    wasShown: false,
+  },
+  {
+    name: "doubleClick",
+    nameInShop: "Lighting Click",
+    image: "/doubleClick.png",
+    price: 100000000, // 100 000 000
+    type: "unique",
+    upgradeNameInShop: "Doubles your click but removes CPS",
+    wasBought: false,
     wasShown: false,
   },
 ];

@@ -2,6 +2,9 @@ import CountUp from "react-countup";
 import { abbreviateNumber } from "js-abbreviation-number";
 import { symbolsArray } from "../../utils/interfaces";
 import { useCallback } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { useDoubleClickUpgrade } from "../../utils/hooks/useDoubleClickUpgrade";
 interface CookiesDisplayProps {
   cookieCount: number;
   CPS: number;
@@ -12,6 +15,7 @@ export const CookiesDisplay: React.FC<CookiesDisplayProps> = ({
   CPS,
   CPC,
 }) => {
+  const { isClickDoubled, multiplier } = useDoubleClickUpgrade();
   const formatCookieCount = useCallback((n: number) => {
     return abbreviateNumber(n, 2, symbolsArray);
   }, []);
@@ -28,10 +32,15 @@ export const CookiesDisplay: React.FC<CookiesDisplayProps> = ({
         />
       </div>
       <div className="text-lg lg:text-xl">
-        CPS: {abbreviateNumber(CPS, 1, symbolsArray)}/s
+        CPS:{" "}
+        {isClickDoubled ? (
+          <span className="text-red-500 font-bold">Disabled</span>
+        ) : (
+          <span>{abbreviateNumber(CPS, 1, symbolsArray)}/s</span>
+        )}
       </div>
       <div className="text-lg lg:text-xl">
-        CPC: {abbreviateNumber(CPC, 1, symbolsArray)}
+        CPC: {abbreviateNumber(isClickDoubled ? CPC * 2 : CPC, 1, symbolsArray)}
       </div>
     </section>
   );

@@ -28,8 +28,8 @@ import CountUp from "react-countup";
 import { abbreviateNumber } from "js-abbreviation-number";
 import { Store } from "./clickerElements/store/Store";
 import { EternalTalk } from "./skillTree/EternalTalk";
-import Image from "next/image";
 import { SkillTreeModal } from "./skillTree/SkillTreeModal";
+import { useDoubleClickUpgrade } from "../utils/hooks/useDoubleClickUpgrade";
 export const MainPage = () => {
   const formatCookieCount = useCallback((n: number) => {
     return abbreviateNumber(n, 2, symbolsArray);
@@ -39,6 +39,7 @@ export const MainPage = () => {
     dispatch(resetGameAndAddSkillPoints(10));
     dispatch(setisSkillTreeUnlocked(true));
   };
+  const { isClickDoubled, multiplier } = useDoubleClickUpgrade();
   const isMobile = useMediaQuery("(max-width:768px)");
   const intervalRef = useRef<null | NodeJS.Timer>(null);
   const cookieCount = useSelector(
@@ -88,6 +89,12 @@ export const MainPage = () => {
       dispatch(setInitialCPC(localStorageCPCCount));
     }
   }, []);
+  useEffect(() => {
+    if (isClickDoubled) {
+      intervalRef.current && clearInterval(intervalRef.current);
+    }
+  }, [isClickDoubled, intervalRef.current]);
+
   useEffect(() => {
     const gameLoopInterval = setInterval(() => dispatch(addCookie(CPS)), 1000);
     intervalRef.current = gameLoopInterval;

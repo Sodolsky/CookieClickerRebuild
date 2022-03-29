@@ -1,4 +1,4 @@
-import { difference } from "lodash";
+import { cloneDeep, difference } from "lodash";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -87,15 +87,17 @@ export const Store = () => {
 
           <div className="divider"></div>
           <div className="flex flex-col gap-2">
-            {shopItems.map((x) => {
-              if (
-                shouldShopItemBeShown(x.name, cookieCount, currentUpgrades) ||
-                x.wasBought ||
-                x.wasShown
-              ) {
-                return <StoreItem {...x} key={x.name} />;
-              }
-            })}
+            {cloneDeep(shopItems)
+              .sort((a, b) => a.price - b.price)
+              .map((x) => {
+                if (
+                  shouldShopItemBeShown(x.name, cookieCount, currentUpgrades) ||
+                  x.wasBought ||
+                  x.wasShown
+                ) {
+                  return <StoreItem {...x} key={x.name} />;
+                }
+              })}
             {numberOfItemsThatAreShown?.length !== shopItems.length && (
               <span className="text-xl text-center">
                 And{" "}

@@ -3,16 +3,19 @@ import { addCookie } from "../../redux/gameLogicReducer";
 import Image from "next/image";
 import CoockieImage from "../../public/cookie.png";
 import { RootState } from "../../redux/store";
+import { useEffect, useState } from "react";
+import { useDoubleClickUpgrade } from "../../utils/hooks/useDoubleClickUpgrade";
 // export interface CookieToClickProps {
 //   setCookieCount: React.Dispatch<React.SetStateAction<number>>;
 // }
 export const CookieToClick: React.FC = () => {
+  const dispatch = useDispatch();
   const CPC = useSelector(
     (state: RootState) => state.gameLogic.cookiesLogic.CPC
   );
-  const dispatch = useDispatch();
+  const { isClickDoubled, multiplier } = useDoubleClickUpgrade();
   const handleClickIncrementation = () => {
-    dispatch(addCookie(CPC));
+    dispatch(addCookie(CPC * multiplier));
   };
   return (
     <Image
