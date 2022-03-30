@@ -50,6 +50,9 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
         //If we buy an upgrade we don't need to do the loop we just multiply previous price by feeIndex
         setPrice((prevPrice) => prevPrice * feeIndex);
       }
+      //Here we reset the price after game reset
+    } else if (numberOfUpgrades === 0 && cost !== price) {
+      setPrice(cost);
     }
   }, [numberOfUpgrades]);
   const dispatch = useDispatch();
