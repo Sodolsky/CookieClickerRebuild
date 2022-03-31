@@ -124,12 +124,15 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
       </span>
     </section>
   ) : (
-    <section
+    <fieldset
       className={`grid place-items-center grid-cols-4 gap-2 border-primary border ${
         currentCookies >= price ? "bg-green-500" : "bg-red-500"
       }`}
       onClick={upgradeCPS}
     >
+      <legend className="text-center border p-1 border-primary bg-blue-500 -skew-x-12">
+        Upgrades: {numberOfUpgrades}
+      </legend>
       <Image
         src={image}
         width={64}
@@ -140,17 +143,21 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
       />
       <div className="flex-col flex gap-2 items-end col-span-2">
         <span>
-          CPS:{" "}
+          {numberOfUpgrades > 0 ? "CPS: " : "Gives: "}
           {abbreviateNumber(
-            CookiesPerSecondBonus * numberOfUpgrades * multiplier,
+            numberOfUpgrades > 0
+              ? CookiesPerSecondBonus * numberOfUpgrades * multiplier
+              : CookiesPerSecondBonus,
             1,
             symbolsArray
           )}
         </span>
         <span>
-          CPC:{" "}
+          {numberOfUpgrades > 0 ? "CPC: " : "Gives: "}
           {abbreviateNumber(
-            CookiesPerClickBonus * numberOfUpgrades * multiplier,
+            numberOfUpgrades > 0
+              ? CookiesPerClickBonus * numberOfUpgrades * multiplier
+              : CookiesPerClickBonus,
             1,
             symbolsArray
           )}
@@ -159,6 +166,6 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
       <span>
         Cost: {abbreviateNumber(Number(price.toFixed(0)), 1, symbolsArray)}
       </span>
-    </section>
+    </fieldset>
   );
 };
