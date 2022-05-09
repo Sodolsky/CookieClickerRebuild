@@ -15,6 +15,7 @@ interface InitialGameLogicStateInterface {
     cookieCount: number;
     CPS: number;
     CPC: number;
+    crystals: number;
   };
   upgrades: UpgradesInterface;
   shopItems: ShopItems;
@@ -31,6 +32,7 @@ const initialState: InitialGameLogicStateInterface = {
     cookieCount: 0,
     CPS: 0,
     CPC: 1,
+    crystals: 0,
   },
   upgrades: initialUpgradesState,
   shopItems: initialStateOfShopItems,
@@ -65,12 +67,22 @@ export const gameMechanicSlice = createSlice({
       state.cookiesLogic.CPC += action.payload;
       localStorage.setItem("CPC", String(state.cookiesLogic.CPC.toFixed(2)));
     },
+    addCrystals: (state, action: PayloadAction<number>) => {
+      state.cookiesLogic.crystals += action.payload;
+      localStorage.setItem(
+        "crystals",
+        String(state.cookiesLogic.crystals.toFixed(2))
+      );
+    },
     //Here we get data from localstorage and setIt
     setInitialCPS: (state, action: PayloadAction<number>) => {
       state.cookiesLogic.CPS = action.payload;
     },
     setInitialCPC: (state, action: PayloadAction<number>) => {
       state.cookiesLogic.CPC = action.payload;
+    },
+    setInitialCrystals: (state, action: PayloadAction<number>) => {
+      state.cookiesLogic.crystals = action.payload;
     },
     setInitialCookieCount: (state, action: PayloadAction<number>) => {
       state.cookiesLogic.cookieCount = action.payload;
@@ -161,6 +173,8 @@ export const gameMechanicSlice = createSlice({
 
 export const {
   addCookie,
+  addCrystals,
+  setInitialCrystals,
   setInitialCookieCount,
   setInitialCPS,
   increaseCPS,

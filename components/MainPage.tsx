@@ -6,6 +6,7 @@ import {
   setInitialCookieCount,
   setInitialCPC,
   setInitialCPS,
+  setInitialCrystals,
   setInitialNumberOfUpgradesForUpgrade,
   setInitialShopitems,
   setisSkillTreeUnlocked,
@@ -39,7 +40,7 @@ export const MainPage = () => {
     dispatch(resetGameAndAddSkillPoints(10));
     dispatch(setisSkillTreeUnlocked(true));
   };
-  const { isClickDoubled, multiplier } = useDoubleClickUpgrade();
+  const { isClickDoubled } = useDoubleClickUpgrade();
   const isMobile = useMediaQuery("(max-width:768px)");
   const intervalRef = useRef<null | NodeJS.Timer>(null);
   const cookieCount = useSelector(
@@ -63,6 +64,8 @@ export const MainPage = () => {
     if (typeof window !== "undefined") {
       const localStorageCookieCount =
         Number(localStorage.getItem("cookieCount")) ?? 0;
+      const localStorageCrystalsCount =
+        Number(localStorage.getItem("crystals")) ?? 0;
       const localStorageCPSCount = Number(localStorage.getItem("CPS") ?? 0);
       const localStorageCPCCount = Number(localStorage.getItem("CPC") ?? 1);
       const localStorageUpgrades =
@@ -87,6 +90,7 @@ export const MainPage = () => {
       dispatch(setInitialCookieCount(localStorageCookieCount));
       dispatch(setInitialCPS(localStorageCPSCount));
       dispatch(setInitialCPC(localStorageCPCCount));
+      dispatch(setInitialCrystals(localStorageCrystalsCount));
     }
   }, []);
   useEffect(() => {

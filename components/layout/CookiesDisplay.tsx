@@ -2,8 +2,6 @@ import CountUp from "react-countup";
 import { abbreviateNumber } from "js-abbreviation-number";
 import { symbolsArray } from "../../utils/interfaces";
 import { useCallback } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
 import { useDoubleClickUpgrade } from "../../utils/hooks/useDoubleClickUpgrade";
 interface CookiesDisplayProps {
   cookieCount: number;
@@ -15,7 +13,7 @@ export const CookiesDisplay: React.FC<CookiesDisplayProps> = ({
   CPS,
   CPC,
 }) => {
-  const { isClickDoubled, multiplier } = useDoubleClickUpgrade();
+  const { isClickDoubled } = useDoubleClickUpgrade();
   const formatCookieCount = useCallback((n: number) => {
     return abbreviateNumber(n, 2, symbolsArray);
   }, []);

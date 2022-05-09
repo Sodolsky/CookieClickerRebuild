@@ -1,5 +1,6 @@
 import "../styles/globals.css";
 import "../components/clickerElements/Animations.css";
+import "../styles/particles.css";
 import type { AppProps } from "next/app";
 import { Provider } from "react-redux";
 import { store } from "../redux/store";
