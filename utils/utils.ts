@@ -59,6 +59,11 @@ export const shouldShopItemBeShown = (
         returnResult = true;
       }
       break;
+    case "doubleCrystals":
+      if (currentCookies > 2500000) {
+        returnResult = true;
+      }
+      break;
     case "unlockSkillTree":
       if (currentUpgrades.upgrade10.numberOfUpgrades !== 0) {
         returnResult = true;

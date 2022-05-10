@@ -15,11 +15,17 @@ export const CookieToClick: React.FC = () => {
   const CPC = useSelector(
     (state: RootState) => state.gameLogic.cookiesLogic.CPC
   );
+  const isPickaxeBought = useSelector(
+    (state: RootState) =>
+      state.gameLogic.shopItems.find((x) => x.name === "doubleCrystals")
+        ?.wasBought
+  );
 
   function pop(e: React.MouseEvent) {
     let shardsGenerated: number = 0;
     for (let i = 0; i < 30; i++) {
-      const generateShard = generateRandomNumber(0, 1000) > 950;
+      const generateShard =
+        generateRandomNumber(0, 1000) > (!isPickaxeBought ? 950 : 850);
       if (generateShard) shardsGenerated += 1;
       createParticle(e.clientX, e.clientY, generateShard);
     }

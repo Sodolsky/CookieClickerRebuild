@@ -21,7 +21,8 @@ export type ShopUpgradesNames =
   | "upgrade9Double"
   | "upgrade10Double"
   | "unlockSkillTree"
-  | "doubleClick";
+  | "doubleClick"
+  | "doubleCrystals";
 export type shopUpgradeTypes = "double" | "unique";
 export const symbolsArray: string[] = ["", "k", "M", "B", "T", "P", "E"];
 export interface UpgradeInterface {
@@ -174,6 +175,17 @@ export const initialStateOfShopItems: ShopItems = [
     price: 100000000, // 100 000 000
     type: "unique",
     upgradeNameInShop: "Doubles your click but removes CPS",
+    wasBought: false,
+    wasShown: false,
+  },
+  {
+    name: "doubleCrystals",
+    nameInShop: "Pickaxe",
+    image: "/pickaxe.png",
+    price: 2500000, // 2 500 000
+    type: "unique",
+    upgradeNameInShop:
+      "Increases your chance to find gems while clicking cookie.",
     wasBought: false,
     wasShown: false,
   },
