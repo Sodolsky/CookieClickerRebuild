@@ -7,6 +7,7 @@ interface CookiesDisplayProps {
   cookieCount: number;
   CPS: number;
   CPC: number;
+  crystals: number;
 }
 export const CookiesDisplay: React.FC<CookiesDisplayProps> = ({
   cookieCount,

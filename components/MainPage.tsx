@@ -31,6 +31,7 @@ import { Store } from "./clickerElements/store/Store";
 import { EternalTalk } from "./skillTree/EternalTalk";
 import { SkillTreeModal } from "./skillTree/SkillTreeModal";
 import { useDoubleClickUpgrade } from "../utils/hooks/useDoubleClickUpgrade";
+import { CrystalsDisplay } from "./layout/CrystalsDisplay";
 export const MainPage = () => {
   const formatCookieCount = useCallback((n: number) => {
     return abbreviateNumber(n, 2, symbolsArray);
@@ -55,6 +56,9 @@ export const MainPage = () => {
   );
   const CPC = useSelector(
     (state: RootState) => state.gameLogic.cookiesLogic.CPC
+  );
+  const crystals = useSelector(
+    (state: RootState) => state.gameLogic.cookiesLogic.crystals
   );
   const isSkillTreeUnlocked = useSelector(
     (state: RootState) => state.gameLogic.isSkillTreeUnlocked
@@ -142,8 +146,10 @@ export const MainPage = () => {
           </div>
         </div>
       )}
-      <Store />
-
+      <aside className="absolute md:top-4 bottom-2 right-2 flex justify-center items-center">
+        <CrystalsDisplay crystals={crystals} />
+        <Store />
+      </aside>
       {shopItems.find((x) => x.name === "unlockSkillTree")?.wasBought &&
       !isSkillTreeUnlocked ? (
         <EternalTalk resetGameLogic={resetGameLogic} />
@@ -158,6 +164,7 @@ export const MainPage = () => {
             cookieCount={Number(cookieCount.toFixed(2))}
             CPS={Number(CPS.toFixed(2))}
             CPC={Number(CPC.toFixed(2))}
+            crystals={Number(crystals.toFixed(2))}
           />
           <CookieToClick />
 

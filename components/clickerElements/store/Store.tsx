@@ -72,7 +72,7 @@ export const Store = () => {
         <figure
           className={`${
             fadeInStore && "animate-pulse"
-          } absolute  bottom-2 right-2 md:top-4 md:right-4 cursor-pointer transition-opacity ${
+          }  cursor-pointer transition-opacity ${
             showStore ? "block" : "hidden"
           } duration-1000`}
           onClick={() => setFadeInStore(false)}
