@@ -146,9 +146,11 @@ export const MainPage = () => {
           </div>
         </div>
       )}
-      <aside className="absolute md:top-4 bottom-2 right-2 flex justify-center items-center">
-        <CrystalsDisplay crystals={crystals} />
-        <Store />
+      <aside className="absolute md:top-4 md:bottom-0 bottom-0 right-2">
+        <div className="flex justify-center items-center gap-2">
+          <CrystalsDisplay crystals={crystals} />
+          <Store />
+        </div>
       </aside>
       {shopItems.find((x) => x.name === "unlockSkillTree")?.wasBought &&
       !isSkillTreeUnlocked ? (
