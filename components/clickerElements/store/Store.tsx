@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { showShopItem } from "../../../redux/gameLogicReducer";
 import { RootState } from "../../../redux/store";
-import { ShopItem, ShopUpgradesNames } from "../../../utils/interfaces";
+import { CookiesShopItem, ShopUpgradesNames } from "../../../utils/interfaces";
 import { shouldShopItemBeShown } from "../../../utils/utils";
 import { StoreItem } from "./StoreItem";
 export const Store = () => {
@@ -29,7 +29,7 @@ export const Store = () => {
   const [fadeInStore, setFadeInStore] = useState<boolean>(false);
   const [showStore, setShowStore] = useState<boolean>(false);
   const [numberOfItemsThatAreShown, setNumberOfItemsThatAreShown] = useState<
-    ShopItem[] | null
+    CookiesShopItem[] | null
   >(null);
   const showUpgrade = (name: ShopUpgradesNames) => {
     dispatch(showShopItem(name));

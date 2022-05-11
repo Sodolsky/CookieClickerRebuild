@@ -31,7 +31,7 @@ import { Store } from "./clickerElements/store/Store";
 import { EternalTalk } from "./skillTree/EternalTalk";
 import { SkillTreeModal } from "./skillTree/SkillTreeModal";
 import { useDoubleClickUpgrade } from "../utils/hooks/useDoubleClickUpgrade";
-import { CrystalsDisplay } from "./layout/CrystalsDisplay";
+import { CrystalsDisplay } from "./clickerElements/crystals/CrystalsDisplay";
 export const MainPage = () => {
   const formatCookieCount = useCallback((n: number) => {
     return abbreviateNumber(n, 2, symbolsArray);

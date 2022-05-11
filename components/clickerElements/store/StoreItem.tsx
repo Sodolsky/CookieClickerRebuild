@@ -2,7 +2,7 @@ import { abbreviateNumber } from "js-abbreviation-number";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
-import { ShopItem, symbolsArray } from "../../../utils/interfaces";
+import { CookiesShopItem, symbolsArray } from "../../../utils/interfaces";
 import { FcCheckmark } from "react-icons/fc";
 import { useState } from "react";
 import {
@@ -10,12 +10,12 @@ import {
   buyShopItem,
   removeCookies,
 } from "../../../redux/gameLogicReducer";
-export const StoreItem: React.FC<ShopItem> = ({
+export const StoreItem: React.FC<CookiesShopItem> = ({
   image,
   name,
   nameInShop,
   price,
-  upgradeNameInShop,
+  description,
   wasBought,
   type,
   upgradeFor,
@@ -61,7 +61,7 @@ export const StoreItem: React.FC<ShopItem> = ({
       />
       <div className="flex-col flex gap-2  col-span-2 justify-center items-center text-center p-2 ">
         <span className="text-2xl">{nameInShop}</span>
-        <span>{upgradeNameInShop}</span>
+        <span>{description}</span>
       </div>
       <span>
         {!wasBought ? (

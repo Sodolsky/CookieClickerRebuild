@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { cloneDeep } from "lodash";
 import {
+  CrystalShopItems,
+  initialStateOfCrystalShopItems,
   initialStateOfShopItems,
   initialUpgradesState,
   ShopItems,
@@ -18,6 +20,7 @@ interface InitialGameLogicStateInterface {
     crystals: number;
   };
   upgrades: UpgradesInterface;
+  crystalShopItems: CrystalShopItems;
   shopItems: ShopItems;
   skillPoints: number;
   isSkillTreeUnlocked: boolean;
@@ -35,6 +38,7 @@ const initialState: InitialGameLogicStateInterface = {
     crystals: 0,
   },
   upgrades: initialUpgradesState,
+  crystalShopItems: initialStateOfCrystalShopItems,
   shopItems: initialStateOfShopItems,
   skillPoints: 0,
   isSkillTreeUnlocked: false,

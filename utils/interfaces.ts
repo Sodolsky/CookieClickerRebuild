@@ -35,23 +35,38 @@ export interface UpgradeInterface {
   upgradeNameForPlayer: string;
   image: string;
 }
-export interface ShopItem {
-  name: ShopUpgradesNames;
-  nameInShop: string;
-  upgradeNameInShop: string;
-  wasBought: boolean;
+export interface BaseShopItem {
   price: number;
   image: string;
+  wasBought: boolean;
+  nameInShop: string;
+  description: string;
+}
+export interface CookiesShopItem extends BaseShopItem {
+  name: ShopUpgradesNames;
   type: shopUpgradeTypes;
   wasShown: boolean;
   upgradeFor?: UpgradesNames;
 }
-export type ShopItems = ShopItem[];
+export interface CrystalShopItem extends BaseShopItem {
+  upgradeFor?: UpgradesNames;
+}
+export type ShopItems = CookiesShopItem[];
+export type CrystalShopItems = CrystalShopItem[];
+export const initialStateOfCrystalShopItems: CrystalShopItems = [
+  {
+    image: "/upgrade6Double.png",
+    nameInShop: "Golden Lichwala",
+    description: "Lichwala becomes Golden! Bystrości",
+    price: 1000,
+    wasBought: false,
+  },
+];
 export const initialStateOfShopItems: ShopItems = [
   {
     name: "upgrade1Double",
     nameInShop: "Best Friend",
-    upgradeNameInShop: "Doubles Benefits from Friend",
+    description: "Doubles Benefits from Friend",
     image: "/upgrade1Double.png",
     price: 600,
     wasBought: false,
@@ -62,7 +77,7 @@ export const initialStateOfShopItems: ShopItems = [
   {
     name: "upgrade2Double",
     nameInShop: "Engagment Ring",
-    upgradeNameInShop: "Doubles Benefits from Girlfriend",
+    description: "Doubles Benefits from Girlfriend",
     image: "/upgrade2Double.png",
     price: 9000,
     wasBought: false,
@@ -73,7 +88,7 @@ export const initialStateOfShopItems: ShopItems = [
   {
     name: "upgrade3Double",
     nameInShop: "Avalanche",
-    upgradeNameInShop: "Doubles Benefits from Snowflake",
+    description: "Doubles Benefits from Snowflake",
     image: "/upgrade3Double.png",
     price: 210000,
     wasBought: false,
@@ -84,7 +99,7 @@ export const initialStateOfShopItems: ShopItems = [
   {
     name: "upgrade4Double",
     nameInShop: "Mind Control",
-    upgradeNameInShop: "Doubles Benefits from Brain Power",
+    description: "Doubles Benefits from Brain Power",
     image: "/upgrade4Double.png",
     price: 1500000,
     wasBought: false,
@@ -95,7 +110,7 @@ export const initialStateOfShopItems: ShopItems = [
   {
     name: "upgrade5Double",
     nameInShop: "Vodka",
-    upgradeNameInShop: "Doubles Benefits from Cold Beer",
+    description: "Doubles Benefits from Cold Beer",
     image: "/upgrade5Double.png",
     price: 17500000,
     wasBought: false,
@@ -106,7 +121,7 @@ export const initialStateOfShopItems: ShopItems = [
   {
     name: "upgrade6Double",
     nameInShop: "Lichwała's Neurology",
-    upgradeNameInShop: "Doubles Benefits from Lichwala",
+    description: "Doubles Benefits from Lichwala",
     image: "/upgrade6Double.png",
     price: 179000000, // 179 000 000
     wasBought: false,
@@ -117,7 +132,7 @@ export const initialStateOfShopItems: ShopItems = [
   {
     name: "upgrade7Double",
     nameInShop: "UFO Abduction 😱",
-    upgradeNameInShop: "Doubles Benefits from UFO",
+    description: "Doubles Benefits from UFO",
     image: "/upgrade7Double.png",
     price: 2400000000, // 2 400 000 000
     wasBought: false,
@@ -128,7 +143,7 @@ export const initialStateOfShopItems: ShopItems = [
   {
     name: "upgrade8Double",
     nameInShop: "Warp Drive",
-    upgradeNameInShop: "Doubles Benefits from Black Hole",
+    description: "Doubles Benefits from Black Hole",
     image: "/upgrade8Double.png",
     price: 140000000000, // 140 000 000 000
     wasBought: false,
@@ -139,7 +154,7 @@ export const initialStateOfShopItems: ShopItems = [
   {
     name: "upgrade9Double",
     nameInShop: "Wormhole",
-    upgradeNameInShop: "Doubles Benefits from Universe",
+    description: "Doubles Benefits from Universe",
     image: "/upgrade9Double.png",
     price: 5675000000000, // 5 675 000 000 000
     wasBought: false,
@@ -150,7 +165,7 @@ export const initialStateOfShopItems: ShopItems = [
   {
     name: "upgrade10Double",
     nameInShop: "Blessing of the Eternal",
-    upgradeNameInShop: "Doubles Benefits from Eye of the Eternal",
+    description: "Doubles Benefits from Eye of the Eternal",
     image: "/upgrade10Double.png",
     price: 50000000000000, // 50 000 000 000 000
     wasBought: false,
@@ -161,7 +176,7 @@ export const initialStateOfShopItems: ShopItems = [
   {
     name: "unlockSkillTree",
     nameInShop: "Peak of Humanity",
-    upgradeNameInShop: "The Eternal wants to meet you",
+    description: "The Eternal wants to meet you",
     image: "/unlockSkillTree.png",
     price: 100000000000000, // 100 000 000 000 000
     wasBought: false,
@@ -174,7 +189,7 @@ export const initialStateOfShopItems: ShopItems = [
     image: "/doubleClick.png",
     price: 100000000, // 100 000 000
     type: "unique",
-    upgradeNameInShop: "Doubles your click but removes CPS",
+    description: "Doubles your click but removes CPS",
     wasBought: false,
     wasShown: false,
   },
@@ -184,8 +199,7 @@ export const initialStateOfShopItems: ShopItems = [
     image: "/pickaxe.png",
     price: 2500000, // 2 500 000
     type: "unique",
-    upgradeNameInShop:
-      "Increases your chance to find gems while clicking cookie.",
+    description: "Increases your chance to find gems while clicking cookie.",
     wasBought: false,
     wasShown: false,
   },
