@@ -55,7 +55,7 @@ export type ShopItems = CookiesShopItem[];
 export type CrystalShopItems = CrystalShopItem[];
 export const initialStateOfCrystalShopItems: CrystalShopItems = [
   {
-    image: "/upgrade6Double.png",
+    image: "/goldenlichwala.jpg",
     nameInShop: "Golden Lichwala",
     description: "Lichwala becomes Golden! Bystrości",
     price: 1000,

@@ -121,6 +121,12 @@ export const gameMechanicSlice = createSlice({
     setInitialShopitems: (state, action: PayloadAction<ShopItems>) => {
       return { ...state, shopItems: action.payload };
     },
+    setInitialCrystalShopItems: (
+      state,
+      action: PayloadAction<CrystalShopItems>
+    ) => {
+      state.crystalShopItems = action.payload;
+    },
     addBonusesForUpgrades: (state, action: PayloadAction<UpgradesNames>) => {
       const upgradedItem = state.upgrades[action.payload];
       const numberOfUpgrades = upgradedItem.numberOfUpgrades;
@@ -193,5 +199,6 @@ export const {
   showShopItem,
   resetGameAndAddSkillPoints,
   setisSkillTreeUnlocked,
+  setInitialCrystalShopItems,
 } = gameMechanicSlice.actions;
 export default gameMechanicSlice.reducer;

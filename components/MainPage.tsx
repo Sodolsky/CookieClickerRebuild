@@ -7,12 +7,15 @@ import {
   setInitialCPC,
   setInitialCPS,
   setInitialCrystals,
+  setInitialCrystalShopItems,
   setInitialNumberOfUpgradesForUpgrade,
   setInitialShopitems,
   setisSkillTreeUnlocked,
 } from "../redux/gameLogicReducer";
 import { RootState } from "../redux/store";
 import {
+  CrystalShopItems,
+  initialStateOfCrystalShopItems,
   initialStateOfShopItems,
   initialUpgradesState,
   ShopItems,
@@ -70,6 +73,10 @@ export const MainPage = () => {
         Number(localStorage.getItem("cookieCount")) ?? 0;
       const localStorageCrystalsCount =
         Number(localStorage.getItem("crystals")) ?? 0;
+      const locaStorageCrystalUpgrades =
+        (JSON.parse(
+          localStorage.getItem("crystalItems")!
+        ) as CrystalShopItems) ?? initialStateOfCrystalShopItems;
       const localStorageCPSCount = Number(localStorage.getItem("CPS") ?? 0);
       const localStorageCPCCount = Number(localStorage.getItem("CPC") ?? 1);
       const localStorageUpgrades =
@@ -95,6 +102,7 @@ export const MainPage = () => {
       dispatch(setInitialCPS(localStorageCPSCount));
       dispatch(setInitialCPC(localStorageCPCCount));
       dispatch(setInitialCrystals(localStorageCrystalsCount));
+      dispatch(setInitialCrystalShopItems(locaStorageCrystalUpgrades));
     }
   }, []);
   useEffect(() => {
