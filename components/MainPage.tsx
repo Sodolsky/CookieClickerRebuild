@@ -35,6 +35,7 @@ import { EternalTalk } from "./skillTree/EternalTalk";
 import { SkillTreeModal } from "./skillTree/SkillTreeModal";
 import { useDoubleClickUpgrade } from "../utils/hooks/useDoubleClickUpgrade";
 import { CrystalsDisplay } from "./clickerElements/crystals/CrystalsDisplay";
+import { CrystalsModal } from "./clickerElements/crystals/CrystalsModal";
 export const MainPage = () => {
   const formatCookieCount = useCallback((n: number) => {
     return abbreviateNumber(n, 2, symbolsArray);
@@ -156,7 +157,8 @@ export const MainPage = () => {
       )}
       <aside className="absolute md:top-4 md:bottom-0 bottom-0 right-2">
         <div className="flex justify-center items-center gap-2">
-          <CrystalsDisplay crystals={crystals} />
+          <CrystalsDisplay />
+          <CrystalsModal />
           <Store />
         </div>
       </aside>

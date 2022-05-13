@@ -23,6 +23,7 @@ export type ShopUpgradesNames =
   | "unlockSkillTree"
   | "doubleClick"
   | "doubleCrystals";
+export type CrystalUpgradesNames = "upgrade6Skin";
 export type shopUpgradeTypes = "double" | "unique";
 export const symbolsArray: string[] = ["", "k", "M", "B", "T", "P", "E"];
 export interface UpgradeInterface {
@@ -49,17 +50,21 @@ export interface CookiesShopItem extends BaseShopItem {
   upgradeFor?: UpgradesNames;
 }
 export interface CrystalShopItem extends BaseShopItem {
+  inUse: boolean;
+  name: CrystalUpgradesNames;
   upgradeFor?: UpgradesNames;
 }
 export type ShopItems = CookiesShopItem[];
 export type CrystalShopItems = CrystalShopItem[];
 export const initialStateOfCrystalShopItems: CrystalShopItems = [
   {
+    name: "upgrade6Skin",
     image: "/goldenlichwala.jpg",
     nameInShop: "Golden Lichwala",
     description: "Lichwala becomes Golden! Bystrości",
     price: 1000,
     wasBought: false,
+    inUse: false,
   },
 ];
 export const initialStateOfShopItems: ShopItems = [

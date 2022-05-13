@@ -22,6 +22,10 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
   image,
   upgradeNameForPlayer,
 }) => {
+  //Here we get coresponding skin object to upgrade
+  const crystalShopUpgradeObject = useSelector(
+    (state: RootState) => state.gameLogic.crystalShopItems
+  ).find((x) => x.name.split("Skin")[0] === upgradeName);
   const isMobile = useMediaQuery("(max-width:768px)");
   const [price, setPrice] = useState<number>(cost);
   const [multiplier, setMultiplier] = useState<number>(1);
@@ -74,7 +78,12 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
       <div className="relative">
         <Image
           onClick={upgradeCPS}
-          src={image}
+          src={
+            crystalShopUpgradeObject?.wasBought &&
+            crystalShopUpgradeObject.inUse
+              ? crystalShopUpgradeObject.image
+              : image
+          }
           width={64}
           height={64}
           alt="Upgrade for clicker"

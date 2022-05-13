@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { cloneDeep } from "lodash";
 import {
   CrystalShopItems,
+  CrystalUpgradesNames as CrystalUpgradesNames,
   initialStateOfCrystalShopItems,
   initialStateOfShopItems,
   initialUpgradesState,
@@ -60,6 +61,13 @@ export const gameMechanicSlice = createSlice({
       localStorage.setItem(
         "cookieCount",
         String(state.cookiesLogic.cookieCount.toFixed(2))
+      );
+    },
+    removeCrystals: (state, action: PayloadAction<number>) => {
+      state.cookiesLogic.crystals -= action.payload;
+      localStorage.setItem(
+        "crystals",
+        String(state.cookiesLogic.crystals.toFixed(2))
       );
     },
     //Here are reducers for buying upgrades
@@ -157,6 +165,35 @@ export const gameMechanicSlice = createSlice({
       localStorage.setItem("shopItems", JSON.stringify(newShopItems));
       return { ...state, shopItems: newShopItems };
     },
+    buyCrystalShopItem: (
+      state,
+      action: PayloadAction<CrystalUpgradesNames>
+    ) => {
+      const stateCopy = cloneDeep(state.crystalShopItems);
+      const newShopItems = stateCopy.map((x) => {
+        if (x.name === action.payload) {
+          return { ...x, wasBought: true, inUse: true };
+        }
+        return x;
+      });
+      localStorage.setItem("crystalItems", JSON.stringify(newShopItems));
+      return { ...state, crystalShopItems: newShopItems };
+    },
+    changeUsageOfCrystalShopitem: (
+      state,
+      action: PayloadAction<{ name: CrystalUpgradesNames; prevState: boolean }>
+    ) => {
+      const stateCopy = cloneDeep(state.crystalShopItems);
+      const newShopItems = stateCopy.map((x) => {
+        if (x.name === action.payload.name) {
+          return { ...x, inUse: !action.payload.prevState };
+        }
+        return x;
+      });
+      localStorage.setItem("crystalItems", JSON.stringify(newShopItems));
+      return { ...state, crystalShopItems: newShopItems };
+    },
+
     showShopItem: (state, action: PayloadAction<ShopUpgradesNames>) => {
       const stateCopy = cloneDeep(state.shopItems);
       const newShopItems = stateCopy.map((x) => {
@@ -200,5 +237,8 @@ export const {
   resetGameAndAddSkillPoints,
   setisSkillTreeUnlocked,
   setInitialCrystalShopItems,
+  buyCrystalShopItem,
+  removeCrystals,
+  changeUsageOfCrystalShopitem,
 } = gameMechanicSlice.actions;
 export default gameMechanicSlice.reducer;
