@@ -19,8 +19,8 @@ import {
   initialStateOfShopItems,
   initialUpgradesState,
   ShopItems,
-  symbolsArray,
   UpgradesInterface,
+  symbolsArray,
 } from "../utils/interfaces";
 import { CookieToClick } from "./clickerElements/CookieToClick";
 import { Upgrade } from "./clickerElements/Upgrade";
