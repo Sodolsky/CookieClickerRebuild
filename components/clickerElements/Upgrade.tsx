@@ -87,7 +87,9 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
           width={64}
           height={64}
           alt="Upgrade for clicker"
-          className={`cursor-pointer ${shakeImage ? "ShakeAnimation" : ""}`}
+          className={`cursor-pointer rounded-lg ${
+            shakeImage ? "ShakeAnimation" : ""
+          }`}
           onAnimationEnd={() => {
             setShakeImage(false);
           }}
@@ -107,7 +109,11 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
           <GrCircleInformation />
         </div>
       </div>
-      <span className="text-2xl font-bold">{upgradeNameForPlayer}</span>
+      <span className="text-2xl font-bold">
+        {crystalShopUpgradeObject?.wasBought && crystalShopUpgradeObject.inUse
+          ? crystalShopUpgradeObject.nameInShop
+          : upgradeNameForPlayer}
+      </span>
       <span>Number of upgrades: {numberOfUpgrades}</span>
       <div className="grid grid-cols-2 place-items-center gap-2 text-green-600">
         <div className="text-xl col-span-2">Current Bonus </div>
@@ -143,7 +149,11 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
         Upgrades: {numberOfUpgrades}
       </legend>
       <Image
-        src={image}
+        src={
+          crystalShopUpgradeObject?.wasBought && crystalShopUpgradeObject.inUse
+            ? crystalShopUpgradeObject.image
+            : image
+        }
         width={64}
         height={64}
         alt="Upgrade for clicker"

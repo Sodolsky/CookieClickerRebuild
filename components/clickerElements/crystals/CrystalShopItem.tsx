@@ -36,7 +36,7 @@ export const CrystalShopItemComponent: React.FC<CrystalShopItem> = ({
   };
   return (
     <div
-      className={` transition-colors flex flex-col gap-2 items-center justify-center py-1 px-2 rounded-xl w-fit   border-primary border ${
+      className={` transition-colors w-3/4 md:w-2/4 text-center  flex flex-col gap-2 items-center justify-center py-1 px-2 rounded-xl  border-primary border ${
         wasBought
           ? "bg-blue-300"
           : crystalCount >= price
@@ -49,7 +49,7 @@ export const CrystalShopItemComponent: React.FC<CrystalShopItem> = ({
         alt={nameInShop}
         width={64}
         height={64}
-        className={`${shakeImage ? "ShakeAnimation" : ""}`}
+        className={`${shakeImage ? "ShakeAnimation" : ""} rounded-lg`}
         onAnimationEnd={() => setShakeImage(false)}
       />
       <span className="text-xl font-bold">{nameInShop}</span>

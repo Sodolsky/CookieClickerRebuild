@@ -23,7 +23,7 @@ export type ShopUpgradesNames =
   | "unlockSkillTree"
   | "doubleClick"
   | "doubleCrystals";
-export type CrystalUpgradesNames = "upgrade6Skin";
+export type CrystalUpgradesNames = "upgrade5Skin" | "upgrade6Skin";
 export type shopUpgradeTypes = "double" | "unique";
 export const symbolsArray: string[] = ["", "k", "M", "B", "T", "P", "E"];
 export interface UpgradeInterface {
@@ -57,6 +57,15 @@ export interface CrystalShopItem extends BaseShopItem {
 export type ShopItems = CookiesShopItem[];
 export type CrystalShopItems = CrystalShopItem[];
 export const initialStateOfCrystalShopItems: CrystalShopItems = [
+  {
+    name: "upgrade5Skin",
+    image: "/desperados580ml.jpeg",
+    nameInShop: "Desperado 580 ml",
+    description: "Ufnal's favorite beer!",
+    price: 500,
+    wasBought: false,
+    inUse: false,
+  },
   {
     name: "upgrade6Skin",
     image: "/goldenlichwala.jpg",
