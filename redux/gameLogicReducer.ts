@@ -25,6 +25,7 @@ interface InitialGameLogicStateInterface {
   shopItems: ShopItems;
   skillPoints: number;
   isSkillTreeUnlocked: boolean;
+  areStatesLoaded: boolean;
 }
 interface InitialNumberOfUpgradesInterface {
   number: number;
@@ -43,11 +44,16 @@ const initialState: InitialGameLogicStateInterface = {
   shopItems: initialStateOfShopItems,
   skillPoints: 0,
   isSkillTreeUnlocked: false,
+  areStatesLoaded: false,
 };
 export const gameMechanicSlice = createSlice({
   name: "gameMechanicReducer",
   initialState,
   reducers: {
+    //!Here is the reducer that controls if all states from local storage we're loaded
+    stateWereLoaded: (state, action: PayloadAction<boolean>) => {
+      state.areStatesLoaded = action.payload;
+    },
     //!Here are reducers for Clicker Logic
     addCookie: (state, action: PayloadAction<number>) => {
       state.cookiesLogic.cookieCount += action.payload;
@@ -240,5 +246,6 @@ export const {
   buyCrystalShopItem,
   removeCrystals,
   changeUsageOfCrystalShopitem,
+  stateWereLoaded,
 } = gameMechanicSlice.actions;
 export default gameMechanicSlice.reducer;

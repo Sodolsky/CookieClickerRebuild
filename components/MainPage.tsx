@@ -11,6 +11,7 @@ import {
   setInitialNumberOfUpgradesForUpgrade,
   setInitialShopitems,
   setisSkillTreeUnlocked,
+  stateWereLoaded,
 } from "../redux/gameLogicReducer";
 import { RootState } from "../redux/store";
 import {
@@ -104,6 +105,7 @@ export const MainPage = () => {
       dispatch(setInitialCPC(localStorageCPCCount));
       dispatch(setInitialCrystals(localStorageCrystalsCount));
       dispatch(setInitialCrystalShopItems(locaStorageCrystalUpgrades));
+      dispatch(stateWereLoaded(true));
     }
   }, []);
   useEffect(() => {
@@ -157,8 +159,8 @@ export const MainPage = () => {
       )}
       <aside className="absolute md:top-4 md:bottom-0 bottom-0 right-2">
         <div className="flex justify-center items-center gap-2">
-          <CrystalsDisplay />
           <CrystalsModal />
+          <CrystalsDisplay />
           <Store />
         </div>
       </aside>

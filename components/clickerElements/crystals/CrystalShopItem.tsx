@@ -8,7 +8,7 @@ import {
   changeUsageOfCrystalShopitem,
   removeCrystals,
 } from "../../../redux/gameLogicReducer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 export const CrystalShopItemComponent: React.FC<CrystalShopItem> = ({
   name,
   description,
@@ -34,6 +34,9 @@ export const CrystalShopItemComponent: React.FC<CrystalShopItem> = ({
       }
     }
   };
+  useEffect(() => {
+    setIsBeingUsed(inUse);
+  }, [inUse]);
   return (
     <div
       className={` transition-colors w-3/4 md:w-2/4 text-center  flex flex-col gap-2 items-center justify-center py-1 px-2 rounded-xl  border-primary border ${
@@ -65,9 +68,9 @@ export const CrystalShopItemComponent: React.FC<CrystalShopItem> = ({
         </button>
       ) : (
         <div className="flex flex-col justify-center items-center border border-secondary p-1 rounded-xl">
-          <label className="cursor-pointer">
+          <div className="cursor-pointer">
             <span className="label-text text-lg">Use Skin</span>
-          </label>
+          </div>
           <input
             type="checkbox"
             className="toggle toggle-md toggle-secondary"
