@@ -23,7 +23,10 @@ export type ShopUpgradesNames =
   | "unlockSkillTree"
   | "doubleClick"
   | "doubleCrystals";
-export type CrystalUpgradesNames = "upgrade5Skin" | "upgrade6Skin";
+export type CrystalUpgradesNames =
+  | "upgrade5Skin"
+  | "upgrade6Skin"
+  | "upgrade7Skin";
 export type shopUpgradeTypes = "double" | "unique";
 export const symbolsArray: string[] = ["", "k", "M", "B", "T", "P", "E"];
 export interface UpgradeInterface {
@@ -57,6 +60,15 @@ export interface CrystalShopItem extends BaseShopItem {
 export type ShopItems = CookiesShopItem[];
 export type CrystalShopItems = CrystalShopItem[];
 export const initialStateOfCrystalShopItems: CrystalShopItems = [
+  {
+    name: "upgrade7Skin",
+    image: "/ufolichwaly.jpg",
+    nameInShop: "Lichwala's UFO",
+    description: "UFO designed by Lichwala!",
+    price: 20000,
+    wasBought: false,
+    inUse: false,
+  },
   {
     name: "upgrade5Skin",
     image: "/desperados580ml.jpeg",

@@ -1,3 +1,4 @@
+import { cloneDeep, xor } from "lodash";
 import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
@@ -26,9 +27,11 @@ export const CrystalsModal = () => {
           <div className="divider"></div>
           <div className="flex justify-center items-center gap-2 flex-col">
             {allStatesWereLoaded &&
-              crystalShopItems.map((x) => (
-                <CrystalShopItemComponent {...x} key={x.nameInShop} />
-              ))}
+              cloneDeep(crystalShopItems)
+                .sort((a, b) => (a === b ? 0 : a.wasBought ? -1 : 1))
+                .map((x) => (
+                  <CrystalShopItemComponent {...x} key={x.nameInShop} />
+                ))}
           </div>
         </label>
       </label>
