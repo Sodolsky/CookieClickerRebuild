@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { SkillTree } from "./SkillTree";
 export const SkillTreeModal = () => {
   return (
     <>
@@ -15,9 +16,10 @@ export const SkillTreeModal = () => {
       <input type="checkbox" id="skillTreeModal" className="modal-toggle" />
       <label htmlFor="skillTreeModal" className={`modal cursor-pointer`}>
         <label className="modal-box relative" htmlFor="">
-          <h2 className="text-xl text-center">
-            Here is going to be skill tree.
-          </h2>
+          <h2 className="text-xl text-center">SkillTree</h2>
+          <div className="container w-full aspect-square bg-primary rounded-2xl relative">
+            <SkillTree />
+          </div>
         </label>
       </label>
     </>

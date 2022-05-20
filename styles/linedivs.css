@@ -1,0 +1,26 @@
+#content {
+  position: relative;
+}
+.mydiv {
+  border: 1px solid #368abb;
+  background-color: #43a4dc;
+  border-radius: 50%;
+  position: absolute;
+}
+.node {
+  width: 25px;
+  height: 25px;
+}
+#div1 {
+  left: 50%;
+  top: 50%;
+}
+#div2 {
+  left: 5%;
+  top: 5%;
+}
+#line {
+  position: absolute;
+  width: 1px;
+  background-color: red;
+}

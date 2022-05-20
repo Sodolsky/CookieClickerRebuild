@@ -219,7 +219,17 @@ export const gameMechanicSlice = createSlice({
       localStorage.setItem("skillTreeUnlocked", "true");
       localStorage.setItem("skillPoints", `${action.payload}`);
       clearLocalStorageFromPreviousState();
-      return { ...initialState, skillPoints: action.payload };
+      const returnObject: InitialGameLogicStateInterface = {
+        ...initialState,
+        skillPoints: action.payload,
+        areStatesLoaded: true,
+        crystalShopItems: state.crystalShopItems,
+        cookiesLogic: {
+          ...initialState.cookiesLogic,
+          crystals: state.cookiesLogic.crystals,
+        },
+      };
+      return returnObject;
     },
   },
 });
