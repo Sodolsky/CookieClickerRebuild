@@ -1,3 +1,4 @@
+export type nodeNames = "starterNode" | "clickingTalent" | "gemMaestry";
 export type UpgradesNames =
   | "upgrade1"
   | "upgrade2"

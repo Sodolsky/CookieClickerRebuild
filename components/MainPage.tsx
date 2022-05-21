@@ -157,7 +157,7 @@ export const MainPage = () => {
           </div>
         </div>
       )}
-      <aside className="absolute md:top-4 md:bottom-0 bottom-0 right-2">
+      <aside className="absolute md:top-4 md:bottom-0 bottom-2 right-2">
         <div className="flex justify-center items-center gap-2">
           <CrystalsModal />
           <CrystalsDisplay />

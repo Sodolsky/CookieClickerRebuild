@@ -8,19 +8,12 @@
   position: absolute;
 }
 .node {
-  width: 25px;
-  height: 25px;
+  width: 40px;
+  height: 40px;
 }
-#div1 {
-  left: 50%;
-  top: 50%;
-}
-#div2 {
-  left: 5%;
-  top: 5%;
-}
-#line {
-  position: absolute;
-  width: 1px;
-  background-color: red;
+@media (max-width: 768px) {
+  .node {
+    width: 25px;
+    height: 25px;
+  }
 }

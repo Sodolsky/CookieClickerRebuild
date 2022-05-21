@@ -1,5 +1,5 @@
-import { cloneDeep, xor } from "lodash";
-import React, { useEffect, useRef } from "react";
+import { cloneDeep } from "lodash";
+import React, { useRef } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { CrystalShopItemComponent } from "./CrystalShopItem";

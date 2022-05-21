@@ -10,7 +10,7 @@ export const CrystalsDisplay: React.FC = () => {
   );
   return (
     <label htmlFor="CrystalsShop">
-      <div className="border-2 border-black p-1  bg-white flex gap-2 items-center justify-center cursor-pointer ">
+      <div className="border-2 border-black p-1  bg-white flex  gap-2 items-center justify-center cursor-pointer ">
         {<Image src={ShardIcon} width={32} height={32} alt="Shards" />}
         <span className="ml-4 mr-1 pointer-events-none">
           <CountUp
