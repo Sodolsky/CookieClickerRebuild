@@ -1,4 +1,40 @@
+import { CSSProperties } from "react";
+
 export type nodeNames = "starterNode" | "clickingTalent" | "gemMaestry";
+export interface singleSkillTreeNode {
+  name: nodeNames;
+  wasBought: boolean;
+  price: number;
+  previousNodes: nodeNames[];
+  image: string;
+  positionObject: CSSProperties;
+}
+export const initialSKillTreeUpgrades: singleSkillTreeNode[] = [
+  {
+    name: "starterNode",
+    price: 0,
+    wasBought: true,
+    previousNodes: [],
+    image: "letter-s.png",
+    positionObject: { left: "50%", bottom: "2%" },
+  },
+  {
+    name: "clickingTalent",
+    price: 2,
+    wasBought: false,
+    previousNodes: ["starterNode"],
+    image: "letter-s.png",
+    positionObject: { left: "50%", bottom: "12%" },
+  },
+  {
+    name: "gemMaestry",
+    price: 4,
+    wasBought: false,
+    previousNodes: ["starterNode", "gemMaestry"],
+    image: "letter-s.png",
+    positionObject: { left: "25%", bottom: "12%" },
+  },
+];
 export type UpgradesNames =
   | "upgrade1"
   | "upgrade2"

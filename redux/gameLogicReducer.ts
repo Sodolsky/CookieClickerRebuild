@@ -3,11 +3,13 @@ import { cloneDeep } from "lodash";
 import {
   CrystalShopItems,
   CrystalUpgradesNames as CrystalUpgradesNames,
+  initialSKillTreeUpgrades,
   initialStateOfCrystalShopItems,
   initialStateOfShopItems,
   initialUpgradesState,
   ShopItems,
   ShopUpgradesNames,
+  singleSkillTreeNode,
   UpgradesInterface,
   UpgradesNames,
 } from "../utils/interfaces";
@@ -20,11 +22,14 @@ interface InitialGameLogicStateInterface {
     CPC: number;
     crystals: number;
   };
+  skillTreeLogic: {
+    skillPoints: number;
+    isSkillTreeUnlocked: boolean;
+    skillTreeNodes: singleSkillTreeNode[];
+  };
   upgrades: UpgradesInterface;
   crystalShopItems: CrystalShopItems;
   shopItems: ShopItems;
-  skillPoints: number;
-  isSkillTreeUnlocked: boolean;
   areStatesLoaded: boolean;
 }
 interface InitialNumberOfUpgradesInterface {
@@ -39,11 +44,14 @@ const initialState: InitialGameLogicStateInterface = {
     CPC: 1,
     crystals: 0,
   },
+  skillTreeLogic: {
+    skillPoints: 0,
+    isSkillTreeUnlocked: false,
+    skillTreeNodes: initialSKillTreeUpgrades,
+  },
   upgrades: initialUpgradesState,
   crystalShopItems: initialStateOfCrystalShopItems,
   shopItems: initialStateOfShopItems,
-  skillPoints: 0,
-  isSkillTreeUnlocked: false,
   areStatesLoaded: false,
 };
 export const gameMechanicSlice = createSlice({
@@ -211,23 +219,51 @@ export const gameMechanicSlice = createSlice({
       localStorage.setItem("shopItems", JSON.stringify(newShopItems));
       return { ...state, shopItems: newShopItems };
     },
-    setisSkillTreeUnlocked: (state, action: PayloadAction<boolean>) => {
-      return { ...state, isSkillTreeUnlocked: action.payload };
+    setInitialSkillTree: (state, action: PayloadAction<boolean>) => {
+      if (action.payload) {
+        const skillPoints = Number(localStorage.getItem("skillPoints"));
+        const skillTreeNodes =
+          (JSON.parse(
+            localStorage.getItem("skillTreeNodes")!
+          ) as singleSkillTreeNode[]) ?? initialSKillTreeUpgrades;
+        return {
+          ...state,
+          skillTreeLogic: {
+            skillTreeNodes: skillTreeNodes,
+            isSkillTreeUnlocked: action.payload,
+            skillPoints: skillPoints,
+          },
+        };
+      } else {
+        return {
+          ...state,
+          skillTreeLogic: {
+            ...state.skillTreeLogic,
+            isSkillTreeUnlocked: action.payload,
+          },
+        };
+      }
     },
     //? Here is the reducer for reseting the game
     resetGameAndAddSkillPoints(state, action: PayloadAction<number>) {
       localStorage.setItem("skillTreeUnlocked", "true");
-      localStorage.setItem("skillPoints", `${action.payload}`);
+      localStorage.setItem(
+        "skillPoints",
+        `${(state.skillTreeLogic.skillPoints += action.payload)}`
+      );
       clearLocalStorageFromPreviousState();
       const returnObject: InitialGameLogicStateInterface = {
         ...initialState,
-        skillPoints: action.payload,
-        areStatesLoaded: true,
-        crystalShopItems: state.crystalShopItems,
+        skillTreeLogic: {
+          ...state.skillTreeLogic,
+          skillPoints: (state.skillTreeLogic.skillPoints += action.payload),
+        },
         cookiesLogic: {
           ...initialState.cookiesLogic,
           crystals: state.cookiesLogic.crystals,
         },
+        crystalShopItems: state.crystalShopItems,
+        areStatesLoaded: true,
       };
       return returnObject;
     },
@@ -251,7 +287,7 @@ export const {
   setInitialShopitems,
   showShopItem,
   resetGameAndAddSkillPoints,
-  setisSkillTreeUnlocked,
+  setInitialSkillTree,
   setInitialCrystalShopItems,
   buyCrystalShopItem,
   removeCrystals,

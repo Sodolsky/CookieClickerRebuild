@@ -1,30 +1,20 @@
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 import { ConnectingLine } from "./ConnectingLine";
 import { Node } from "./Node";
 export const SkillTree = () => {
+  const allNodes = useSelector(
+    (state: RootState) => state.gameLogic.skillTreeLogic.skillTreeNodes
+  );
   return (
     <>
-      <Node
-        id="starterNode"
-        positionObject={{ left: "50%", bottom: "2%" }}
-        previousNodes={[]}
-        image="letter-s.png"
-      />
-      <Node
-        id="clickingTalent"
-        positionObject={{ left: "50%", bottom: "12%" }}
-        previousNodes={["starterNode"]}
-        image="letter-s.png"
-      />
+      {allNodes.map((x) => (
+        <Node {...x} />
+      ))}
       <ConnectingLine
         node1="starterNode"
         node2="clickingTalent"
         connectionName="fc"
-      />
-      <Node
-        id="gemMaestry"
-        positionObject={{ left: "25%", bottom: "12%" }}
-        previousNodes={["starterNode", "clickingTalent"]}
-        image="letter-s.png"
       />
       <ConnectingLine
         node1="clickingTalent"

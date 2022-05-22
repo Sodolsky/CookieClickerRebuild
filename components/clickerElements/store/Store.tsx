@@ -12,7 +12,7 @@ export const Store = () => {
     (state: RootState) => state.gameLogic.cookiesLogic.cookieCount
   );
   const shopItems = useSelector((state: RootState) =>
-    state.gameLogic.isSkillTreeUnlocked
+    state.gameLogic.skillTreeLogic.isSkillTreeUnlocked
       ? state.gameLogic.shopItems.filter((x) => x.name !== "unlockSkillTree")
       : state.gameLogic.shopItems
   );
@@ -20,7 +20,7 @@ export const Store = () => {
     (state: RootState) => state.gameLogic.upgrades
   );
   const isSkillTreeUnlocked = useSelector(
-    (state: RootState) => state.gameLogic.isSkillTreeUnlocked
+    (state: RootState) => state.gameLogic.skillTreeLogic.isSkillTreeUnlocked
   );
   useEffect(() => {
     isSkillTreeUnlocked && cookieCount < 500 && setShowStore(false);

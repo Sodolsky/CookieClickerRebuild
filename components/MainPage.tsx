@@ -10,7 +10,7 @@ import {
   setInitialCrystalShopItems,
   setInitialNumberOfUpgradesForUpgrade,
   setInitialShopitems,
-  setisSkillTreeUnlocked,
+  setInitialSkillTree,
   stateWereLoaded,
 } from "../redux/gameLogicReducer";
 import { RootState } from "../redux/store";
@@ -44,7 +44,7 @@ export const MainPage = () => {
   const resetGameLogic = () => {
     intervalRef.current && clearInterval(intervalRef.current);
     dispatch(resetGameAndAddSkillPoints(10));
-    dispatch(setisSkillTreeUnlocked(true));
+    dispatch(setInitialSkillTree(true));
   };
   const { isClickDoubled } = useDoubleClickUpgrade();
   const isMobile = useMediaQuery("(max-width:768px)");
@@ -66,7 +66,7 @@ export const MainPage = () => {
     (state: RootState) => state.gameLogic.cookiesLogic.crystals
   );
   const isSkillTreeUnlocked = useSelector(
-    (state: RootState) => state.gameLogic.isSkillTreeUnlocked
+    (state: RootState) => state.gameLogic.skillTreeLogic.isSkillTreeUnlocked
   );
   const dispatch = useDispatch();
   useEffect(() => {
@@ -98,7 +98,7 @@ export const MainPage = () => {
           })
         );
       });
-      dispatch(setisSkillTreeUnlocked(localStorageSkillTreeUnlocked));
+      dispatch(setInitialSkillTree(localStorageSkillTreeUnlocked));
       dispatch(setInitialShopitems(localStorageShopItems));
       dispatch(setInitialCookieCount(localStorageCookieCount));
       dispatch(setInitialCPS(localStorageCPSCount));
