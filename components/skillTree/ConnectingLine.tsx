@@ -70,7 +70,7 @@ export const ConnectingLine: React.FC<ConnectingLineProps> = ({
   return (
     <div
       id={connectionName}
-      className={`absolute w-[4px] border border-black shadow-2xl transition-colors duration-500  rounded-lg ${
+      className={`absolute z-0 w-[4px] border border-black shadow-2xl transition-colors duration-500  rounded-lg ${
         isActive ? "bg-green-500" : "bg-red-500"
       }`}
     ></div>
