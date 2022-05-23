@@ -173,6 +173,9 @@ export const MainPage = () => {
 
       <main className="min-h-screen">
         <div className="flex flex-col gap-2 justify-center items-center">
+          {/* <button className="btn" onClick={() => resetGameLogic()}>
+            Test
+          </button> */}
           <Header />
           <CookiesDisplay
             cookieCount={Number(cookieCount.toFixed(2))}

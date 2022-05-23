@@ -1,16 +1,25 @@
-import { useEffect } from "react";
-import { nodeNames } from "../../utils/interfaces";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { nodeNames, singleSkillTreeNode } from "../../utils/interfaces";
 
 interface ConnectingLineProps {
-  node1: nodeNames;
-  node2: nodeNames;
+  from: nodeNames;
+  to: nodeNames;
   connectionName: string;
 }
 export const ConnectingLine: React.FC<ConnectingLineProps> = ({
-  node1,
-  node2,
+  from,
+  to,
   connectionName,
 }) => {
+  const [isActive, setIsActive] = useState<boolean>(false);
+  const targetNode = useSelector((state: RootState) =>
+    state.gameLogic.skillTreeLogic.skillTreeNodes.find((x) => x.name === to)
+  ) as singleSkillTreeNode;
+  useEffect(() => {
+    if (targetNode.wasBought) setIsActive(true);
+  }, [targetNode.wasBought]);
   const adjustLine = (
     from: HTMLDivElement,
     to: HTMLDivElement,
@@ -20,7 +29,6 @@ export const ConnectingLine: React.FC<ConnectingLineProps> = ({
     var tT = to.offsetTop + to.offsetHeight / 2;
     var fL = from.offsetLeft + from.offsetWidth / 2;
     var tL = to.offsetLeft + to.offsetWidth / 2;
-
     var CA = Math.abs(tT - fT);
     var CO = Math.abs(tL - fL);
     var H = Math.sqrt(CA * CA + CO * CO);
@@ -54,15 +62,17 @@ export const ConnectingLine: React.FC<ConnectingLineProps> = ({
   };
   useEffect(() => {
     adjustLine(
-      document.getElementById(node1) as HTMLDivElement,
-      document.getElementById(node2) as HTMLDivElement,
+      document.getElementById(from) as HTMLDivElement,
+      document.getElementById(to) as HTMLDivElement,
       document.getElementById(connectionName) as HTMLDivElement
     );
   }, []);
   return (
     <div
       id={connectionName}
-      className="absolute w-[3px] rounded-lg bg-red-500"
+      className={`absolute w-[4px] border border-black shadow-2xl transition-colors duration-500  rounded-lg ${
+        isActive ? "bg-green-500" : "bg-red-500"
+      }`}
     ></div>
   );
 };

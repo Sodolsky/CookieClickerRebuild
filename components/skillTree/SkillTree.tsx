@@ -9,18 +9,23 @@ export const SkillTree = () => {
   return (
     <>
       {allNodes.map((x) => (
-        <Node {...x} />
+        <Node {...x} key={x.name} />
       ))}
-      <ConnectingLine
-        node1="starterNode"
-        node2="clickingTalent"
-        connectionName="fc"
-      />
-      <ConnectingLine
-        node1="clickingTalent"
-        node2="gemMaestry"
-        connectionName="sc"
-      />
+      {allNodes
+        .filter((x) => x.connectedNodes.length > 0)
+        .map((item) => {
+          const val = item.connectedNodes.map((node) => {
+            return (
+              <ConnectingLine
+                from={node}
+                to={item.name}
+                connectionName={`${node}-${item.name}`}
+                key={`${node}-${item.name}`}
+              />
+            );
+          });
+          return val;
+        })}
     </>
   );
 };
