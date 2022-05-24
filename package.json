@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.0",
+    "@tippyjs/react": "^4.2.6",
     "daisyui": "^2.6.0",
     "js-abbreviation-number": "^1.4.0",
     "lodash": "^4.17.21",

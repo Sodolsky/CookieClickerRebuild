@@ -23,8 +23,8 @@ export const initialSKillTreeUpgrades: singleSkillTreeNode[] = [
     price: 2,
     wasBought: true,
     connectedNodes: ["starterNode"],
-    image: "letter-s.png",
-    positionObject: { left: "50%", bottom: "12%" },
+    image: "click.png",
+    positionObject: { left: "50%", bottom: "16%" },
   },
   {
     name: "gemMaestry",
@@ -32,7 +32,7 @@ export const initialSKillTreeUpgrades: singleSkillTreeNode[] = [
     wasBought: false,
     connectedNodes: ["clickingTalent"],
     image: "letter-s.png",
-    positionObject: { left: "25%", bottom: "12%" },
+    positionObject: { left: "25%", bottom: "16%" },
   },
 ];
 export type UpgradesNames =
