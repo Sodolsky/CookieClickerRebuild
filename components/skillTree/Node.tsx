@@ -4,14 +4,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { buySkillTreeUpgrade } from "../../redux/gameLogicReducer";
 import { RootState } from "../../redux/store";
 import { singleSkillTreeNode } from "../../utils/interfaces";
+import { isTouchDevice } from "../../utils/utils";
 export const Node: React.FC<singleSkillTreeNode> = ({
   connectedNodes,
   positionObject,
   image,
   wasBought,
+  description,
+  nameForPlayer,
   name,
   price,
 }) => {
+  const isTouch = isTouchDevice();
   const dispatch = useDispatch();
   const skillPoints = useSelector(
     (state: RootState) => state.gameLogic.skillTreeLogic.skillPoints
@@ -28,53 +32,70 @@ export const Node: React.FC<singleSkillTreeNode> = ({
     }
   };
   return (
-    <Tippy
-      allowHTML={true}
-      content={
-        <caption className="bg-black p-2 rounded-xl text-white w-64 relative">
-          <div className="flex flex-col items-center justify-center">
-            <div className="w-full">
-              <div className="flex gap-1 items-center justify-center">
-                <Image
-                  width={16}
-                  height={16}
-                  src={"/skillPoint16x16.png"}
-                  alt={"Skill Point"}
-                />
-                <span>{price} Skill Points</span>
+    <div>
+      <Tippy
+        allowHTML={true}
+        interactive={true}
+        content={
+          name !== "starterNode" ? (
+            <div className="bg-black p-2 rounded-xl text-white w-64 relative">
+              <div className="flex flex-col items-center justify-center">
+                <div className="w-full">
+                  <div className="flex justify-center italic text-lg font-bold">
+                    {nameForPlayer}
+                  </div>
+                  <div className="flex gap-1 items-center justify-center">
+                    <Image
+                      width={16}
+                      height={16}
+                      src={"/skillPoint16x16.png"}
+                      alt={"Skill Point"}
+                    />
+                    <span>{price} Skill Points</span>
+                  </div>
+
+                  <figure className="absolute right-1 top-1">
+                    <Image
+                      src={wasBought ? "/check-mark.png" : "/x.png"}
+                      className="absolute"
+                      width={24}
+                      height={24}
+                      alt={"Buyed Status"}
+                    />
+                  </figure>
+                </div>
+                <div className="mt-1 text-center">{description}</div>
+                {isTouch && !wasBought && (
+                  <button className="btn bg-green-400 mt-1" onClick={buyNode}>
+                    Buy
+                  </button>
+                )}
               </div>
-              <figure className="absolute right-1 top-1">
-                <Image
-                  src={wasBought ? "/check-mark.png" : "/x.png"}
-                  className="absolute"
-                  width={24}
-                  height={24}
-                  alt={"Buyed Status"}
-                />
-              </figure>
             </div>
-            <div className="divider"></div>
-            <div className="w-1 bg-white"></div>
-            <div className=""></div>
-          </div>
-        </caption>
-      }
-    >
-      <div
-        id={name}
-        className={`mydiv node border-2 bg-secondary   ${
-          wasBought ? "border-green-500" : "border-red-500"
-        }`}
-        style={positionObject}
-        onClick={buyNode}
+          ) : (
+            <span className="bg-black p-2 rounded-xl text-white flex items-center justify-center">
+              Starting Node
+            </span>
+          )
+        }
       >
-        <Image
-          src={`/${image}`}
-          layout={"fill"}
-          className="w-full h-full"
-          alt={name}
-        />
-      </div>
-    </Tippy>
+        <div
+          id={name}
+          className={`mydiv node border-2 bg-secondary   ${
+            wasBought ? "border-green-500" : "border-red-500"
+          }`}
+          onClick={() => !isTouch && buyNode()}
+          style={positionObject}
+        >
+          <Image
+            src={`/${image}`}
+            className={"rounded-image"}
+            height={32}
+            width={32}
+            alt={name}
+          />
+        </div>
+      </Tippy>
+    </div>
   );
 };

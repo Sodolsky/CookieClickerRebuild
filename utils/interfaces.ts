@@ -1,10 +1,12 @@
 import { CSSProperties } from "react";
 
-export type nodeNames = "starterNode" | "clickingTalent" | "gemMaestry";
+export type nodeNames = "starterNode" | "clickingTalent" | "crystalMine";
 export interface singleSkillTreeNode {
   name: nodeNames;
   wasBought: boolean;
   price: number;
+  description: string;
+  nameForPlayer: string;
   connectedNodes: nodeNames[];
   image: string;
   positionObject: CSSProperties;
@@ -15,23 +17,29 @@ export const initialSKillTreeUpgrades: singleSkillTreeNode[] = [
     price: 0,
     wasBought: true,
     connectedNodes: [],
-    image: "letter-s.png",
+    nameForPlayer: "",
+    description: "",
+    image: "letters.png",
     positionObject: { left: "50%", bottom: "2%" },
   },
   {
     name: "clickingTalent",
+    nameForPlayer: "Clicking Talent",
     price: 2,
     wasBought: true,
+    description: "Triples amount of cookies you gain from clicking.",
     connectedNodes: ["starterNode"],
     image: "click.png",
     positionObject: { left: "50%", bottom: "16%" },
   },
   {
-    name: "gemMaestry",
+    name: "crystalMine",
+    nameForPlayer: "Crystal Mine",
     price: 4,
     wasBought: false,
+    description: "Doubles the amount of crystals you get from clicking.",
     connectedNodes: ["clickingTalent"],
-    image: "letter-s.png",
+    image: "mining.png",
     positionObject: { left: "25%", bottom: "16%" },
   },
 ];

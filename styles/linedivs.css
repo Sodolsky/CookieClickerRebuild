@@ -6,11 +6,16 @@
   position: absolute;
 }
 .node {
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-
+.rounded-image {
+  border-radius: 50%;
+}
 /* @media (max-width: 768px) {
   .node {
     width: 25px;
