@@ -14,7 +14,7 @@ export const CookiesDisplay: React.FC<CookiesDisplayProps> = ({
   CPS,
   CPC,
 }) => {
-  const { isClickDoubled } = useDoubleClickUpgrade();
+  const { isClickDoubled, multiplier } = useDoubleClickUpgrade();
   const formatCookieCount = useCallback((n: number) => {
     return abbreviateNumber(n, 2, symbolsArray);
   }, []);
@@ -39,7 +39,7 @@ export const CookiesDisplay: React.FC<CookiesDisplayProps> = ({
         )}
       </div>
       <div className="text-lg lg:text-xl">
-        CPC: {abbreviateNumber(isClickDoubled ? CPC * 2 : CPC, 1, symbolsArray)}
+        CPC: {abbreviateNumber(CPC * multiplier, 1, symbolsArray)}
       </div>
     </section>
   );

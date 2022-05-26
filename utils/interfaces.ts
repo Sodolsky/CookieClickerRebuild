@@ -1,6 +1,10 @@
 import { CSSProperties } from "react";
 
-export type nodeNames = "starterNode" | "clickingTalent" | "crystalMine";
+export type nodeNames =
+  | "starterNode"
+  | "clickingTalent"
+  | "crystalMine"
+  | "cookieExplosion";
 export interface singleSkillTreeNode {
   name: nodeNames;
   wasBought: boolean;
@@ -26,12 +30,13 @@ export const initialSKillTreeUpgrades: singleSkillTreeNode[] = [
     name: "clickingTalent",
     nameForPlayer: "Clicking Talent",
     price: 2,
-    wasBought: true,
+    wasBought: false,
     description: "Triples amount of cookies you gain from clicking.",
     connectedNodes: ["starterNode"],
     image: "click.png",
     positionObject: { left: "50%", bottom: "16%" },
   },
+  //?Left side of the tree
   {
     name: "crystalMine",
     nameForPlayer: "Crystal Mine",
@@ -41,6 +46,17 @@ export const initialSKillTreeUpgrades: singleSkillTreeNode[] = [
     connectedNodes: ["clickingTalent"],
     image: "mining.png",
     positionObject: { left: "25%", bottom: "16%" },
+  },
+  {
+    name: "cookieExplosion",
+    nameForPlayer: "Cookie Explosion",
+    price: 10,
+    wasBought: false,
+    description:
+      "Every time you get a crystal there is 1% chance for a cookie explosion.",
+    connectedNodes: ["crystalMine"],
+    image: "explosion.png",
+    positionObject: { left: "25%", bottom: "30%" },
   },
 ];
 export type UpgradesNames =

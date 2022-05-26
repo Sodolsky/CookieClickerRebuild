@@ -6,6 +6,7 @@ import { RootState } from "../../redux/store";
 import { useDoubleClickUpgrade } from "../../utils/hooks/useDoubleClickUpgrade";
 import { generateRandomNumber } from "../../utils/utils";
 import ShardIcon from "../../public/crystal.png";
+import { singleSkillTreeNode } from "../../utils/interfaces";
 // export interface CookieToClickProps {
 //   setCookieCount: React.Dispatch<React.SetStateAction<number>>;
 // }
@@ -20,14 +21,40 @@ export const CookieToClick: React.FC = () => {
       state.gameLogic.shopItems.find((x) => x.name === "doubleCrystals")
         ?.wasBought
   );
-
+  const crystalMineMultiplier = useSelector(
+    (state: RootState) =>
+      state.gameLogic.skillTreeLogic.skillTreeNodes.find(
+        (x) => x.name === "crystalMine"
+      ) as singleSkillTreeNode
+  ).wasBought
+    ? 2
+    : 1;
+  const cookiesExplosionBought = useSelector(
+    (state: RootState) =>
+      state.gameLogic.skillTreeLogic.skillTreeNodes.find(
+        (x) => x.name === "cookieExplosion"
+      ) as singleSkillTreeNode
+  ).wasBought;
   function pop(e: React.MouseEvent) {
     let shardsGenerated: number = 0;
+    let didExplosionHappen: boolean = false;
     for (let i = 0; i < 30; i++) {
       const generateShard =
-        generateRandomNumber(0, 1000) > (!isPickaxeBought ? 950 : 850);
-      if (generateShard) shardsGenerated += 1;
+        generateRandomNumber(0, 1000) >
+        (!isPickaxeBought ? 950 : 850) / crystalMineMultiplier;
+      if (generateShard) {
+        shardsGenerated += 1;
+        if (cookiesExplosionBought) {
+          if (generateRandomNumber(0, 100) > 99) {
+            didExplosionHappen = true;
+          }
+        }
+      }
       createParticle(e.clientX, e.clientY, generateShard);
+    }
+    if (didExplosionHappen) {
+      alert("EXPLOSION");
+      dispatch(addCookie(30 * CPC * multiplier));
     }
     dispatch(addCrystals(shardsGenerated));
   }
