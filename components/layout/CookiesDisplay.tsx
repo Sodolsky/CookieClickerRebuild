@@ -3,6 +3,9 @@ import { abbreviateNumber } from "js-abbreviation-number";
 import { symbolsArray } from "../../utils/interfaces";
 import { useCallback } from "react";
 import { useDoubleClickUpgrade } from "../../utils/hooks/useDoubleClickUpgrade";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import Image from "next/image";
 interface CookiesDisplayProps {
   cookieCount: number;
   CPS: number;
@@ -18,6 +21,9 @@ export const CookiesDisplay: React.FC<CookiesDisplayProps> = ({
   const formatCookieCount = useCallback((n: number) => {
     return abbreviateNumber(n, 2, symbolsArray);
   }, []);
+  const explosionCookiesCount = useSelector(
+    (state: RootState) => state.explosionCookies.cookies
+  );
   return (
     <section className="flex flex-col items-center justify-center text-xl">
       <div className="text-lg lg:text-2xl font-bold">
@@ -30,6 +36,19 @@ export const CookiesDisplay: React.FC<CookiesDisplayProps> = ({
           formattingFn={formatCookieCount}
         />
       </div>
+      {explosionCookiesCount !== 0 && (
+        <div className="flex items-center justify-center gap-1">
+          <Image
+            src={"/explosion.png"}
+            alt={"Explosion"}
+            height={32}
+            width={32}
+          />
+          <span>
+            +{abbreviateNumber(explosionCookiesCount, 2, symbolsArray)} COOKIES!
+          </span>
+        </div>
+      )}
       <div className="text-lg lg:text-xl">
         CPS:{" "}
         {isClickDoubled ? (

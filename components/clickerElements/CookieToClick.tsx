@@ -7,11 +7,16 @@ import { useDoubleClickUpgrade } from "../../utils/hooks/useDoubleClickUpgrade";
 import { generateRandomNumber } from "../../utils/utils";
 import ShardIcon from "../../public/crystal.png";
 import { singleSkillTreeNode } from "../../utils/interfaces";
+import { useState } from "react";
+import explosionImage from "../../public/explosion.png";
+import { addExplosionCookiesCount } from "../../redux/explosionCookiesReducer";
 // export interface CookieToClickProps {
 //   setCookieCount: React.Dispatch<React.SetStateAction<number>>;
 // }
 
 export const CookieToClick: React.FC = () => {
+  const [explosionAnimationPlayState, setExplosionAnimationPlayState] =
+    useState<boolean>(false);
   const dispatch = useDispatch();
   const CPC = useSelector(
     (state: RootState) => state.gameLogic.cookiesLogic.CPC
@@ -53,8 +58,10 @@ export const CookieToClick: React.FC = () => {
       createParticle(e.clientX, e.clientY, generateShard);
     }
     if (didExplosionHappen) {
-      alert("EXPLOSION");
-      dispatch(addCookie(30 * CPC * multiplier));
+      const cookiesGainedFromExplosion = 30 * CPC * multiplier;
+      setExplosionAnimationPlayState(true);
+      dispatch(addCookie(cookiesGainedFromExplosion));
+      dispatch(addExplosionCookiesCount(cookiesGainedFromExplosion));
     }
     dispatch(addCrystals(shardsGenerated));
   }
@@ -108,7 +115,10 @@ export const CookieToClick: React.FC = () => {
   return (
     <Image
       src={CoockieImage}
-      className={"cursor-pointer transition-all"}
+      className={`cursor-pointer transition-all ${
+        explosionAnimationPlayState ? "ShakeAnimationXL" : ""
+      }`}
+      onAnimationEnd={() => setExplosionAnimationPlayState(false)}
       onClick={(e) => {
         handleClickIncrementation();
         pop(e);
