@@ -4,7 +4,8 @@ export type nodeNames =
   | "starterNode"
   | "clickingTalent"
   | "crystalMine"
-  | "cookieExplosion";
+  | "cookieExplosion"
+  | "idlePlayer";
 export interface singleSkillTreeNode {
   name: nodeNames;
   wasBought: boolean;
@@ -29,7 +30,7 @@ export const initialSKillTreeUpgrades: singleSkillTreeNode[] = [
   {
     name: "clickingTalent",
     nameForPlayer: "Clicking Talent",
-    price: 2,
+    price: 4,
     wasBought: false,
     description: "Triples amount of cookies you gain from clicking.",
     connectedNodes: ["starterNode"],
@@ -43,7 +44,7 @@ export const initialSKillTreeUpgrades: singleSkillTreeNode[] = [
     price: 4,
     wasBought: false,
     description: "Doubles the amount of crystals you get from clicking.",
-    connectedNodes: ["clickingTalent"],
+    connectedNodes: ["starterNode"],
     image: "mining.png",
     positionObject: { left: "25%", bottom: "16%" },
   },
@@ -57,6 +58,16 @@ export const initialSKillTreeUpgrades: singleSkillTreeNode[] = [
     connectedNodes: ["crystalMine"],
     image: "explosion.png",
     positionObject: { left: "25%", bottom: "30%" },
+  },
+  {
+    name: "idlePlayer",
+    nameForPlayer: "Idle Player",
+    price: 4,
+    wasBought: false,
+    description: "Quadruples the amount of cookies you gain per second.",
+    connectedNodes: ["starterNode"],
+    image: "sand-clock.png",
+    positionObject: { right: "25%", bottom: "16%" },
   },
 ];
 export type UpgradesNames =

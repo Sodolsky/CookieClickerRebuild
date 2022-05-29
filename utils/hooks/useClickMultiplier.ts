@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { singleSkillTreeNode } from "../interfaces";
 
-export const useDoubleClickUpgrade = () => {
+export const useClickMultiplier = () => {
   const [multiplier, setMultiplier] = useState<number>(1);
   const isClickDoubled = useSelector(
     (state: RootState) =>

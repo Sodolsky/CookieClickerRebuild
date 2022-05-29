@@ -2,10 +2,11 @@ import CountUp from "react-countup";
 import { abbreviateNumber } from "js-abbreviation-number";
 import { symbolsArray } from "../../utils/interfaces";
 import { useCallback } from "react";
-import { useDoubleClickUpgrade } from "../../utils/hooks/useDoubleClickUpgrade";
+import { useClickMultiplier } from "../../utils/hooks/useClickMultiplier";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import Image from "next/image";
+import { useCPSMultiplier } from "../../utils/hooks/useCPSMultiplier";
 interface CookiesDisplayProps {
   cookieCount: number;
   CPS: number;
@@ -17,7 +18,8 @@ export const CookiesDisplay: React.FC<CookiesDisplayProps> = ({
   CPS,
   CPC,
 }) => {
-  const { isClickDoubled, multiplier } = useDoubleClickUpgrade();
+  const { isClickDoubled, multiplier } = useClickMultiplier();
+  const { multiplierCPS } = useCPSMultiplier();
   const formatCookieCount = useCallback((n: number) => {
     return abbreviateNumber(n, 2, symbolsArray);
   }, []);
@@ -54,7 +56,9 @@ export const CookiesDisplay: React.FC<CookiesDisplayProps> = ({
         {isClickDoubled ? (
           <span className="text-red-500 font-bold">Disabled</span>
         ) : (
-          <span>{abbreviateNumber(CPS, 1, symbolsArray)}/s</span>
+          <span>
+            {abbreviateNumber(CPS * multiplierCPS, 1, symbolsArray)}/s
+          </span>
         )}
       </div>
       <div className="text-lg lg:text-xl">

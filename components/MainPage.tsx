@@ -34,9 +34,10 @@ import { abbreviateNumber } from "js-abbreviation-number";
 import { Store } from "./clickerElements/store/Store";
 import { EternalTalk } from "./skillTree/EternalTalk";
 import { SkillTreeModal } from "./skillTree/SkillTreeModal";
-import { useDoubleClickUpgrade } from "../utils/hooks/useDoubleClickUpgrade";
+import { useClickMultiplier } from "../utils/hooks/useClickMultiplier";
 import { CrystalsDisplay } from "./clickerElements/crystals/CrystalsDisplay";
 import { CrystalsModal } from "./clickerElements/crystals/CrystalsModal";
+import { useCPSMultiplier } from "../utils/hooks/useCPSMultiplier";
 export const MainPage = () => {
   const formatCookieCount = useCallback((n: number) => {
     return abbreviateNumber(n, 2, symbolsArray);
@@ -46,7 +47,8 @@ export const MainPage = () => {
     dispatch(resetGameAndAddSkillPoints(10));
     dispatch(setInitialSkillTree(true));
   };
-  const { isClickDoubled } = useDoubleClickUpgrade();
+  const { isClickDoubled } = useClickMultiplier();
+  const { multiplierCPS } = useCPSMultiplier();
   const isMobile = useMediaQuery("(max-width:768px)");
   const intervalRef = useRef<null | NodeJS.Timer>(null);
   const cookieCount = useSelector(
@@ -113,12 +115,14 @@ export const MainPage = () => {
       intervalRef.current && clearInterval(intervalRef.current);
     }
   }, [isClickDoubled, intervalRef.current]);
-
   useEffect(() => {
-    const gameLoopInterval = setInterval(() => dispatch(addCookie(CPS)), 1000);
+    const gameLoopInterval = setInterval(
+      () => dispatch(addCookie(CPS * multiplierCPS)),
+      1000
+    );
     intervalRef.current = gameLoopInterval;
     return () => clearInterval(gameLoopInterval);
-  }, [CPS]);
+  }, [multiplierCPS, CPS]);
   return (
     <>
       {isMobile && (

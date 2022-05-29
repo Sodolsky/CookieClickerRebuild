@@ -3,7 +3,7 @@ import { addCookie, addCrystals } from "../../redux/gameLogicReducer";
 import Image from "next/image";
 import CoockieImage from "../../public/cookie.png";
 import { RootState } from "../../redux/store";
-import { useDoubleClickUpgrade } from "../../utils/hooks/useDoubleClickUpgrade";
+import { useClickMultiplier } from "../../utils/hooks/useClickMultiplier";
 import { generateRandomNumber } from "../../utils/utils";
 import ShardIcon from "../../public/crystal.png";
 import { singleSkillTreeNode } from "../../utils/interfaces";
@@ -58,7 +58,8 @@ export const CookieToClick: React.FC = () => {
       createParticle(e.clientX, e.clientY, generateShard);
     }
     if (didExplosionHappen) {
-      const cookiesGainedFromExplosion = 30 * CPC * multiplier;
+      const cookiesGainedFromExplosion =
+        30 * CPC * multiplier * ((100 - generateRandomNumber(0, 30)) / 100);
       setExplosionAnimationPlayState(true);
       dispatch(addCookie(cookiesGainedFromExplosion));
       dispatch(addExplosionCookiesCount(cookiesGainedFromExplosion));
@@ -108,7 +109,7 @@ export const CookieToClick: React.FC = () => {
     };
   }
 
-  const { isClickDoubled, multiplier } = useDoubleClickUpgrade();
+  const { isClickDoubled, multiplier } = useClickMultiplier();
   const handleClickIncrementation = () => {
     dispatch(addCookie(CPC * multiplier));
   };

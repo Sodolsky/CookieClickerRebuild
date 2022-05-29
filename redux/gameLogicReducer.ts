@@ -65,6 +65,7 @@ export const gameMechanicSlice = createSlice({
     },
     //!Here are reducers for Clicker Logic
     addCookie: (state, action: PayloadAction<number>) => {
+      console.log(action.payload);
       state.cookiesLogic.cookieCount += action.payload;
       localStorage.setItem(
         "cookieCount",
