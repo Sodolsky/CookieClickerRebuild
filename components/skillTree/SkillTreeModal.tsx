@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { SkillTree } from "./SkillTree";
@@ -6,6 +7,7 @@ export const SkillTreeModal = () => {
   const skillPointsCount = useSelector(
     (state: RootState) => state.gameLogic.skillTreeLogic.skillPoints
   );
+  const [showExplanations, setShowExplanations] = useState<boolean>(false);
   return (
     <>
       <label htmlFor="skillTreeModal">
@@ -26,8 +28,21 @@ export const SkillTreeModal = () => {
             <Image width={32} height={32} src={"/skillPoint32x32.png"} />
             <span>{skillPointsCount} Skill Points</span>
           </div>
+          <div className="mb-2 mt-1">
+            <div className="form-control items-center">
+              <label htmlFor="" className="label">
+                <span>Show Advanced Descriptions</span>
+              </label>
+              <input
+                type="checkbox"
+                className="toggle"
+                checked={showExplanations}
+                onChange={() => setShowExplanations(!showExplanations)}
+              />
+            </div>
+          </div>
           <div className="container w-full aspect-square bg-primary rounded-2xl relative">
-            <SkillTree />
+            <SkillTree showExplanations={showExplanations} />
           </div>
         </label>
       </label>

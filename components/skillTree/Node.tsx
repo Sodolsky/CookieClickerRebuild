@@ -5,7 +5,10 @@ import { buySkillTreeUpgrade } from "../../redux/gameLogicReducer";
 import { RootState } from "../../redux/store";
 import { singleSkillTreeNode } from "../../utils/interfaces";
 import { isTouchDevice } from "../../utils/utils";
-export const Node: React.FC<singleSkillTreeNode> = ({
+interface localNodeInterface extends singleSkillTreeNode {
+  showExplanations: boolean;
+}
+export const Node: React.FC<localNodeInterface> = ({
   connectedNodes,
   positionObject,
   image,
@@ -14,6 +17,8 @@ export const Node: React.FC<singleSkillTreeNode> = ({
   nameForPlayer,
   name,
   price,
+  explanation,
+  showExplanations,
 }) => {
   const isTouch = isTouchDevice();
   const dispatch = useDispatch();
@@ -25,7 +30,7 @@ export const Node: React.FC<singleSkillTreeNode> = ({
       connectedNodes.some((upgradeName) => x.name === upgradeName)
     )
   );
-  const canBuy = allPreviousNodes.every((x) => x.wasBought);
+  const canBuy = allPreviousNodes.some((x) => x.wasBought);
   const buyNode = () => {
     if (skillPoints >= price && !wasBought && canBuy) {
       dispatch(buySkillTreeUpgrade(name));
@@ -65,6 +70,11 @@ export const Node: React.FC<singleSkillTreeNode> = ({
                   </figure>
                 </div>
                 <div className="mt-1 text-center">{description}</div>
+                {showExplanations && (
+                  <div className="mt-1 text-center text-gray-400">
+                    {explanation}
+                  </div>
+                )}
                 {isTouch && !wasBought && (
                   <button className="btn bg-green-400 mt-1" onClick={buyNode}>
                     Buy

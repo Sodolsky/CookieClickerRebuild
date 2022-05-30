@@ -8,7 +8,6 @@ import { generateRandomNumber } from "../../utils/utils";
 import ShardIcon from "../../public/crystal.png";
 import { singleSkillTreeNode } from "../../utils/interfaces";
 import { useState } from "react";
-import explosionImage from "../../public/explosion.png";
 import { addExplosionCookiesCount } from "../../redux/explosionCookiesReducer";
 // export interface CookieToClickProps {
 //   setCookieCount: React.Dispatch<React.SetStateAction<number>>;
@@ -65,6 +64,7 @@ export const CookieToClick: React.FC = () => {
       dispatch(addExplosionCookiesCount(cookiesGainedFromExplosion));
     }
     dispatch(addCrystals(shardsGenerated));
+    dispatch(addCookie(Math.floor(shardsGenerated / 2) * CPC));
   }
 
   function createParticle(x: number, y: number, generateShard: boolean) {

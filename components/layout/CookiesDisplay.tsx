@@ -47,7 +47,13 @@ export const CookiesDisplay: React.FC<CookiesDisplayProps> = ({
             width={32}
           />
           <span>
-            +{abbreviateNumber(explosionCookiesCount, 2, symbolsArray)} COOKIES!
+            +
+            {abbreviateNumber(
+              Math.round(explosionCookiesCount),
+              2,
+              symbolsArray
+            )}{" "}
+            COOKIES!
           </span>
         </div>
       )}

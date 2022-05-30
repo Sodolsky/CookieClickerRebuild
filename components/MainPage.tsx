@@ -70,6 +70,9 @@ export const MainPage = () => {
   const isSkillTreeUnlocked = useSelector(
     (state: RootState) => state.gameLogic.skillTreeLogic.isSkillTreeUnlocked
   );
+  const statesWereLoaded = useSelector(
+    (state: RootState) => state.gameLogic.areStatesLoaded
+  );
   const dispatch = useDispatch();
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -116,13 +119,14 @@ export const MainPage = () => {
     }
   }, [isClickDoubled, intervalRef.current]);
   useEffect(() => {
+    if (!statesWereLoaded || isClickDoubled) return;
     const gameLoopInterval = setInterval(
       () => dispatch(addCookie(CPS * multiplierCPS)),
       1000
     );
     intervalRef.current = gameLoopInterval;
     return () => clearInterval(gameLoopInterval);
-  }, [multiplierCPS, CPS]);
+  }, [multiplierCPS, CPS, statesWereLoaded]);
   return (
     <>
       {isMobile && (

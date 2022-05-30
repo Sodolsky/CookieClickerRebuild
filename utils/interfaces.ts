@@ -5,7 +5,8 @@ export type nodeNames =
   | "clickingTalent"
   | "crystalMine"
   | "cookieExplosion"
-  | "idlePlayer";
+  | "idlePlayer"
+  | "crystalConversion";
 export interface singleSkillTreeNode {
   name: nodeNames;
   wasBought: boolean;
@@ -15,6 +16,7 @@ export interface singleSkillTreeNode {
   connectedNodes: nodeNames[];
   image: string;
   positionObject: CSSProperties;
+  explanation?: string;
 }
 export const initialSKillTreeUpgrades: singleSkillTreeNode[] = [
   {
@@ -27,6 +29,7 @@ export const initialSKillTreeUpgrades: singleSkillTreeNode[] = [
     image: "letters.png",
     positionObject: { left: "50%", bottom: "2%" },
   },
+  //?Middle of the tree
   {
     name: "clickingTalent",
     nameForPlayer: "Clicking Talent",
@@ -37,6 +40,20 @@ export const initialSKillTreeUpgrades: singleSkillTreeNode[] = [
     image: "click.png",
     positionObject: { left: "50%", bottom: "16%" },
   },
+  {
+    name: "crystalConversion",
+    nameForPlayer: "Crystal Conversion",
+    price: 6,
+    wasBought: false,
+    description:
+      "Crystals that you get from clicking also give you extra cookies.",
+    connectedNodes: ["clickingTalent", "crystalMine"],
+    image: "conversion-rate.png",
+    positionObject: { left: "37.5%", bottom: "25%" },
+    explanation:
+      "Formula for the amount of cookies you get is [Crystals Gained / 2 * CPC]",
+  },
+
   //?Left side of the tree
   {
     name: "crystalMine",
@@ -58,7 +75,10 @@ export const initialSKillTreeUpgrades: singleSkillTreeNode[] = [
     connectedNodes: ["crystalMine"],
     image: "explosion.png",
     positionObject: { left: "25%", bottom: "30%" },
+    explanation:
+      "Formula for amount of Cookies that you gain from explosion is [ 30 * CPC * CPCMultiplier ]",
   },
+  //?Right side of the tree
   {
     name: "idlePlayer",
     nameForPlayer: "Idle Player",
