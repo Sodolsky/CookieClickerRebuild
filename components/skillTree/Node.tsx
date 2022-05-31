@@ -19,6 +19,7 @@ export const Node: React.FC<localNodeInterface> = ({
   price,
   explanation,
   showExplanations,
+  isNotable,
 }) => {
   const isTouch = isTouchDevice();
   const dispatch = useDispatch();
@@ -91,9 +92,9 @@ export const Node: React.FC<localNodeInterface> = ({
       >
         <div
           id={name}
-          className={`mydiv node border-2 bg-secondary   ${
-            wasBought ? "border-green-500" : "border-red-500"
-          }`}
+          className={`mydiv node border-2 bg-secondary ${
+            isNotable ? "nodeNotable" : ""
+          }   ${wasBought ? "border-green-500" : "border-red-500"}`}
           onClick={() => !isTouch && buyNode()}
           style={positionObject}
         >

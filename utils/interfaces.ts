@@ -6,9 +6,11 @@ export type nodeNames =
   | "crystalMine"
   | "cookieExplosion"
   | "idlePlayer"
-  | "crystalConversion";
+  | "crystalConversion"
+  | "chakra";
 export interface singleSkillTreeNode {
   name: nodeNames;
+  isNotable: boolean;
   wasBought: boolean;
   price: number;
   description: string;
@@ -21,6 +23,7 @@ export interface singleSkillTreeNode {
 export const initialSKillTreeUpgrades: singleSkillTreeNode[] = [
   {
     name: "starterNode",
+    isNotable: false,
     price: 0,
     wasBought: true,
     connectedNodes: [],
@@ -32,6 +35,7 @@ export const initialSKillTreeUpgrades: singleSkillTreeNode[] = [
   //?Middle of the tree
   {
     name: "clickingTalent",
+    isNotable: false,
     nameForPlayer: "Clicking Talent",
     price: 4,
     wasBought: false,
@@ -42,6 +46,7 @@ export const initialSKillTreeUpgrades: singleSkillTreeNode[] = [
   },
   {
     name: "crystalConversion",
+    isNotable: false,
     nameForPlayer: "Crystal Conversion",
     price: 6,
     wasBought: false,
@@ -57,6 +62,7 @@ export const initialSKillTreeUpgrades: singleSkillTreeNode[] = [
   //?Left side of the tree
   {
     name: "crystalMine",
+    isNotable: false,
     nameForPlayer: "Crystal Mine",
     price: 4,
     wasBought: false,
@@ -67,6 +73,7 @@ export const initialSKillTreeUpgrades: singleSkillTreeNode[] = [
   },
   {
     name: "cookieExplosion",
+    isNotable: false,
     nameForPlayer: "Cookie Explosion",
     price: 10,
     wasBought: false,
@@ -81,6 +88,7 @@ export const initialSKillTreeUpgrades: singleSkillTreeNode[] = [
   //?Right side of the tree
   {
     name: "idlePlayer",
+    isNotable: false,
     nameForPlayer: "Idle Player",
     price: 4,
     wasBought: false,
@@ -88,6 +96,20 @@ export const initialSKillTreeUpgrades: singleSkillTreeNode[] = [
     connectedNodes: ["starterNode"],
     image: "sand-clock.png",
     positionObject: { right: "25%", bottom: "16%" },
+  },
+  {
+    name: "chakra",
+    isNotable: true,
+    nameForPlayer: "Chakra",
+    price: 16,
+    wasBought: false,
+    description:
+      "Adds new active that let's multiplies cookies you gain for 30 seconds.",
+    connectedNodes: ["idlePlayer"],
+    explanation:
+      "Chakra can be activated every 2 minutes. The amount of cookies you gain is multiplied by 10 times during it's duration.",
+    image: "chakra.png",
+    positionObject: { right: "6%", bottom: "16%" },
   },
 ];
 export type UpgradesNames =

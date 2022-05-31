@@ -14,8 +14,7 @@
   justify-content: center;
 }
 .nodeNotable {
-  width: 80px;
-  height: 80px;
+  border-radius: 15%;
 }
 .rounded-image {
   border-radius: 50%;

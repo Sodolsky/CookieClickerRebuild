@@ -3,6 +3,8 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { SkillTree } from "./SkillTree";
+import SettingsIcon from "../../public/settings.png";
+import Tippy from "@tippyjs/react";
 export const SkillTreeModal = () => {
   const skillPointsCount = useSelector(
     (state: RootState) => state.gameLogic.skillTreeLogic.skillPoints
@@ -23,23 +25,40 @@ export const SkillTreeModal = () => {
       <input type="checkbox" id="skillTreeModal" className="modal-toggle" />
       <label htmlFor="skillTreeModal" className={`modal cursor-pointer`}>
         <label className="modal-box relative" htmlFor="">
-          <h2 className="text-xl text-center">Skill Tree</h2>
+          <div className="flex justify-center items-center relative">
+            <h2 className="text-xl text-center">Skill Tree</h2>
+            <Tippy
+              interactive={true}
+              allowHTML={true}
+              content={
+                <div className="rounded-xl bg-accent text-accent-content p-1 flex flex-col items-center justify-center">
+                  <div className="form-control items-center">
+                    <label htmlFor="" className="label">
+                      <span>Show Advanced Descriptions</span>
+                    </label>
+                    <input
+                      type="checkbox"
+                      className="toggle"
+                      checked={showExplanations}
+                      onChange={() => setShowExplanations(!showExplanations)}
+                    />
+                  </div>
+                </div>
+              }
+            >
+              <figure className="self-end absolute right-0">
+                <Image
+                  src={SettingsIcon.src}
+                  alt={"Skill Tree Settings"}
+                  height={32}
+                  width={32}
+                />
+              </figure>
+            </Tippy>
+          </div>
           <div className="flex justify-center items-center my-2 gap-2">
             <Image width={32} height={32} src={"/skillPoint32x32.png"} />
             <span>{skillPointsCount} Skill Points</span>
-          </div>
-          <div className="mb-2 mt-1">
-            <div className="form-control items-center">
-              <label htmlFor="" className="label">
-                <span>Show Advanced Descriptions</span>
-              </label>
-              <input
-                type="checkbox"
-                className="toggle"
-                checked={showExplanations}
-                onChange={() => setShowExplanations(!showExplanations)}
-              />
-            </div>
           </div>
           <div className="container w-full aspect-square bg-primary rounded-2xl relative">
             <SkillTree showExplanations={showExplanations} />

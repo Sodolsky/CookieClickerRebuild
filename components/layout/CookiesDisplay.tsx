@@ -38,6 +38,7 @@ export const CookiesDisplay: React.FC<CookiesDisplayProps> = ({
           formattingFn={formatCookieCount}
         />
       </div>
+
       {explosionCookiesCount !== 0 && (
         <div className="flex items-center justify-center gap-1">
           <Image
@@ -57,6 +58,7 @@ export const CookiesDisplay: React.FC<CookiesDisplayProps> = ({
           </span>
         </div>
       )}
+
       <div className="text-lg lg:text-xl">
         CPS:{" "}
         {isClickDoubled ? (
