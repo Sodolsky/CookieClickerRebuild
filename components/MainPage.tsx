@@ -22,6 +22,7 @@ import {
   ShopItems,
   UpgradesInterface,
   symbolsArray,
+  singleSkillTreeNode,
 } from "../utils/interfaces";
 import { CookieToClick } from "./clickerElements/CookieToClick";
 import { Upgrade } from "./clickerElements/Upgrade";
@@ -38,6 +39,7 @@ import { useClickMultiplier } from "../utils/hooks/useClickMultiplier";
 import { CrystalsDisplay } from "./clickerElements/crystals/CrystalsDisplay";
 import { CrystalsModal } from "./clickerElements/crystals/CrystalsModal";
 import { useCPSMultiplier } from "../utils/hooks/useCPSMultiplier";
+import { Chakra } from "./skillTree/Chakra";
 export const MainPage = () => {
   const formatCookieCount = useCallback((n: number) => {
     return abbreviateNumber(n, 2, symbolsArray);
@@ -73,6 +75,12 @@ export const MainPage = () => {
   const statesWereLoaded = useSelector(
     (state: RootState) => state.gameLogic.areStatesLoaded
   );
+  const isChakraBought = useSelector(
+    (state: RootState) =>
+      state.gameLogic.skillTreeLogic.skillTreeNodes.find(
+        (x) => x.name === "chakra"
+      ) as singleSkillTreeNode
+  ).wasBought;
   const dispatch = useDispatch();
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -178,7 +186,7 @@ export const MainPage = () => {
       ) : (
         isSkillTreeUnlocked && <SkillTreeModal />
       )}
-
+      {isChakraBought && <Chakra />}
       <main className="min-h-screen">
         <div className="flex flex-col gap-2 justify-center items-center">
           {/* <button className="btn" onClick={() => resetGameLogic()}>

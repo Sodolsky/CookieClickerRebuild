@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
+import chakraReducer from "./chakraReducer";
 import explosionCookiesReducer from "./explosionCookiesReducer";
 import gameLogicReducer from "./gameLogicReducer";
 export const store = configureStore({
   reducer: {
     gameLogic: gameLogicReducer,
     explosionCookies: explosionCookiesReducer,
+    chakra: chakraReducer,
   },
 });
 export type RootState = ReturnType<typeof store.getState>;

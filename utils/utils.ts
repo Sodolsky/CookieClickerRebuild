@@ -88,3 +88,12 @@ export const clearLocalStorageFromPreviousState = () => {
 export const isTouchDevice = (): boolean => {
   return "ontouchstart" in window || navigator.maxTouchPoints > 0;
 };
+export function secondsToTime(seconds: number) {
+  let m = Math.floor((seconds % 3600) / 60)
+    .toString()
+    .padStart(2, "0");
+  let s = Math.floor(seconds % 60)
+    .toString()
+    .padStart(2, "0");
+  return `${m}:${s}`;
+}
