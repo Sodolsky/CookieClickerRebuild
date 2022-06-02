@@ -15,16 +15,15 @@ export const useClickMultiplier = () => {
         (x) => x.name === "clickingTalent"
       ) as singleSkillTreeNode
   ).wasBought;
+  const isChakraActive = useSelector(
+    (state: RootState) => state.chakra.isActive
+  );
   useEffect(() => {
-    if (isClickTripledFromSkillTreeUpgrades && isClickDoubled) {
-      setMultiplier(5);
-    } else if (isClickDoubled) {
-      setMultiplier(2);
-    } else if (isClickTripledFromSkillTreeUpgrades) {
-      setMultiplier(3);
-    } else {
-      setMultiplier(1);
-    }
-  }, [isClickDoubled, isClickTripledFromSkillTreeUpgrades]);
+    let multiplier: number = 1;
+    if (isClickDoubled) multiplier += 1;
+    if (isClickTripledFromSkillTreeUpgrades) multiplier += 3;
+    if (isChakraActive) multiplier += 10;
+    setMultiplier(multiplier);
+  }, [isClickDoubled, isClickTripledFromSkillTreeUpgrades, isChakraActive]);
   return { isClickDoubled, multiplier };
 };

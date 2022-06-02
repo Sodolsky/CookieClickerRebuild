@@ -1,4 +1,3 @@
-import { clear } from "console";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { CircularProgressbarWithChildren } from "react-circular-progressbar";
@@ -7,37 +6,77 @@ import ChakraImage from "../../public/chakra64x64.png";
 import { switchChakraState } from "../../redux/chakraReducer";
 import { RootState } from "../../redux/store";
 import { secondsToTime } from "../../utils/utils";
+interface timers {
+  timer: number;
+  waitTime: number;
+}
+
 export const Chakra = () => {
   const dispatch = useDispatch();
   const isChakraActive = useSelector(
     (state: RootState) => state.chakra.isActive
   );
-  const [timer, setTimer] = useState(30);
-  const secondsInterval = useRef<NodeJS.Timer>();
+  const [timers, setTimers] = useState<timers>({ waitTime: 0, timer: 3 });
+  const [stateOfChakra, setStateOfChakra] = useState<
+    "cooldown" | "readyToUse" | "inUsage"
+  >("readyToUse");
+  const timingInterval = useRef<NodeJS.Timer | null>(null);
   const turnChakraOn = () => {
-    if (isChakraActive) return;
+    if (isChakraActive || stateOfChakra !== "readyToUse") return;
     dispatch(switchChakraState(true));
-    secondsInterval.current = setInterval(
-      () => setTimer((prev) => (prev -= 1)),
+    setStateOfChakra("inUsage");
+    timingInterval.current = setInterval(
+      () => setTimers((prev) => ({ ...prev, timer: prev.timer - 1 })),
       1000
     );
   };
   useEffect(() => {
-    if (timer <= 0 && secondsInterval.current) {
-      setTimer(30);
-      dispatch(switchChakraState(false));
-      clearInterval(secondsInterval.current);
+    if (timingInterval.current) {
+      if (timers.timer <= 0) {
+        setStateOfChakra("cooldown");
+        setTimers(() => ({ waitTime: 0, timer: 30 }));
+        dispatch(switchChakraState(false));
+        clearInterval(timingInterval.current);
+      }
+      if (timers.waitTime === 90 && stateOfChakra === "cooldown") {
+        setStateOfChakra("readyToUse");
+        clearInterval(timingInterval.current);
+      }
     }
-  }, [timer, secondsInterval.current]);
-
+  }, [timers, timingInterval.current]);
+  useEffect(() => {
+    if (stateOfChakra === "cooldown") {
+      timingInterval.current = setInterval(() => {
+        setTimers((prev) => {
+          return { ...prev, waitTime: (prev.waitTime += 1) };
+        });
+      }, 1000);
+    }
+  }, [stateOfChakra]);
   return (
     <figure
       className="absolute bottom-24 left-2 md:top-24 md:left-4 cursor-pointer h-32 w-32"
       onClick={turnChakraOn}
     >
-      <CircularProgressbarWithChildren value={timer} maxValue={30}>
+      <CircularProgressbarWithChildren
+        value={stateOfChakra === "cooldown" ? timers.waitTime : timers.timer}
+        maxValue={stateOfChakra === "cooldown" ? 90 : 30}
+        styles={{
+          path: {
+            stroke:
+              stateOfChakra === "readyToUse" || stateOfChakra === "inUsage"
+                ? `rgb(127, 255, 0)`
+                : `rgb(220,20,60)
+`,
+          },
+        }}
+      >
         <div className="flex justify-center items-center flex-col">
-          <span>{secondsToTime(timer)}</span>
+          <span>
+            {stateOfChakra === "cooldown"
+              ? secondsToTime(timers.waitTime)
+              : secondsToTime(timers.timer)}
+          </span>
           <Image
             src={ChakraImage}
             alt={"Chakra Image"}

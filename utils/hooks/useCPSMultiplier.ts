@@ -11,12 +11,14 @@ export const useCPSMultiplier = () => {
         (x) => x.name === "idlePlayer"
       ) as singleSkillTreeNode
   ).wasBought;
+  const isChakraActive = useSelector(
+    (state: RootState) => state.chakra.isActive
+  );
   useEffect(() => {
-    if (isIdlePlayerBought) {
-      setMultiplierCPS(4);
-    } else {
-      setMultiplierCPS(1);
-    }
-  }, [isIdlePlayerBought]);
+    let multiplier: number = 1;
+    if (isIdlePlayerBought) multiplier += 4;
+    if (isChakraActive) multiplier += 10;
+    setMultiplierCPS(multiplier);
+  }, [isIdlePlayerBought, isChakraActive]);
   return { multiplierCPS };
 };
