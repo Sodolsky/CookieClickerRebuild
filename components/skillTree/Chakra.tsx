@@ -16,7 +16,7 @@ export const Chakra = () => {
   const isChakraActive = useSelector(
     (state: RootState) => state.chakra.isActive
   );
-  const [timers, setTimers] = useState<timers>({ waitTime: 0, timer: 3 });
+  const [timers, setTimers] = useState<timers>({ waitTime: 0, timer: 30 });
   const [stateOfChakra, setStateOfChakra] = useState<
     "cooldown" | "readyToUse" | "inUsage"
   >("readyToUse");
