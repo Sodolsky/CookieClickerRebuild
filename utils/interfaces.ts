@@ -7,7 +7,9 @@ export type nodeNames =
   | "cookieExplosion"
   | "idlePlayer"
   | "crystalConversion"
-  | "chakra";
+  | "chakra"
+  | "nuclearBomb"
+  | "carpetBombing";
 export interface singleSkillTreeNode {
   name: nodeNames;
   isNotable: boolean;
@@ -83,9 +85,45 @@ export const initialSKillTreeUpgrades: singleSkillTreeNode[] = [
     image: "explosion.png",
     positionObject: { left: "25%", bottom: "30%" },
     explanation:
-      "Formula for amount of Cookies that you gain from explosion is [ 30 * CPC * CPCMultiplier ]",
+      "Formula for amount of Cookies that you gain from explosion is [ 5 * CPC * CPCMultiplier ]",
+  },
+  {
+    name: "nuclearBomb",
+    isNotable: false,
+    nameForPlayer: "Nuclear Bomb",
+    price: 8,
+    wasBought: false,
+    description: "Triples the amount of Coookies you gain from explosions.",
+    connectedNodes: ["cookieExplosion"],
+    image: "nuke.png",
+    positionObject: { left: "15%", bottom: "40%" },
+    explanation:
+      "Formula for the explosion changes to [ 15 * CPC * CPCMultiplier ]",
+  },
+  {
+    name: "carpetBombing",
+    isNotable: false,
+    nameForPlayer: "Carpet Bombing",
+    price: 8,
+    wasBought: false,
+    description: "Makes explosions more common.",
+    connectedNodes: ["cookieExplosion"],
+    image: "carpetBombing.png",
+    positionObject: { left: "35%", bottom: "40%" },
+    explanation: "Chance for the explosion is doubled",
   },
   //?Right side of the tree
+  {
+    name: "idlePlayer",
+    isNotable: false,
+    nameForPlayer: "Idle Player",
+    price: 4,
+    wasBought: false,
+    description: "Quadruples the amount of cookies you gain per second.",
+    connectedNodes: ["starterNode"],
+    image: "sand-clock.png",
+    positionObject: { right: "25%", bottom: "16%" },
+  },
   {
     name: "idlePlayer",
     isNotable: false,

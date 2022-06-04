@@ -39,6 +39,18 @@ export const CookieToClick: React.FC = () => {
         (x) => x.name === "cookieExplosion"
       ) as singleSkillTreeNode
   ).wasBought;
+  const nuclearBombBought = useSelector(
+    (state: RootState) =>
+      state.gameLogic.skillTreeLogic.skillTreeNodes.find(
+        (x) => x.name === "nuclearBomb"
+      ) as singleSkillTreeNode
+  ).wasBought;
+  const wasCarpetBombingBought = useSelector(
+    (state: RootState) =>
+      state.gameLogic.skillTreeLogic.skillTreeNodes.find(
+        (x) => x.name === "carpetBombing"
+      ) as singleSkillTreeNode
+  ).wasBought;
   function pop(e: React.MouseEvent) {
     let shardsGenerated: number = 0;
     let didExplosionHappen: boolean = false;
@@ -49,7 +61,9 @@ export const CookieToClick: React.FC = () => {
       if (generateShard) {
         shardsGenerated += 1;
         if (cookiesExplosionBought) {
-          if (generateRandomNumber(0, 100) > 99) {
+          if (
+            generateRandomNumber(0, 100) > (wasCarpetBombingBought ? 98 : 99)
+          ) {
             didExplosionHappen = true;
           }
         }
@@ -58,7 +72,10 @@ export const CookieToClick: React.FC = () => {
     }
     if (didExplosionHappen) {
       const cookiesGainedFromExplosion =
-        30 * CPC * multiplier * ((100 - generateRandomNumber(0, 30)) / 100);
+        (nuclearBombBought ? 15 : 5) *
+        CPC *
+        multiplier *
+        ((100 - generateRandomNumber(0, 30)) / 100);
       setExplosionAnimationPlayState(true);
       dispatch(addCookie(cookiesGainedFromExplosion));
       dispatch(addExplosionCookiesCount(cookiesGainedFromExplosion));
