@@ -110,7 +110,7 @@ export const initialSKillTreeUpgrades: singleSkillTreeNode[] = [
     connectedNodes: ["cookieExplosion"],
     image: "carpetBombing.png",
     positionObject: { left: "35%", bottom: "40%" },
-    explanation: "Chance for the explosion is doubled",
+    explanation: "Chance for the explosion is tripled",
   },
   //?Right side of the tree
   {

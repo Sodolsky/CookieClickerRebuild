@@ -31,8 +31,8 @@ export const CookieToClick: React.FC = () => {
         (x) => x.name === "crystalMine"
       ) as singleSkillTreeNode
   ).wasBought
-    ? 2
-    : 1;
+    ? 1
+    : 0;
   const cookiesExplosionBought = useSelector(
     (state: RootState) =>
       state.gameLogic.skillTreeLogic.skillTreeNodes.find(
@@ -56,13 +56,13 @@ export const CookieToClick: React.FC = () => {
     let didExplosionHappen: boolean = false;
     for (let i = 0; i < 30; i++) {
       const generateShard =
-        generateRandomNumber(0, 1000) >
-        (!isPickaxeBought ? 950 : 850) / crystalMineMultiplier;
+        generateRandomNumber(0, 10000) >
+        (!isPickaxeBought ? 9900 : 9800) - 100 * crystalMineMultiplier;
       if (generateShard) {
         shardsGenerated += 1;
         if (cookiesExplosionBought) {
           if (
-            generateRandomNumber(0, 100) > (wasCarpetBombingBought ? 98 : 99)
+            generateRandomNumber(0, 100) > (wasCarpetBombingBought ? 97 : 99)
           ) {
             didExplosionHappen = true;
           }
