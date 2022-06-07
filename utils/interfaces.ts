@@ -85,7 +85,7 @@ export const initialSKillTreeUpgrades: singleSkillTreeNode[] = [
     image: "explosion.png",
     positionObject: { left: "25%", bottom: "30%" },
     explanation:
-      "Formula for amount of Cookies that you gain from explosion is [ 5 * CPC * CPCMultiplier ]",
+      "Formula for amount of Cookies that you gain from explosion is [ 20 * CPC * CPCMultiplier ]",
   },
   {
     name: "nuclearBomb",
@@ -98,7 +98,7 @@ export const initialSKillTreeUpgrades: singleSkillTreeNode[] = [
     image: "nuke.png",
     positionObject: { left: "15%", bottom: "40%" },
     explanation:
-      "Formula for the explosion changes to [ 15 * CPC * CPCMultiplier ]",
+      "Formula for the explosion changes to [ 60 * CPC * CPCMultiplier ]",
   },
   {
     name: "carpetBombing",
@@ -124,17 +124,7 @@ export const initialSKillTreeUpgrades: singleSkillTreeNode[] = [
     image: "sand-clock.png",
     positionObject: { right: "25%", bottom: "16%" },
   },
-  {
-    name: "idlePlayer",
-    isNotable: false,
-    nameForPlayer: "Idle Player",
-    price: 4,
-    wasBought: false,
-    description: "Quadruples the amount of cookies you gain per second.",
-    connectedNodes: ["starterNode"],
-    image: "sand-clock.png",
-    positionObject: { right: "25%", bottom: "16%" },
-  },
+
   {
     name: "chakra",
     isNotable: true,

@@ -40,13 +40,14 @@ import { CrystalsDisplay } from "./clickerElements/crystals/CrystalsDisplay";
 import { CrystalsModal } from "./clickerElements/crystals/CrystalsModal";
 import { useCPSMultiplier } from "../utils/hooks/useCPSMultiplier";
 import { Chakra } from "./skillTree/Chakra";
+import { ResetModal } from "./skillTree/ResetModal";
 export const MainPage = () => {
   const formatCookieCount = useCallback((n: number) => {
     return abbreviateNumber(n, 2, symbolsArray);
   }, []);
-  const resetGameLogic = () => {
+  const resetGameLogic = (skillPointsCount: number) => {
     intervalRef.current && clearInterval(intervalRef.current);
-    dispatch(resetGameAndAddSkillPoints(10));
+    dispatch(resetGameAndAddSkillPoints(skillPointsCount));
     dispatch(setInitialSkillTree(true));
   };
   const { isClickDoubled } = useClickMultiplier();
@@ -82,6 +83,7 @@ export const MainPage = () => {
       ) as singleSkillTreeNode
   ).wasBought;
   const dispatch = useDispatch();
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       const localStorageCookieCount =
@@ -182,7 +184,7 @@ export const MainPage = () => {
       </aside>
       {shopItems.find((x) => x.name === "unlockSkillTree")?.wasBought &&
       !isSkillTreeUnlocked ? (
-        <EternalTalk resetGameLogic={resetGameLogic} />
+        <EternalTalk resetGameLogic={() => resetGameLogic(10)} />
       ) : (
         isSkillTreeUnlocked && <SkillTreeModal />
       )}
@@ -200,7 +202,11 @@ export const MainPage = () => {
             crystals={Number(crystals.toFixed(2))}
           />
           <CookieToClick />
-
+          {/* This Code is checking if player has bought 10 upgrades of type */}
+          {Object.values(upgrades).reduce((acc, a) => {
+            if (acc && a.numberOfUpgrades >= 10) return acc;
+            return (acc = false);
+          }, true) && <ResetModal resetGameLogic={() => resetGameLogic(30)} />}
           <div className="grid place-items-center  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 grid-rows-1 gap-2 mt-6 w-full xl:w-3/4">
             {isMobile !== null &&
               !isMobile &&

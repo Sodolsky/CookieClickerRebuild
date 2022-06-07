@@ -56,9 +56,14 @@ export const SkillTreeModal = () => {
               </figure>
             </Tippy>
           </div>
-          <div className="flex justify-center items-center my-2 gap-2">
-            <Image width={32} height={32} src={"/skillPoint32x32.png"} />
-            <span>{skillPointsCount} Skill Points</span>
+          <div className="flex flex-col items-center gap-1">
+            <div className="flex justify-center items-center  gap-2">
+              <Image width={32} height={32} src={"/skillPoint32x32.png"} />
+              <span>{skillPointsCount} Skill Points</span>
+            </div>
+            <h4 className="text-lg text-gray-500 text-center">
+              To gain more skill points buy every upgrade 10 times
+            </h4>
           </div>
           <div className="container w-full aspect-square bg-primary rounded-2xl relative">
             <SkillTree showExplanations={showExplanations} />
