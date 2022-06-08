@@ -57,7 +57,7 @@ export const CookieToClick: React.FC = () => {
     for (let i = 0; i < 30; i++) {
       const generateShard =
         generateRandomNumber(0, 10000) >
-        (!isPickaxeBought ? 9800 : 9700) - 200 * crystalMineMultiplier;
+        (!isPickaxeBought ? 9700 : 9600) - 200 * crystalMineMultiplier;
       if (generateShard) {
         shardsGenerated += 1;
         if (cookiesExplosionBought) {
