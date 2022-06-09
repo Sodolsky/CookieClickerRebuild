@@ -14,11 +14,32 @@ export const useCPSMultiplier = () => {
   const isChakraActive = useSelector(
     (state: RootState) => state.chakra.isActive
   );
+  const isTimeMachineBought = useSelector(
+    (state: RootState) =>
+      state.gameLogic.skillTreeLogic.skillTreeNodes.find(
+        (x) => x.name === "timeMachine"
+      ) as singleSkillTreeNode
+  ).wasBought;
+  const isChakraUpgraded = useSelector(
+    (state: RootState) =>
+      state.gameLogic.skillTreeLogic.skillTreeNodes.find(
+        (x) => x.name === "heartOfTheEternal"
+      ) as singleSkillTreeNode
+  ).wasBought;
   useEffect(() => {
     let multiplier: number = 1;
     if (isIdlePlayerBought) multiplier += 4;
-    if (isChakraActive) multiplier += 10;
+    if (isChakraActive) {
+      if (isChakraUpgraded) multiplier += 10;
+      else multiplier += 3;
+    }
+    if (isTimeMachineBought) multiplier *= 2;
     setMultiplierCPS(multiplier);
-  }, [isIdlePlayerBought, isChakraActive]);
+  }, [
+    isIdlePlayerBought,
+    isChakraActive,
+    isTimeMachineBought,
+    isChakraUpgraded,
+  ]);
   return { multiplierCPS };
 };

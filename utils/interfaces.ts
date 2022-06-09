@@ -9,7 +9,10 @@ export type nodeNames =
   | "crystalConversion"
   | "chakra"
   | "nuclearBomb"
-  | "carpetBombing";
+  | "carpetBombing"
+  | "clickingWithLove"
+  | "timeMachine"
+  | "heartOfTheEternal";
 export interface singleSkillTreeNode {
   name: nodeNames;
   isNotable: boolean;
@@ -45,6 +48,19 @@ export const initialSKillTreeUpgrades: singleSkillTreeNode[] = [
     connectedNodes: ["starterNode"],
     image: "click.png",
     positionObject: { left: "50%", bottom: "16%" },
+  },
+  {
+    name: "timeMachine",
+    isNotable: false,
+    nameForPlayer: "Time Machine",
+    price: 6,
+    wasBought: false,
+    description: "Doubles your multiplier for cookies per second.",
+    explanation:
+      "This upgrade doubles your MULTIPLIER so if you bought idle player and nothing else it doubles it so your CPS multiplier is 8",
+    connectedNodes: ["clickingTalent"],
+    image: "stopwatch.png",
+    positionObject: { left: "50%", bottom: "30%" },
   },
   {
     name: "crystalConversion",
@@ -124,6 +140,19 @@ export const initialSKillTreeUpgrades: singleSkillTreeNode[] = [
     image: "sand-clock.png",
     positionObject: { right: "25%", bottom: "16%" },
   },
+  {
+    name: "clickingWithLove",
+    isNotable: false,
+    nameForPlayer: "Clicking With Love",
+    price: 6,
+    wasBought: false,
+    description: "Doubles your multiplier for CPC.",
+    explanation:
+      "This upgrade doubles your MULTIPLIER so if you bought Clicking Talent and nothing else it doubles it so your CPC multiplier is 6",
+    connectedNodes: ["idlePlayer"],
+    image: "heart.png",
+    positionObject: { right: "25%", bottom: "30%" },
+  },
 
   {
     name: "chakra",
@@ -135,9 +164,20 @@ export const initialSKillTreeUpgrades: singleSkillTreeNode[] = [
       "Adds new active that let's multiplies cookies you gain for 30 seconds.",
     connectedNodes: ["idlePlayer"],
     explanation:
-      "Chakra can be activated every 2 minutes. The amount of cookies you gain is multiplied by 10 times during it's duration.",
+      "Chakra can be activated every 2 minutes. The amount of cookies you gain is multiplied by 3 times during it's duration.",
     image: "chakra.png",
     positionObject: { right: "6%", bottom: "16%" },
+  },
+  {
+    name: "heartOfTheEternal",
+    isNotable: false,
+    nameForPlayer: "Heart Of The Eternal",
+    price: 14,
+    wasBought: false,
+    description: "Chakra multiplier becomes 10x.",
+    connectedNodes: ["chakra"],
+    image: "sacred-heart.png",
+    positionObject: { right: "6%", bottom: "30%" },
   },
 ];
 export type UpgradesNames =
