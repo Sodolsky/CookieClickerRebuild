@@ -56,7 +56,7 @@ export const SkillTreeModal = () => {
               </figure>
             </Tippy>
           </div>
-          <div className="flex flex-col items-center gap-1">
+          <div className="flex flex-col items-center gap-2">
             <div className="flex justify-center items-center  gap-2">
               <Image width={32} height={32} src={"/skillPoint32x32.png"} />
               <span>{skillPointsCount} Skill Points</span>
