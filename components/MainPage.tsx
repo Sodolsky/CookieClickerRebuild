@@ -23,6 +23,7 @@ import {
   UpgradesInterface,
   symbolsArray,
   singleSkillTreeNode,
+  UpgradeInterface,
 } from "../utils/interfaces";
 import { CookieToClick } from "./clickerElements/CookieToClick";
 import { Upgrade } from "./clickerElements/Upgrade";
@@ -41,15 +42,23 @@ import { CrystalsModal } from "./clickerElements/crystals/CrystalsModal";
 import { useCPSMultiplier } from "../utils/hooks/useCPSMultiplier";
 import { Chakra } from "./skillTree/Chakra";
 import { ResetModal } from "./skillTree/ResetModal";
+import { addExplosionCookiesCount } from "../redux/explosionCookiesReducer";
 export const MainPage = () => {
   const formatCookieCount = useCallback((n: number) => {
     return abbreviateNumber(n, 2, symbolsArray);
   }, []);
   const resetGameLogic = (skillPointsCount: number) => {
     intervalRef.current && clearInterval(intervalRef.current);
+    dispatch(addExplosionCookiesCount(0));
     dispatch(resetGameAndAddSkillPoints(skillPointsCount));
     dispatch(setInitialSkillTree(true));
   };
+  const isQPBought = useSelector(
+    (state: RootState) =>
+      state.gameLogic.skillTreeLogic.skillTreeNodes.find(
+        (x) => x.name === "quantumPhysics"
+      ) as singleSkillTreeNode
+  ).wasBought;
   const { isClickDoubled } = useClickMultiplier();
   const { multiplierCPS } = useCPSMultiplier();
   const isMobile = useMediaQuery("(max-width:768px)");
@@ -164,13 +173,27 @@ export const MainPage = () => {
                   formattingFn={formatCookieCount}
                 />
               </h2>
-              {Object.values(upgrades).map((x) => {
-                return (
-                  <li key={x.upgradeName}>
-                    <Upgrade {...x} />
-                  </li>
-                );
-              })}
+              {Object.values(upgrades)
+                .filter((x) => {
+                  const upgrade = x as UpgradeInterface;
+                  if (
+                    upgrade.upgradeName === "upgrade11" ||
+                    upgrade.upgradeName === "upgrade12"
+                  ) {
+                    if (isQPBought) {
+                      return x;
+                    }
+                  } else {
+                    return x;
+                  }
+                })
+                .map((x) => {
+                  return (
+                    <li key={x.upgradeName}>
+                      <Upgrade {...x} />
+                    </li>
+                  );
+                })}
             </ul>
           </div>
         </div>
@@ -206,14 +229,28 @@ export const MainPage = () => {
           {Object.values(upgrades).reduce((acc, a) => {
             if (acc && a.numberOfUpgrades >= 10) return acc;
             return (acc = false);
-          }, true) && <ResetModal resetGameLogic={() => resetGameLogic(30)} />}
+          }, true) && <ResetModal resetGameLogic={resetGameLogic} />}
           <div className="grid place-items-center  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 grid-rows-1 gap-2 mt-6 w-full xl:w-3/4">
             {isMobile !== null &&
               !isMobile &&
               //Otherwise we render  upgrades in grid container
-              Object.values(upgrades).map((x) => {
-                return <Upgrade {...x} key={x.upgradeName} />;
-              })}
+              Object.values(upgrades)
+                .filter((x) => {
+                  const upgrade = x as UpgradeInterface;
+                  if (
+                    upgrade.upgradeName === "upgrade11" ||
+                    upgrade.upgradeName === "upgrade12"
+                  ) {
+                    if (isQPBought) {
+                      return x;
+                    }
+                  } else {
+                    return x;
+                  }
+                })
+                .map((x) => {
+                  return <Upgrade {...x} key={x.upgradeName} />;
+                })}
           </div>
         </div>
       </main>

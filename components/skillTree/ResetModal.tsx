@@ -1,10 +1,20 @@
+import { is } from "immer/dist/internal";
 import Image from "next/image";
 import React from "react";
+import { useSelector } from "react-redux";
 import ResetIcon from "../../public/reset.png";
+import { RootState } from "../../redux/store";
+import { singleSkillTreeNode } from "../../utils/interfaces";
 export interface ResetModalProps {
   resetGameLogic: (skillPointsCount: number) => void;
 }
 export const ResetModal: React.FC<ResetModalProps> = ({ resetGameLogic }) => {
+  const isQPBought = useSelector(
+    (state: RootState) =>
+      state.gameLogic.skillTreeLogic.skillTreeNodes.find(
+        (x) => x.name === "quantumPhysics"
+      ) as singleSkillTreeNode
+  ).wasBought;
   return (
     <>
       <label htmlFor="resetModal">
@@ -20,7 +30,10 @@ export const ResetModal: React.FC<ResetModalProps> = ({ resetGameLogic }) => {
         <div className="modal-box bg-black text-white">
           <div className="flex justify-center items-center flex-col gap-1">
             <span>Thanks For Playing The Game</span>
-            <button className="btn" onClick={() => resetGameLogic(30)}>
+            <button
+              className="btn"
+              onClick={() => resetGameLogic(isQPBought ? 60 : 30)}
+            >
               Reset
             </button>
           </div>

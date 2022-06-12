@@ -12,7 +12,8 @@ export type nodeNames =
   | "carpetBombing"
   | "clickingWithLove"
   | "timeMachine"
-  | "heartOfTheEternal";
+  | "heartOfTheEternal"
+  | "quantumPhysics";
 export interface singleSkillTreeNode {
   name: nodeNames;
   isNotable: boolean;
@@ -88,6 +89,18 @@ export const initialSKillTreeUpgrades: singleSkillTreeNode[] = [
     connectedNodes: ["starterNode"],
     image: "mining.png",
     positionObject: { left: "25%", bottom: "16%" },
+  },
+  {
+    name: "quantumPhysics",
+    isNotable: true,
+    nameForPlayer: "Quantum Physics",
+    price: 16,
+    wasBought: false,
+    description:
+      "Adds 2 new upgrades and doubles the number of skill points you get from game resets",
+    connectedNodes: ["crystalMine"],
+    image: "physics.png",
+    positionObject: { left: "6%", bottom: "16%" },
   },
   {
     name: "cookieExplosion",
@@ -190,7 +203,9 @@ export type UpgradesNames =
   | "upgrade7"
   | "upgrade8"
   | "upgrade9"
-  | "upgrade10";
+  | "upgrade10"
+  | "upgrade11"
+  | "upgrade12";
 export type ShopUpgradesNames =
   | "upgrade1Double"
   | "upgrade2Double"
@@ -424,6 +439,8 @@ export interface UpgradesInterface {
   upgrade8: UpgradeInterface;
   upgrade9: UpgradeInterface;
   upgrade10: UpgradeInterface;
+  upgrade11: UpgradeInterface;
+  upgrade12: UpgradeInterface;
 }
 export const initialUpgradesState: UpgradesInterface = {
   upgrade1: {
@@ -525,5 +542,25 @@ export const initialUpgradesState: UpgradesInterface = {
     upgradeName: "upgrade10",
     upgradeNameForPlayer: "Eye of the Eternal",
     image: "/upgrade10.png",
+  },
+  upgrade11: {
+    CookiesPerClickBonus: 1000000000000, //1 000 000 000 000
+    CookiesPerSecondBonus: 1000000000000, //1 000 000 000 000
+    cost: 1000000000000000, // 1 000 000 000 000 000
+    feeIndex: 1.15,
+    numberOfUpgrades: 0,
+    upgradeName: "upgrade11",
+    upgradeNameForPlayer: "Atom",
+    image: "/upgrade11.png",
+  },
+  upgrade12: {
+    CookiesPerClickBonus: 420000000000000, //420 000 000 000 000
+    CookiesPerSecondBonus: 319000000000000, //319 000 000 000 000
+    cost: 250000000000000000, // 250 000 000 000 000 000
+    feeIndex: 1.15,
+    numberOfUpgrades: 0,
+    upgradeName: "upgrade12",
+    upgradeNameForPlayer: "Forger of the Planets",
+    image: "/upgrade12.png",
   },
 };

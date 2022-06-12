@@ -133,6 +133,7 @@ export const CookieToClick: React.FC = () => {
   return (
     <Image
       src={CoockieImage}
+      priority={true}
       className={`cursor-pointer transition-all ${
         explosionAnimationPlayState ? "ShakeAnimationXL" : ""
       }`}
