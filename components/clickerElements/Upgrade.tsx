@@ -8,7 +8,11 @@ import {
   removeCookies,
 } from "../../redux/gameLogicReducer";
 import { RootState } from "../../redux/store";
-import { symbolsArray, UpgradeInterface } from "../../utils/interfaces";
+import {
+  singleSkillTreeNode,
+  symbolsArray,
+  UpgradeInterface,
+} from "../../utils/interfaces";
 import { GrCircleInformation } from "react-icons/gr";
 import { abbreviateNumber } from "js-abbreviation-number";
 import useMediaQuery from "../../utils/hooks/useMediaQuery";
@@ -34,6 +38,12 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
   const shopItems = useSelector(
     (state: RootState) => state.gameLogic.shopItems
   );
+  const isTheoryOfEverythingBought = useSelector(
+    (state: RootState) =>
+      state.gameLogic.skillTreeLogic.skillTreeNodes.find(
+        (x) => x.name === "theoryOfEverything"
+      ) as singleSkillTreeNode
+  ).wasBought;
   useEffect(() => {
     //?Here is the Shop item that doubles the bonuses from single upgrade we handle multiplier logic here
     const doubleUpgrade = shopItems.find((x) => x.upgradeFor === upgradeName);
@@ -41,6 +51,13 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
       doubleUpgrade.wasBought && setMultiplier(2);
     }
   }, [shopItems]);
+  useEffect(() => {
+    let price = cost;
+    for (let i = numberOfUpgrades; i > 0; i--) {
+      price = price * feeIndex;
+    }
+    setPrice(price);
+  }, [isTheoryOfEverythingBought]);
   useEffect(() => {
     if (numberOfUpgrades > 0) {
       //When we first load the component we need to calculate current price

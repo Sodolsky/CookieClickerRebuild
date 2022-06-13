@@ -66,6 +66,12 @@ export const MainPage = () => {
   const cookieCount = useSelector(
     (state: RootState) => state.gameLogic.cookiesLogic.cookieCount
   );
+  const isTheoryOfEverythingBought = useSelector(
+    (state: RootState) =>
+      state.gameLogic.skillTreeLogic.skillTreeNodes.find(
+        (x) => x.name === "theoryOfEverything"
+      ) as singleSkillTreeNode
+  ).wasBought;
   const upgrades = useSelector((state: RootState) => state.gameLogic.upgrades);
   const shopItems = useSelector(
     (state: RootState) => state.gameLogic.shopItems
@@ -248,8 +254,18 @@ export const MainPage = () => {
                     return x;
                   }
                 })
-                .map((x) => {
-                  return <Upgrade {...x} key={x.upgradeName} />;
+                .map((x: UpgradeInterface) => {
+                  return (
+                    <Upgrade
+                      {...x}
+                      cost={
+                        isTheoryOfEverythingBought
+                          ? Math.floor(x.cost / 2)
+                          : x.cost
+                      }
+                      key={x.upgradeName}
+                    />
+                  );
                 })}
           </div>
         </div>
