@@ -9,6 +9,7 @@ import ShardIcon from "../../public/crystal.png";
 import { singleSkillTreeNode } from "../../utils/interfaces";
 import { useState } from "react";
 import { addExplosionCookiesCount } from "../../redux/explosionCookiesReducer";
+import { useCPSMultiplier } from "../../utils/hooks/useCPSMultiplier";
 // export interface CookieToClickProps {
 //   setCookieCount: React.Dispatch<React.SetStateAction<number>>;
 // }
@@ -51,6 +52,12 @@ export const CookieToClick: React.FC = () => {
         (x) => x.name === "carpetBombing"
       ) as singleSkillTreeNode
   ).wasBought;
+  const isTimeBombBought = useSelector(
+    (state: RootState) =>
+      state.gameLogic.skillTreeLogic.skillTreeNodes.find(
+        (x) => x.name === "timeBomb"
+      ) as singleSkillTreeNode
+  ).wasBought;
   function pop(e: React.MouseEvent) {
     let shardsGenerated: number = 0;
     let didExplosionHappen: boolean = false;
@@ -71,10 +78,13 @@ export const CookieToClick: React.FC = () => {
       createParticle(e.clientX, e.clientY, generateShard);
     }
     if (didExplosionHappen) {
+      const timeBombMultiplier = isTimeBombBought ? multiplierCPS : 1;
+      console.log(timeBombMultiplier);
       const cookiesGainedFromExplosion =
         (nuclearBombBought ? 60 : 20) *
         CPC *
         multiplier *
+        timeBombMultiplier *
         ((100 - generateRandomNumber(0, 30)) / 100);
       setExplosionAnimationPlayState(true);
       dispatch(addCookie(cookiesGainedFromExplosion));
@@ -127,6 +137,7 @@ export const CookieToClick: React.FC = () => {
   }
 
   const { isClickDoubled, multiplier } = useClickMultiplier();
+  const { multiplierCPS } = useCPSMultiplier();
   const handleClickIncrementation = () => {
     dispatch(addCookie(CPC * multiplier));
   };
