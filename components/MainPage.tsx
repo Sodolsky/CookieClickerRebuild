@@ -43,6 +43,7 @@ import { useCPSMultiplier } from "../utils/hooks/useCPSMultiplier";
 import { Chakra } from "./skillTree/Chakra";
 import { ResetModal } from "./skillTree/ResetModal";
 import { addExplosionCookiesCount } from "../redux/explosionCookiesReducer";
+import { clearAllCrystalBallStates } from "../redux/crystalBallReducer";
 export const MainPage = () => {
   const formatCookieCount = useCallback((n: number) => {
     return abbreviateNumber(n, 2, symbolsArray);
@@ -50,6 +51,7 @@ export const MainPage = () => {
   const resetGameLogic = (skillPointsCount: number) => {
     intervalRef.current && clearInterval(intervalRef.current);
     dispatch(addExplosionCookiesCount(0));
+    dispatch(clearAllCrystalBallStates());
     dispatch(resetGameAndAddSkillPoints(skillPointsCount));
     dispatch(setInitialSkillTree(true));
   };

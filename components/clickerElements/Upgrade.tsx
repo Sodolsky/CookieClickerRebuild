@@ -16,6 +16,7 @@ import {
 import { GrCircleInformation } from "react-icons/gr";
 import { abbreviateNumber } from "js-abbreviation-number";
 import useMediaQuery from "../../utils/hooks/useMediaQuery";
+import { addNewUpgrade } from "../../redux/crystalBallReducer";
 export const Upgrade: React.FC<UpgradeInterface> = ({
   CookiesPerClickBonus,
   CookiesPerSecondBonus,
@@ -44,6 +45,12 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
         (x) => x.name === "theoryOfEverything"
       ) as singleSkillTreeNode
   ).wasBought;
+  const isCrystalBallBought = useSelector(
+    (state: RootState) =>
+      state.gameLogic.skillTreeLogic.skillTreeNodes.find(
+        (x) => x.name === "crystalBall"
+      ) as singleSkillTreeNode
+  ).wasBought;
   useEffect(() => {
     //?Here is the Shop item that doubles the bonuses from single upgrade we handle multiplier logic here
     const doubleUpgrade = shopItems.find((x) => x.upgradeFor === upgradeName);
@@ -64,6 +71,7 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
       if (price === cost) {
         let price = cost;
         for (let i = numberOfUpgrades; i > 0; i--) {
+          dispatch(addNewUpgrade());
           price = price * feeIndex;
         }
         setPrice(price);
@@ -86,6 +94,7 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
       dispatch(increaseCPS(CookiesPerSecondBonus));
       dispatch(increaseCPC(CookiesPerClickBonus));
       dispatch(buyUpgrade({ name: upgradeName, number: 1 }));
+      isCrystalBallBought && dispatch(addNewUpgrade());
     } else {
       setShakeImage(true);
     }

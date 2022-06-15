@@ -79,7 +79,6 @@ export const CookieToClick: React.FC = () => {
     }
     if (didExplosionHappen) {
       const timeBombMultiplier = isTimeBombBought ? multiplierCPS : 1;
-      console.log(timeBombMultiplier);
       const cookiesGainedFromExplosion =
         (nuclearBombBought ? 60 : 20) *
         CPC *
@@ -135,11 +134,10 @@ export const CookieToClick: React.FC = () => {
       particle.remove();
     };
   }
-
   const { isClickDoubled, multiplier } = useClickMultiplier();
   const { multiplierCPS } = useCPSMultiplier();
   const handleClickIncrementation = () => {
-    dispatch(addCookie(CPC * multiplier));
+    dispatch(addCookie(Math.round(CPC * multiplier)));
   };
   return (
     <Image

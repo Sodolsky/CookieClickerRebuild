@@ -9,6 +9,7 @@ export const useClickMultiplier = () => {
     (state: RootState) =>
       state.gameLogic.shopItems.find((x) => x.name === "doubleClick")?.wasBought
   );
+
   const isClickTripledFromSkillTreeUpgrades = useSelector(
     (state: RootState) =>
       state.gameLogic.skillTreeLogic.skillTreeNodes.find(
@@ -30,6 +31,9 @@ export const useClickMultiplier = () => {
   const isChakraActive = useSelector(
     (state: RootState) => state.chakra.isActive
   );
+  const bonusFromCrystalBall = useSelector(
+    (state: RootState) => state.crystalBall.bonus
+  );
   useEffect(() => {
     let multiplier: number = 1;
     if (isClickDoubled) multiplier += 1;
@@ -38,6 +42,7 @@ export const useClickMultiplier = () => {
       if (isChakraUpgraded) multiplier += 10;
       else multiplier += 3;
     }
+    multiplier *= bonusFromCrystalBall;
     if (isClickingWithLoveBought) multiplier *= 2;
     setMultiplier(multiplier);
   }, [

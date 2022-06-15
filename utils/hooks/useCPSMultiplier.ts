@@ -26,6 +26,9 @@ export const useCPSMultiplier = () => {
         (x) => x.name === "heartOfTheEternal"
       ) as singleSkillTreeNode
   ).wasBought;
+  const bonusFromCrystalBall = useSelector(
+    (state: RootState) => state.crystalBall.bonus
+  );
   useEffect(() => {
     let multiplier: number = 1;
     if (isIdlePlayerBought) multiplier += 4;
@@ -34,12 +37,14 @@ export const useCPSMultiplier = () => {
       else multiplier += 3;
     }
     if (isTimeMachineBought) multiplier *= 2;
+    multiplier *= bonusFromCrystalBall;
     setMultiplierCPS(multiplier);
   }, [
     isIdlePlayerBought,
     isChakraActive,
     isTimeMachineBought,
     isChakraUpgraded,
+    bonusFromCrystalBall,
   ]);
   return { multiplierCPS };
 };

@@ -15,7 +15,8 @@ export type nodeNames =
   | "heartOfTheEternal"
   | "quantumPhysics"
   | "theoryOfEverything"
-  | "timeBomb";
+  | "timeBomb"
+  | "crystalBall";
 export interface singleSkillTreeNode {
   name: nodeNames;
   isNotable: boolean;
@@ -189,6 +190,17 @@ export const initialSKillTreeUpgrades: singleSkillTreeNode[] = [
     connectedNodes: ["idlePlayer"],
     image: "heart.png",
     positionObject: { right: "25%", bottom: "30%" },
+  },
+  {
+    name: "crystalBall",
+    isNotable: false,
+    nameForPlayer: "Clicking With Love",
+    price: 10,
+    wasBought: false,
+    description: "Every upgrade you buy gives you 1% more cookies.",
+    connectedNodes: ["clickingWithLove", "timeMachine"],
+    image: "crystal-ball.png",
+    positionObject: { right: "25%", bottom: "40%" },
   },
 
   {
