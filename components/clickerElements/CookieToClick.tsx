@@ -21,6 +21,9 @@ export const CookieToClick: React.FC = () => {
   const CPC = useSelector(
     (state: RootState) => state.gameLogic.cookiesLogic.CPC
   );
+  const areParticlesDisabled = useSelector(
+    (state: RootState) => state.performance.disableParticlesFromClicking
+  );
   const isPickaxeBought = useSelector(
     (state: RootState) =>
       state.gameLogic.shopItems.find((x) => x.name === "doubleCrystals")
@@ -75,7 +78,9 @@ export const CookieToClick: React.FC = () => {
           }
         }
       }
-      createParticle(e.clientX, e.clientY, generateShard);
+      if (!areParticlesDisabled) {
+        createParticle(e.clientX, e.clientY, generateShard);
+      }
     }
     if (didExplosionHappen) {
       const timeBombMultiplier = isTimeBombBought ? multiplierCPS : 1;

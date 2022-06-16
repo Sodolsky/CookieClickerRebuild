@@ -44,6 +44,12 @@ import { Chakra } from "./skillTree/Chakra";
 import { ResetModal } from "./skillTree/ResetModal";
 import { addExplosionCookiesCount } from "../redux/explosionCookiesReducer";
 import { clearAllCrystalBallStates } from "../redux/crystalBallReducer";
+import {
+  initialPerformanceReducerState,
+  performanceReducerInterface,
+  setInitialPerformanceOptions,
+} from "../redux/performanceReducer";
+import { PerformanceModal } from "./performance/PerformanceModal";
 export const MainPage = () => {
   const formatCookieCount = useCallback((n: number) => {
     return abbreviateNumber(n, 2, symbolsArray);
@@ -119,6 +125,10 @@ export const MainPage = () => {
       const localStorageShopItems =
         (JSON.parse(localStorage.getItem("shopItems")!) as ShopItems) ??
         initialStateOfShopItems;
+      const localStoragePerformanceOptions =
+        (JSON.parse(
+          localStorage.getItem("performance")!
+        ) as performanceReducerInterface) ?? initialPerformanceReducerState;
       const localStorageSkillTreeUnlocked =
         localStorage.getItem("skillTreeUnlocked") === "true" ? true : false;
       Object.values(localStorageUpgrades).forEach((item) => {
@@ -130,6 +140,7 @@ export const MainPage = () => {
           })
         );
       });
+      dispatch(setInitialPerformanceOptions(localStoragePerformanceOptions));
       dispatch(setInitialSkillTree(localStorageSkillTreeUnlocked));
       dispatch(setInitialShopitems(localStorageShopItems));
       dispatch(setInitialCookieCount(localStorageCookieCount));
@@ -238,6 +249,7 @@ export const MainPage = () => {
             if (acc && a.numberOfUpgrades >= 10) return acc;
             return (acc = false);
           }, true) && <ResetModal resetGameLogic={resetGameLogic} />}
+          <PerformanceModal />
           <div className="grid place-items-center  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 grid-rows-1 gap-2 mt-6 w-full xl:w-3/4">
             {isMobile !== null &&
               !isMobile &&

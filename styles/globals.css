@@ -40,13 +40,16 @@
     pointer-events: auto;
   }
 }
-html,
-body {
+.animatedBodyBG {
   background: linear-gradient(270deg, #a88beb, #f8ceec);
   background-size: 400% 400%;
   -webkit-animation: AnimatedGradient 19s ease infinite;
   -moz-animation: AnimatedGradient 19s ease infinite;
   animation: AnimatedGradient 19s ease infinite;
+}
+html,
+body {
+  background-color: #f8ceec;
   @apply font-JosefinSans;
   @apply font-normal;
 }

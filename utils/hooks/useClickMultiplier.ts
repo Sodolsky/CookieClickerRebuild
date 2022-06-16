@@ -51,6 +51,7 @@ export const useClickMultiplier = () => {
     isChakraActive,
     isClickingWithLoveBought,
     isChakraUpgraded,
+    bonusFromCrystalBall,
   ]);
   return { isClickDoubled, multiplier };
 };
