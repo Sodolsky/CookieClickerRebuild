@@ -187,7 +187,7 @@ export const MainPage = () => {
                 <CountUp
                   end={cookieCount}
                   preserveValue={true}
-                  duration={0.35}
+                  duration={0.25}
                   separator={" "}
                   formattingFn={formatCookieCount}
                 />

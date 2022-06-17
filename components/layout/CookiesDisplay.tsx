@@ -65,12 +65,13 @@ export const CookiesDisplay: React.FC<CookiesDisplayProps> = ({
           <span className="text-red-500 font-bold">Disabled</span>
         ) : (
           <span>
-            {abbreviateNumber(CPS * multiplierCPS, 1, symbolsArray)}/s
+            {abbreviateNumber(Math.round(CPS * multiplierCPS), 1, symbolsArray)}
+            /s
           </span>
         )}
       </div>
       <div className="text-lg lg:text-xl">
-        CPC: {abbreviateNumber(CPC * multiplier, 1, symbolsArray)}
+        CPC: {abbreviateNumber(Math.round(CPC * multiplier), 1, symbolsArray)}
       </div>
     </section>
   );
