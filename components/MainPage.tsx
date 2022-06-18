@@ -151,6 +151,12 @@ export const MainPage = () => {
       dispatch(stateWereLoaded(true));
     }
   }, []);
+  console.log(
+    Object.values(upgrades).reduce((acc, a) => {
+      if (acc && a.numberOfUpgrades >= 10) return acc;
+      return (acc = false);
+    }, true)
+  );
   useEffect(() => {
     if (isClickDoubled) {
       intervalRef.current && clearInterval(intervalRef.current);

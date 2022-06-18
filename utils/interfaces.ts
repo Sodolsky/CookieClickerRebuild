@@ -162,7 +162,7 @@ export const initialSKillTreeUpgrades: singleSkillTreeNode[] = [
     wasBought: false,
     description: "Makes explosions more common.",
     connectedNodes: ["cookieExplosion"],
-    image: "carpetBombing.png",
+    image: "carpet-bombing.png",
     positionObject: { left: "35%", bottom: "40%" },
     explanation: "Chance for the explosion is tripled",
   },
@@ -295,7 +295,7 @@ export type CrystalShopItems = CrystalShopItem[];
 export const initialStateOfCrystalShopItems: CrystalShopItems = [
   {
     name: "upgrade7Skin",
-    image: "/ufolichwaly.jpg",
+    image: "/ufo.jpg",
     nameInShop: "Lichwala's UFO",
     description: "UFO designed by Lichwala!",
     price: 20000,
