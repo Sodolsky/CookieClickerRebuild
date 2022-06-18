@@ -151,12 +151,7 @@ export const MainPage = () => {
       dispatch(stateWereLoaded(true));
     }
   }, []);
-  console.log(
-    Object.values(upgrades).reduce((acc, a) => {
-      if (acc && a.numberOfUpgrades >= 10) return acc;
-      return (acc = false);
-    }, true)
-  );
+
   useEffect(() => {
     if (isClickDoubled) {
       intervalRef.current && clearInterval(intervalRef.current);
@@ -251,10 +246,24 @@ export const MainPage = () => {
           />
           <CookieToClick />
           {/* This Code is checking if player has bought 10 upgrades of type */}
-          {Object.values(upgrades).reduce((acc, a) => {
-            if (acc && a.numberOfUpgrades >= 10) return acc;
-            return (acc = false);
-          }, true) && <ResetModal resetGameLogic={resetGameLogic} />}
+          {Object.values(upgrades)
+            .filter((x) => {
+              const upgrade = x as UpgradeInterface;
+              if (
+                upgrade.upgradeName === "upgrade11" ||
+                upgrade.upgradeName === "upgrade12"
+              ) {
+                if (isQPBought) {
+                  return x;
+                }
+              } else {
+                return x;
+              }
+            })
+            .reduce((acc, a) => {
+              if (acc && a.numberOfUpgrades >= 10) return acc;
+              return (acc = false);
+            }, true) && <ResetModal resetGameLogic={resetGameLogic} />}
           <PerformanceModal />
           <div className="grid place-items-center  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 grid-rows-1 gap-2 mt-6 w-full xl:w-3/4">
             {isMobile !== null &&
