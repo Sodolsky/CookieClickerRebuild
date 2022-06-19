@@ -31,8 +31,6 @@ import { CookiesDisplay } from "./layout/CookiesDisplay";
 import { Header } from "./layout/Header";
 import { AiOutlineMenu } from "react-icons/ai";
 import useMediaQuery from "../utils/hooks/useMediaQuery";
-import CountUp from "react-countup";
-import { abbreviateNumber } from "js-abbreviation-number";
 import { Store } from "./clickerElements/store/Store";
 import { EternalTalk } from "./skillTree/EternalTalk";
 import { SkillTreeModal } from "./skillTree/SkillTreeModal";
@@ -50,10 +48,8 @@ import {
   setInitialPerformanceOptions,
 } from "../redux/performanceReducer";
 import { PerformanceModal } from "./performance/PerformanceModal";
+import { MobileCookieCountWrapper } from "./clickerElements/MobileCookieCountWrapper";
 export const MainPage = () => {
-  const formatCookieCount = useCallback((n: number) => {
-    return abbreviateNumber(n, 2, symbolsArray);
-  }, []);
   const resetGameLogic = (skillPointsCount: number) => {
     intervalRef.current && clearInterval(intervalRef.current);
     dispatch(addExplosionCookiesCount(0));
@@ -71,9 +67,7 @@ export const MainPage = () => {
   const { multiplierCPS } = useCPSMultiplier();
   const isMobile = useMediaQuery("(max-width:768px)");
   const intervalRef = useRef<null | NodeJS.Timer>(null);
-  const cookieCount = useSelector(
-    (state: RootState) => state.gameLogic.cookiesLogic.cookieCount
-  );
+
   const isTheoryOfEverythingBought = useSelector(
     (state: RootState) =>
       state.gameLogic.skillTreeLogic.skillTreeNodes.find(
@@ -90,9 +84,7 @@ export const MainPage = () => {
   const CPC = useSelector(
     (state: RootState) => state.gameLogic.cookiesLogic.CPC
   );
-  const crystals = useSelector(
-    (state: RootState) => state.gameLogic.cookiesLogic.crystals
-  );
+
   const isSkillTreeUnlocked = useSelector(
     (state: RootState) => state.gameLogic.skillTreeLogic.isSkillTreeUnlocked
   );
@@ -151,7 +143,6 @@ export const MainPage = () => {
       dispatch(stateWereLoaded(true));
     }
   }, []);
-
   useEffect(() => {
     if (isClickDoubled) {
       intervalRef.current && clearInterval(intervalRef.current);
@@ -183,16 +174,7 @@ export const MainPage = () => {
           <div className="drawer-side">
             <label htmlFor="my-drawer" className="drawer-overlay"></label>
             <ul className="menu p-4 gap-2 overflow-y-auto w-80 bg-base-100 text-base-content">
-              <h2 className="text-2xl text-center">
-                Cookies:{" "}
-                <CountUp
-                  end={cookieCount}
-                  preserveValue={true}
-                  duration={0.25}
-                  separator={" "}
-                  formattingFn={formatCookieCount}
-                />
-              </h2>
+              <MobileCookieCountWrapper />
               {Object.values(upgrades)
                 .filter((x) => {
                   const upgrade = x as UpgradeInterface;
@@ -239,10 +221,8 @@ export const MainPage = () => {
           </button> */}
           <Header />
           <CookiesDisplay
-            cookieCount={Number(cookieCount.toFixed(2))}
             CPS={Number(CPS.toFixed(2))}
             CPC={Number(CPC.toFixed(2))}
-            crystals={Number(crystals.toFixed(2))}
           />
           <CookieToClick />
           {/* This Code is checking if player has bought 10 upgrades of type */}

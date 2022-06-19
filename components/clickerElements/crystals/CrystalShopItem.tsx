@@ -7,6 +7,7 @@ import {
   buyCrystalShopItem,
   changeUsageOfCrystalShopitem,
   removeCrystals,
+  resetSkillTree,
 } from "../../../redux/gameLogicReducer";
 import { useEffect, useState } from "react";
 export const CrystalShopItemComponent: React.FC<CrystalShopItem> = ({
@@ -27,8 +28,12 @@ export const CrystalShopItemComponent: React.FC<CrystalShopItem> = ({
   const buyItem = () => {
     if (!wasBought) {
       if (crystalCount >= price) {
+        if (name === "resetSkillTree") {
+          dispatch(resetSkillTree());
+        } else {
+          dispatch(buyCrystalShopItem(name));
+        }
         dispatch(removeCrystals(price));
-        dispatch(buyCrystalShopItem(name));
       } else {
         setShakeImage(true);
       }

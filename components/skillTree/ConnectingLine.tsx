@@ -21,7 +21,9 @@ export const ConnectingLine: React.FC<ConnectingLineProps> = ({
     state.gameLogic.skillTreeLogic.skillTreeNodes.find((x) => x.name === from)
   ) as singleSkillTreeNode;
   useEffect(() => {
-    if (targetNode.wasBought && fromNode.wasBought) setIsActive(true);
+    targetNode.wasBought && fromNode.wasBought
+      ? setIsActive(true)
+      : setIsActive(false);
   }, [targetNode.wasBought, fromNode.wasBought]);
   const adjustLine = (
     from: HTMLDivElement,

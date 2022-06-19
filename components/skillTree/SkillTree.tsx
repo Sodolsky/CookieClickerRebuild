@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import { singleSkillTreeNode } from "../../utils/interfaces";
 import { ConnectingLine } from "./ConnectingLine";
 import { Node } from "./Node";
 interface SkillTreeInterface {

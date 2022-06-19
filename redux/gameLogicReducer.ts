@@ -3,7 +3,7 @@ import { cloneDeep } from "lodash";
 import {
   CrystalShopItems,
   CrystalUpgradesNames as CrystalUpgradesNames,
-  initialSKillTreeUpgrades,
+  initialSkillTreeNodes,
   initialStateOfCrystalShopItems,
   initialStateOfShopItems,
   initialUpgradesState,
@@ -48,7 +48,7 @@ const initialState: InitialGameLogicStateInterface = {
   skillTreeLogic: {
     skillPoints: 0,
     isSkillTreeUnlocked: false,
-    skillTreeNodes: initialSKillTreeUpgrades,
+    skillTreeNodes: initialSkillTreeNodes,
   },
   upgrades: initialUpgradesState,
   crystalShopItems: initialStateOfCrystalShopItems,
@@ -65,7 +65,9 @@ export const gameMechanicSlice = createSlice({
     },
     //!Here are reducers for Clicker Logic
     addCookie: (state, action: PayloadAction<number>) => {
-      state.cookiesLogic.cookieCount += action.payload;
+      const newNumberOfCookies = (state.cookiesLogic.cookieCount +=
+        action.payload);
+      state.cookiesLogic.cookieCount = newNumberOfCookies;
       localStorage.setItem(
         "cookieCount",
         String(state.cookiesLogic.cookieCount.toFixed(2))
@@ -226,7 +228,7 @@ export const gameMechanicSlice = createSlice({
         const skillTreeNodes =
           (JSON.parse(
             localStorage.getItem("skillTreeNodes")!
-          ) as singleSkillTreeNode[]) ?? initialSKillTreeUpgrades;
+          ) as singleSkillTreeNode[]) ?? initialSkillTreeNodes;
         return {
           ...state,
           skillTreeLogic: {
@@ -298,6 +300,24 @@ export const gameMechanicSlice = createSlice({
       };
       return returnObject;
     },
+    resetSkillTree(state) {
+      const numberOfPoints = state.skillTreeLogic.skillTreeNodes.reduce(
+        (acc, a) => (a.wasBought ? (acc += a.price) : acc),
+        0
+      );
+      const newSkillPoints = (state.skillTreeLogic.skillPoints +=
+        numberOfPoints);
+      localStorage.setItem(
+        "skillTreeNodes",
+        JSON.stringify(initialSkillTreeNodes)
+      );
+      localStorage.setItem("skillPoints", `${newSkillPoints}`);
+      state.skillTreeLogic = {
+        ...state.skillTreeLogic,
+        skillPoints: newSkillPoints,
+        skillTreeNodes: initialSkillTreeNodes,
+      };
+    },
   },
 });
 
@@ -325,5 +345,6 @@ export const {
   changeUsageOfCrystalShopitem,
   stateWereLoaded,
   buySkillTreeUpgrade,
+  resetSkillTree,
 } = gameMechanicSlice.actions;
 export default gameMechanicSlice.reducer;

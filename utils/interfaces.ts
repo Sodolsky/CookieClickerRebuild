@@ -29,7 +29,7 @@ export interface singleSkillTreeNode {
   positionObject: CSSProperties;
   explanation?: string;
 }
-export const initialSKillTreeUpgrades: singleSkillTreeNode[] = [
+export const initialSkillTreeNodes: singleSkillTreeNode[] = [
   {
     name: "starterNode",
     isNotable: false,
@@ -259,7 +259,8 @@ export type ShopUpgradesNames =
 export type CrystalUpgradesNames =
   | "upgrade5Skin"
   | "upgrade6Skin"
-  | "upgrade7Skin";
+  | "upgrade7Skin"
+  | "resetSkillTree";
 export type shopUpgradeTypes = "double" | "unique";
 export const symbolsArray: string[] = ["", "k", "M", "B", "T", "P", "E"];
 export interface UpgradeInterface {
@@ -317,6 +318,15 @@ export const initialStateOfCrystalShopItems: CrystalShopItems = [
     nameInShop: "Golden Lichwala",
     description: "Lichwala becomes Golden! Bystrości",
     price: 1000,
+    wasBought: false,
+    inUse: false,
+  },
+  {
+    name: "resetSkillTree",
+    image: "/resetSkillTree.png",
+    nameInShop: "Reset Skill Tree",
+    description: "Resets your skill tree",
+    price: 250,
     wasBought: false,
     inUse: false,
   },
@@ -449,6 +459,26 @@ export const initialStateOfShopItems: ShopItems = [
     price: 100000000, // 100 000 000
     type: "unique",
     description: "Doubles your click but removes CPS",
+    wasBought: false,
+    wasShown: false,
+  },
+  {
+    name: "doubleCrystals",
+    nameInShop: "Pickaxe",
+    image: "/pickaxe.png",
+    price: 2500000, // 2 500 000
+    type: "unique",
+    description: "Increases your chance to find gems while clicking cookie.",
+    wasBought: false,
+    wasShown: false,
+  },
+  {
+    name: "doubleCrystals",
+    nameInShop: "Pickaxe",
+    image: "/pickaxe.png",
+    price: 2500000, // 2 500 000
+    type: "unique",
+    description: "Increases your chance to find gems while clicking cookie.",
     wasBought: false,
     wasShown: false,
   },

@@ -8,16 +8,10 @@ import { RootState } from "../../redux/store";
 import Image from "next/image";
 import { useCPSMultiplier } from "../../utils/hooks/useCPSMultiplier";
 interface CookiesDisplayProps {
-  cookieCount: number;
   CPS: number;
   CPC: number;
-  crystals: number;
 }
-export const CookiesDisplay: React.FC<CookiesDisplayProps> = ({
-  cookieCount,
-  CPS,
-  CPC,
-}) => {
+export const CookiesDisplay: React.FC<CookiesDisplayProps> = ({ CPS, CPC }) => {
   const { isClickDoubled, multiplier } = useClickMultiplier();
   const { multiplierCPS } = useCPSMultiplier();
   const formatCookieCount = useCallback((n: number) => {
@@ -25,6 +19,9 @@ export const CookiesDisplay: React.FC<CookiesDisplayProps> = ({
   }, []);
   const explosionCookiesCount = useSelector(
     (state: RootState) => state.explosionCookies.cookies
+  );
+  const cookieCount = useSelector(
+    (state: RootState) => state.gameLogic.cookiesLogic.cookieCount
   );
   return (
     <section className="flex flex-col items-center justify-center text-xl">

@@ -11,6 +11,9 @@ export const CrystalsModal = () => {
   const allStatesWereLoaded = useSelector(
     (state: RootState) => state.gameLogic.areStatesLoaded
   );
+  const isSkillTreeUnlocked = useSelector(
+    (state: RootState) => state.gameLogic.skillTreeLogic.isSkillTreeUnlocked
+  );
   const inputRef = useRef<null | HTMLInputElement>(null);
   return (
     <>
@@ -28,6 +31,10 @@ export const CrystalsModal = () => {
           <div className="flex justify-center items-center gap-2 flex-col">
             {allStatesWereLoaded &&
               cloneDeep(crystalShopItems)
+                .filter((x) => {
+                  if (x.name !== "resetSkillTree" || isSkillTreeUnlocked)
+                    return x;
+                })
                 .sort((a, b) => (a === b ? 0 : a.wasBought ? -1 : 1))
                 .map((x) => (
                   <CrystalShopItemComponent {...x} key={x.nameInShop} />
