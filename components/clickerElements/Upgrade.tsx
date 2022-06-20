@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   buyUpgrade,
-  increaseCPC,
-  increaseCPS,
+  changeCPC,
+  changeCPS,
   removeCookies,
 } from "../../redux/gameLogicReducer";
 import { RootState } from "../../redux/store";
@@ -36,6 +36,12 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
   const [multiplier, setMultiplier] = useState<number>(1);
   //?We shake the image when user doesn't have enought cookie to buy an upgrade
   const [shakeImage, setShakeImage] = useState<boolean>(false);
+  const currentBestUpgradeBonus = useSelector(
+    (state: RootState) => state.trashToTreasure.bonus
+  );
+  const isThisUpgradeTheBest =
+    useSelector((state: RootState) => state.trashToTreasure.bestUpgrade) ===
+    upgradeName;
   const shopItems = useSelector(
     (state: RootState) => state.gameLogic.shopItems
   );
@@ -91,8 +97,8 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
   const upgradeCPS = () => {
     if (currentCookies >= price) {
       dispatch(removeCookies(price));
-      dispatch(increaseCPS(CookiesPerSecondBonus));
-      dispatch(increaseCPC(CookiesPerClickBonus));
+      dispatch(changeCPS({ type: "increase", amount: CookiesPerSecondBonus }));
+      dispatch(changeCPC({ type: "increase", amount: CookiesPerClickBonus }));
       dispatch(buyUpgrade({ name: upgradeName, number: 1 }));
       isCrystalBallBought && dispatch(addNewUpgrade());
     } else {
@@ -146,7 +152,10 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
         <span>
           CPS:{" "}
           {abbreviateNumber(
-            CookiesPerSecondBonus * numberOfUpgrades * multiplier,
+            CookiesPerSecondBonus *
+              numberOfUpgrades *
+              multiplier *
+              (isThisUpgradeTheBest ? currentBestUpgradeBonus : 1),
             1,
             symbolsArray
           )}
@@ -154,7 +163,10 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
         <span>
           CPC:{" "}
           {abbreviateNumber(
-            CookiesPerClickBonus * numberOfUpgrades * multiplier,
+            CookiesPerClickBonus *
+              numberOfUpgrades *
+              multiplier *
+              (isThisUpgradeTheBest ? currentBestUpgradeBonus : 1),
             1,
             symbolsArray
           )}
@@ -192,7 +204,8 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
           {abbreviateNumber(
             numberOfUpgrades > 0
               ? CookiesPerSecondBonus * numberOfUpgrades * multiplier
-              : CookiesPerSecondBonus,
+              : CookiesPerSecondBonus *
+                  (isThisUpgradeTheBest ? currentBestUpgradeBonus : 1),
             1,
             symbolsArray
           )}
@@ -202,7 +215,8 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
           {abbreviateNumber(
             numberOfUpgrades > 0
               ? CookiesPerClickBonus * numberOfUpgrades * multiplier
-              : CookiesPerClickBonus,
+              : CookiesPerClickBonus *
+                  (isThisUpgradeTheBest ? currentBestUpgradeBonus : 1),
             1,
             symbolsArray
           )}

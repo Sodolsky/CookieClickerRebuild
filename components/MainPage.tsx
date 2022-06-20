@@ -49,11 +49,17 @@ import {
 } from "../redux/performanceReducer";
 import { PerformanceModal } from "./performance/PerformanceModal";
 import { MobileCookieCountWrapper } from "./clickerElements/MobileCookieCountWrapper";
+import {
+  changeBestUpgrade,
+  changeBonusForTTT,
+  clearTTTState,
+} from "../redux/trashToTreasureReducer";
 export const MainPage = () => {
   const resetGameLogic = (skillPointsCount: number) => {
     intervalRef.current && clearInterval(intervalRef.current);
     dispatch(addExplosionCookiesCount(0));
     dispatch(clearAllCrystalBallStates());
+    dispatch(clearTTTState());
     dispatch(resetGameAndAddSkillPoints(skillPointsCount));
     dispatch(setInitialSkillTree(true));
   };
@@ -97,6 +103,15 @@ export const MainPage = () => {
         (x) => x.name === "chakra"
       ) as singleSkillTreeNode
   ).wasBought;
+  const isTrashToTreasureBought = useSelector(
+    (state: RootState) =>
+      state.gameLogic.skillTreeLogic.skillTreeNodes.find(
+        (x) => x.name === "trashToTreasure"
+      ) as singleSkillTreeNode
+  ).wasBought;
+  const currentBestUpgrade = useSelector(
+    (state: RootState) => state.trashToTreasure.bestUpgrade
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -157,6 +172,35 @@ export const MainPage = () => {
     intervalRef.current = gameLoopInterval;
     return () => clearInterval(gameLoopInterval);
   }, [multiplierCPS, CPS, statesWereLoaded]);
+  //?This UEF is for changing best Upgrade for TrashToTreasureReducer
+  useEffect(() => {
+    if (isTrashToTreasureBought) {
+      const boughtUpgrades = Object.values(upgrades)
+        .filter((x: UpgradeInterface) => x.numberOfUpgrades > 0)
+        .sort((a: UpgradeInterface, b: UpgradeInterface) =>
+          a.CookiesPerClickBonus > b.CookiesPerClickBonus ? 1 : -1
+        );
+      if (boughtUpgrades.length < 2) return;
+      const bestUpgrade: UpgradeInterface =
+        boughtUpgrades[boughtUpgrades.length - 1];
+      boughtUpgrades.pop();
+      const numberOfUpgradesBought = boughtUpgrades.reduce(
+        (acc, a: UpgradeInterface) => (acc += a.numberOfUpgrades),
+        0
+      );
+      const newBonus = 1 + numberOfUpgradesBought * 0.02;
+      if (currentBestUpgrade !== bestUpgrade.upgradeName) {
+        dispatch(
+          changeBestUpgrade({
+            bestUpgrade: bestUpgrade.upgradeName,
+            bonus: newBonus,
+          })
+        );
+      } else {
+        dispatch(changeBonusForTTT(newBonus));
+      }
+    }
+  }, [upgrades, isTrashToTreasureBought]);
   return (
     <>
       {isMobile && (

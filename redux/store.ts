@@ -4,6 +4,7 @@ import crystalBallReducer from "./crystalBallReducer";
 import explosionCookiesReducer from "./explosionCookiesReducer";
 import gameLogicReducer from "./gameLogicReducer";
 import performanceReducer from "./performanceReducer";
+import trashToTreasureReducer from "./trashToTreasureReducer";
 export const store = configureStore({
   reducer: {
     gameLogic: gameLogicReducer,
@@ -11,6 +12,7 @@ export const store = configureStore({
     chakra: chakraReducer,
     crystalBall: crystalBallReducer,
     performance: performanceReducer,
+    trashToTreasure: trashToTreasureReducer,
   },
 });
 export type RootState = ReturnType<typeof store.getState>;

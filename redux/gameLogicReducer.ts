@@ -37,6 +37,10 @@ interface InitialNumberOfUpgradesInterface {
   number: number;
   name: UpgradesNames;
 }
+interface UpgradeActionsInterface {
+  type: "increase" | "decrease";
+  amount: number;
+}
 // Define the initial state using that type
 const initialState: InitialGameLogicStateInterface = {
   cookiesLogic: {
@@ -88,14 +92,19 @@ export const gameMechanicSlice = createSlice({
       );
     },
     //Here are reducers for buying upgrades
-    increaseCPS: (state, action: PayloadAction<number>) => {
-      state.cookiesLogic.CPS += action.payload;
+    changeCPS: (state, action: PayloadAction<UpgradeActionsInterface>) => {
+      if (action.payload.type === "increase")
+        state.cookiesLogic.CPS += action.payload.amount;
+      else state.cookiesLogic.CPS -= action.payload.amount;
       localStorage.setItem("CPS", String(state.cookiesLogic.CPS.toFixed(2)));
     },
-    increaseCPC: (state, action: PayloadAction<number>) => {
-      state.cookiesLogic.CPC += action.payload;
+    changeCPC: (state, action: PayloadAction<UpgradeActionsInterface>) => {
+      if (action.payload.type === "increase")
+        state.cookiesLogic.CPC += action.payload.amount;
+      else state.cookiesLogic.CPC -= action.payload.amount;
       localStorage.setItem("CPC", String(state.cookiesLogic.CPC.toFixed(2)));
     },
+
     addCrystals: (state, action: PayloadAction<number>) => {
       state.cookiesLogic.crystals += action.payload;
       localStorage.setItem(
@@ -327,9 +336,9 @@ export const {
   setInitialCrystals,
   setInitialCookieCount,
   setInitialCPS,
-  increaseCPS,
+  changeCPS,
   removeCookies,
-  increaseCPC,
+  changeCPC,
   setInitialCPC,
   buyUpgrade,
   setInitialNumberOfUpgradesForUpgrade,

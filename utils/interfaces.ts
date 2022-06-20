@@ -16,7 +16,8 @@ export type nodeNames =
   | "quantumPhysics"
   | "theoryOfEverything"
   | "timeBomb"
-  | "crystalBall";
+  | "crystalBall"
+  | "trashToTreasure";
 export interface singleSkillTreeNode {
   name: nodeNames;
   isNotable: boolean;
@@ -194,13 +195,27 @@ export const initialSkillTreeNodes: singleSkillTreeNode[] = [
   {
     name: "crystalBall",
     isNotable: false,
-    nameForPlayer: "Clicking With Love",
+    nameForPlayer: "Crystal Ball",
     price: 10,
     wasBought: false,
     description: "Every upgrade you buy gives you 1% more cookies.",
     connectedNodes: ["clickingWithLove", "timeMachine"],
     image: "crystal-ball.png",
     positionObject: { right: "25%", bottom: "40%" },
+  },
+  {
+    name: "trashToTreasure",
+    isNotable: false,
+    nameForPlayer: "Trash to Treasure",
+    price: 20,
+    wasBought: false,
+    description:
+      "Every upgrade you bought makes your current best upgrade stronger,",
+    explanation:
+      "The number of CPS/CPC is increased by 0.02%. Your current best upgrade is the upgrade that gives costs the mosts and it's not counting to the bonus. ",
+    connectedNodes: ["crystalBall", "timeBomb"],
+    image: "treasure.png",
+    positionObject: { right: "32.5%", bottom: "50%" },
   },
 
   {
@@ -459,26 +474,6 @@ export const initialStateOfShopItems: ShopItems = [
     price: 100000000, // 100 000 000
     type: "unique",
     description: "Doubles your click but removes CPS",
-    wasBought: false,
-    wasShown: false,
-  },
-  {
-    name: "doubleCrystals",
-    nameInShop: "Pickaxe",
-    image: "/pickaxe.png",
-    price: 2500000, // 2 500 000
-    type: "unique",
-    description: "Increases your chance to find gems while clicking cookie.",
-    wasBought: false,
-    wasShown: false,
-  },
-  {
-    name: "doubleCrystals",
-    nameInShop: "Pickaxe",
-    image: "/pickaxe.png",
-    price: 2500000, // 2 500 000
-    type: "unique",
-    description: "Increases your chance to find gems while clicking cookie.",
     wasBought: false,
     wasShown: false,
   },

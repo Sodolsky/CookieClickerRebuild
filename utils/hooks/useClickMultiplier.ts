@@ -31,6 +31,12 @@ export const useClickMultiplier = () => {
   const isChakraActive = useSelector(
     (state: RootState) => state.chakra.isActive
   );
+  const isCrystalBallBought = useSelector(
+    (state: RootState) =>
+      state.gameLogic.skillTreeLogic.skillTreeNodes.find(
+        (x) => x.name === "crystalBall"
+      ) as singleSkillTreeNode
+  ).wasBought;
   const bonusFromCrystalBall = useSelector(
     (state: RootState) => state.crystalBall.bonus
   );
@@ -42,7 +48,7 @@ export const useClickMultiplier = () => {
       if (isChakraUpgraded) multiplier += 10;
       else multiplier += 3;
     }
-    multiplier *= bonusFromCrystalBall;
+    if (isCrystalBallBought) multiplier *= bonusFromCrystalBall;
     if (isClickingWithLoveBought) multiplier *= 2;
     setMultiplier(multiplier);
   }, [
@@ -52,6 +58,7 @@ export const useClickMultiplier = () => {
     isClickingWithLoveBought,
     isChakraUpgraded,
     bonusFromCrystalBall,
+    isCrystalBallBought,
   ]);
   return { isClickDoubled, multiplier };
 };
