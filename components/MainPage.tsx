@@ -109,6 +109,7 @@ export const MainPage = () => {
         (x) => x.name === "trashToTreasure"
       ) as singleSkillTreeNode
   ).wasBought;
+
   const currentBestUpgrade = useSelector(
     (state: RootState) => state.trashToTreasure.bestUpgrade
   );
@@ -124,8 +125,6 @@ export const MainPage = () => {
         (JSON.parse(
           localStorage.getItem("crystalItems")!
         ) as CrystalShopItems) ?? initialStateOfCrystalShopItems;
-      const localStorageCPSCount = Number(localStorage.getItem("CPS") ?? 0);
-      const localStorageCPCCount = Number(localStorage.getItem("CPC") ?? 1);
       const localStorageUpgrades =
         (JSON.parse(localStorage.getItem("upgrades")!) as UpgradesInterface) ??
         initialUpgradesState;
@@ -147,12 +146,22 @@ export const MainPage = () => {
           })
         );
       });
+      const CPSCount = Object.values(localStorageUpgrades).reduce(
+        (acc: number, a: UpgradeInterface) =>
+          (acc += a.numberOfUpgrades * a.CookiesPerSecondBonus),
+        0
+      );
+      const CPCCount = Object.values(localStorageUpgrades).reduce(
+        (acc: number, a: UpgradeInterface) =>
+          (acc += a.numberOfUpgrades * a.CookiesPerClickBonus),
+        1
+      );
       dispatch(setInitialPerformanceOptions(localStoragePerformanceOptions));
       dispatch(setInitialSkillTree(localStorageSkillTreeUnlocked));
       dispatch(setInitialShopitems(localStorageShopItems));
       dispatch(setInitialCookieCount(localStorageCookieCount));
-      dispatch(setInitialCPS(localStorageCPSCount));
-      dispatch(setInitialCPC(localStorageCPCCount));
+      dispatch(setInitialCPS(CPSCount));
+      dispatch(setInitialCPC(CPCCount));
       dispatch(setInitialCrystals(localStorageCrystalsCount));
       dispatch(setInitialCrystalShopItems(locaStorageCrystalUpgrades));
       dispatch(stateWereLoaded(true));

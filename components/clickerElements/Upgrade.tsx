@@ -45,6 +45,7 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
   const shopItems = useSelector(
     (state: RootState) => state.gameLogic.shopItems
   );
+
   const isTheoryOfEverythingBought = useSelector(
     (state: RootState) =>
       state.gameLogic.skillTreeLogic.skillTreeNodes.find(
@@ -152,10 +153,12 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
         <span>
           CPS:{" "}
           {abbreviateNumber(
-            CookiesPerSecondBonus *
-              numberOfUpgrades *
-              multiplier *
-              (isThisUpgradeTheBest ? currentBestUpgradeBonus : 1),
+            Math.floor(
+              CookiesPerSecondBonus *
+                numberOfUpgrades *
+                multiplier *
+                (isThisUpgradeTheBest ? currentBestUpgradeBonus : 1)
+            ),
             1,
             symbolsArray
           )}
@@ -163,10 +166,12 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
         <span>
           CPC:{" "}
           {abbreviateNumber(
-            CookiesPerClickBonus *
-              numberOfUpgrades *
-              multiplier *
-              (isThisUpgradeTheBest ? currentBestUpgradeBonus : 1),
+            Math.floor(
+              CookiesPerClickBonus *
+                numberOfUpgrades *
+                multiplier *
+                (isThisUpgradeTheBest ? currentBestUpgradeBonus : 1)
+            ),
             1,
             symbolsArray
           )}

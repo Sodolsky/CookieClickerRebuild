@@ -96,13 +96,11 @@ export const gameMechanicSlice = createSlice({
       if (action.payload.type === "increase")
         state.cookiesLogic.CPS += action.payload.amount;
       else state.cookiesLogic.CPS -= action.payload.amount;
-      localStorage.setItem("CPS", String(state.cookiesLogic.CPS.toFixed(2)));
     },
     changeCPC: (state, action: PayloadAction<UpgradeActionsInterface>) => {
       if (action.payload.type === "increase")
         state.cookiesLogic.CPC += action.payload.amount;
       else state.cookiesLogic.CPC -= action.payload.amount;
-      localStorage.setItem("CPC", String(state.cookiesLogic.CPC.toFixed(2)));
     },
 
     addCrystals: (state, action: PayloadAction<number>) => {
