@@ -45,7 +45,14 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
   const shopItems = useSelector(
     (state: RootState) => state.gameLogic.shopItems
   );
-
+  const contributions = {
+    CPSContribution: CookiesPerSecondBonus * numberOfUpgrades,
+    CPCContribution: CookiesPerClickBonus * numberOfUpgrades,
+    CPCContributionWithTTT:
+      CookiesPerClickBonus * numberOfUpgrades * currentBestUpgradeBonus,
+    CPSContributionWithTTT:
+      CookiesPerSecondBonus * numberOfUpgrades * currentBestUpgradeBonus,
+  };
   const isTheoryOfEverythingBought = useSelector(
     (state: RootState) =>
       state.gameLogic.skillTreeLogic.skillTreeNodes.find(
@@ -56,6 +63,12 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
     (state: RootState) =>
       state.gameLogic.skillTreeLogic.skillTreeNodes.find(
         (x) => x.name === "crystalBall"
+      ) as singleSkillTreeNode
+  ).wasBought;
+  const isTrashToTreasureBought = useSelector(
+    (state: RootState) =>
+      state.gameLogic.skillTreeLogic.skillTreeNodes.find(
+        (x) => x.name === "trashToTreasure"
       ) as singleSkillTreeNode
   ).wasBought;
   useEffect(() => {
@@ -106,6 +119,7 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
       setShakeImage(true);
     }
   };
+
   return !isMobile ? (
     <section className="flex  text-center flex-col gap-2 justify-center items-center p-4 border-black  rounded-xl relative">
       <div className="relative">

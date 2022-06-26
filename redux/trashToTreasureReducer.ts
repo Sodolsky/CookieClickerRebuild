@@ -4,11 +4,15 @@ import { UpgradesNames } from "../utils/interfaces";
 interface trashToTreasureReducerInterface {
   bestUpgrade: UpgradesNames;
   bonus: number;
+  CPCContribution: number;
+  CPSContribution: number;
 }
 
 const initialState: trashToTreasureReducerInterface = {
   bestUpgrade: "upgrade1",
   bonus: 1,
+  CPCContribution: 1,
+  CPSContribution: 1,
 };
 export const trashToTreasureReducer = createSlice({
   name: "trashToTreasureReducer",

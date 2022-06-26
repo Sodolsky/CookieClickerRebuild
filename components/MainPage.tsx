@@ -203,6 +203,8 @@ export const MainPage = () => {
           changeBestUpgrade({
             bestUpgrade: bestUpgrade.upgradeName,
             bonus: newBonus,
+            CPSContribution: bestUpgrade.CookiesPerSecondBonus * newBonus,
+            CPCContribution: bestUpgrade.CookiesPerClickBonus * newBonus,
           })
         );
       } else {

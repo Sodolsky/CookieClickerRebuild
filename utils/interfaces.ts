@@ -212,7 +212,7 @@ export const initialSkillTreeNodes: singleSkillTreeNode[] = [
     description:
       "Every upgrade you bought makes your current best upgrade stronger.",
     explanation:
-      "The number of CPS/CPC is increased by 0.02%. Your current best upgrade is the upgrade that gives costs the mosts and it's not counting to the bonus. ",
+      "The number of CPS/CPC is increased by 0.02%. Your current best upgrade is the upgrade that costs the most and it's not counting to the bonus. ",
     connectedNodes: ["crystalBall", "timeBomb"],
     image: "treasure.png",
     positionObject: { right: "32.5%", bottom: "50%" },
