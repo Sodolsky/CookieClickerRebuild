@@ -7,7 +7,11 @@ interface trashToTreasureReducerInterface {
   CPCContribution: number;
   CPSContribution: number;
 }
-
+interface changeBonusForTTTInterface {
+  bonus: number;
+  CPCContribution: number;
+  CPSContribution: number;
+}
 const initialState: trashToTreasureReducerInterface = {
   bestUpgrade: "upgrade1",
   bonus: 1,
@@ -22,11 +26,21 @@ export const trashToTreasureReducer = createSlice({
       state,
       action: PayloadAction<trashToTreasureReducerInterface>
     ) => {
-      state.bestUpgrade = action.payload.bestUpgrade;
-      state.bonus = action.payload.bonus;
+      const { bonus, CPCContribution, CPSContribution, bestUpgrade } =
+        action.payload;
+      state.bestUpgrade = bestUpgrade;
+      state.bonus = bonus;
+      state.CPCContribution = CPCContribution;
+      state.CPSContribution = CPSContribution;
     },
-    changeBonusForTTT: (state, action: PayloadAction<number>) => {
-      state.bonus = action.payload;
+    changeBonusForTTT: (
+      state,
+      action: PayloadAction<changeBonusForTTTInterface>
+    ) => {
+      const { bonus, CPCContribution, CPSContribution } = action.payload;
+      state.bonus = bonus;
+      state.CPCContribution = CPCContribution;
+      state.CPSContribution = CPSContribution;
     },
     clearTTTState: (state) => {
       state = initialState;

@@ -2,6 +2,8 @@ import { useCallback, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addCookie,
+  changeCPC,
+  changeCPS,
   resetGameAndAddSkillPoints,
   setInitialCookieCount,
   setInitialCPC,
@@ -109,7 +111,7 @@ export const MainPage = () => {
         (x) => x.name === "trashToTreasure"
       ) as singleSkillTreeNode
   ).wasBought;
-
+  const TTTStats = useSelector((state: RootState) => state.trashToTreasure);
   const currentBestUpgrade = useSelector(
     (state: RootState) => state.trashToTreasure.bestUpgrade
   );
@@ -198,17 +200,56 @@ export const MainPage = () => {
         0
       );
       const newBonus = 1 + numberOfUpgradesBought * 0.02;
+      const newBonusesObject = {
+        bonus: newBonus,
+        CPSContribution:
+          bestUpgrade.CookiesPerSecondBonus *
+          newBonus *
+          bestUpgrade.numberOfUpgrades,
+        CPCContribution:
+          bestUpgrade.CookiesPerClickBonus *
+          newBonus *
+          bestUpgrade.numberOfUpgrades,
+      };
       if (currentBestUpgrade !== bestUpgrade.upgradeName) {
+        const currentBestStats = Object.values(upgrades).find(
+          (x: UpgradeInterface) => x.upgradeName == currentBestUpgrade
+        ) as UpgradeInterface;
+        const diffrences = {
+          CPSDiff:
+            currentBestStats.CookiesPerSecondBonus *
+              currentBestStats.numberOfUpgrades *
+              TTTStats.bonus -
+            currentBestStats.CookiesPerSecondBonus *
+              currentBestStats.numberOfUpgrades,
+          CPCDiff:
+            currentBestStats.CookiesPerClickBonus *
+              currentBestStats.numberOfUpgrades *
+              TTTStats.bonus -
+            currentBestStats.CookiesPerClickBonus *
+              currentBestStats.numberOfUpgrades,
+        };
+        console.log(diffrences);
+        // dispatch(
+        //   changeCPS({
+        //     amount: diffrences.CPSDiff,
+        //     type: "decrease",
+        //   })
+        // );
+        // dispatch(
+        //   changeCPC({
+        //     amount: diffrences.CPCDiff,
+        //     type: "decrease",
+        //   })
+        // );
         dispatch(
           changeBestUpgrade({
             bestUpgrade: bestUpgrade.upgradeName,
-            bonus: newBonus,
-            CPSContribution: bestUpgrade.CookiesPerSecondBonus * newBonus,
-            CPCContribution: bestUpgrade.CookiesPerClickBonus * newBonus,
+            ...newBonusesObject,
           })
         );
       } else {
-        dispatch(changeBonusForTTT(newBonus));
+        dispatch(changeBonusForTTT(newBonusesObject));
       }
     }
   }, [upgrades, isTrashToTreasureBought]);
