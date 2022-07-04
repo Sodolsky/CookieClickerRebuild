@@ -229,26 +229,62 @@ export const MainPage = () => {
             currentBestStats.CookiesPerClickBonus *
               currentBestStats.numberOfUpgrades,
         };
-        console.log(diffrences);
-        // dispatch(
-        //   changeCPS({
-        //     amount: diffrences.CPSDiff,
-        //     type: "decrease",
-        //   })
-        // );
-        // dispatch(
-        //   changeCPC({
-        //     amount: diffrences.CPCDiff,
-        //     type: "decrease",
-        //   })
-        // );
+        dispatch(
+          changeCPS({
+            amount: diffrences.CPSDiff,
+            type: "decrease",
+          })
+        );
+        dispatch(
+          changeCPC({
+            amount: diffrences.CPCDiff,
+            type: "decrease",
+          })
+        );
         dispatch(
           changeBestUpgrade({
             bestUpgrade: bestUpgrade.upgradeName,
             ...newBonusesObject,
           })
         );
+
+        dispatch(
+          changeCPS({
+            amount: newBonusesObject.CPSContribution,
+            type: "increase",
+          })
+        );
+        dispatch(
+          changeCPC({
+            amount: newBonusesObject.CPCContribution,
+            type: "increase",
+          })
+        );
       } else {
+        dispatch(
+          changeCPS({
+            amount: TTTStats.CPSContribution,
+            type: "decrease",
+          })
+        );
+        dispatch(
+          changeCPC({
+            amount: TTTStats.CPCContribution,
+            type: "decrease",
+          })
+        );
+        dispatch(
+          changeCPS({
+            amount: newBonusesObject.CPSContribution,
+            type: "increase",
+          })
+        );
+        dispatch(
+          changeCPC({
+            amount: newBonusesObject.CPCContribution,
+            type: "increase",
+          })
+        );
         dispatch(changeBonusForTTT(newBonusesObject));
       }
     }
@@ -320,7 +356,7 @@ export const MainPage = () => {
             CPS={Number(CPS.toFixed(2))}
             CPC={Number(CPC.toFixed(2))}
           />
-          <CookieToClick />
+          <CookieToClick upgrades={upgrades} />
           {/* This Code is checking if player has bought 10 upgrades of type */}
           {Object.values(upgrades)
             .filter((x) => {

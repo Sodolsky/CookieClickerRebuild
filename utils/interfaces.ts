@@ -17,7 +17,8 @@ export type nodeNames =
   | "theoryOfEverything"
   | "timeBomb"
   | "crystalBall"
-  | "trashToTreasure";
+  | "trashToTreasure"
+  | "peaceAroundTheWorld";
 export interface singleSkillTreeNode {
   name: nodeNames;
   isNotable: boolean;
@@ -166,6 +167,18 @@ export const initialSkillTreeNodes: singleSkillTreeNode[] = [
     image: "carpet-bombing.png",
     positionObject: { left: "35%", bottom: "40%" },
     explanation: "Chance for the explosion is tripled",
+  },
+  {
+    name: "peaceAroundTheWorld",
+    isNotable: false,
+    nameForPlayer: "Peace Around The World",
+    price: 20,
+    wasBought: false,
+    description:
+      "Every explosion you generate adds 2 random upgrades to a upgrade that you have bought",
+    connectedNodes: ["carpetBombing", "nuclearBomb"],
+    image: "peace.png",
+    positionObject: { left: "25%", bottom: "50%" },
   },
   //?Right side of the tree
   {

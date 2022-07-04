@@ -44,7 +44,7 @@ export const Node: React.FC<localNodeInterface> = ({
         interactive={true}
         content={
           name !== "starterNode" ? (
-            <div className="bg-black p-2 rounded-xl text-white w-64 relative">
+            <div className="bg-black p-2 rounded-xl text-white w-72 relative">
               <div className="flex flex-col items-center justify-center">
                 <div className="w-full">
                   <div className="flex justify-center italic text-lg font-bold">

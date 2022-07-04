@@ -6,15 +6,19 @@ import { RootState } from "../../redux/store";
 import { useClickMultiplier } from "../../utils/hooks/useClickMultiplier";
 import { generateRandomNumber } from "../../utils/utils";
 import ShardIcon from "../../public/crystal.png";
-import { singleSkillTreeNode } from "../../utils/interfaces";
+import {
+  singleSkillTreeNode,
+  UpgradeInterface,
+  UpgradesInterface,
+} from "../../utils/interfaces";
 import { useState } from "react";
 import { addExplosionCookiesCount } from "../../redux/explosionCookiesReducer";
 import { useCPSMultiplier } from "../../utils/hooks/useCPSMultiplier";
-// export interface CookieToClickProps {
-//   setCookieCount: React.Dispatch<React.SetStateAction<number>>;
-// }
+export interface CookieToClickProps {
+  upgrades: UpgradesInterface;
+}
 
-export const CookieToClick: React.FC = () => {
+export const CookieToClick: React.FC<CookieToClickProps> = ({ upgrades }) => {
   const [explosionAnimationPlayState, setExplosionAnimationPlayState] =
     useState<boolean>(false);
   const dispatch = useDispatch();
@@ -61,15 +65,23 @@ export const CookieToClick: React.FC = () => {
         (x) => x.name === "timeBomb"
       ) as singleSkillTreeNode
   ).wasBought;
+  const isPeaceBought = useSelector(
+    (state: RootState) =>
+      state.gameLogic.skillTreeLogic.skillTreeNodes.find(
+        (x) => x.name === "peaceAroundTheWorld"
+      ) as singleSkillTreeNode
+  ).wasBought;
   function pop(e: React.MouseEvent) {
     let shardsGenerated: number = 0;
     let didExplosionHappen: boolean = false;
     for (let i = 0; i < 30; i++) {
+      //?Every click there are 30 particles created there is a chance that one of these particle will be crystal particle here we handle this chance
       const generateShard =
         generateRandomNumber(0, 10000) >
         (!isPickaxeBought ? 9700 : 9600) - 200 * crystalMineMultiplier;
       if (generateShard) {
         shardsGenerated += 1;
+        //?We need to check if explosion node was bought
         if (cookiesExplosionBought) {
           if (
             generateRandomNumber(0, 100) > (wasCarpetBombingBought ? 97 : 99)
@@ -78,11 +90,14 @@ export const CookieToClick: React.FC = () => {
           }
         }
       }
+      //? To optimise we don't create particles when player opt-out of them
       if (!areParticlesDisabled) {
         createParticle(e.clientX, e.clientY, generateShard);
       }
     }
+    //?Here we handle logic when explosion happens
     if (didExplosionHappen) {
+      //? timeBomb | nuclearBomb are skillTreeNodeNames
       const timeBombMultiplier = isTimeBombBought ? multiplierCPS : 1;
       const cookiesGainedFromExplosion =
         (nuclearBombBought ? 60 : 20) *
@@ -90,6 +105,17 @@ export const CookieToClick: React.FC = () => {
         multiplier *
         timeBombMultiplier *
         ((100 - generateRandomNumber(0, 30)) / 100);
+      //?Here we handle the logic when peaceAroundTheWorld skill node was bought
+      if (isPeaceBought) {
+        const boughtUpgrades: string[] = Object.values(upgrades)
+          .filter((x: UpgradeInterface) => x.numberOfUpgrades > 0)
+          .map((x: UpgradeInterface) => x.upgradeName);
+        if (boughtUpgrades.length > 0) {
+          const randomUpgrade =
+            boughtUpgrades[generateRandomNumber(0, boughtUpgrades.length)];
+        }
+        //TODO HandlePeaceLogic
+      }
       setExplosionAnimationPlayState(true);
       dispatch(addCookie(cookiesGainedFromExplosion));
       dispatch(addExplosionCookiesCount(cookiesGainedFromExplosion));
