@@ -1,5 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
-import { addCookie, addCrystals } from "../../redux/gameLogicReducer";
+import {
+  addCookie,
+  addCrystals,
+  buyUpgrade,
+  changeCPC,
+  changeCPS,
+} from "../../redux/gameLogicReducer";
 import Image from "next/image";
 import CoockieImage from "../../public/cookie.png";
 import { RootState } from "../../redux/store";
@@ -10,6 +16,7 @@ import {
   singleSkillTreeNode,
   UpgradeInterface,
   UpgradesInterface,
+  UpgradesNames,
 } from "../../utils/interfaces";
 import { useState } from "react";
 import { addExplosionCookiesCount } from "../../redux/explosionCookiesReducer";
@@ -107,12 +114,26 @@ export const CookieToClick: React.FC<CookieToClickProps> = ({ upgrades }) => {
         ((100 - generateRandomNumber(0, 30)) / 100);
       //?Here we handle the logic when peaceAroundTheWorld skill node was bought
       if (isPeaceBought) {
-        const boughtUpgrades: string[] = Object.values(upgrades)
+        const boughtUpgrades: UpgradesNames[] = Object.values(upgrades)
           .filter((x: UpgradeInterface) => x.numberOfUpgrades > 0)
           .map((x: UpgradeInterface) => x.upgradeName);
         if (boughtUpgrades.length > 0) {
           const randomUpgrade =
-            boughtUpgrades[generateRandomNumber(0, boughtUpgrades.length)];
+            boughtUpgrades[generateRandomNumber(0, boughtUpgrades.length - 1)];
+          const randomUpgradeStats = upgrades[randomUpgrade];
+          dispatch(
+            changeCPC({
+              type: "increase",
+              amount: randomUpgradeStats.CookiesPerClickBonus,
+            })
+          );
+          dispatch(
+            changeCPS({
+              type: "increase",
+              amount: randomUpgradeStats.CookiesPerSecondBonus,
+            })
+          );
+          dispatch(buyUpgrade({ name: randomUpgrade, number: 1 }));
         }
         //TODO HandlePeaceLogic
       }
