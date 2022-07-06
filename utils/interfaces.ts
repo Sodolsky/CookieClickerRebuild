@@ -18,7 +18,8 @@ export type nodeNames =
   | "timeBomb"
   | "crystalBall"
   | "trashToTreasure"
-  | "peaceAroundTheWorld";
+  | "peaceAroundTheWorld"
+  | "equalibrum";
 export interface singleSkillTreeNode {
   name: nodeNames;
   isNotable: boolean;
@@ -204,6 +205,19 @@ export const initialSkillTreeNodes: singleSkillTreeNode[] = [
     connectedNodes: ["idlePlayer"],
     image: "heart.png",
     positionObject: { right: "25%", bottom: "30%" },
+  },
+  {
+    name: "equalibrum",
+    isNotable: false,
+    nameForPlayer: "Equalibrum",
+    price: 10,
+    wasBought: false,
+    description:
+      "Everytime you click or gain CPS you gain stacks of each type. When you reach 100 stacks of certain type the other method of gaining cookies multiplier becomes tripled. Until stacks reach zero",
+    explanation: "Lightning Click cannot be bought.",
+    connectedNodes: ["clickingWithLove", "heartOfTheEternal"],
+    image: "yin-yang.png",
+    positionObject: { right: "12.5%", bottom: "50%" },
   },
   {
     name: "crystalBall",

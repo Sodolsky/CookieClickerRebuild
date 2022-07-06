@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import chakraReducer from "./chakraReducer";
 import crystalBallReducer from "./crystalBallReducer";
+import equalibrumReducer from "./equalibrumReducer";
 import explosionCookiesReducer from "./explosionCookiesReducer";
 import gameLogicReducer from "./gameLogicReducer";
 import performanceReducer from "./performanceReducer";
@@ -13,6 +14,7 @@ export const store = configureStore({
     crystalBall: crystalBallReducer,
     performance: performanceReducer,
     trashToTreasure: trashToTreasureReducer,
+    eqalibrum: equalibrumReducer,
   },
 });
 export type RootState = ReturnType<typeof store.getState>;
