@@ -56,6 +56,8 @@ import {
   changeBonusForTTT,
   clearTTTState,
 } from "../redux/trashToTreasureReducer";
+import { addIdleStacks } from "../redux/equalibrumReducer";
+import useEqualibrumTimer from "../utils/hooks/useEqualibrumTImer";
 export const MainPage = () => {
   const resetGameLogic = (skillPointsCount: number) => {
     intervalRef.current && clearInterval(intervalRef.current);
@@ -115,8 +117,22 @@ export const MainPage = () => {
   const currentBestUpgrade = useSelector(
     (state: RootState) => state.trashToTreasure.bestUpgrade
   );
+  const isEqualibrumBought = useSelector(
+    (state: RootState) =>
+      state.gameLogic.skillTreeLogic.skillTreeNodes.find(
+        (x) => x.name === "equalibrum"
+      ) as singleSkillTreeNode
+  ).wasBought;
+  const equalibrumState = useSelector(
+    (state: RootState) => state.eqalibrum.state
+  );
+  const equalibrum = useSelector((state: RootState) => state.eqalibrum);
+  const equalibrumTimer = useEqualibrumTimer({
+    equlibrumState: equalibrumState,
+    isEqualibrumBought: isEqualibrumBought,
+  });
   const dispatch = useDispatch();
-
+  console.log(equalibrum);
   useEffect(() => {
     if (typeof window !== "undefined") {
       const localStorageCookieCount =
@@ -176,13 +192,21 @@ export const MainPage = () => {
   }, [isClickDoubled, intervalRef.current]);
   useEffect(() => {
     if (!statesWereLoaded || isClickDoubled) return;
-    const gameLoopInterval = setInterval(
-      () => dispatch(addCookie(CPS * multiplierCPS)),
-      1000
-    );
+    const gameLoopInterval = setInterval(() => {
+      dispatch(addCookie(CPS * multiplierCPS));
+      if (isEqualibrumBought && equalibrumState === "idle") {
+        dispatch(addIdleStacks(10));
+      }
+    }, 1000);
     intervalRef.current = gameLoopInterval;
     return () => clearInterval(gameLoopInterval);
-  }, [multiplierCPS, CPS, statesWereLoaded]);
+  }, [
+    multiplierCPS,
+    CPS,
+    statesWereLoaded,
+    isEqualibrumBought,
+    equalibrumState,
+  ]);
   //?This UEF is for changing best Upgrade for TrashToTreasureReducer
   useEffect(() => {
     if (isTrashToTreasureBought) {

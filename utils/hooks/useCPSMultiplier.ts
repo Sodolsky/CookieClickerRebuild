@@ -35,6 +35,15 @@ export const useCPSMultiplier = () => {
   const bonusFromCrystalBall = useSelector(
     (state: RootState) => state.crystalBall.bonus
   );
+  const isEqualibrumBought = useSelector(
+    (state: RootState) =>
+      state.gameLogic.skillTreeLogic.skillTreeNodes.find(
+        (x) => x.name === "equalibrum"
+      ) as singleSkillTreeNode
+  ).wasBought;
+  const equalibrumState = useSelector(
+    (state: RootState) => state.eqalibrum.state
+  );
   useEffect(() => {
     let multiplier: number = 1;
     if (isIdlePlayerBought) multiplier += 4;
@@ -43,7 +52,8 @@ export const useCPSMultiplier = () => {
       else multiplier += 3;
     }
     if (isCrystalBallBought) multiplier *= bonusFromCrystalBall;
-    if (isTimeMachineBought) multiplier *= 2;
+    if (isEqualibrumBought && equalibrumState === "clickExhaustion")
+      multiplier *= 3;
     setMultiplierCPS(multiplier);
   }, [
     isIdlePlayerBought,
@@ -52,6 +62,8 @@ export const useCPSMultiplier = () => {
     isChakraUpgraded,
     bonusFromCrystalBall,
     isCrystalBallBought,
+    isEqualibrumBought,
+    equalibrumState,
   ]);
   return { multiplierCPS };
 };

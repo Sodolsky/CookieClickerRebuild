@@ -40,6 +40,15 @@ export const useClickMultiplier = () => {
   const bonusFromCrystalBall = useSelector(
     (state: RootState) => state.crystalBall.bonus
   );
+  const isEqualibrumBought = useSelector(
+    (state: RootState) =>
+      state.gameLogic.skillTreeLogic.skillTreeNodes.find(
+        (x) => x.name === "equalibrum"
+      ) as singleSkillTreeNode
+  ).wasBought;
+  const equalibrumState = useSelector(
+    (state: RootState) => state.eqalibrum.state
+  );
   useEffect(() => {
     let multiplier: number = 1;
     if (isClickDoubled) multiplier += 1;
@@ -50,6 +59,8 @@ export const useClickMultiplier = () => {
     }
     if (isCrystalBallBought) multiplier *= bonusFromCrystalBall;
     if (isClickingWithLoveBought) multiplier *= 2;
+    if (isEqualibrumBought && equalibrumState === "idleExhaustion")
+      multiplier *= 3;
     setMultiplier(multiplier);
   }, [
     isClickDoubled,
@@ -59,6 +70,8 @@ export const useClickMultiplier = () => {
     isChakraUpgraded,
     bonusFromCrystalBall,
     isCrystalBallBought,
+    isEqualibrumBought,
+    equalibrumState,
   ]);
   return { isClickDoubled, multiplier };
 };

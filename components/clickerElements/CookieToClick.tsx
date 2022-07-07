@@ -21,6 +21,7 @@ import {
 import { useState } from "react";
 import { addExplosionCookiesCount } from "../../redux/explosionCookiesReducer";
 import { useCPSMultiplier } from "../../utils/hooks/useCPSMultiplier";
+import { addClickStacks } from "../../redux/equalibrumReducer";
 export interface CookieToClickProps {
   upgrades: UpgradesInterface;
 }
@@ -78,6 +79,15 @@ export const CookieToClick: React.FC<CookieToClickProps> = ({ upgrades }) => {
         (x) => x.name === "peaceAroundTheWorld"
       ) as singleSkillTreeNode
   ).wasBought;
+  const isEqualibrumBought = useSelector(
+    (state: RootState) =>
+      state.gameLogic.skillTreeLogic.skillTreeNodes.find(
+        (x) => x.name === "equalibrum"
+      ) as singleSkillTreeNode
+  ).wasBought;
+  const equalibrumState = useSelector(
+    (state: RootState) => state.eqalibrum.state
+  );
   function pop(e: React.MouseEvent) {
     let shardsGenerated: number = 0;
     let didExplosionHappen: boolean = false;
@@ -101,6 +111,9 @@ export const CookieToClick: React.FC<CookieToClickProps> = ({ upgrades }) => {
       if (!areParticlesDisabled) {
         createParticle(e.clientX, e.clientY, generateShard);
       }
+    }
+    if (isEqualibrumBought && equalibrumState === "idle") {
+      dispatch(addClickStacks(2));
     }
     //?Here we handle logic when explosion happens
     if (didExplosionHappen) {
@@ -135,10 +148,10 @@ export const CookieToClick: React.FC<CookieToClickProps> = ({ upgrades }) => {
           );
           dispatch(buyUpgrade({ name: randomUpgrade, number: 1 }));
         }
-        //TODO HandlePeaceLogic
       }
       setExplosionAnimationPlayState(true);
       dispatch(addCookie(cookiesGainedFromExplosion));
+
       dispatch(addExplosionCookiesCount(cookiesGainedFromExplosion));
     }
     dispatch(addCrystals(shardsGenerated));
