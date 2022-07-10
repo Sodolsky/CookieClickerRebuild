@@ -11,7 +11,10 @@ const initialState: equalibrumReducer = {
   idleStacks: 0,
   state: "idle",
 };
-
+export interface decreaseStacksReducerInterface {
+  stackType: "click" | "idle";
+  number: number;
+}
 export const equalibrumReducer = createSlice({
   name: "equalibrumReducer",
   initialState,
@@ -54,9 +57,32 @@ export const equalibrumReducer = createSlice({
         }
       }
     },
+    reduceEQStacks(
+      state,
+      action: PayloadAction<decreaseStacksReducerInterface>
+    ) {
+      if (action.payload.stackType === "click") {
+        const futureStacks = state.clickStacks - 5;
+        if (futureStacks <= 0) {
+          state.clickStacks = 0;
+          state.state = "idle";
+        } else {
+          state.clickStacks = futureStacks;
+        }
+      } else {
+        const futureStacks = state.idleStacks - 5;
+        if (futureStacks <= 0) {
+          state.idleStacks = 0;
+          state.state = "idle";
+        } else {
+          state.idleStacks = futureStacks;
+        }
+      }
+    },
   },
 });
 
-export const { addClickStacks, addIdleStacks } = equalibrumReducer.actions;
+export const { addClickStacks, addIdleStacks, reduceEQStacks } =
+  equalibrumReducer.actions;
 
 export default equalibrumReducer.reducer;

@@ -132,7 +132,7 @@ export const MainPage = () => {
     isEqualibrumBought: isEqualibrumBought,
   });
   const dispatch = useDispatch();
-  console.log(equalibrum);
+  console.log(equalibrum, equalibrumTimer);
   useEffect(() => {
     if (typeof window !== "undefined") {
       const localStorageCookieCount =
