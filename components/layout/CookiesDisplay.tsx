@@ -26,7 +26,7 @@ export const CookiesDisplay: React.FC<CookiesDisplayProps> = ({ CPS, CPC }) => {
   return (
     <section className="flex flex-col items-center justify-center text-xl">
       <div className="text-lg lg:text-2xl font-bold">
-        Cookies:{" "}
+        Cookies:
         <CountUp
           end={cookieCount}
           preserveValue={true}

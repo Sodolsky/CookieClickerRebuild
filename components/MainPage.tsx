@@ -56,7 +56,10 @@ import {
   changeBonusForTTT,
   clearTTTState,
 } from "../redux/trashToTreasureReducer";
-import { addIdleStacks } from "../redux/equalibrumReducer";
+import {
+  addIdleStacks,
+  clearEqualibrumState,
+} from "../redux/equalibrumReducer";
 import useEqualibrumTimer from "../utils/hooks/useEqualibrumTImer";
 export const MainPage = () => {
   const resetGameLogic = (skillPointsCount: number) => {
@@ -64,6 +67,7 @@ export const MainPage = () => {
     dispatch(addExplosionCookiesCount(0));
     dispatch(clearAllCrystalBallStates());
     dispatch(clearTTTState());
+    dispatch(clearEqualibrumState());
     dispatch(resetGameAndAddSkillPoints(skillPointsCount));
     dispatch(setInitialSkillTree(true));
   };
@@ -126,13 +130,11 @@ export const MainPage = () => {
   const equalibrumState = useSelector(
     (state: RootState) => state.eqalibrum.state
   );
-  const equalibrum = useSelector((state: RootState) => state.eqalibrum);
   const equalibrumTimer = useEqualibrumTimer({
     equlibrumState: equalibrumState,
     isEqualibrumBought: isEqualibrumBought,
   });
   const dispatch = useDispatch();
-  console.log(equalibrum, equalibrumTimer);
   useEffect(() => {
     if (typeof window !== "undefined") {
       const localStorageCookieCount =

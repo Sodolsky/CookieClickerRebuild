@@ -101,3 +101,6 @@ img {
   -webkit-user-select: none;
   -ms-user-select: none;
 }
+.halveCircleBG {
+  background: linear-gradient(90deg, red 50%, blue 50%);
+}

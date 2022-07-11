@@ -79,10 +79,17 @@ export const equalibrumReducer = createSlice({
         }
       }
     },
+    clearEqualibrumState(state) {
+      state = initialState;
+    },
   },
 });
 
-export const { addClickStacks, addIdleStacks, reduceEQStacks } =
-  equalibrumReducer.actions;
+export const {
+  addClickStacks,
+  addIdleStacks,
+  reduceEQStacks,
+  clearEqualibrumState,
+} = equalibrumReducer.actions;
 
 export default equalibrumReducer.reducer;
