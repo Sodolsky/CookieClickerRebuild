@@ -10,7 +10,7 @@ export const EqualibrumStacksDisplay = () => {
         {equalibrum.clickStacks}
       </div>
       <div className="relative left-[15px] bottom-[1px] w-[0.5px] bg-black h-8"></div>
-      <div className="relative left-[17px] top-[1px]">
+      <div className="relative left-[16px] top-[1px]">
         {equalibrum.idleStacks}
       </div>
     </div>
