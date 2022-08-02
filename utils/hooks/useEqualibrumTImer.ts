@@ -18,17 +18,14 @@ const useEqualibrumTimer = (
 
     if (equlibrumState === "clickExhaustion") {
       intervalRef.current = setInterval(() => {
-        console.log("1");
         dispatch(reduceEQStacks({ number: 5, stackType: "click" }));
       }, 1000);
     } else if (equlibrumState === "idleExhaustion") {
       intervalRef.current = setInterval(() => {
-        console.log("2");
         dispatch(reduceEQStacks({ number: 5, stackType: "idle" }));
       }, 1000);
     } else {
       if (intervalRef.current) {
-        console.log("3");
         clearInterval(intervalRef.current);
       }
     }
