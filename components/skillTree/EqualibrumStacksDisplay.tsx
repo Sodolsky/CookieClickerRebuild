@@ -21,7 +21,7 @@ export const EqualibrumStacksDisplay = () => {
     <Tippy
       content={
         <div className="bg-black text-white w-16 h-16 rounded-xl flex justify-center gap-2 items-center border-purple-400">
-          <div className="flex flex-col items-center gap-[2px]">
+          <div className="flex flex-col items-center gap-[1px]">
             <Image
               src={ClickIcon}
               alt={"Click Icon"}
