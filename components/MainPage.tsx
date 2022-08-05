@@ -61,6 +61,7 @@ import {
   clearEqualibrumState,
 } from "../redux/equalibrumReducer";
 import useEqualibrumTimer from "../utils/hooks/useEqualibrumTImer";
+import { EqualibrumStacksDisplay } from "./skillTree/EqualibrumStacksDisplay";
 export const MainPage = () => {
   const resetGameLogic = (skillPointsCount: number) => {
     intervalRef.current && clearInterval(intervalRef.current);
@@ -372,6 +373,11 @@ export const MainPage = () => {
         isSkillTreeUnlocked && <SkillTreeModal />
       )}
       {isChakraBought && <Chakra />}
+      {isEqualibrumBought && (
+        <div className="absolute bottom-60 left-2 md:top-60 md:left-4">
+          <EqualibrumStacksDisplay />
+        </div>
+      )}
       <main className="min-h-screen">
         <div className="flex flex-col gap-2 justify-center items-center">
           {/* <button className="btn" onClick={() => resetGameLogic()}>

@@ -10,10 +10,14 @@ export const EqualibrumStacksDisplay = () => {
   const circleRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     if (circleRef.current) {
+      if (equalibrum.state === "clickExhaustion") {
+        circleRef.current.style.background = `linear-gradient(90deg, #2a2a72 0%,  #009ffd 74%)`;
+      }
+      if (equalibrum.state === "idleExhaustion") {
+        circleRef.current.style.background = `linear-gradient(90deg, #ff4e00 0%,  #ec9f05 74%)`;
+      }
       if (equalibrum.state === "idle") {
-        circleRef.current.style.background = `linear-gradient(90deg, red ${equalibrum.clickStacks}%, blue ${equalibrum.idleStacks}%)`;
-      } else if (equalibrum.state === "clickExhaustion") {
-      } else {
+        circleRef.current.style.background = `linear-gradient(90deg, red ${50}%, blue ${50}%)`;
       }
     }
   }, [equalibrum]);
@@ -39,13 +43,25 @@ export const EqualibrumStacksDisplay = () => {
       }
     >
       <div
-        className="w-16 h-16 relative rounded-full border border-black halveCircleBG text-white text-[1rem] flex justify-center items-center"
+        className={`w-16 h-16 relative rounded-full border border-black  ${
+          equalibrum.state !== "idle" && "animate-pulse animate-spin"
+        } halveCircleBG text-white text-[1rem] flex items-center justify-center`}
         ref={circleRef}
       >
-        {/* <div className="absolute left-[3px] top-[1px] flex justify-center items-center flex-col w-8 h-16"></div>
-        <div className="absolute left-[33px] top-[1px] flex justify-center items-center flex-col w-8 h-16">
-          <figure className="grow-[2]"></figure>
-        </div> */}
+        {equalibrum.state === "idle" ? (
+          <>
+            <div className="absolute left-[3px] top-[1px] flex justify-center items-center flex-col w-8 h-16">
+              {equalibrum.clickStacks}
+            </div>
+            <div className="absolute left-[33px] top-[1px] flex justify-center items-center flex-col w-8 h-16">
+              {equalibrum.idleStacks}
+            </div>
+          </>
+        ) : (
+          <span>
+            {equalibrum.state === "clickExhaustion" ? "IDLE" : "CLICK"}
+          </span>
+        )}
       </div>
     </Tippy>
   );

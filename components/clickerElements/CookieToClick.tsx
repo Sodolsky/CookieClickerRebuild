@@ -113,7 +113,7 @@ export const CookieToClick: React.FC<CookieToClickProps> = ({ upgrades }) => {
       }
     }
     if (isEqualibrumBought && equalibrumState === "idle") {
-      dispatch(addClickStacks(2));
+      dispatch(addClickStacks(5));
     }
     //?Here we handle logic when explosion happens
     if (didExplosionHappen) {

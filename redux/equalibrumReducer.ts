@@ -31,7 +31,7 @@ export const equalibrumReducer = createSlice({
       } else {
         //?When the number of clickStacks isn't 100 we are simply adding the number and decreasing stacks of the other type by 2
         state.clickStacks = futureClickStacks;
-        const futureIdleStacksState = state.idleStacks - 2;
+        const futureIdleStacksState = state.idleStacks - 5;
         //?Here we are just making sure that the number would not be negative
         if (futureIdleStacksState < 0) {
           state.idleStacks = 0;
@@ -49,7 +49,7 @@ export const equalibrumReducer = createSlice({
         state.state = "idleExhaustion";
       } else {
         state.idleStacks = futureIdleStacks;
-        const futureClickStacks = state.clickStacks - 2;
+        const futureClickStacks = state.clickStacks - 5;
         if (futureClickStacks < 0) {
           state.clickStacks = 0;
         } else {
