@@ -7,8 +7,13 @@ import { symbolsArray } from "../../utils/interfaces";
 
 export const MobileCookieCountWrapper = () => {
   const formatCookieCount = useCallback((n: number) => {
-    return abbreviateNumber(n, 2, symbolsArray);
+    try {
+      return abbreviateNumber(n, 2, symbolsArray);
+    } catch (error) {
+      return n.toFixed(2);
+    }
   }, []);
+
   const cookieCount = useSelector(
     (state: RootState) => state.gameLogic.cookiesLogic.cookieCount
   );

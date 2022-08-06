@@ -15,7 +15,11 @@ export const CookiesDisplay: React.FC<CookiesDisplayProps> = ({ CPS, CPC }) => {
   const { isClickDoubled, multiplier } = useClickMultiplier();
   const { multiplierCPS } = useCPSMultiplier();
   const formatCookieCount = useCallback((n: number) => {
-    return abbreviateNumber(n, 2, symbolsArray);
+    try {
+      return abbreviateNumber(n, 2, symbolsArray);
+    } catch (error) {
+      return n.toFixed(2);
+    }
   }, []);
   const explosionCookiesCount = useSelector(
     (state: RootState) => state.explosionCookies.cookies
