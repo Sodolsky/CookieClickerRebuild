@@ -19,7 +19,8 @@ export type nodeNames =
   | "crystalBall"
   | "trashToTreasure"
   | "peaceAroundTheWorld"
-  | "equalibrum";
+  | "equalibrum"
+  | "evenMoreQuestions";
 export interface singleSkillTreeNode {
   name: nodeNames;
   isNotable: boolean;
@@ -131,6 +132,17 @@ export const initialSkillTreeNodes: singleSkillTreeNode[] = [
     positionObject: { left: "6%", bottom: "30%" },
   },
   {
+    name: "evenMoreQuestions",
+    isNotable: false,
+    nameForPlayer: "Even More Questions???",
+    price: 35,
+    wasBought: false,
+    description: "Your upgrades are 75% cheaper.",
+    connectedNodes: ["theoryOfEverything"],
+    image: "question.png",
+    positionObject: { left: "6%", bottom: "50%" },
+  },
+  {
     name: "cookieExplosion",
     isNotable: false,
     nameForPlayer: "Cookie Explosion",
@@ -181,6 +193,7 @@ export const initialSkillTreeNodes: singleSkillTreeNode[] = [
     image: "peace.png",
     positionObject: { left: "25%", bottom: "50%" },
   },
+
   //?Right side of the tree
   {
     name: "idlePlayer",

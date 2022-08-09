@@ -59,6 +59,12 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
         (x) => x.name === "theoryOfEverything"
       ) as singleSkillTreeNode
   ).wasBought;
+  const isEvenMoreQuestionsBought = useSelector(
+    (state: RootState) =>
+      state.gameLogic.skillTreeLogic.skillTreeNodes.find(
+        (x) => x.name === "evenMoreQuestions"
+      ) as singleSkillTreeNode
+  ).wasBought;
   const isCrystalBallBought = useSelector(
     (state: RootState) =>
       state.gameLogic.skillTreeLogic.skillTreeNodes.find(
@@ -84,7 +90,7 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
       price = price * feeIndex;
     }
     setPrice(price);
-  }, [isTheoryOfEverythingBought]);
+  }, [isTheoryOfEverythingBought, isEvenMoreQuestionsBought]);
   useEffect(() => {
     if (numberOfUpgrades > 0) {
       //When we first load the component we need to calculate current price
