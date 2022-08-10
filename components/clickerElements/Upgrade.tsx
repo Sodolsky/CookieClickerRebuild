@@ -148,7 +148,7 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
           }}
         />
         <div
-          className="tooltip absolute -right-6 -top-2 tooltip-left z-10"
+          className="tooltip absolute -right-6 -top-2 tooltip-left z-[11]"
           data-tip={`Gives: ${abbreviateNumber(
             CookiesPerSecondBonus,
             1,
