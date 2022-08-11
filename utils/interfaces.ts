@@ -20,7 +20,8 @@ export type nodeNames =
   | "trashToTreasure"
   | "peaceAroundTheWorld"
   | "equalibrum"
-  | "evenMoreQuestions";
+  | "evenMoreQuestions"
+  | "perfectAim";
 export interface singleSkillTreeNode {
   name: nodeNames;
   isNotable: boolean;
