@@ -194,6 +194,18 @@ export const initialSkillTreeNodes: singleSkillTreeNode[] = [
     image: "peace.png",
     positionObject: { left: "25%", bottom: "50%" },
   },
+  {
+    name: "perfectAim",
+    isNotable: false,
+    nameForPlayer: "Perfect Aim",
+    price: 32,
+    wasBought: false,
+    description:
+      "Every click that doesn't result in getting crystal get's rolled one more time.",
+    connectedNodes: ["carpetBombing", "nuclearBomb"],
+    image: "aim.png",
+    positionObject: { left: "25%", bottom: "65%" },
+  },
 
   //?Right side of the tree
   {

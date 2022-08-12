@@ -12,6 +12,7 @@ import { RootState } from "../../redux/store";
 import { useClickMultiplier } from "../../utils/hooks/useClickMultiplier";
 import { generateRandomNumber } from "../../utils/utils";
 import ShardIcon from "../../public/crystal.png";
+import AimIcon from "../../public/aim.png";
 import {
   singleSkillTreeNode,
   UpgradeInterface,
@@ -88,14 +89,28 @@ export const CookieToClick: React.FC<CookieToClickProps> = ({ upgrades }) => {
   const equalibrumState = useSelector(
     (state: RootState) => state.eqalibrum.state
   );
+  const isPerfectAimBought = useSelector(
+    (state: RootState) =>
+      state.gameLogic.skillTreeLogic.skillTreeNodes.find(
+        (x) => x.name === "perfectAim"
+      ) as singleSkillTreeNode
+  ).wasBought;
   function pop(e: React.MouseEvent) {
     let shardsGenerated: number = 0;
     let didExplosionHappen: boolean = false;
     for (let i = 0; i < 30; i++) {
       //?Every click there are 30 particles created there is a chance that one of these particle will be crystal particle here we handle this chance
-      const generateShard =
+      let generateShard =
         generateRandomNumber(0, 10000) >
         (!isPickaxeBought ? 9700 : 9600) - 200 * crystalMineMultiplier;
+      let secondChance: boolean = false;
+      //?If perfect aim skill tree node has been bought we roll th crystal one morem time.
+      if (isPerfectAimBought && !generateShard) {
+        generateShard =
+          generateRandomNumber(0, 10000) >
+          (!isPickaxeBought ? 9700 : 9600) - 200 * crystalMineMultiplier;
+        secondChance = true;
+      }
       if (generateShard) {
         shardsGenerated += 1;
         //?We need to check if explosion node was bought
@@ -109,7 +124,7 @@ export const CookieToClick: React.FC<CookieToClickProps> = ({ upgrades }) => {
       }
       //? To optimise we don't create particles when player opt-out of them
       if (!areParticlesDisabled) {
-        createParticle(e.clientX, e.clientY, generateShard);
+        createParticle(e.clientX, e.clientY, generateShard, secondChance);
       }
     }
     if (isEqualibrumBought && equalibrumState === "idle") {
@@ -158,7 +173,12 @@ export const CookieToClick: React.FC<CookieToClickProps> = ({ upgrades }) => {
     dispatch(addCookie(Math.floor(shardsGenerated / 2) * CPC));
   }
 
-  function createParticle(x: number, y: number, generateShard: boolean) {
+  function createParticle(
+    x: number,
+    y: number,
+    generateShard: boolean,
+    secondRoll: boolean
+  ) {
     const particle = document.createElement("particle");
     document.body.appendChild(particle);
     const size = Math.floor(Math.random() * 35 + 10);
@@ -167,6 +187,8 @@ export const CookieToClick: React.FC<CookieToClickProps> = ({ upgrades }) => {
     if (!generateShard) {
       particle.style.background = `hsl(${Math.random() * 90 + 180}, 70%, 60%)`;
       particle.style.borderRadius = `50%`;
+    } else if (generateShard && secondRoll) {
+      particle.style.backgroundImage = `url(${AimIcon.src})`;
     } else {
       particle.style.backgroundImage = `url(${ShardIcon.src})`;
     }
