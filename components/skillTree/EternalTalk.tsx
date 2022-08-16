@@ -2,6 +2,9 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import C1 from "../../public/c1.jpg";
+import C2 from "../../public/c2.jpg";
+import { SkillTreeImagesCarousel } from "./SkillTreeImagesCarousel";
 interface ImageSettings {
   pulseImage: boolean;
   showImage: boolean;
@@ -14,7 +17,7 @@ export const EternalTalk: React.FC<EternalTalkProps> = ({ resetGameLogic }) => {
     pulseImage: false,
     showImage: false,
   });
-  const [currentStep, setCurrentStep] = useState<1 | 2>(1);
+  const [currentStep, setCurrentStep] = useState<1 | 2>(2);
   const [dealOutcome, setDealOutcome] = useState<
     null | "accepted" | "declined"
   >(null);
@@ -91,9 +94,14 @@ export const EternalTalk: React.FC<EternalTalkProps> = ({ resetGameLogic }) => {
                 exchange for your Cookies.
               </p>
               <div className="divider"></div>
-              <figure className="EternalTalk-FadeInSkillTreeImage flex justify-center">
-                <Image src={"/notimplemented.png"} height={128} width={128} />
-              </figure>
+              <div className="EternalTalk-FadeInSkillTreeImage ">
+                <SkillTreeImagesCarousel
+                  imagesArray={[C1, C2]}
+                  altTexts={
+                    Array.from({ length: 2 }).fill("Skill Tree") as string[]
+                  }
+                />
+              </div>
               <div className="divider"></div>
               <div className="flex justify-around EternalTalk-FadeInButtons">
                 <button
