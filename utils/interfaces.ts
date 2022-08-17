@@ -347,6 +347,7 @@ export interface BaseShopItem {
   wasBought: boolean;
   nameInShop: string;
   description: string;
+  isLocked: boolean;
 }
 export interface CookiesShopItem extends BaseShopItem {
   name: ShopUpgradesNames;
@@ -370,6 +371,7 @@ export const initialStateOfCrystalShopItems: CrystalShopItems = [
     price: 20000,
     wasBought: false,
     inUse: false,
+    isLocked: false,
   },
   {
     name: "upgrade5Skin",
@@ -378,6 +380,7 @@ export const initialStateOfCrystalShopItems: CrystalShopItems = [
     description: "Ufnal's favorite beer!",
     price: 500,
     wasBought: false,
+    isLocked: false,
     inUse: false,
   },
   {
@@ -387,6 +390,7 @@ export const initialStateOfCrystalShopItems: CrystalShopItems = [
     description: "Lichwala becomes Golden! Bystrości",
     price: 1000,
     wasBought: false,
+    isLocked: false,
     inUse: false,
   },
   {
@@ -396,6 +400,7 @@ export const initialStateOfCrystalShopItems: CrystalShopItems = [
     description: "Resets your skill tree",
     price: 250,
     wasBought: false,
+    isLocked: false,
     inUse: false,
   },
 ];
@@ -409,6 +414,7 @@ export const initialStateOfShopItems: ShopItems = [
     wasBought: false,
     type: "double",
     upgradeFor: "upgrade1",
+    isLocked: false,
     wasShown: false,
   },
   {
@@ -420,6 +426,7 @@ export const initialStateOfShopItems: ShopItems = [
     wasBought: false,
     type: "double",
     upgradeFor: "upgrade2",
+    isLocked: false,
     wasShown: false,
   },
   {
@@ -431,6 +438,7 @@ export const initialStateOfShopItems: ShopItems = [
     wasBought: false,
     type: "double",
     upgradeFor: "upgrade3",
+    isLocked: false,
     wasShown: false,
   },
   {
@@ -442,6 +450,7 @@ export const initialStateOfShopItems: ShopItems = [
     wasBought: false,
     type: "double",
     upgradeFor: "upgrade4",
+    isLocked: false,
     wasShown: false,
   },
   {
@@ -453,6 +462,7 @@ export const initialStateOfShopItems: ShopItems = [
     wasBought: false,
     type: "double",
     upgradeFor: "upgrade5",
+    isLocked: false,
     wasShown: false,
   },
   {
@@ -464,6 +474,7 @@ export const initialStateOfShopItems: ShopItems = [
     wasBought: false,
     type: "double",
     upgradeFor: "upgrade6",
+    isLocked: false,
     wasShown: false,
   },
   {
@@ -475,6 +486,7 @@ export const initialStateOfShopItems: ShopItems = [
     wasBought: false,
     type: "double",
     upgradeFor: "upgrade7",
+    isLocked: false,
     wasShown: false,
   },
   {
@@ -486,6 +498,7 @@ export const initialStateOfShopItems: ShopItems = [
     wasBought: false,
     type: "double",
     upgradeFor: "upgrade8",
+    isLocked: false,
     wasShown: false,
   },
   {
@@ -497,6 +510,7 @@ export const initialStateOfShopItems: ShopItems = [
     wasBought: false,
     type: "double",
     upgradeFor: "upgrade9",
+    isLocked: false,
     wasShown: false,
   },
   {
@@ -508,6 +522,7 @@ export const initialStateOfShopItems: ShopItems = [
     wasBought: false,
     type: "double",
     upgradeFor: "upgrade10",
+    isLocked: false,
     wasShown: false,
   },
   {
@@ -518,6 +533,7 @@ export const initialStateOfShopItems: ShopItems = [
     price: 100000000000000, // 100 000 000 000 000
     wasBought: false,
     type: "unique",
+    isLocked: false,
     wasShown: false,
   },
   {
@@ -528,6 +544,7 @@ export const initialStateOfShopItems: ShopItems = [
     type: "unique",
     description: "Doubles your click but removes CPS",
     wasBought: false,
+    isLocked: false,
     wasShown: false,
   },
   {
@@ -538,6 +555,7 @@ export const initialStateOfShopItems: ShopItems = [
     type: "unique",
     description: "Increases your chance to find gems while clicking cookie.",
     wasBought: false,
+    isLocked: false,
     wasShown: false,
   },
 ];

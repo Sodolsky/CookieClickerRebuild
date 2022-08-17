@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { singleSkillTreeNode } from "../interfaces";
+import { CookiesShopItem, singleSkillTreeNode } from "../interfaces";
 
 export const useClickMultiplier = () => {
   const [multiplier, setMultiplier] = useState<number>(1);
-  const isClickDoubled = useSelector(
-    (state: RootState) =>
-      state.gameLogic.shopItems.find((x) => x.name === "doubleClick")?.wasBought
-  );
-
+  const doubleClickShopItemState = useSelector((state: RootState) =>
+    state.gameLogic.shopItems.find((x) => x.name === "doubleClick")
+  ) as CookiesShopItem;
+  const isClickDoubled =
+    doubleClickShopItemState.wasBought && !doubleClickShopItemState.isLocked;
   const isClickTripledFromSkillTreeUpgrades = useSelector(
     (state: RootState) =>
       state.gameLogic.skillTreeLogic.skillTreeNodes.find(

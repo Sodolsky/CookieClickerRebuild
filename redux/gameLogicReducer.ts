@@ -189,6 +189,17 @@ export const gameMechanicSlice = createSlice({
       localStorage.setItem("shopItems", JSON.stringify(newShopItems));
       return { ...state, shopItems: newShopItems };
     },
+    lockShopItem: (state, action: PayloadAction<ShopUpgradesNames>) => {
+      const stateCopy = cloneDeep(state.shopItems);
+      const newShopItems = stateCopy.map((x) => {
+        if (x.name === action.payload) {
+          return { ...x, wasBought: false, isLocked: true };
+        }
+        return x;
+      });
+      localStorage.setItem("shopItems", JSON.stringify(newShopItems));
+      return { ...state, shopItems: newShopItems };
+    },
     buyCrystalShopItem: (
       state,
       action: PayloadAction<CrystalUpgradesNames>
@@ -342,6 +353,7 @@ export const {
   setInitialNumberOfUpgradesForUpgrade,
   addBonusesForUpgrades,
   buyShopItem,
+  lockShopItem,
   setInitialShopitems,
   showShopItem,
   resetGameAndAddSkillPoints,

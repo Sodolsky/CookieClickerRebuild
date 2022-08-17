@@ -215,6 +215,7 @@ export const MainPage = () => {
     statesWereLoaded,
     isEqualibrumBought,
     equalibrumState,
+    isClickDoubled,
   ]);
   //?This UEF is for changing best Upgrade for TrashToTreasureReducer
   useEffect(() => {

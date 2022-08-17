@@ -104,3 +104,6 @@ img {
 .halveCircleBG {
   background: linear-gradient(90deg, red 50%, blue 50%);
 }
+.absoluteCenterTranslate {
+  transform: translate(-50%, 0);
+}
