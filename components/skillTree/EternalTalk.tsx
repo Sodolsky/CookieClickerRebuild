@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import C1 from "../../public/c1.jpg";
 import C2 from "../../public/c2.jpg";
+import C3 from "../../public/c2.jpg";
 import { SkillTreeImagesCarousel } from "./SkillTreeImagesCarousel";
 interface ImageSettings {
   pulseImage: boolean;
@@ -17,6 +18,7 @@ export const EternalTalk: React.FC<EternalTalkProps> = ({ resetGameLogic }) => {
     pulseImage: false,
     showImage: false,
   });
+  const iArray = [C1, C2, C3];
   const [currentStep, setCurrentStep] = useState<1 | 2>(2);
   const [dealOutcome, setDealOutcome] = useState<
     null | "accepted" | "declined"
@@ -96,9 +98,11 @@ export const EternalTalk: React.FC<EternalTalkProps> = ({ resetGameLogic }) => {
               <div className="divider"></div>
               <div className="EternalTalk-FadeInSkillTreeImage ">
                 <SkillTreeImagesCarousel
-                  imagesArray={[C1, C2]}
+                  imagesArray={iArray}
                   altTexts={
-                    Array.from({ length: 2 }).fill("Skill Tree") as string[]
+                    Array.from({ length: iArray.length }).fill(
+                      "Skill Tree"
+                    ) as string[]
                   }
                 />
               </div>
