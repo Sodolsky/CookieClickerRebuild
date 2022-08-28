@@ -21,7 +21,8 @@ export type nodeNames =
   | "peaceAroundTheWorld"
   | "equalibrum"
   | "evenMoreQuestions"
-  | "perfectAim";
+  | "perfectAim"
+  | "oneUpgrade";
 export interface singleSkillTreeNode {
   name: nodeNames;
   isNotable: boolean;
@@ -205,6 +206,18 @@ export const initialSkillTreeNodes: singleSkillTreeNode[] = [
     connectedNodes: ["carpetBombing", "nuclearBomb"],
     image: "aim.png",
     positionObject: { left: "25%", bottom: "65%" },
+  },
+  {
+    name: "oneUpgrade",
+    isNotable: false,
+    nameForPlayer: "One Upgrade",
+    price: 40,
+    wasBought: false,
+    description: "Your Explosions add 4 of your current best upgrade",
+    connectedNodes: ["trashToTreasure", "peaceAroundTheWorld"],
+    image: "ring.png",
+    explanation: '"To Rule Them All..."',
+    positionObject: { left: "45%", bottom: "65%" },
   },
 
   //?Right side of the tree

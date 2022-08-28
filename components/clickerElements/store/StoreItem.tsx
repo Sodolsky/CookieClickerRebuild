@@ -52,9 +52,7 @@ export const StoreItem: React.FC<CookiesShopItem> = ({
       ) as singleSkillTreeNode
   ).wasBought;
   useEffect(() => {
-    console.log(isEqualibrumBought, name, isLocked);
     if (isEqualibrumBought && name === "doubleClick") {
-      console.log("wchodzi");
       !isLocked && dispatch(lockShopItem("doubleClick"));
     }
   }, [isEqualibrumBought]);
