@@ -62,6 +62,7 @@ import {
 } from "../redux/equalibrumReducer";
 import useEqualibrumTimer from "../utils/hooks/useEqualibrumTImer";
 import { EqualibrumStacksDisplay } from "./skillTree/EqualibrumStacksDisplay";
+import { getBoughtUpgrades } from "../utils/utils";
 export const MainPage = () => {
   const resetGameLogic = (skillPointsCount: number) => {
     intervalRef.current && clearInterval(intervalRef.current);
@@ -220,15 +221,9 @@ export const MainPage = () => {
   //?This UEF is for changing best Upgrade for TrashToTreasureReducer
   useEffect(() => {
     if (isTrashToTreasureBought) {
-      const boughtUpgrades = Object.values(upgrades)
-        .filter((x: UpgradeInterface) => x.numberOfUpgrades > 0)
-        .sort((a: UpgradeInterface, b: UpgradeInterface) =>
-          a.CookiesPerClickBonus > b.CookiesPerClickBonus ? 1 : -1
-        );
+      const boughtUpgrades = getBoughtUpgrades(upgrades, false);
       if (boughtUpgrades.length < 2) return;
-      const bestUpgrade: UpgradeInterface =
-        boughtUpgrades[boughtUpgrades.length - 1];
-      boughtUpgrades.pop();
+      const bestUpgrade = boughtUpgrades[boughtUpgrades.length - 1];
       const numberOfUpgradesBought = boughtUpgrades.reduce(
         (acc, a: UpgradeInterface) => (acc += a.numberOfUpgrades),
         0
@@ -322,7 +317,7 @@ export const MainPage = () => {
         dispatch(changeBonusForTTT(newBonusesObject));
       }
     }
-  }, [upgrades, isTrashToTreasureBought]);
+  }, [upgrades, isTrashToTreasureBought, CPS]);
   return (
     <>
       {isMobile && (

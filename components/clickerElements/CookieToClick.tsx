@@ -10,7 +10,7 @@ import Image from "next/image";
 import CoockieImage from "../../public/cookie.png";
 import { RootState } from "../../redux/store";
 import { useClickMultiplier } from "../../utils/hooks/useClickMultiplier";
-import { generateRandomNumber } from "../../utils/utils";
+import { generateRandomNumber, getBoughtUpgrades } from "../../utils/utils";
 import ShardIcon from "../../public/crystal.png";
 import AimIcon from "../../public/aim.png";
 import {
@@ -95,6 +95,12 @@ export const CookieToClick: React.FC<CookieToClickProps> = ({ upgrades }) => {
         (x) => x.name === "perfectAim"
       ) as singleSkillTreeNode
   ).wasBought;
+  const isOneUpgradeBought = useSelector(
+    (state: RootState) =>
+      state.gameLogic.skillTreeLogic.skillTreeNodes.find(
+        (x) => x.name === "oneUpgrade"
+      ) as singleSkillTreeNode
+  ).wasBought;
   function pop(e: React.MouseEvent) {
     let shardsGenerated: number = 0;
     let didExplosionHappen: boolean = false;
@@ -149,20 +155,50 @@ export const CookieToClick: React.FC<CookieToClickProps> = ({ upgrades }) => {
           const randomUpgrade =
             boughtUpgrades[generateRandomNumber(0, boughtUpgrades.length - 1)];
           const randomUpgradeStats = upgrades[randomUpgrade];
+          const numberOfAddedUpgrades = 2;
           dispatch(
             changeCPC({
               type: "increase",
-              amount: randomUpgradeStats.CookiesPerClickBonus,
+              amount:
+                randomUpgradeStats.CookiesPerClickBonus * numberOfAddedUpgrades,
             })
           );
           dispatch(
             changeCPS({
               type: "increase",
-              amount: randomUpgradeStats.CookiesPerSecondBonus,
+              amount:
+                randomUpgradeStats.CookiesPerSecondBonus *
+                numberOfAddedUpgrades,
             })
           );
-          dispatch(buyUpgrade({ name: randomUpgrade, number: 1 }));
+          dispatch(
+            buyUpgrade({ name: randomUpgrade, number: numberOfAddedUpgrades })
+          );
         }
+      }
+      const boughtUpgrades = getBoughtUpgrades(upgrades, false);
+      if (isOneUpgradeBought && boughtUpgrades) {
+        const bestUpgrade: UpgradeInterface =
+          boughtUpgrades[boughtUpgrades?.length - 1];
+        const numberOfAddedUpgrades = 4;
+        dispatch(
+          changeCPC({
+            type: "increase",
+            amount: bestUpgrade.CookiesPerClickBonus * numberOfAddedUpgrades,
+          })
+        );
+        dispatch(
+          changeCPS({
+            type: "increase",
+            amount: bestUpgrade.CookiesPerSecondBonus * numberOfAddedUpgrades,
+          })
+        );
+        dispatch(
+          buyUpgrade({
+            name: bestUpgrade.upgradeName,
+            number: numberOfAddedUpgrades,
+          })
+        );
       }
       setExplosionAnimationPlayState(true);
       dispatch(addCookie(cookiesGainedFromExplosion));

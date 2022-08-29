@@ -1,5 +1,9 @@
 import { useDispatch } from "react-redux";
-import { ShopUpgradesNames, UpgradesInterface } from "./interfaces";
+import {
+  ShopUpgradesNames,
+  UpgradeInterface,
+  UpgradesInterface,
+} from "./interfaces";
 
 export const shouldShopItemBeShown = (
   name: ShopUpgradesNames,
@@ -98,3 +102,16 @@ export function secondsToTime(seconds: number) {
     .padStart(2, "0");
   return `${m}:${s}`;
 }
+export const getBoughtUpgrades = (
+  upgrades: UpgradesInterface,
+  excludeFirstUpgrade: boolean
+): any[] => {
+  const boughtUpgrades = Object.values(upgrades)
+    .filter((x: UpgradeInterface) => x.numberOfUpgrades > 0)
+    .sort((a: UpgradeInterface, b: UpgradeInterface) =>
+      a.CookiesPerClickBonus > b.CookiesPerClickBonus ? 1 : -1
+    );
+  if (!excludeFirstUpgrade) return boughtUpgrades;
+  boughtUpgrades.pop();
+  return boughtUpgrades;
+};
