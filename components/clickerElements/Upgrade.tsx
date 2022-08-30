@@ -17,6 +17,7 @@ import { GrCircleInformation } from "react-icons/gr";
 import { abbreviateNumber } from "js-abbreviation-number";
 import useMediaQuery from "../../utils/hooks/useMediaQuery";
 import { addNewUpgrade } from "../../redux/crystalBallReducer";
+import CountUp from "react-countup";
 export const Upgrade: React.FC<UpgradeInterface> = ({
   CookiesPerClickBonus,
   CookiesPerSecondBonus,
@@ -167,7 +168,15 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
           ? crystalShopUpgradeObject.nameInShop
           : upgradeNameForPlayer}
       </span>
-      <span>Number of upgrades: {numberOfUpgrades}</span>
+      <span>
+        Number of upgrades:{" "}
+        <CountUp
+          end={numberOfUpgrades}
+          preserveValue={true}
+          duration={0.35}
+          separator={" "}
+        />
+      </span>
       <div className="grid grid-cols-2 place-items-center gap-2 text-green-600">
         <div className="text-xl col-span-2">Current Bonus </div>
         <span>
