@@ -78,6 +78,12 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
         (x) => x.name === "trashToTreasure"
       ) as singleSkillTreeNode
   ).wasBought;
+  const isDebtBought = useSelector(
+    (state: RootState) =>
+      state.gameLogic.skillTreeLogic.skillTreeNodes.find(
+        (x) => x.name === "debt"
+      ) as singleSkillTreeNode
+  ).wasBought;
   useEffect(() => {
     //?Here is the Shop item that doubles the bonuses from single upgrade we handle multiplier logic here
     const doubleUpgrade = shopItems.find((x) => x.upgradeFor === upgradeName);
@@ -115,8 +121,10 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
   const currentCookies = useSelector(
     (state: RootState) => state.gameLogic.cookiesLogic.cookieCount
   );
+  const realPrice = isDebtBought ? Math.floor((price * 3) / 4) : price;
   const upgradeCPS = () => {
-    if (currentCookies >= price) {
+    console.log(realPrice);
+    if (currentCookies >= realPrice) {
       dispatch(removeCookies(price));
       dispatch(changeCPS({ type: "increase", amount: CookiesPerSecondBonus }));
       dispatch(changeCPC({ type: "increase", amount: CookiesPerClickBonus }));
@@ -207,13 +215,13 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
         </span>
       </div>
       <span className="text-xl text-red-600">
-        Cost: {abbreviateNumber(Number(price.toFixed(0)), 1, symbolsArray)}
+        Cost: {abbreviateNumber(Number(realPrice.toFixed(0)), 1, symbolsArray)}
       </span>
     </section>
   ) : (
     <fieldset
       className={`grid place-items-center grid-cols-4 gap-2 border-primary border ${
-        currentCookies >= price ? "bg-green-500" : "bg-red-500"
+        currentCookies >= realPrice ? "bg-green-500" : "bg-red-500"
       }`}
       onClick={upgradeCPS}
     >
@@ -257,7 +265,7 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
         </span>
       </div>
       <span>
-        Cost: {abbreviateNumber(Number(price.toFixed(0)), 1, symbolsArray)}
+        Cost: {abbreviateNumber(Number(realPrice.toFixed(0)), 1, symbolsArray)}
       </span>
     </fieldset>
   );

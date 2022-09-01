@@ -22,7 +22,8 @@ export type nodeNames =
   | "equalibrum"
   | "evenMoreQuestions"
   | "perfectAim"
-  | "oneUpgrade";
+  | "oneUpgrade"
+  | "debt";
 export interface singleSkillTreeNode {
   name: nodeNames;
   isNotable: boolean;
@@ -35,6 +36,7 @@ export interface singleSkillTreeNode {
   positionObject: CSSProperties;
   explanation?: string;
 }
+//! Idea za kazda explozje którą wywołasz coś się dzieje więcej ciastek / upgrady.
 export const initialSkillTreeNodes: singleSkillTreeNode[] = [
   {
     name: "starterNode",
@@ -196,6 +198,18 @@ export const initialSkillTreeNodes: singleSkillTreeNode[] = [
     positionObject: { left: "25%", bottom: "50%" },
   },
   {
+    name: "debt",
+    isNotable: false,
+    nameForPlayer: "Debt",
+    price: 20,
+    wasBought: false,
+    description:
+      "If you don't have enough cookies. You can buy upgrade with only 3/4 of it's price. Buy you will need to pay your debt.",
+    connectedNodes: ["carpetBombing", "timeBomb"],
+    image: "debt.png",
+    positionObject: { left: "42.5%", bottom: "50%" },
+  },
+  {
     name: "perfectAim",
     isNotable: false,
     nameForPlayer: "Perfect Aim",
@@ -249,7 +263,7 @@ export const initialSkillTreeNodes: singleSkillTreeNode[] = [
     name: "equalibrum",
     isNotable: false,
     nameForPlayer: "Equalibrum",
-    price: 10,
+    price: 20,
     wasBought: false,
     description:
       "Everytime you click or gain CPS you gain stacks of each type. When you reach 100 stacks of certain type the other method of gaining cookies multiplier becomes tripled. Until stacks reach zero",
