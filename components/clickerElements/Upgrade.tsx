@@ -72,12 +72,6 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
         (x) => x.name === "crystalBall"
       ) as singleSkillTreeNode
   ).wasBought;
-  const isTrashToTreasureBought = useSelector(
-    (state: RootState) =>
-      state.gameLogic.skillTreeLogic.skillTreeNodes.find(
-        (x) => x.name === "trashToTreasure"
-      ) as singleSkillTreeNode
-  ).wasBought;
   const isDebtBought = useSelector(
     (state: RootState) =>
       state.gameLogic.skillTreeLogic.skillTreeNodes.find(
