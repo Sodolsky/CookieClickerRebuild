@@ -17,6 +17,7 @@ import { GrCircleInformation } from "react-icons/gr";
 import { abbreviateNumber } from "js-abbreviation-number";
 import useMediaQuery from "../../utils/hooks/useMediaQuery";
 import { addNewUpgrade } from "../../redux/crystalBallReducer";
+import { BsCash } from "react-icons/bs";
 import CountUp from "react-countup";
 export const Upgrade: React.FC<UpgradeInterface> = ({
   CookiesPerClickBonus,
@@ -164,7 +165,24 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
         >
           <GrCircleInformation />
         </div>
+        {isDebtBought && currentCookies >= realPrice && currentCookies < price && (
+          <figure
+            className="absolute -left-6 -top-2 "
+            data-tip={`Gives: ${abbreviateNumber(
+              CookiesPerSecondBonus,
+              1,
+              symbolsArray
+            )} CPS && ${abbreviateNumber(
+              CookiesPerClickBonus,
+              1,
+              symbolsArray
+            )} CPC`}
+          >
+            <BsCash />
+          </figure>
+        )}
       </div>
+
       <span className="text-2xl font-bold">
         {crystalShopUpgradeObject?.wasBought && crystalShopUpgradeObject.inUse
           ? crystalShopUpgradeObject.nameInShop
