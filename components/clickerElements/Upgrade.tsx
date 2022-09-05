@@ -166,18 +166,7 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
           <GrCircleInformation />
         </div>
         {isDebtBought && currentCookies >= realPrice && currentCookies < price && (
-          <figure
-            className="absolute -left-6 -top-2 "
-            data-tip={`Gives: ${abbreviateNumber(
-              CookiesPerSecondBonus,
-              1,
-              symbolsArray
-            )} CPS && ${abbreviateNumber(
-              CookiesPerClickBonus,
-              1,
-              symbolsArray
-            )} CPC`}
-          >
+          <figure className="absolute -left-6 -top-2 ">
             <BsCash />
           </figure>
         )}
@@ -232,7 +221,7 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
     </section>
   ) : (
     <fieldset
-      className={`grid place-items-center grid-cols-4 gap-2 border-primary border ${
+      className={`grid place-items-center grid-cols-4 gap-2 border-primary border relative ${
         currentCookies >= realPrice ? "bg-green-500" : "bg-red-500"
       }`}
       onClick={upgradeCPS}
@@ -240,6 +229,11 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
       <legend className="text-center border p-1 border-primary bg-blue-500 -skew-x-12">
         Upgrades: {numberOfUpgrades}
       </legend>
+      {isDebtBought && currentCookies >= realPrice && currentCookies < price && (
+        <figure className="absolute right-4 top-0 ">
+          <BsCash />
+        </figure>
+      )}
       <Image
         src={
           crystalShopUpgradeObject?.wasBought && crystalShopUpgradeObject.inUse
