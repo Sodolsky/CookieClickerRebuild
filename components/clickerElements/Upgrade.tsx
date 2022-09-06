@@ -118,7 +118,6 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
   );
   const realPrice = isDebtBought ? Math.floor((price * 3) / 4) : price;
   const upgradeCPS = () => {
-    console.log(realPrice);
     if (currentCookies >= realPrice) {
       dispatch(removeCookies(price));
       dispatch(changeCPS({ type: "increase", amount: CookiesPerSecondBonus }));
