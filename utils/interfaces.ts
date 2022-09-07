@@ -355,6 +355,7 @@ export type CrystalUpgradesNames =
   | "upgrade5Skin"
   | "upgrade6Skin"
   | "upgrade7Skin"
+  | "upgrade8Skin"
   | "resetSkillTree";
 export type shopUpgradeTypes = "double" | "unique";
 export const symbolsArray: string[] = ["", "k", "M", "B", "T", "P", "E"];
@@ -391,21 +392,11 @@ export type ShopItems = CookiesShopItem[];
 export type CrystalShopItems = CrystalShopItem[];
 export const initialStateOfCrystalShopItems: CrystalShopItems = [
   {
-    name: "upgrade7Skin",
-    image: "/ufo.jpg",
-    nameInShop: "Lichwala's UFO",
-    description: "UFO designed by Lichwala!",
-    price: 20000,
-    wasBought: false,
-    inUse: false,
-    isLocked: false,
-  },
-  {
     name: "upgrade5Skin",
     image: "/desperados580ml.jpeg",
     nameInShop: "Desperado 580 ml",
     description: "Ufnal's favorite beer!",
-    price: 500,
+    price: 1000,
     wasBought: false,
     isLocked: false,
     inUse: false,
@@ -419,6 +410,26 @@ export const initialStateOfCrystalShopItems: CrystalShopItems = [
     wasBought: false,
     isLocked: false,
     inUse: false,
+  },
+  {
+    name: "upgrade7Skin",
+    image: "/ufo.jpg",
+    nameInShop: "Lichwala's UFO",
+    description: "UFO designed by Lichwala!",
+    price: 1000,
+    wasBought: false,
+    inUse: false,
+    isLocked: false,
+  },
+  {
+    name: "upgrade8Skin",
+    image: "/firstBlackHole.jpg",
+    nameInShop: "First Black Hole",
+    description: "First Black Hole picture ever taken!",
+    price: 1000,
+    wasBought: false,
+    inUse: false,
+    isLocked: false,
   },
   {
     name: "resetSkillTree",
