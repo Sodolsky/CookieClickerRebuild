@@ -23,7 +23,8 @@ export type nodeNames =
   | "evenMoreQuestions"
   | "perfectAim"
   | "oneUpgrade"
-  | "debt";
+  | "debt"
+  | "eternity";
 export interface singleSkillTreeNode {
   name: nodeNames;
   isNotable: boolean;
@@ -232,6 +233,17 @@ export const initialSkillTreeNodes: singleSkillTreeNode[] = [
     image: "ring.png",
     explanation: '"To Rule Them All..."',
     positionObject: { left: "45%", bottom: "65%" },
+  },
+  {
+    name: "eternity",
+    isNotable: true,
+    nameForPlayer: "Eternity",
+    price: 100,
+    wasBought: false,
+    description: "Unlocks the ending.",
+    connectedNodes: ["starterNode"],
+    image: "eternity.png",
+    positionObject: { left: "50%", bottom: "90%" },
   },
 
   //?Right side of the tree

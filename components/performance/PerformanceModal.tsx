@@ -3,10 +3,12 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import PerformanceIcon from "../../public/performance.png";
 import {
+  changeVolume,
   switchAnimatedBackground,
   switchClickParticles,
 } from "../../redux/performanceReducer";
 import { RootState } from "../../redux/store";
+import { RangeSlider } from "./RangeSlider";
 export const PerformanceModal = () => {
   const performanceState = useSelector((state: RootState) => state.performance);
   const dispatch = useDispatch();
@@ -17,6 +19,7 @@ export const PerformanceModal = () => {
       document.body.classList.remove("animatedBodyBG");
     }
   }, [performanceState]);
+
   return (
     <>
       <label htmlFor="PerformanceModal">
@@ -56,6 +59,32 @@ export const PerformanceModal = () => {
               onChange={() => dispatch(switchClickParticles())}
             />
           </div>
+          <div className="divider"></div>
+          <RangeSlider
+            text="Sound Volume"
+            onChangeFunc={(e) => {
+              dispatch(
+                changeVolume({
+                  type: "sound",
+                  newValue: parseInt(e.currentTarget.value),
+                })
+              );
+            }}
+            value={performanceState.soundVolume}
+          />
+          <div className="divider"></div>
+          <RangeSlider
+            text="Music Volume"
+            onChangeFunc={(e) => {
+              dispatch(
+                changeVolume({
+                  type: "music",
+                  newValue: parseInt(e.currentTarget.value),
+                })
+              );
+            }}
+            value={performanceState.musicVolume}
+          />
         </div>
       </label>
     </>
