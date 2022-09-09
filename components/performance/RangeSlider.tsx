@@ -8,7 +8,6 @@ export const RangeSlider: React.FC<RangeSliderInterface> = ({
   onChangeFunc,
   value,
 }) => {
-  console.log("r");
   return (
     <div className="form-control items-center">
       <label htmlFor="" className="label">
