@@ -73,6 +73,7 @@ export const MainPage = () => {
     dispatch(resetGameAndAddSkillPoints(skillPointsCount));
     dispatch(setInitialSkillTree(true));
   };
+  const bgMusicRef = useRef<null | HTMLAudioElement>(null);
   const isQPBought = useSelector(
     (state: RootState) =>
       state.gameLogic.skillTreeLogic.skillTreeNodes.find(
@@ -142,6 +143,7 @@ export const MainPage = () => {
     equlibrumState: equalibrumState,
     isEqualibrumBought: isEqualibrumBought,
   });
+
   const dispatch = useDispatch();
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -320,6 +322,7 @@ export const MainPage = () => {
   }, [upgrades, isTrashToTreasureBought, CPS]);
   return (
     <>
+      <audio src="bgmusic.mp3" ref={bgMusicRef}></audio>
       {isMobile && (
         //?When user screen size is less than 768px we render drawer with upgrades
         <div className="drawer absolute w-full rounded">
@@ -390,7 +393,7 @@ export const MainPage = () => {
             CPS={Number(CPS.toFixed(2))}
             CPC={Number(CPC.toFixed(2))}
           />
-          <CookieToClick upgrades={upgrades} />
+          <CookieToClick upgrades={upgrades} bgMusicRef={bgMusicRef.current} />
           {/* This Code is checking if player has bought 10 upgrades of type */}
           {Object.values(upgrades)
             .filter((x) => {

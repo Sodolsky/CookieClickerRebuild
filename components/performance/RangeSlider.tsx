@@ -16,7 +16,7 @@ export const RangeSlider: React.FC<RangeSliderInterface> = ({
       <input
         type="range"
         min="0"
-        max="10"
+        max="100"
         value={value}
         className="range range-primary range-md"
         step="1"

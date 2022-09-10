@@ -19,23 +19,27 @@ import {
   UpgradesInterface,
   UpgradesNames,
 } from "../../utils/interfaces";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { addExplosionCookiesCount } from "../../redux/explosionCookiesReducer";
 import { useCPSMultiplier } from "../../utils/hooks/useCPSMultiplier";
 import { addClickStacks } from "../../redux/equalibrumReducer";
 export interface CookieToClickProps {
   upgrades: UpgradesInterface;
+  bgMusicRef: HTMLAudioElement | null;
 }
 
-export const CookieToClick: React.FC<CookieToClickProps> = ({ upgrades }) => {
+export const CookieToClick: React.FC<CookieToClickProps> = ({
+  upgrades,
+  bgMusicRef,
+}) => {
   const [explosionAnimationPlayState, setExplosionAnimationPlayState] =
     useState<boolean>(false);
   const dispatch = useDispatch();
   const CPC = useSelector(
     (state: RootState) => state.gameLogic.cookiesLogic.CPC
   );
-  const areParticlesDisabled = useSelector(
-    (state: RootState) => state.performance.disableParticlesFromClicking
+  const performanceReducerState = useSelector(
+    (state: RootState) => state.performance
   );
   const isPickaxeBought = useSelector(
     (state: RootState) =>
@@ -129,7 +133,7 @@ export const CookieToClick: React.FC<CookieToClickProps> = ({ upgrades }) => {
         }
       }
       //? To optimise we don't create particles when player opt-out of them
-      if (!areParticlesDisabled) {
+      if (!performanceReducerState.disableParticlesFromClicking) {
         createParticle(e.clientX, e.clientY, generateShard, secondChance);
       }
     }
@@ -208,7 +212,11 @@ export const CookieToClick: React.FC<CookieToClickProps> = ({ upgrades }) => {
     dispatch(addCrystals(shardsGenerated));
     dispatch(addCookie(Math.floor(shardsGenerated / 2) * CPC));
   }
-
+  useEffect(() => {
+    if (bgMusicRef) {
+      bgMusicRef.volume = performanceReducerState.musicVolume / 100;
+    }
+  }, [performanceReducerState.musicVolume, bgMusicRef]);
   function createParticle(
     x: number,
     y: number,
@@ -260,22 +268,25 @@ export const CookieToClick: React.FC<CookieToClickProps> = ({ upgrades }) => {
   const { isClickDoubled, multiplier } = useClickMultiplier();
   const { multiplierCPS } = useCPSMultiplier();
   const handleClickIncrementation = () => {
+    if (bgMusicRef?.paused) bgMusicRef.play();
     dispatch(addCookie(Math.round(CPC * multiplier)));
   };
   return (
-    <Image
-      src={CoockieImage}
-      priority={true}
-      className={`cursor-pointer transition-all ${
-        explosionAnimationPlayState ? "ShakeAnimationXL" : ""
-      }`}
-      onAnimationEnd={() => setExplosionAnimationPlayState(false)}
-      onClick={(e) => {
-        handleClickIncrementation();
-        pop(e);
-      }}
-      height={256}
-      width={256}
-    />
+    <>
+      <Image
+        src={CoockieImage}
+        priority={true}
+        className={`cursor-pointer transition-all ${
+          explosionAnimationPlayState ? "ShakeAnimationXL" : ""
+        }`}
+        onAnimationEnd={() => setExplosionAnimationPlayState(false)}
+        onClick={(e) => {
+          handleClickIncrementation();
+          pop(e);
+        }}
+        height={256}
+        width={256}
+      />
+    </>
   );
 };
