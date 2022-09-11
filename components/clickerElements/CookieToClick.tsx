@@ -212,6 +212,7 @@ export const CookieToClick: React.FC<CookieToClickProps> = ({
     dispatch(addCrystals(shardsGenerated));
     dispatch(addCookie(Math.floor(shardsGenerated / 2) * CPC));
   }
+  //? Use effect that controls music volume, audio html element is on main page component
   useEffect(() => {
     if (bgMusicRef) {
       bgMusicRef.volume = performanceReducerState.musicVolume / 100;
