@@ -1,11 +1,9 @@
-import { abbreviateNumber } from "js-abbreviation-number";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import {
   CookiesShopItem,
   singleSkillTreeNode,
-  symbolsArray,
 } from "../../../utils/interfaces";
 import { FcCheckmark } from "react-icons/fc";
 import { useEffect, useState } from "react";
@@ -15,6 +13,7 @@ import {
   lockShopItem,
   removeCookies,
 } from "../../../redux/gameLogicReducer";
+import { numberFormatter } from "../../../utils/utils";
 export const StoreItem: React.FC<CookiesShopItem> = ({
   image,
   name,
@@ -87,11 +86,7 @@ export const StoreItem: React.FC<CookiesShopItem> = ({
           </div>
           <span>
             {!wasBought ? (
-              `Cost: ${abbreviateNumber(
-                Number(price.toFixed(0)),
-                1,
-                symbolsArray
-              )}`
+              `Cost: ${numberFormatter.format(Number(price.toFixed(0)))}`
             ) : (
               <FcCheckmark className="text-3xl" />
             )}

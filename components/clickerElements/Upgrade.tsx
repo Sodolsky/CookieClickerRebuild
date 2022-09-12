@@ -8,17 +8,13 @@ import {
   removeCookies,
 } from "../../redux/gameLogicReducer";
 import { RootState } from "../../redux/store";
-import {
-  singleSkillTreeNode,
-  symbolsArray,
-  UpgradeInterface,
-} from "../../utils/interfaces";
+import { singleSkillTreeNode, UpgradeInterface } from "../../utils/interfaces";
 import { GrCircleInformation } from "react-icons/gr";
-import { abbreviateNumber } from "js-abbreviation-number";
 import useMediaQuery from "../../utils/hooks/useMediaQuery";
 import { addNewUpgrade } from "../../redux/crystalBallReducer";
 import { BsCash } from "react-icons/bs";
 import CountUp from "react-countup";
+import { numberFormatter } from "../../utils/utils";
 export const Upgrade: React.FC<UpgradeInterface> = ({
   CookiesPerClickBonus,
   CookiesPerSecondBonus,
@@ -152,15 +148,9 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
         />
         <div
           className="tooltip absolute -right-6 -top-2 tooltip-left z-[10]"
-          data-tip={`Gives: ${abbreviateNumber(
-            CookiesPerSecondBonus,
-            1,
-            symbolsArray
-          )} CPS && ${abbreviateNumber(
-            CookiesPerClickBonus,
-            1,
-            symbolsArray
-          )} CPC`}
+          data-tip={`Gives: ${numberFormatter.format(
+            CookiesPerSecondBonus
+          )} CPS && ${numberFormatter.format(CookiesPerClickBonus)} CPC`}
         >
           <GrCircleInformation />
         </div>
@@ -189,33 +179,25 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
         <div className="text-xl col-span-2">Current Bonus </div>
         <span>
           CPS:{" "}
-          {abbreviateNumber(
-            Math.floor(
-              CookiesPerSecondBonus *
-                numberOfUpgrades *
-                multiplier *
-                (isThisUpgradeTheBest ? currentBestUpgradeBonus : 1)
-            ),
-            1,
-            symbolsArray
+          {numberFormatter.format(
+            CookiesPerSecondBonus *
+              numberOfUpgrades *
+              multiplier *
+              (isThisUpgradeTheBest ? currentBestUpgradeBonus : 1)
           )}
         </span>
         <span>
           CPC:{" "}
-          {abbreviateNumber(
-            Math.floor(
-              CookiesPerClickBonus *
-                numberOfUpgrades *
-                multiplier *
-                (isThisUpgradeTheBest ? currentBestUpgradeBonus : 1)
-            ),
-            1,
-            symbolsArray
+          {numberFormatter.format(
+            CookiesPerClickBonus *
+              numberOfUpgrades *
+              multiplier *
+              (isThisUpgradeTheBest ? currentBestUpgradeBonus : 1)
           )}
         </span>
       </div>
       <span className="text-xl text-red-600">
-        Cost: {abbreviateNumber(Number(realPrice.toFixed(0)), 1, symbolsArray)}
+        Cost: {numberFormatter.format(realPrice)}
       </span>
     </section>
   ) : (
@@ -248,30 +230,24 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
       <div className="flex-col flex gap-2 items-end col-span-2">
         <span>
           {numberOfUpgrades > 0 ? "CPS: " : "Gives: "}
-          {abbreviateNumber(
+          {numberFormatter.format(
             numberOfUpgrades > 0
               ? CookiesPerSecondBonus * numberOfUpgrades * multiplier
               : CookiesPerSecondBonus *
-                  (isThisUpgradeTheBest ? currentBestUpgradeBonus : 1),
-            1,
-            symbolsArray
+                  (isThisUpgradeTheBest ? currentBestUpgradeBonus : 1)
           )}
         </span>
         <span>
           {numberOfUpgrades > 0 ? "CPC: " : "Gives: "}
-          {abbreviateNumber(
+          {numberFormatter.format(
             numberOfUpgrades > 0
               ? CookiesPerClickBonus * numberOfUpgrades * multiplier
               : CookiesPerClickBonus *
-                  (isThisUpgradeTheBest ? currentBestUpgradeBonus : 1),
-            1,
-            symbolsArray
+                  (isThisUpgradeTheBest ? currentBestUpgradeBonus : 1)
           )}
         </span>
       </div>
-      <span>
-        Cost: {abbreviateNumber(Number(realPrice.toFixed(0)), 1, symbolsArray)}
-      </span>
+      <span>Cost: {numberFormatter.format(realPrice)}</span>
     </fieldset>
   );
 };

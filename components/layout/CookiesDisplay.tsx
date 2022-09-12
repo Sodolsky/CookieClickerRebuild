@@ -1,12 +1,11 @@
 import CountUp from "react-countup";
-import { abbreviateNumber } from "js-abbreviation-number";
-import { symbolsArray } from "../../utils/interfaces";
 import { useCallback, useEffect, useRef } from "react";
 import { useClickMultiplier } from "../../utils/hooks/useClickMultiplier";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import Image from "next/image";
 import { useCPSMultiplier } from "../../utils/hooks/useCPSMultiplier";
+import { numberFormatter } from "../../utils/utils";
 interface CookiesDisplayProps {
   CPS: number;
   CPC: number;
@@ -17,7 +16,7 @@ export const CookiesDisplay: React.FC<CookiesDisplayProps> = ({ CPS, CPC }) => {
   const { multiplierCPS } = useCPSMultiplier();
   const formatCookieCount = useCallback((n: number) => {
     try {
-      return abbreviateNumber(n, 2, symbolsArray);
+      return numberFormatter.format(n);
     } catch (error) {
       return n.toFixed(2);
     }
@@ -74,8 +73,7 @@ export const CookiesDisplay: React.FC<CookiesDisplayProps> = ({ CPS, CPC }) => {
           width={32}
         />
         <span>
-          +
-          {abbreviateNumber(Math.round(explosionCookiesCount), 2, symbolsArray)}{" "}
+          +{numberFormatter.format(explosionCookiesCount)}
           COOKIES!
         </span>
       </div>
@@ -86,13 +84,13 @@ export const CookiesDisplay: React.FC<CookiesDisplayProps> = ({ CPS, CPC }) => {
           <span className="text-red-500 font-bold">Disabled</span>
         ) : (
           <span>
-            {abbreviateNumber(Math.round(CPS * multiplierCPS), 1, symbolsArray)}
+            {numberFormatter.format(CPS * multiplierCPS)}
             /s
           </span>
         )}
       </div>
       <div className="text-lg lg:text-xl">
-        CPC: {abbreviateNumber(Math.round(CPC * multiplier), 1, symbolsArray)}
+        CPC: {numberFormatter.format(CPC * multiplier)}
       </div>
     </section>
   );

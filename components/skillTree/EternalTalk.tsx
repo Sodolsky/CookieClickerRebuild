@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import C1 from "../../public/c1.jpg";
 import C2 from "../../public/c2.jpg";
-import C3 from "../../public/c2.jpg";
+import C3 from "../../public/c3.jpg";
 import { SkillTreeImagesCarousel } from "./SkillTreeImagesCarousel";
 interface ImageSettings {
   pulseImage: boolean;

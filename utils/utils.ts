@@ -1,4 +1,3 @@
-import { useDispatch } from "react-redux";
 import {
   ShopUpgradesNames,
   UpgradeInterface,
@@ -115,3 +114,7 @@ export const getBoughtUpgrades = (
   boughtUpgrades.pop();
   return boughtUpgrades;
 };
+export const numberFormatter = Intl.NumberFormat("en", {
+  notation: "compact",
+  maximumSignificantDigits: 3,
+});

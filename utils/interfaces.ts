@@ -370,7 +370,6 @@ export type CrystalUpgradesNames =
   | "upgrade8Skin"
   | "resetSkillTree";
 export type shopUpgradeTypes = "double" | "unique";
-export const symbolsArray: string[] = ["", "k", "M", "B", "T", "P", "E"];
 export interface UpgradeInterface {
   CookiesPerClickBonus: number;
   CookiesPerSecondBonus: number;

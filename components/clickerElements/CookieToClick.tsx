@@ -26,11 +26,13 @@ import { addClickStacks } from "../../redux/equalibrumReducer";
 export interface CookieToClickProps {
   upgrades: UpgradesInterface;
   bgMusicRef: HTMLAudioElement | null;
+  explosionSoundRef: HTMLAudioElement | null;
 }
 
 export const CookieToClick: React.FC<CookieToClickProps> = ({
   upgrades,
   bgMusicRef,
+  explosionSoundRef,
 }) => {
   const [explosionAnimationPlayState, setExplosionAnimationPlayState] =
     useState<boolean>(false);
@@ -206,7 +208,7 @@ export const CookieToClick: React.FC<CookieToClickProps> = ({
       }
       setExplosionAnimationPlayState(true);
       dispatch(addCookie(cookiesGainedFromExplosion));
-
+      explosionSoundRef?.play();
       dispatch(addExplosionCookiesCount(cookiesGainedFromExplosion));
     }
     dispatch(addCrystals(shardsGenerated));
@@ -218,6 +220,12 @@ export const CookieToClick: React.FC<CookieToClickProps> = ({
       bgMusicRef.volume = performanceReducerState.musicVolume / 100;
     }
   }, [performanceReducerState.musicVolume, bgMusicRef]);
+  //? Use effect that controls sound effects volume, audio html elements are on main page component
+  useEffect(() => {
+    if (explosionSoundRef) {
+      explosionSoundRef.volume = performanceReducerState.soundVolume / 100;
+    }
+  }, [performanceReducerState.soundVolume, explosionSoundRef]);
   function createParticle(
     x: number,
     y: number,
