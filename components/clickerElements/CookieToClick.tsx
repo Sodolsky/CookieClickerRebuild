@@ -144,7 +144,6 @@ export const CookieToClick: React.FC<CookieToClickProps> = ({
     }
     //?Here we handle logic when explosion happens
     if (didExplosionHappen) {
-      //? timeBomb | nuclearBomb are skillTreeNodeNames
       const timeBombMultiplier = isTimeBombBought ? multiplierCPS : 1;
       const cookiesGainedFromExplosion =
         (nuclearBombBought ? 60 : 20) *
