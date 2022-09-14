@@ -7,6 +7,7 @@ import { singleSkillTreeNode } from "../../utils/interfaces";
 import { isTouchDevice } from "../../utils/utils";
 interface localNodeInterface extends singleSkillTreeNode {
   showExplanations: boolean;
+  buySound: HTMLAudioElement | null;
 }
 export const Node: React.FC<localNodeInterface> = ({
   connectedNodes,
@@ -20,6 +21,7 @@ export const Node: React.FC<localNodeInterface> = ({
   explanation,
   showExplanations,
   isNotable,
+  buySound,
 }) => {
   const isTouch = isTouchDevice();
   const dispatch = useDispatch();
@@ -34,6 +36,7 @@ export const Node: React.FC<localNodeInterface> = ({
   const canBuy = allPreviousNodes.some((x) => x.wasBought);
   const buyNode = () => {
     if (skillPoints >= price && !wasBought && canBuy) {
+      buySound?.play();
       dispatch(buySkillTreeUpgrade(name));
     }
   };
