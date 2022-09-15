@@ -14,7 +14,10 @@ import {
   removeCookies,
 } from "../../../redux/gameLogicReducer";
 import { numberFormatter } from "../../../utils/utils";
-export const StoreItem: React.FC<CookiesShopItem> = ({
+interface CookiesShopItemLocal extends CookiesShopItem {
+  buySound: HTMLAudioElement | null;
+}
+export const StoreItem: React.FC<CookiesShopItemLocal> = ({
   image,
   name,
   nameInShop,
@@ -24,6 +27,7 @@ export const StoreItem: React.FC<CookiesShopItem> = ({
   type,
   upgradeFor,
   isLocked,
+  buySound,
 }) => {
   const [shakeImage, setShakeImage] = useState(false);
   const dispatch = useDispatch();
@@ -31,6 +35,7 @@ export const StoreItem: React.FC<CookiesShopItem> = ({
     if (isLocked) return;
     if (!wasBought) {
       if (cookieCount >= price) {
+        buySound?.play();
         if (type === "double") {
           upgradeFor && dispatch(addBonusesForUpgrades(upgradeFor));
         }

@@ -368,6 +368,7 @@ export type CrystalUpgradesNames =
   | "upgrade6Skin"
   | "upgrade7Skin"
   | "upgrade8Skin"
+  | "cookieSkin"
   | "resetSkillTree";
 export type shopUpgradeTypes = "double" | "unique";
 export interface UpgradeInterface {
@@ -438,6 +439,16 @@ export const initialStateOfCrystalShopItems: CrystalShopItems = [
     nameInShop: "First Black Hole",
     description: "First Black Hole picture ever taken!",
     price: 1000,
+    wasBought: false,
+    inUse: false,
+    isLocked: false,
+  },
+  {
+    name: "cookieSkin",
+    image: "/mc.png",
+    nameInShop: "Minecraft Cookie",
+    description: "Minecraft Cookie Skin!",
+    price: 2500,
     wasBought: false,
     inUse: false,
     isLocked: false,

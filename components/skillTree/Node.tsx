@@ -97,7 +97,7 @@ export const Node: React.FC<localNodeInterface> = ({
           id={name}
           className={`mydiv node border-2 bg-secondary ${
             isNotable ? "nodeNotable" : ""
-          }   ${wasBought ? "border-green-500" : "border-red-500"}`}
+          }   ${wasBought ? "border-green-500 " : "border-red-500"}`}
           onClick={() => !isTouch && buyNode()}
           style={positionObject}
         >

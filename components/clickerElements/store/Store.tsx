@@ -1,6 +1,6 @@
 import { cloneDeep, difference } from "lodash";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { showShopItem } from "../../../redux/gameLogicReducer";
 import { RootState } from "../../../redux/store";
@@ -22,6 +22,7 @@ export const Store = () => {
   const isSkillTreeUnlocked = useSelector(
     (state: RootState) => state.gameLogic.skillTreeLogic.isSkillTreeUnlocked
   );
+  const buyStoreItemSound = useRef<null | HTMLAudioElement>(null);
   useEffect(() => {
     isSkillTreeUnlocked && cookieCount < 500 && setShowStore(false);
   }, [isSkillTreeUnlocked]);
@@ -68,6 +69,8 @@ export const Store = () => {
   }, [cookieCount]);
   return (
     <>
+      <audio src="buyUpgradeSound.mp3" ref={buyStoreItemSound}></audio>
+
       <label htmlFor="my-modal">
         <figure
           className={`${
@@ -95,7 +98,13 @@ export const Store = () => {
                   x.wasBought ||
                   x.wasShown
                 ) {
-                  return <StoreItem {...x} key={x.name} />;
+                  return (
+                    <StoreItem
+                      {...x}
+                      key={x.name}
+                      buySound={buyStoreItemSound.current}
+                    />
+                  );
                 }
               })}
             {numberOfItemsThatAreShown?.length !== shopItems.length && (

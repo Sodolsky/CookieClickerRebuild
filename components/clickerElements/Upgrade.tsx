@@ -15,6 +15,7 @@ import { addNewUpgrade } from "../../redux/crystalBallReducer";
 import { BsCash } from "react-icons/bs";
 import CountUp from "react-countup";
 import { numberFormatter } from "../../utils/utils";
+
 export const Upgrade: React.FC<UpgradeInterface> = ({
   CookiesPerClickBonus,
   CookiesPerSecondBonus,

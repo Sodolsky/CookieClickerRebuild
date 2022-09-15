@@ -7,7 +7,7 @@ import {
   changeCPS,
 } from "../../redux/gameLogicReducer";
 import Image from "next/image";
-import CoockieImage from "../../public/cookie.png";
+import CookieImage from "../../public/cookie.png";
 import { RootState } from "../../redux/store";
 import { useClickMultiplier } from "../../utils/hooks/useClickMultiplier";
 import { generateRandomNumber, getBoughtUpgrades } from "../../utils/utils";
@@ -36,6 +36,9 @@ export const CookieToClick: React.FC<CookieToClickProps> = ({
 }) => {
   const [explosionAnimationPlayState, setExplosionAnimationPlayState] =
     useState<boolean>(false);
+  const cookieSkin = useSelector(
+    (state: RootState) => state.gameLogic.crystalShopItems
+  ).find((x) => x.name.split("Skin")[0] === "cookie");
   const dispatch = useDispatch();
   const CPC = useSelector(
     (state: RootState) => state.gameLogic.cookiesLogic.CPC
@@ -282,7 +285,11 @@ export const CookieToClick: React.FC<CookieToClickProps> = ({
   return (
     <>
       <Image
-        src={CoockieImage}
+        src={
+          cookieSkin?.wasBought && cookieSkin.inUse
+            ? cookieSkin.image
+            : CookieImage
+        }
         priority={true}
         className={`cursor-pointer transition-all ${
           explosionAnimationPlayState ? "ShakeAnimationXL" : ""
