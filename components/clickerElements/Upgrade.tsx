@@ -44,14 +44,14 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
   const shopItems = useSelector(
     (state: RootState) => state.gameLogic.shopItems
   );
-  // const contributions = {
-  //   CPSContribution: CookiesPerSecondBonus * numberOfUpgrades,
-  //   CPCContribution: CookiesPerClickBonus * numberOfUpgrades,
-  //   CPCContributionWithTTT:
-  //     CookiesPerClickBonus * numberOfUpgrades * currentBestUpgradeBonus,
-  //   CPSContributionWithTTT:
-  //     CookiesPerSecondBonus * numberOfUpgrades * currentBestUpgradeBonus,
-  // };
+  const contributions = {
+    CPSContribution: CookiesPerSecondBonus * numberOfUpgrades,
+    CPCContribution: CookiesPerClickBonus * numberOfUpgrades,
+    CPCContributionWithTTT:
+      CookiesPerClickBonus * numberOfUpgrades * currentBestUpgradeBonus,
+    CPSContributionWithTTT:
+      CookiesPerSecondBonus * numberOfUpgrades * currentBestUpgradeBonus,
+  };
   const isTheoryOfEverythingBought = useSelector(
     (state: RootState) =>
       state.gameLogic.skillTreeLogic.skillTreeNodes.find(
