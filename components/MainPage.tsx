@@ -62,6 +62,7 @@ import {
 import useEqualibrumTimer from "../utils/hooks/useEqualibrumTImer";
 import { EqualibrumStacksDisplay } from "./skillTree/EqualibrumStacksDisplay";
 import { getBoughtUpgrades } from "../utils/utils";
+import { BackendSynchronizationModal } from "./backendSynchronization/BackendSynchronizationModal";
 export const MainPage = () => {
   const resetGameLogic = (skillPointsCount: number) => {
     intervalRef.current && clearInterval(intervalRef.current);
@@ -419,6 +420,7 @@ export const MainPage = () => {
               return (acc = false);
             }, true) && <ResetModal resetGameLogic={resetGameLogic} />}
           <PerformanceModal />
+          <BackendSynchronizationModal />
           <div className="grid place-items-center  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 grid-rows-1 gap-2 mt-6 w-full xl:w-3/4">
             {isMobile !== null &&
               !isMobile &&
