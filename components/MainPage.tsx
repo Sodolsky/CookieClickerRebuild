@@ -373,6 +373,8 @@ export const MainPage = () => {
           <Store />
         </div>
       </aside>
+      <PerformanceModal />
+      <BackendSynchronizationModal />
       {shopItems.find((x) => x.name === "unlockSkillTree")?.wasBought &&
       !isSkillTreeUnlocked ? (
         <EternalTalk resetGameLogic={() => resetGameLogic(10)} />
@@ -419,8 +421,7 @@ export const MainPage = () => {
               if (acc && a.numberOfUpgrades >= 10) return acc;
               return (acc = false);
             }, true) && <ResetModal resetGameLogic={resetGameLogic} />}
-          <PerformanceModal />
-          <BackendSynchronizationModal />
+
           <div className="grid place-items-center  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 grid-rows-1 gap-2 mt-6 w-full xl:w-3/4">
             {isMobile !== null &&
               !isMobile &&

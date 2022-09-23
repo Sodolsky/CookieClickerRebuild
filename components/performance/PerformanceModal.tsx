@@ -32,7 +32,7 @@ export const PerformanceModal = () => {
       <input type="checkbox" className="modal-toggle" id="PerformanceModal" />
 
       <label htmlFor="PerformanceModal" className={`modal`}>
-        <div className="modal-box bg-white">
+        <label className="modal-box bg-white" htmlFor="">
           <h1 className="text-2xl font-bold text-center">
             Performance Options
           </h1>
@@ -85,7 +85,7 @@ export const PerformanceModal = () => {
             }}
             value={performanceState.musicVolume}
           />
-        </div>
+        </label>
       </label>
     </>
   );

@@ -16,11 +16,14 @@ export const BackendSynchronizationModal = () => {
         </figure>
       </label>
       <input type="checkbox" className="modal-toggle" id="BackendModal" />
-
       <label htmlFor="BackendModal" className={`modal`}>
-        <div className="modal-box bg-white">
-          {!isUserLoggedIn ? <SignInForm /> : <div>Logged In</div>}
-        </div>
+        <label className="modal-box relative bg-white">
+          {!isUserLoggedIn ? (
+            <SignInForm setIsUserLoggedIn={setisUserLoggedIn} />
+          ) : (
+            <div>Logged In</div>
+          )}
+        </label>
       </label>
     </>
   );
