@@ -1,28 +1,13 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
+import {
+  defaultDataValidity,
+  defaultFormData,
+  formDataInterface,
+  formDataValidityInterface,
+} from "./SignInForm";
 
-export interface formDataInterface {
-  email: string;
-  password: string;
-}
-export interface formDataValidityInterface {
-  email: boolean;
-  password: boolean;
-}
-export const defaultFormData: formDataInterface = {
-  email: "",
-  password: "",
-};
-export const defaultDataValidity: formDataValidityInterface = {
-  email: false,
-  password: false,
-};
-interface SignInFormProps {
-  setIsUserLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
-}
-export const SignInForm: React.FC<SignInFormProps> = ({
-  setIsUserLoggedIn,
-}) => {
+export const LogInForm = () => {
   const [formData, setFormData] = useState<formDataInterface>(defaultFormData);
   const [formDataValidityOutline, setFormDataValidityOutline] =
     useState<formDataValidityInterface>(defaultDataValidity);
@@ -48,14 +33,11 @@ export const SignInForm: React.FC<SignInFormProps> = ({
         password: true,
       }));
     }
-    setIsUserLoggedIn(true);
   };
   return (
     <div className="flex items-center justify-center flex-col gap-2">
-      <h1 className="text-2xl font-bold text-center">Sign In</h1>
-      <span className="text-center text-gray-500">
-        Sign In to synchronize your progress across all devices!
-      </span>
+      <h1 className="text-2xl font-bold text-center">Log In</h1>
+      <span className="text-center text-gray-500">Log In to your account!</span>
       <div className="form-control w-3/4">
         <input
           type="text"
@@ -79,7 +61,7 @@ export const SignInForm: React.FC<SignInFormProps> = ({
         />
       </div>
       <button className="btn btn-primary" onClick={() => handleFormSubmiton()}>
-        Create Account
+        Log In
       </button>
     </div>
   );

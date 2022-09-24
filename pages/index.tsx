@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import { ToastContainer } from "react-toastify";
 import { MainPage } from "../components/MainPage";
 
 const Home: NextPage = () => {
@@ -14,6 +15,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <MainPage />
+      <ToastContainer />
     </>
   );
 };
