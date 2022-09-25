@@ -21,7 +21,7 @@ export const BackendSynchronizationModal = () => {
           {!isUserLoggedIn ? (
             <SignInForm setIsUserLoggedIn={setisUserLoggedIn} />
           ) : (
-            <div>Logged In</div>
+            <div>You are logged in</div>
           )}
         </label>
       </label>
