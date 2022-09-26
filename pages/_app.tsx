@@ -2,6 +2,7 @@ import "../styles/globals.css";
 import "../components/clickerElements/Animations.css";
 import "../styles/particles.css";
 import "../styles/linedivs.css";
+import "nprogress/nprogress.css";
 import "react-toastify/dist/ReactToastify.css";
 
 import "react-circular-progressbar/dist/styles.css";

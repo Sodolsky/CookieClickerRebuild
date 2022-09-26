@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase";
+import Image from "next/image";
+import BackArrowImage from "../../public/back.png";
+import Nprogress from "nprogress";
 export interface formDataInterface {
   email: string;
   password: string;
@@ -17,11 +21,11 @@ export const defaultDataValidity: formDataValidityInterface = {
   email: false,
   password: false,
 };
-interface SignInFormProps {
-  setIsUserLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+interface SignInFormInterface {
+  setShowSignIn: React.Dispatch<React.SetStateAction<boolean>>;
 }
-export const SignInForm: React.FC<SignInFormProps> = ({
-  setIsUserLoggedIn,
+export const SignInForm: React.FC<SignInFormInterface> = ({
+  setShowSignIn,
 }) => {
   const [formData, setFormData] = useState<formDataInterface>(defaultFormData);
   const [formDataValidityOutline, setFormDataValidityOutline] =
@@ -48,10 +52,27 @@ export const SignInForm: React.FC<SignInFormProps> = ({
         password: true,
       }));
     }
-    setIsUserLoggedIn(true);
+    Nprogress.start();
+    createUserWithEmailAndPassword(auth, formData.email, formData.password)
+      .then((userCredential) => {
+        Nprogress.done();
+        toast.success(
+          "Your account has been created from now on your progress will be saved across all devices!"
+        );
+      })
+      .catch((error) => {
+        Nprogress.done();
+        toast.error(error.message);
+      });
   };
   return (
-    <div className="flex items-center justify-center flex-col gap-2">
+    <div className="flex items-center justify-center flex-col gap-2 relative">
+      <figure
+        className="absolute left-2 top-1 cursor-pointer hover:animate-spin transition-all"
+        onClick={() => setShowSignIn(false)}
+      >
+        <Image height={24} width={24} src={BackArrowImage.src} />
+      </figure>
       <h1 className="text-2xl font-bold text-center">Sign In</h1>
       <span className="text-center text-gray-500">
         Sign In to synchronize your progress across all devices!
