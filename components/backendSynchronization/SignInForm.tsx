@@ -76,7 +76,7 @@ export const SignInForm: React.FC<SignInFormInterface> = ({
       </figure>
       <h1 className="text-2xl font-bold text-center">Sign In</h1>
       <span className="text-center text-gray-500">
-        Sign In to synchronize your progress across all devices!
+        Create your account to synchronize your progress across all devices!
       </span>
       <div className="form-control w-3/4">
         <input
