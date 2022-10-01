@@ -1,13 +1,23 @@
+import { onAuthStateChanged } from "firebase/auth";
 import Image from "next/image";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { auth } from "../../firebase";
 import SynchronizeIcon from "../../public/synchronize.png";
+import { LoggedInModalView } from "./LoggedInModalView";
 import { LogInForm } from "./LogInForm";
-import { SignInForm } from "./SignInForm";
 export const BackendSynchronizationModal = () => {
   const dispatch = useDispatch();
-  const [isSigningInSelected, setIsSigningInSelected] =
-    useState<boolean>(false);
+  const [userDataIsReady, setUserDataIsReady] = useState<boolean>(true);
+  const [isUserAuthed, setIsUserAuthed] = useState<boolean>(false);
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      setIsUserAuthed(true);
+    } else {
+      setIsUserAuthed(false);
+    }
+    setUserDataIsReady(true);
+  });
   return (
     <>
       <label htmlFor="BackendModal">
@@ -20,7 +30,15 @@ export const BackendSynchronizationModal = () => {
       <input type="checkbox" className="modal-toggle" id="BackendModal" />
       <label htmlFor="BackendModal" className={`modal`}>
         <label className="modal-box relative bg-white">
-          <LogInForm />
+          {userDataIsReady ? (
+            isUserAuthed ? (
+              <LoggedInModalView setAuth={setIsUserAuthed} />
+            ) : (
+              <LogInForm setAuth={setIsUserAuthed} />
+            )
+          ) : (
+            <span>Loading ...</span>
+          )}
         </label>
       </label>
     </>

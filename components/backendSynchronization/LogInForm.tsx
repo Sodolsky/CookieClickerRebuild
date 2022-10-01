@@ -11,9 +11,12 @@ import {
   formDataValidityInterface,
   SignInForm,
 } from "./SignInForm";
-
-export const LogInForm = () => {
+interface LogInFormProps {
+  setAuth: React.Dispatch<React.SetStateAction<boolean>>;
+}
+export const LogInForm: React.FC<LogInFormProps> = ({ setAuth }) => {
   const [formData, setFormData] = useState<formDataInterface>(defaultFormData);
+
   const [showSignIn, setShowSignIn] = useState<boolean>(false);
   const [formDataValidityOutline, setFormDataValidityOutline] =
     useState<formDataValidityInterface>(defaultDataValidity);
@@ -43,6 +46,7 @@ export const LogInForm = () => {
     nProgress.start();
     signInWithEmailAndPassword(auth, formData.email, formData.password)
       .then((userCredential) => {
+        setAuth(true);
         nprogress.done();
         toast.success("You have succesfuly logged in!");
       })
