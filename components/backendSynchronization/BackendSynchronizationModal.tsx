@@ -7,6 +7,7 @@ import SynchronizeIcon from "../../public/synchronize.png";
 import { LoggedInModalView } from "./LoggedInModalView";
 import { LogInForm } from "./LogInForm";
 export const BackendSynchronizationModal = () => {
+  //? Syncronizing with backend should work like this, if user doesn't have an account his progress will be stored in localStorage if he craetes one firebase document is created with his current progress that will be updated every 1 minute and pulled every time he visits the webpage and is authed. When he decides to log out tho progress will be resetted until he auths again.
   const dispatch = useDispatch();
   const [userDataIsReady, setUserDataIsReady] = useState<boolean>(true);
   const [isUserAuthed, setIsUserAuthed] = useState<boolean>(false);
