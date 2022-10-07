@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase";
+import { auth, db } from "../../firebase";
 import Image from "next/image";
 import BackArrowImage from "../../public/back.png";
 import Nprogress from "nprogress";
+import { doc, setDoc } from "firebase/firestore";
+import { firebaseObjectInterface } from "../../utils/interfaces";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { useFirebaseUserObject } from "../../utils/hooks/useFirebaseUserObject";
 export interface formDataInterface {
   email: string;
   password: string;
@@ -24,10 +29,19 @@ export const defaultDataValidity: formDataValidityInterface = {
 interface SignInFormInterface {
   setShowSignIn: React.Dispatch<React.SetStateAction<boolean>>;
 }
+const saveUserDocumentInDatabase = async (
+  emaiL: string,
+  firebaseObj: firebaseObjectInterface
+) => {
+  const ref = doc(db, "Users", emaiL);
+  await setDoc(ref, firebaseObj, { merge: true });
+};
 export const SignInForm: React.FC<SignInFormInterface> = ({
   setShowSignIn,
 }) => {
+  const { firebaseObject } = useFirebaseUserObject();
   const [formData, setFormData] = useState<formDataInterface>(defaultFormData);
+  const gamelogicReducer = useSelector((state: RootState) => state.gameLogic);
   const [formDataValidityOutline, setFormDataValidityOutline] =
     useState<formDataValidityInterface>(defaultDataValidity);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,7 +50,6 @@ export const SignInForm: React.FC<SignInFormInterface> = ({
       return { ...prev, [name]: value };
     });
   };
-  //TEST
   const handleFormSubmiton = () => {
     const pattern =
       /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
@@ -56,6 +69,10 @@ export const SignInForm: React.FC<SignInFormInterface> = ({
     Nprogress.start();
     createUserWithEmailAndPassword(auth, formData.email, formData.password)
       .then((userCredential) => {
+        saveUserDocumentInDatabase(
+          userCredential.user.email as string,
+          firebaseObject
+        );
         Nprogress.done();
         toast.success(
           "Your account has been created from now on your progress will be saved across all devices!"

@@ -52,7 +52,7 @@ export const LogInForm: React.FC<LogInFormProps> = ({ setAuth }) => {
       })
       .catch((error) => {
         nprogress.done();
-        toast.error(error);
+        toast.error(error.message);
       });
   };
   return !showSignIn ? (

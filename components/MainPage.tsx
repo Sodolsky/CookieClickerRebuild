@@ -63,6 +63,8 @@ import useEqualibrumTimer from "../utils/hooks/useEqualibrumTImer";
 import { EqualibrumStacksDisplay } from "./skillTree/EqualibrumStacksDisplay";
 import { getBoughtUpgrades } from "../utils/utils";
 import { BackendSynchronizationModal } from "./backendSynchronization/BackendSynchronizationModal";
+import { auth } from "../firebase";
+import { getAuth } from "firebase/auth";
 export const MainPage = () => {
   const resetGameLogic = (skillPointsCount: number) => {
     intervalRef.current && clearInterval(intervalRef.current);
@@ -144,10 +146,10 @@ export const MainPage = () => {
     equlibrumState: equalibrumState,
     isEqualibrumBought: isEqualibrumBought,
   });
-
   const dispatch = useDispatch();
   useEffect(() => {
     if (typeof window !== "undefined") {
+      console.log(auth.currentUser);
       const localStorageCookieCount =
         Number(localStorage.getItem("cookieCount")) ?? 0;
       const localStorageCrystalsCount =

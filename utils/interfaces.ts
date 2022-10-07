@@ -1,5 +1,13 @@
 import { CSSProperties } from "react";
-
+export interface firebaseObjectInterface {
+  upgrades: UpgradesInterface;
+  crystalItems: CrystalShopItems;
+  crystals: number;
+  cookieCount: number;
+  skillTreeUnlocked: boolean;
+  skillPoints: number;
+  skillTreeNodes: singleSkillTreeNode[];
+}
 export type nodeNames =
   | "starterNode"
   | "clickingTalent"

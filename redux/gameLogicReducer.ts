@@ -42,7 +42,7 @@ interface UpgradeActionsInterface {
   amount: number;
 }
 // Define the initial state using that type
-const initialState: InitialGameLogicStateInterface = {
+const initialGameLogicState: InitialGameLogicStateInterface = {
   cookiesLogic: {
     cookieCount: 0,
     CPS: 0,
@@ -61,7 +61,7 @@ const initialState: InitialGameLogicStateInterface = {
 };
 export const gameMechanicSlice = createSlice({
   name: "gameMechanicReducer",
-  initialState,
+  initialState: initialGameLogicState,
   reducers: {
     //!Here is the reducer that controls if all states from local storage we're loaded
     stateWereLoaded: (state, action: PayloadAction<boolean>) => {
@@ -304,13 +304,13 @@ export const gameMechanicSlice = createSlice({
       const crystalShopItems = state.crystalShopItems;
       const newSkillPoints = state.skillTreeLogic.skillPoints + action.payload;
       const returnObject: InitialGameLogicStateInterface = {
-        ...initialState,
+        ...initialGameLogicState,
         skillTreeLogic: {
           ...skillTreeLogicCopy,
           skillPoints: newSkillPoints,
         },
         cookiesLogic: {
-          ...initialState.cookiesLogic,
+          ...initialGameLogicState.cookiesLogic,
           crystals: crystalCount,
         },
         crystalShopItems: crystalShopItems,
