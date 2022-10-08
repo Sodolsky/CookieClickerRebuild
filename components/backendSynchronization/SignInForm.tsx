@@ -9,7 +9,7 @@ import { doc, setDoc } from "firebase/firestore";
 import { firebaseObjectInterface } from "../../utils/interfaces";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { useFirebaseUserObject } from "../../utils/hooks/useFirebaseUserObject";
+import { useConvertDataToFirebaseObject } from "../../utils/hooks/useConvertDataToFirebaseObject";
 export interface formDataInterface {
   email: string;
   password: string;
@@ -39,7 +39,7 @@ const saveUserDocumentInDatabase = async (
 export const SignInForm: React.FC<SignInFormInterface> = ({
   setShowSignIn,
 }) => {
-  const { firebaseObject } = useFirebaseUserObject();
+  const { firebaseObject } = useConvertDataToFirebaseObject();
   const [formData, setFormData] = useState<formDataInterface>(defaultFormData);
   const gamelogicReducer = useSelector((state: RootState) => state.gameLogic);
   const [formDataValidityOutline, setFormDataValidityOutline] =

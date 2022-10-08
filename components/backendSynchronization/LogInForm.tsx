@@ -1,9 +1,12 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
 import nprogress from "nprogress";
 import nProgress from "nprogress";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { auth } from "../../firebase";
+import { auth, db } from "../../firebase";
+import { useSetReducersDataFromFirebaseObjects } from "../../utils/hooks/useSetReducersDataFromFirebaseObject";
+import { firebaseObjectInterface } from "../../utils/interfaces";
 import {
   defaultDataValidity,
   defaultFormData,
@@ -16,7 +19,9 @@ interface LogInFormProps {
 }
 export const LogInForm: React.FC<LogInFormProps> = ({ setAuth }) => {
   const [formData, setFormData] = useState<formDataInterface>(defaultFormData);
-
+  const { setFirebaseObjectForSaving } =
+    useSetReducersDataFromFirebaseObjects();
+  const [temp, setTemp] = useState(false);
   const [showSignIn, setShowSignIn] = useState<boolean>(false);
   const [formDataValidityOutline, setFormDataValidityOutline] =
     useState<formDataValidityInterface>(defaultDataValidity);
@@ -45,10 +50,15 @@ export const LogInForm: React.FC<LogInFormProps> = ({ setAuth }) => {
     }
     nProgress.start();
     signInWithEmailAndPassword(auth, formData.email, formData.password)
-      .then((userCredential) => {
-        setAuth(true);
+      .then(async (userCredential) => {
         nprogress.done();
         toast.success("You have succesfuly logged in!");
+        const firebaseData: firebaseObjectInterface = await getDoc(
+          doc(db, "Users", userCredential.user.email as string)
+        ).then((doc) => doc.data() as firebaseObjectInterface);
+        setFirebaseObjectForSaving(firebaseData);
+        console.log(firebaseData);
+        setAuth(true);
       })
       .catch((error) => {
         nprogress.done();

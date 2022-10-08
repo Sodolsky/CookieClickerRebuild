@@ -5,9 +5,10 @@ import {
   firebaseObjectInterface,
   initialSkillTreeNodes,
   initialStateOfCrystalShopItems,
+  initialStateOfShopItems,
   initialUpgradesState,
 } from "../interfaces";
-const baseGameLogicObject: firebaseObjectInterface = {
+export const baseGameLogicObject: firebaseObjectInterface = {
   upgrades: initialUpgradesState,
   cookieCount: 0,
   crystalItems: initialStateOfCrystalShopItems,
@@ -15,8 +16,9 @@ const baseGameLogicObject: firebaseObjectInterface = {
   skillPoints: 0,
   skillTreeNodes: initialSkillTreeNodes,
   skillTreeUnlocked: false,
+  shopItems: initialStateOfShopItems,
 };
-export const useFirebaseUserObject = () => {
+export const useConvertDataToFirebaseObject = () => {
   const [firebaseObject, setFirebaseObject] =
     useState<firebaseObjectInterface>(baseGameLogicObject);
   const gameLogicReducer = useSelector((state: RootState) => state.gameLogic);
@@ -29,9 +31,9 @@ export const useFirebaseUserObject = () => {
       skillPoints: gameLogicReducer.skillTreeLogic.skillPoints,
       skillTreeNodes: gameLogicReducer.skillTreeLogic.skillTreeNodes,
       skillTreeUnlocked: gameLogicReducer.skillTreeLogic.isSkillTreeUnlocked,
+      shopItems: gameLogicReducer.shopItems,
     };
     setFirebaseObject(firebaseObj);
   }, [gameLogicReducer]);
-  console.log(firebaseObject);
   return { firebaseObject };
 };

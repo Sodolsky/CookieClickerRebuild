@@ -11,6 +11,7 @@ import {
   ShopItems,
   ShopUpgradesNames,
   singleSkillTreeNode,
+  skillTreeWrapper,
   UpgradesInterface,
   UpgradesNames,
 } from "../utils/interfaces";
@@ -265,6 +266,18 @@ export const gameMechanicSlice = createSlice({
         };
       }
     },
+    setSkillTreeFromDB: (state, action: PayloadAction<skillTreeWrapper>) => {
+      let stateClone = cloneDeep(state);
+      stateClone = {
+        ...stateClone,
+        skillTreeLogic: {
+          isSkillTreeUnlocked: action.payload.isSkillTreeUnlocked,
+          skillPoints: action.payload.skillPoints,
+          skillTreeNodes: action.payload.skillTreeNodes,
+        },
+      };
+      state = stateClone;
+    },
     buySkillTreeUpgrade(state, action: PayloadAction<nodeNames>) {
       const stateCopy = cloneDeep(state.skillTreeLogic.skillTreeNodes);
       const nodeThatIsBuyed = state.skillTreeLogic.skillTreeNodes.find(
@@ -365,5 +378,6 @@ export const {
   stateWereLoaded,
   buySkillTreeUpgrade,
   resetSkillTree,
+  setSkillTreeFromDB,
 } = gameMechanicSlice.actions;
 export default gameMechanicSlice.reducer;
