@@ -15,7 +15,6 @@ export const useSetReducersDataFromFirebaseObjects = () => {
   const [firebaseObjForSaving, setFirebaseObjectForSaving] =
     useState<firebaseObjectInterface | null>(null);
 
-  console.log(firebaseObjForSaving);
   const dispatch = useDispatch();
   useEffect(() => {
     if (firebaseObjForSaving) {
