@@ -3,9 +3,10 @@ import { doc, getDoc } from "firebase/firestore";
 import nprogress from "nprogress";
 import nProgress from "nprogress";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { auth, db } from "../../firebase";
-import { useSetReducersDataFromFirebaseObjects } from "../../utils/hooks/useSetReducersDataFromFirebaseObject";
+import { setReducerDataFromFirebaseObject } from "../../redux/gameLogicReducer";
 import { firebaseObjectInterface } from "../../utils/interfaces";
 import {
   defaultDataValidity,
@@ -19,8 +20,7 @@ interface LogInFormProps {
 }
 export const LogInForm: React.FC<LogInFormProps> = ({ setAuth }) => {
   const [formData, setFormData] = useState<formDataInterface>(defaultFormData);
-  const { setFirebaseObjectForSaving } =
-    useSetReducersDataFromFirebaseObjects();
+  const dispatch = useDispatch();
   const [temp, setTemp] = useState(false);
   const [showSignIn, setShowSignIn] = useState<boolean>(false);
   const [formDataValidityOutline, setFormDataValidityOutline] =
@@ -56,8 +56,8 @@ export const LogInForm: React.FC<LogInFormProps> = ({ setAuth }) => {
         const firebaseData: firebaseObjectInterface = await getDoc(
           doc(db, "Users", userCredential.user.email as string)
         ).then((doc) => doc.data() as firebaseObjectInterface);
-        setFirebaseObjectForSaving(firebaseData);
         console.log(firebaseData);
+        dispatch(setReducerDataFromFirebaseObject(firebaseData));
         setAuth(true);
       })
       .catch((error) => {

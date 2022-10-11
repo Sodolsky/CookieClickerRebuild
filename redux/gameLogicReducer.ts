@@ -3,6 +3,7 @@ import { cloneDeep } from "lodash";
 import {
   CrystalShopItems,
   CrystalUpgradesNames as CrystalUpgradesNames,
+  firebaseObjectInterface,
   initialSkillTreeNodes,
   initialStateOfCrystalShopItems,
   initialStateOfShopItems,
@@ -12,6 +13,7 @@ import {
   ShopUpgradesNames,
   singleSkillTreeNode,
   skillTreeWrapper,
+  UpgradeInterface,
   UpgradesInterface,
   UpgradesNames,
 } from "../utils/interfaces";
@@ -278,6 +280,39 @@ export const gameMechanicSlice = createSlice({
       };
       state = stateClone;
     },
+    setReducerDataFromFirebaseObject: (
+      state,
+      action: PayloadAction<firebaseObjectInterface>
+    ) => {
+      const CPSCount = Object.values(action.payload.upgrades).reduce(
+        (acc: number, a: UpgradeInterface) =>
+          (acc += a.numberOfUpgrades * a.CookiesPerSecondBonus),
+        0
+      );
+      const CPCCount = Object.values(action.payload.upgrades).reduce(
+        (acc: number, a: UpgradeInterface) =>
+          (acc += a.numberOfUpgrades * a.CookiesPerClickBonus),
+        1
+      );
+
+      return {
+        ...state,
+        cookiesLogic: {
+          cookieCount: action.payload.cookieCount,
+          CPC: CPCCount,
+          CPS: CPSCount,
+          crystals: action.payload.crystals,
+        },
+        crystalShopItems: action.payload.crystalItems,
+        shopItems: action.payload.shopItems,
+        skillTreeLogic: {
+          isSkillTreeUnlocked: action.payload.skillTreeUnlocked,
+          skillPoints: action.payload.skillPoints,
+          skillTreeNodes: action.payload.skillTreeNodes,
+        },
+        upgrades: action.payload.upgrades,
+      };
+    },
     buySkillTreeUpgrade(state, action: PayloadAction<nodeNames>) {
       const stateCopy = cloneDeep(state.skillTreeLogic.skillTreeNodes);
       const nodeThatIsBuyed = state.skillTreeLogic.skillTreeNodes.find(
@@ -379,5 +414,6 @@ export const {
   buySkillTreeUpgrade,
   resetSkillTree,
   setSkillTreeFromDB,
+  setReducerDataFromFirebaseObject,
 } = gameMechanicSlice.actions;
 export default gameMechanicSlice.reducer;
