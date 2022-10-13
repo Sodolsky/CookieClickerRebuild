@@ -56,13 +56,11 @@ export const LogInForm: React.FC<LogInFormProps> = ({ setAuth }) => {
         const firebaseData: firebaseObjectInterface = await getDoc(
           doc(db, "Users", userCredential.user.email as string)
         ).then((doc) => doc.data() as firebaseObjectInterface);
-        console.log(firebaseData);
         dispatch(setReducerDataFromFirebaseObject(firebaseData));
         setAuth(true);
       })
       .catch((error) => {
         nprogress.done();
-        console.log(error);
         toast.error(error.message);
       });
   };
