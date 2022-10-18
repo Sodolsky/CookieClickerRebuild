@@ -13,6 +13,7 @@ import {
   setInitialNumberOfUpgradesForUpgrade,
   setInitialShopitems,
   setInitialSkillTree,
+  setReducerDataFromFirebaseObject,
   stateWereLoaded,
 } from "../redux/gameLogicReducer";
 import { RootState } from "../redux/store";
@@ -25,6 +26,7 @@ import {
   UpgradesInterface,
   singleSkillTreeNode,
   UpgradeInterface,
+  firebaseObjectInterface,
 } from "../utils/interfaces";
 import { CookieToClick } from "./clickerElements/CookieToClick";
 import { Upgrade } from "./clickerElements/Upgrade";
@@ -63,6 +65,9 @@ import useEqualibrumTimer from "../utils/hooks/useEqualibrumTImer";
 import { EqualibrumStacksDisplay } from "./skillTree/EqualibrumStacksDisplay";
 import { getBoughtUpgrades } from "../utils/utils";
 import { BackendSynchronizationModal } from "./backendSynchronization/BackendSynchronizationModal";
+import { useAuthStatus } from "../utils/hooks/useAuthStatus";
+import { getDoc, doc } from "firebase/firestore";
+import { db } from "../firebase";
 export const MainPage = () => {
   const resetGameLogic = (skillPointsCount: number) => {
     intervalRef.current && clearInterval(intervalRef.current);
@@ -74,6 +79,7 @@ export const MainPage = () => {
     dispatch(setInitialSkillTree(true));
   };
   const bgMusicRef = useRef<null | HTMLAudioElement>(null);
+  const { authStatus, auth } = useAuthStatus();
   const explosionSoundRef = useRef<null | HTMLAudioElement>(null);
   const isQPBought = useSelector(
     (state: RootState) =>
@@ -147,56 +153,68 @@ export const MainPage = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const localStorageCookieCount =
-        Number(localStorage.getItem("cookieCount")) ?? 0;
-      const localStorageCrystalsCount =
-        Number(localStorage.getItem("crystals")) ?? 0;
-      const locaStorageCrystalUpgrades =
-        (JSON.parse(
-          localStorage.getItem("crystalItems")!
-        ) as CrystalShopItems) ?? initialStateOfCrystalShopItems;
-      const localStorageUpgrades =
-        (JSON.parse(localStorage.getItem("upgrades")!) as UpgradesInterface) ??
-        initialUpgradesState;
-      const localStorageShopItems =
-        (JSON.parse(localStorage.getItem("shopItems")!) as ShopItems) ??
-        initialStateOfShopItems;
-      const localStoragePerformanceOptions =
-        (JSON.parse(
-          localStorage.getItem("performance")!
-        ) as performanceReducerInterface) ?? initialPerformanceReducerState;
-      const localStorageSkillTreeUnlocked =
-        localStorage.getItem("skillTreeUnlocked") === "true" ? true : false;
-      Object.values(localStorageUpgrades).forEach((item) => {
-        const obj = item;
-        dispatch(
-          setInitialNumberOfUpgradesForUpgrade({
-            name: obj.upgradeName,
-            number: obj.numberOfUpgrades,
-          })
+      if (authStatus === "ready" && !auth.currentUser) {
+        const localStorageCookieCount =
+          Number(localStorage.getItem("cookieCount")) ?? 0;
+        const localStorageCrystalsCount =
+          Number(localStorage.getItem("crystals")) ?? 0;
+        const locaStorageCrystalUpgrades =
+          (JSON.parse(
+            localStorage.getItem("crystalItems")!
+          ) as CrystalShopItems) ?? initialStateOfCrystalShopItems;
+        const localStorageUpgrades =
+          (JSON.parse(
+            localStorage.getItem("upgrades")!
+          ) as UpgradesInterface) ?? initialUpgradesState;
+        const localStorageShopItems =
+          (JSON.parse(localStorage.getItem("shopItems")!) as ShopItems) ??
+          initialStateOfShopItems;
+        const localStoragePerformanceOptions =
+          (JSON.parse(
+            localStorage.getItem("performance")!
+          ) as performanceReducerInterface) ?? initialPerformanceReducerState;
+        const localStorageSkillTreeUnlocked =
+          localStorage.getItem("skillTreeUnlocked") === "true" ? true : false;
+        Object.values(localStorageUpgrades).forEach((item) => {
+          const obj = item;
+          dispatch(
+            setInitialNumberOfUpgradesForUpgrade({
+              name: obj.upgradeName,
+              number: obj.numberOfUpgrades,
+            })
+          );
+        });
+        const CPSCount = Object.values(localStorageUpgrades).reduce(
+          (acc: number, a: UpgradeInterface) =>
+            (acc += a.numberOfUpgrades * a.CookiesPerSecondBonus),
+          0
         );
-      });
-      const CPSCount = Object.values(localStorageUpgrades).reduce(
-        (acc: number, a: UpgradeInterface) =>
-          (acc += a.numberOfUpgrades * a.CookiesPerSecondBonus),
-        0
-      );
-      const CPCCount = Object.values(localStorageUpgrades).reduce(
-        (acc: number, a: UpgradeInterface) =>
-          (acc += a.numberOfUpgrades * a.CookiesPerClickBonus),
-        1
-      );
-      dispatch(setInitialPerformanceOptions(localStoragePerformanceOptions));
-      dispatch(setInitialSkillTree(localStorageSkillTreeUnlocked));
-      dispatch(setInitialShopitems(localStorageShopItems));
-      dispatch(setInitialCookieCount(localStorageCookieCount));
-      dispatch(setInitialCPS(CPSCount));
-      dispatch(setInitialCPC(CPCCount));
-      dispatch(setInitialCrystals(localStorageCrystalsCount));
-      dispatch(setInitialCrystalShopItems(locaStorageCrystalUpgrades));
-      dispatch(stateWereLoaded(true));
+        const CPCCount = Object.values(localStorageUpgrades).reduce(
+          (acc: number, a: UpgradeInterface) =>
+            (acc += a.numberOfUpgrades * a.CookiesPerClickBonus),
+          1
+        );
+        dispatch(setInitialPerformanceOptions(localStoragePerformanceOptions));
+        dispatch(setInitialSkillTree(localStorageSkillTreeUnlocked));
+        dispatch(setInitialShopitems(localStorageShopItems));
+        dispatch(setInitialCookieCount(localStorageCookieCount));
+        dispatch(setInitialCPS(CPSCount));
+        dispatch(setInitialCPC(CPCCount));
+        dispatch(setInitialCrystals(localStorageCrystalsCount));
+        dispatch(setInitialCrystalShopItems(locaStorageCrystalUpgrades));
+        dispatch(stateWereLoaded(true));
+      } else if (authStatus === "ready" && auth) {
+        const getFirebaseData = async () => {
+          const firebaseData: firebaseObjectInterface = await getDoc(
+            doc(db, "Users", auth.currentUser?.email as string)
+          ).then((doc) => doc.data() as firebaseObjectInterface);
+          dispatch(setReducerDataFromFirebaseObject(firebaseData));
+          dispatch(stateWereLoaded(true));
+        };
+        getFirebaseData();
+      }
     }
-  }, []);
+  }, [authStatus]);
   useEffect(() => {
     if (isClickDoubled) {
       intervalRef.current && clearInterval(intervalRef.current);
