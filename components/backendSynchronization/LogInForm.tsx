@@ -61,6 +61,7 @@ export const LogInForm: React.FC<LogInFormProps> = ({ setAuth }) => {
       })
       .catch((error) => {
         nprogress.done();
+        console.log(error);
         toast.error(error.message);
       });
   };
