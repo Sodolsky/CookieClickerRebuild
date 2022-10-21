@@ -29,7 +29,7 @@ export const defaultDataValidity: formDataValidityInterface = {
 interface SignInFormInterface {
   setShowSignIn: React.Dispatch<React.SetStateAction<boolean>>;
 }
-const saveUserDocumentInDatabase = async (
+export const saveUserDocumentInDatabase = async (
   emaiL: string,
   firebaseObj: firebaseObjectInterface
 ) => {

@@ -68,6 +68,12 @@ import { BackendSynchronizationModal } from "./backendSynchronization/BackendSyn
 import { useAuthStatus } from "../utils/hooks/useAuthStatus";
 import { getDoc, doc } from "firebase/firestore";
 import { db } from "../firebase";
+import { useConvertDataToFirebaseObject } from "../utils/hooks/useConvertDataToFirebaseObject";
+import {
+  setAuthStatus,
+  setFirebaseObjectReducer,
+  setUserEmail,
+} from "../redux/authAndBackendReducer";
 export const MainPage = () => {
   const resetGameLogic = (skillPointsCount: number) => {
     intervalRef.current && clearInterval(intervalRef.current);
@@ -150,6 +156,14 @@ export const MainPage = () => {
     equlibrumState: equalibrumState,
     isEqualibrumBought: isEqualibrumBought,
   });
+  const { firebaseObject } = useConvertDataToFirebaseObject();
+  useEffect(() => {
+    console.log(firebaseObject);
+    dispatch(setFirebaseObjectReducer(firebaseObject));
+    if (authStatus === "ready") {
+      dispatch(setAuthStatus(auth.currentUser ? true : false));
+    }
+  }, [firebaseObject, authStatus, auth]);
   const dispatch = useDispatch();
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -209,6 +223,8 @@ export const MainPage = () => {
             doc(db, "Users", auth.currentUser?.email as string)
           ).then((doc) => doc.data() as firebaseObjectInterface);
           dispatch(setReducerDataFromFirebaseObject(firebaseData));
+          dispatch(setAuthStatus(true));
+          dispatch(setUserEmail(auth.currentUser?.email as string));
           dispatch(stateWereLoaded(true));
         };
         getFirebaseData();

@@ -2,7 +2,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { useState } from "react";
 import { auth } from "../../firebase";
 
-type authStatusTypes = "loading" | "ready";
+export type authStatusTypes = "loading" | "ready";
 export const useAuthStatus = () => {
   const [authStatus, setAuthStatus] = useState<authStatusTypes>("loading");
   auth.onAuthStateChanged((userData) => {

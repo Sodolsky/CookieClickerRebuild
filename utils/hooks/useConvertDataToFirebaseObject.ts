@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setFirebaseObjectReducer } from "../../redux/authAndBackendReducer";
 import { RootState } from "../../redux/store";
 import {
   firebaseObjectInterface,
@@ -21,6 +22,7 @@ export const baseGameLogicObject: firebaseObjectInterface = {
 export const useConvertDataToFirebaseObject = () => {
   const [firebaseObject, setFirebaseObject] =
     useState<firebaseObjectInterface>(baseGameLogicObject);
+  const dispatch = useDispatch();
   const gameLogicReducer = useSelector((state: RootState) => state.gameLogic);
   useEffect(() => {
     const firebaseObj: firebaseObjectInterface = {
@@ -33,6 +35,7 @@ export const useConvertDataToFirebaseObject = () => {
       skillTreeUnlocked: gameLogicReducer.skillTreeLogic.isSkillTreeUnlocked,
       shopItems: gameLogicReducer.shopItems,
     };
+    dispatch(setFirebaseObjectReducer(firebaseObj));
     setFirebaseObject(firebaseObj);
   }, [gameLogicReducer]);
   return { firebaseObject };
