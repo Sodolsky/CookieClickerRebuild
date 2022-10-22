@@ -158,7 +158,7 @@ export const MainPage = () => {
   });
   const { firebaseObject } = useConvertDataToFirebaseObject();
   useEffect(() => {
-    console.log(firebaseObject);
+    // console.log(firebaseObject);
     dispatch(setFirebaseObjectReducer(firebaseObject));
     if (authStatus === "ready") {
       dispatch(setAuthStatus(auth.currentUser ? true : false));
