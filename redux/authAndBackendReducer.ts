@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { cloneDeep } from "lodash";
 import { baseGameLogicObject } from "../utils/hooks/useConvertDataToFirebaseObject";
 import { firebaseObjectInterface } from "../utils/interfaces";
 
@@ -13,7 +14,6 @@ const initialState: authAndBackendReducerInterface = {
   firebaseObject: baseGameLogicObject,
   userEmail: null,
 };
-
 export const authAndBackendReducer = createSlice({
   name: "authAndBackendReducer",
   initialState,
@@ -30,10 +30,17 @@ export const authAndBackendReducer = createSlice({
     setUserEmail: (state, action: PayloadAction<string>) => {
       state.userEmail = action.payload;
     },
+    setBaseStateOfAuthAndBackendReducer: (state) => {
+      return initialState;
+    },
   },
 });
 
-export const { setAuthStatus, setFirebaseObjectReducer, setUserEmail } =
-  authAndBackendReducer.actions;
+export const {
+  setAuthStatus,
+  setFirebaseObjectReducer,
+  setUserEmail,
+  setBaseStateOfAuthAndBackendReducer,
+} = authAndBackendReducer.actions;
 
 export default authAndBackendReducer.reducer;

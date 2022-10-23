@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { auth, db } from "../../firebase";
+import { setUserEmail } from "../../redux/authAndBackendReducer";
 import { setReducerDataFromFirebaseObject } from "../../redux/gameLogicReducer";
 import { firebaseObjectInterface } from "../../utils/interfaces";
 import {
@@ -57,6 +58,7 @@ export const LogInForm: React.FC<LogInFormProps> = ({ setAuth }) => {
           doc(db, "Users", userCredential.user.email as string)
         ).then((doc) => doc.data() as firebaseObjectInterface);
         dispatch(setReducerDataFromFirebaseObject(firebaseData));
+        dispatch(setUserEmail(userCredential.user.email));
         setAuth(true);
       })
       .catch((error) => {

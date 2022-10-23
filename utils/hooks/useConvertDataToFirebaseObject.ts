@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { saveUserDocumentInDatabase } from "../../components/backendSynchronization/SignInForm";
 import { setFirebaseObjectReducer } from "../../redux/authAndBackendReducer";
 import { RootState } from "../../redux/store";
 import {
@@ -24,6 +25,7 @@ export const useConvertDataToFirebaseObject = () => {
     useState<firebaseObjectInterface>(baseGameLogicObject);
   const dispatch = useDispatch();
   const gameLogicReducer = useSelector((state: RootState) => state.gameLogic);
+  const backendStatus = useSelector((state: RootState) => state.authAndBackend);
   useEffect(() => {
     const firebaseObj: firebaseObjectInterface = {
       upgrades: gameLogicReducer.upgrades,
@@ -36,6 +38,13 @@ export const useConvertDataToFirebaseObject = () => {
       shopItems: gameLogicReducer.shopItems,
     };
     dispatch(setFirebaseObjectReducer(firebaseObj));
+    if (backendStatus.isUserAuthed && backendStatus.userEmail) {
+      console.log(backendStatus, firebaseObj.cookieCount);
+      saveUserDocumentInDatabase(
+        backendStatus.userEmail as string,
+        firebaseObj
+      );
+    }
     setFirebaseObject(firebaseObj);
   }, [gameLogicReducer]);
   return { firebaseObject };

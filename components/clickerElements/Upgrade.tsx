@@ -15,9 +15,6 @@ import { addNewUpgrade } from "../../redux/crystalBallReducer";
 import { BsCash } from "react-icons/bs";
 import CountUp from "react-countup";
 import { numberFormatter } from "../../utils/utils";
-import { useConvertDataToFirebaseObject } from "../../utils/hooks/useConvertDataToFirebaseObject";
-import { saveUserDocumentInDatabase } from "../backendSynchronization/SignInForm";
-import { auth } from "../../firebase";
 
 export const Upgrade: React.FC<UpgradeInterface> = ({
   CookiesPerClickBonus,
@@ -55,7 +52,6 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
   //   CPSContributionWithTTT:
   //     CookiesPerSecondBonus * numberOfUpgrades * currentBestUpgradeBonus,
   // };
-  const backendStatus = useSelector((state: RootState) => state.authAndBackend);
   const isTheoryOfEverythingBought = useSelector(
     (state: RootState) =>
       state.gameLogic.skillTreeLogic.skillTreeNodes.find(
@@ -124,12 +120,6 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
       dispatch(changeCPS({ type: "increase", amount: CookiesPerSecondBonus }));
       dispatch(changeCPC({ type: "increase", amount: CookiesPerClickBonus }));
       dispatch(buyUpgrade({ name: upgradeName, number: 1 }));
-      console.log(backendStatus);
-      backendStatus.isUserAuthed &&
-        saveUserDocumentInDatabase(
-          backendStatus.userEmail as string,
-          backendStatus.firebaseObject
-        );
       isCrystalBallBought && dispatch(addNewUpgrade());
     } else {
       setShakeImage(true);

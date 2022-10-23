@@ -68,7 +68,10 @@ import { BackendSynchronizationModal } from "./backendSynchronization/BackendSyn
 import { useAuthStatus } from "../utils/hooks/useAuthStatus";
 import { getDoc, doc } from "firebase/firestore";
 import { db } from "../firebase";
-import { useConvertDataToFirebaseObject } from "../utils/hooks/useConvertDataToFirebaseObject";
+import {
+  baseGameLogicObject,
+  useConvertDataToFirebaseObject,
+} from "../utils/hooks/useConvertDataToFirebaseObject";
 import {
   setAuthStatus,
   setFirebaseObjectReducer,
@@ -158,7 +161,6 @@ export const MainPage = () => {
   });
   const { firebaseObject } = useConvertDataToFirebaseObject();
   useEffect(() => {
-    // console.log(firebaseObject);
     dispatch(setFirebaseObjectReducer(firebaseObject));
     if (authStatus === "ready") {
       dispatch(setAuthStatus(auth.currentUser ? true : false));
@@ -219,9 +221,11 @@ export const MainPage = () => {
         dispatch(stateWereLoaded(true));
       } else if (authStatus === "ready" && auth) {
         const getFirebaseData = async () => {
-          const firebaseData: firebaseObjectInterface = await getDoc(
-            doc(db, "Users", auth.currentUser?.email as string)
-          ).then((doc) => doc.data() as firebaseObjectInterface);
+          const firebaseData: firebaseObjectInterface =
+            (await getDoc(
+              doc(db, "Users", auth.currentUser?.email as string)
+            ).then((doc) => doc.data() as firebaseObjectInterface)) ??
+            baseGameLogicObject;
           dispatch(setReducerDataFromFirebaseObject(firebaseData));
           dispatch(setAuthStatus(true));
           dispatch(setUserEmail(auth.currentUser?.email as string));
@@ -473,6 +477,10 @@ export const MainPage = () => {
                     return x;
                   }
                 })
+                .sort(
+                  (a: UpgradeInterface, b: UpgradeInterface) =>
+                    a.CookiesPerClickBonus - b.CookiesPerClickBonus
+                )
                 .map((x: UpgradeInterface) => {
                   return (
                     <Upgrade

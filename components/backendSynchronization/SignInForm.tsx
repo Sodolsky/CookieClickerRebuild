@@ -30,10 +30,10 @@ interface SignInFormInterface {
   setShowSignIn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 export const saveUserDocumentInDatabase = async (
-  emaiL: string,
+  email: string,
   firebaseObj: firebaseObjectInterface
 ) => {
-  const ref = doc(db, "Users", emaiL);
+  const ref = doc(db, "Users", email);
   await setDoc(ref, firebaseObj, { merge: true });
 };
 export const SignInForm: React.FC<SignInFormInterface> = ({
