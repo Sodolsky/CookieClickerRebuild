@@ -85,6 +85,7 @@ export const MainPage = () => {
     dispatch(clearTTTState());
     dispatch(clearEqualibrumState());
     dispatch(resetGameAndAddSkillPoints(skillPointsCount));
+
     dispatch(setInitialSkillTree(true));
   };
   const bgMusicRef = useRef<null | HTMLAudioElement>(null);

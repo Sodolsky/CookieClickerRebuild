@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { isEqual } from "lodash";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { saveUserDocumentInDatabase } from "../../components/backendSynchronization/SignInForm";
 import { setFirebaseObjectReducer } from "../../redux/authAndBackendReducer";
@@ -20,9 +21,12 @@ export const baseGameLogicObject: firebaseObjectInterface = {
   skillTreeUnlocked: false,
   shopItems: initialStateOfShopItems,
 };
+type keysOfFirebaseObject = keyof firebaseObjectInterface;
 export const useConvertDataToFirebaseObject = () => {
   const [firebaseObject, setFirebaseObject] =
     useState<firebaseObjectInterface>(baseGameLogicObject);
+  const prevStateOfFirebaseObject =
+    useRef<firebaseObjectInterface>(firebaseObject);
   const dispatch = useDispatch();
   const gameLogicReducer = useSelector((state: RootState) => state.gameLogic);
   const backendStatus = useSelector((state: RootState) => state.authAndBackend);
@@ -37,9 +41,18 @@ export const useConvertDataToFirebaseObject = () => {
       skillTreeUnlocked: gameLogicReducer.skillTreeLogic.isSkillTreeUnlocked,
       shopItems: gameLogicReducer.shopItems,
     };
+    prevStateOfFirebaseObject.current = firebaseObject;
     dispatch(setFirebaseObjectReducer(firebaseObj));
     if (backendStatus.isUserAuthed && backendStatus.userEmail) {
-      console.log(backendStatus, firebaseObj.cookieCount);
+      const valuesThatChanged = Object.entries(firebaseObj)
+        .map((x) => {
+          const key = x[0] as keysOfFirebaseObject;
+          const value = x[1];
+          if (!isEqual(prevStateOfFirebaseObject.current[key], value)) {
+            return key;
+          }
+        })
+        .filter(Boolean);
       saveUserDocumentInDatabase(
         backendStatus.userEmail as string,
         firebaseObj

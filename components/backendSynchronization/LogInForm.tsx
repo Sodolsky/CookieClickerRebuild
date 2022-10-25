@@ -58,7 +58,7 @@ export const LogInForm: React.FC<LogInFormProps> = ({ setAuth }) => {
           doc(db, "Users", userCredential.user.email as string)
         ).then((doc) => doc.data() as firebaseObjectInterface);
         dispatch(setReducerDataFromFirebaseObject(firebaseData));
-        dispatch(setUserEmail(userCredential.user.email));
+        dispatch(setUserEmail(userCredential.user.email as string));
         setAuth(true);
       })
       .catch((error) => {
