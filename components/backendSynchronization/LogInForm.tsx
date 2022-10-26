@@ -100,7 +100,7 @@ export const LogInForm: React.FC<LogInFormProps> = ({ setAuth }) => {
         className="text-center text-blue-500 cursor-pointer hover:animate-pulse transition-opacity"
         onClick={() => setShowSignIn(true)}
       >
-        Don't have a account? Create one to synchronize your progress across all
+        Don{"'"}t have a account? Create one to synchronize your progress across all
         devices.
       </span>
     </div>

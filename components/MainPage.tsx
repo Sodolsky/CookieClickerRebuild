@@ -186,10 +186,6 @@ export const MainPage = () => {
         const localStorageShopItems =
           (JSON.parse(localStorage.getItem("shopItems")!) as ShopItems) ??
           initialStateOfShopItems;
-        const localStoragePerformanceOptions =
-          (JSON.parse(
-            localStorage.getItem("performance")!
-          ) as performanceReducerInterface) ?? initialPerformanceReducerState;
         const localStorageSkillTreeUnlocked =
           localStorage.getItem("skillTreeUnlocked") === "true" ? true : false;
         Object.values(localStorageUpgrades).forEach((item) => {
@@ -211,7 +207,6 @@ export const MainPage = () => {
             (acc += a.numberOfUpgrades * a.CookiesPerClickBonus),
           1
         );
-        dispatch(setInitialPerformanceOptions(localStoragePerformanceOptions));
         dispatch(setInitialSkillTree(localStorageSkillTreeUnlocked));
         dispatch(setInitialShopitems(localStorageShopItems));
         dispatch(setInitialCookieCount(localStorageCookieCount));
@@ -234,6 +229,11 @@ export const MainPage = () => {
         };
         getFirebaseData();
       }
+      const localStoragePerformanceOptions =
+          (JSON.parse(
+            localStorage.getItem("performance")!
+          ) as performanceReducerInterface) ?? initialPerformanceReducerState;
+        dispatch(setInitialPerformanceOptions(localStoragePerformanceOptions));
     }
   }, [authStatus]);
   useEffect(() => {
