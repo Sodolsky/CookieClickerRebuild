@@ -31,7 +31,6 @@ export const useConvertDataToFirebaseObject = () => {
   const gameLogicReducer = useSelector((state: RootState) => state.gameLogic);
   const backendStatus = useSelector((state: RootState) => state.authAndBackend);
   useEffect(() => {
-    console.log('t')
     const firebaseObj: firebaseObjectInterface = {
       upgrades: gameLogicReducer.upgrades,
       cookieCount: gameLogicReducer.cookiesLogic.cookieCount,
@@ -60,7 +59,7 @@ export const useConvertDataToFirebaseObject = () => {
         firebaseObj
       );
     }
-        //!Big performance hit needs to be optimised ASAP
+    //!Big performance hit needs to be optimised ASAP
     setFirebaseObject(firebaseObj);
   }, [gameLogicReducer]);
   return { firebaseObject };
