@@ -1,4 +1,4 @@
-import { isEqual } from "lodash";
+import { isEqual, values } from "lodash";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { saveUserDocumentInDatabase } from "../../components/backendSynchronization/SignInForm";
@@ -54,10 +54,24 @@ export const useConvertDataToFirebaseObject = () => {
           }
         })
         .filter(Boolean);
-      saveUserDocumentInDatabase(
-        backendStatus.userEmail as string,
-        firebaseObj
-      );
+      try {
+        if (
+          valuesThatChanged.length === 1 &&
+          valuesThatChanged.some((x) => x === "cookieCount")
+        )
+          throw new Error("No imporant data was changed");
+        if (
+          valuesThatChanged.some((x) => x === "crystals") &&
+          valuesThatChanged.some((x) => x === "cookieCount") &&
+          valuesThatChanged.length === 2
+        )
+          throw new Error("No imporant data was changed");
+        saveUserDocumentInDatabase(
+          backendStatus.userEmail as string,
+          firebaseObj
+        );
+        console.log(valuesThatChanged);
+      } catch (error) {}
     }
     //!Big performance hit needs to be optimised ASAP
     setFirebaseObject(firebaseObj);
