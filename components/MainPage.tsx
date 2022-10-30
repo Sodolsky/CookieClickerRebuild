@@ -230,10 +230,10 @@ export const MainPage = () => {
         getFirebaseData();
       }
       const localStoragePerformanceOptions =
-          (JSON.parse(
-            localStorage.getItem("performance")!
-          ) as performanceReducerInterface) ?? initialPerformanceReducerState;
-        dispatch(setInitialPerformanceOptions(localStoragePerformanceOptions));
+        (JSON.parse(
+          localStorage.getItem("performance")!
+        ) as performanceReducerInterface) ?? initialPerformanceReducerState;
+      dispatch(setInitialPerformanceOptions(localStoragePerformanceOptions));
     }
   }, [authStatus]);
   useEffect(() => {
