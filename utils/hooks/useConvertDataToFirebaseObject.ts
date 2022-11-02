@@ -1,10 +1,11 @@
-import { isEqual } from "lodash";
+import { isEqual, values } from "lodash";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { saveUserDocumentInDatabase } from "../../components/backendSynchronization/SignInForm";
 import { setFirebaseObjectReducer } from "../../redux/authAndBackendReducer";
 import { RootState } from "../../redux/store";
 import {
+  firebaseObjectAndUserEmail,
   firebaseObjectInterface,
   initialSkillTreeNodes,
   initialStateOfCrystalShopItems,
@@ -30,6 +31,26 @@ export const useConvertDataToFirebaseObject = () => {
   const dispatch = useDispatch();
   const gameLogicReducer = useSelector((state: RootState) => state.gameLogic);
   const backendStatus = useSelector((state: RootState) => state.authAndBackend);
+  const handleSavingUserWhenWebPageCloses = () => {
+    if (document.visibilityState === "hidden") {
+      const reqObject: firebaseObjectAndUserEmail = {
+        email: backendStatus.userEmail as string,
+        firebaseObject: firebaseObject,
+      };
+      const saveUser = async () => {
+        try {
+          await fetch("/api/saveFirebaseData", {
+            method: "POST",
+            body: JSON.stringify(reqObject),
+            keepalive: true,
+          });
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      saveUser();
+    }
+  };
   useEffect(() => {
     const firebaseObj: firebaseObjectInterface = {
       upgrades: gameLogicReducer.upgrades,
@@ -54,12 +75,40 @@ export const useConvertDataToFirebaseObject = () => {
           }
         })
         .filter(Boolean);
-      saveUserDocumentInDatabase(
-        backendStatus.userEmail as string,
-        firebaseObj
-      );
+      try {
+        if (
+          valuesThatChanged.length === 1 &&
+          valuesThatChanged.some((x) => x === "cookieCount")
+        )
+          throw new Error("No imporant data was changed");
+        if (
+          valuesThatChanged.some((x) => x === "crystals") &&
+          valuesThatChanged.some((x) => x === "cookieCount") &&
+          valuesThatChanged.length === 2
+        )
+          throw new Error("No imporant data was changed");
+        // saveUserDocumentInDatabase(
+        //   backendStatus.userEmail as string,
+        //   firebaseObj
+        // );
+      } catch (error) {}
     }
+
+    //!Big performance hit needs to be optimised ASAP
     setFirebaseObject(firebaseObj);
   }, [gameLogicReducer]);
+  useEffect(() => {
+    if (typeof window !== undefined && backendStatus.userEmail) {
+      document.addEventListener(
+        "visibilitychange",
+        handleSavingUserWhenWebPageCloses
+      );
+    }
+    return () =>
+      document.removeEventListener(
+        "visibilitychange",
+        handleSavingUserWhenWebPageCloses
+      );
+  }, [handleSavingUserWhenWebPageCloses]);
   return { firebaseObject };
 };

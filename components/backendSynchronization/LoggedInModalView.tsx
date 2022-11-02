@@ -1,9 +1,11 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { auth } from "../../firebase";
 import { setBaseStateOfAuthAndBackendReducer } from "../../redux/authAndBackendReducer";
 import { setReducerDataFromFirebaseObject } from "../../redux/gameLogicReducer";
+import { RootState } from "../../redux/store";
 import { baseGameLogicObject } from "../../utils/hooks/useConvertDataToFirebaseObject";
+import { saveUserDocumentInDatabase } from "./SignInForm";
 interface LoggedInModalViewProps {
   setAuth: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -11,6 +13,7 @@ export const LoggedInModalView: React.FC<LoggedInModalViewProps> = ({
   setAuth,
 }) => {
   const dispatch = useDispatch();
+  const backendData = useSelector((state: RootState) => state.authAndBackend);
   //This component is representing the user view when he is auther
   return (
     <div className="flex flex-col gap-2 items-center justify-center">
@@ -19,6 +22,10 @@ export const LoggedInModalView: React.FC<LoggedInModalViewProps> = ({
         className="btn-square btn btn-md"
         onClick={async () => {
           try {
+            await saveUserDocumentInDatabase(
+              backendData.userEmail as string,
+              backendData.firebaseObject
+            );
             await auth.signOut();
             dispatch(setBaseStateOfAuthAndBackendReducer());
             dispatch(setReducerDataFromFirebaseObject(baseGameLogicObject));
