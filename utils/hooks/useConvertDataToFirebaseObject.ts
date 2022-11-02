@@ -59,7 +59,6 @@ export const useConvertDataToFirebaseObject = () => {
         firebaseObj
       );
     }
-    //!Big performance hit needs to be optimised ASAP
     setFirebaseObject(firebaseObj);
   }, [gameLogicReducer]);
   return { firebaseObject };
