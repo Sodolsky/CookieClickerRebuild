@@ -9,6 +9,11 @@ export interface firebaseObjectInterface {
   skillPoints: number;
   skillTreeNodes: singleSkillTreeNode[];
 }
+export interface userStatistics {
+  totalTimePlay: number;
+  totalCookiesCollected: number;
+  totalNumberOfExplosions: number;
+}
 export interface firebaseObjectAndUserEmail {
   email: string;
   firebaseObject: firebaseObjectInterface;
