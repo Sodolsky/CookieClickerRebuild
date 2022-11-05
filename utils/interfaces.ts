@@ -9,7 +9,7 @@ export interface firebaseObjectInterface {
   skillPoints: number;
   skillTreeNodes: singleSkillTreeNode[];
 }
-export interface userStatistics {
+export interface userStats {
   totalTimePlay: number;
   totalCookiesCollected: number;
   totalNumberOfExplosions: number;

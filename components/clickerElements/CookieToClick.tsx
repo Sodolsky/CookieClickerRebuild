@@ -10,7 +10,11 @@ import Image from "next/image";
 import CookieImage from "../../public/cookie.png";
 import { RootState } from "../../redux/store";
 import { useClickMultiplier } from "../../utils/hooks/useClickMultiplier";
-import { generateRandomNumber, getBoughtUpgrades } from "../../utils/utils";
+import {
+  generateRandomNumber,
+  getBoughtUpgrades,
+  setStatsStateWrapper,
+} from "../../utils/utils";
 import ShardIcon from "../../public/crystal.png";
 import AimIcon from "../../public/aim.png";
 import {
@@ -28,7 +32,6 @@ export interface CookieToClickProps {
   bgMusicRef: HTMLAudioElement | null;
   explosionSoundRef: HTMLAudioElement | null;
 }
-
 export const CookieToClick: React.FC<CookieToClickProps> = ({
   upgrades,
   bgMusicRef,
@@ -63,6 +66,12 @@ export const CookieToClick: React.FC<CookieToClickProps> = ({
     (state: RootState) =>
       state.gameLogic.skillTreeLogic.skillTreeNodes.find(
         (x) => x.name === "cookieExplosion"
+      ) as singleSkillTreeNode
+  ).wasBought;
+  const isCrystalConversionBought = useSelector(
+    (state: RootState) =>
+      state.gameLogic.skillTreeLogic.skillTreeNodes.find(
+        (x) => x.name === "crystalConversion"
       ) as singleSkillTreeNode
   ).wasBought;
   const nuclearBombBought = useSelector(
@@ -110,6 +119,7 @@ export const CookieToClick: React.FC<CookieToClickProps> = ({
         (x) => x.name === "oneUpgrade"
       ) as singleSkillTreeNode
   ).wasBought;
+  const userStatsState = useSelector((state: RootState) => state.userStats);
   function pop(e: React.MouseEvent) {
     let shardsGenerated: number = 0;
     let didExplosionHappen: boolean = false;
@@ -134,6 +144,7 @@ export const CookieToClick: React.FC<CookieToClickProps> = ({
             generateRandomNumber(0, 100) > (wasCarpetBombingBought ? 97 : 99)
           ) {
             didExplosionHappen = true;
+            setStatsStateWrapper("totalNumberOfExplosions", 1);
           }
         }
       }
@@ -210,11 +221,20 @@ export const CookieToClick: React.FC<CookieToClickProps> = ({
       }
       setExplosionAnimationPlayState(true);
       dispatch(addCookie(cookiesGainedFromExplosion));
+      setStatsStateWrapper("totalCookiesCollected", cookiesGainedFromExplosion);
       explosionSoundRef?.play();
       dispatch(addExplosionCookiesCount(cookiesGainedFromExplosion));
     }
     dispatch(addCrystals(shardsGenerated));
-    dispatch(addCookie(Math.floor(shardsGenerated / 2) * CPC));
+    if (isCrystalConversionBought) {
+      const cookiesGainFromCrystalConversion =
+        Math.floor(shardsGenerated / 2) * CPC;
+      dispatch(addCookie(cookiesGainFromCrystalConversion));
+      setStatsStateWrapper(
+        "totalCookiesCollected",
+        cookiesGainFromCrystalConversion
+      );
+    }
   }
   //? Use effect that controls music volume, audio html element is on main page component
   useEffect(() => {
@@ -280,7 +300,9 @@ export const CookieToClick: React.FC<CookieToClickProps> = ({
   const { multiplierCPS } = useCPSMultiplier();
   const handleClickIncrementation = () => {
     if (bgMusicRef?.paused) bgMusicRef.play();
-    dispatch(addCookie(Math.round(CPC * multiplier)));
+    const cookiesGained = CPC * multiplier;
+    dispatch(addCookie(Math.round(cookiesGained)));
+    setStatsStateWrapper("totalCookiesCollected", cookiesGained);
   };
   return (
     <>

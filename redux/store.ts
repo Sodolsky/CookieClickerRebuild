@@ -7,6 +7,7 @@ import explosionCookiesReducer from "./explosionCookiesReducer";
 import gameLogicReducer from "./gameLogicReducer";
 import performanceReducer from "./performanceReducer";
 import trashToTreasureReducer from "./trashToTreasureReducer";
+import userStatsReducer from "./userStatsReducer";
 export const store = configureStore({
   reducer: {
     gameLogic: gameLogicReducer,
@@ -17,6 +18,7 @@ export const store = configureStore({
     trashToTreasure: trashToTreasureReducer,
     eqalibrum: equalibrumReducer,
     authAndBackend: authAndBackendReducer,
+    userStats: userStatsReducer,
   },
 });
 export type RootState = ReturnType<typeof store.getState>;

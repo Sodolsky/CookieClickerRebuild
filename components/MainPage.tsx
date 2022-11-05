@@ -27,6 +27,7 @@ import {
   singleSkillTreeNode,
   UpgradeInterface,
   firebaseObjectInterface,
+  userStats,
 } from "../utils/interfaces";
 import { CookieToClick } from "./clickerElements/CookieToClick";
 import { Upgrade } from "./clickerElements/Upgrade";
@@ -63,7 +64,7 @@ import {
 } from "../redux/equalibrumReducer";
 import useEqualibrumTimer from "../utils/hooks/useEqualibrumTImer";
 import { EqualibrumStacksDisplay } from "./skillTree/EqualibrumStacksDisplay";
-import { getBoughtUpgrades } from "../utils/utils";
+import { getBoughtUpgrades, setStatsStateWrapper } from "../utils/utils";
 import { BackendSynchronizationModal } from "./backendSynchronization/BackendSynchronizationModal";
 import { useAuthStatus } from "../utils/hooks/useAuthStatus";
 import { getDoc, doc } from "firebase/firestore";
@@ -77,6 +78,10 @@ import {
   setFirebaseObjectReducer,
   setUserEmail,
 } from "../redux/authAndBackendReducer";
+import {
+  initialStateOfUserStats,
+  setStatsState,
+} from "../redux/userStatsReducer";
 export const MainPage = () => {
   const resetGameLogic = (skillPointsCount: number) => {
     intervalRef.current && clearInterval(intervalRef.current);
@@ -188,6 +193,9 @@ export const MainPage = () => {
           initialStateOfShopItems;
         const localStorageSkillTreeUnlocked =
           localStorage.getItem("skillTreeUnlocked") === "true" ? true : false;
+        const userStats =
+          (JSON.parse(localStorage.getItem("userStats")!) as userStats) ??
+          initialStateOfUserStats;
         Object.values(localStorageUpgrades).forEach((item) => {
           const obj = item;
           dispatch(
@@ -207,6 +215,7 @@ export const MainPage = () => {
             (acc += a.numberOfUpgrades * a.CookiesPerClickBonus),
           1
         );
+        dispatch(setStatsState(userStats));
         dispatch(setInitialSkillTree(localStorageSkillTreeUnlocked));
         dispatch(setInitialShopitems(localStorageShopItems));
         dispatch(setInitialCookieCount(localStorageCookieCount));
@@ -244,7 +253,10 @@ export const MainPage = () => {
   useEffect(() => {
     if (!statesWereLoaded || isClickDoubled) return;
     const gameLoopInterval = setInterval(() => {
-      dispatch(addCookie(CPS * multiplierCPS));
+      const cookiesGained = CPS * multiplierCPS;
+      dispatch(addCookie(cookiesGained));
+      setStatsStateWrapper("totalCookiesCollected", cookiesGained);
+      setStatsStateWrapper("totalTimePlay", 1);
       if (isEqualibrumBought && equalibrumState === "idle") {
         dispatch(addIdleStacks(10));
       }

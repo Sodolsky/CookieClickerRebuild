@@ -1,7 +1,11 @@
+import { cloneDeep } from "lodash";
+import { store } from "../redux/store";
+import { setStatsState } from "../redux/userStatsReducer";
 import {
   ShopUpgradesNames,
   UpgradeInterface,
   UpgradesInterface,
+  userStats,
 } from "./interfaces";
 
 export const shouldShopItemBeShown = (
@@ -118,3 +122,11 @@ export const numberFormatter = Intl.NumberFormat("en", {
   notation: "compact",
   maximumSignificantDigits: 3,
 });
+export const setStatsStateWrapper = (stat: keyof userStats, value: number) => {
+  //?Creating stateOfStats clone so it isnt read only;
+  const stateOfStats = store.getState().userStats;
+  const stateClone = cloneDeep(stateOfStats);
+  store.dispatch(
+    setStatsState({ ...stateClone, [stat]: (stateClone[stat] += value) })
+  );
+};
