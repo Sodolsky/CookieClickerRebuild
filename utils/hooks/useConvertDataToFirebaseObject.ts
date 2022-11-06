@@ -65,36 +65,6 @@ export const useConvertDataToFirebaseObject = () => {
     prevStateOfFirebaseObject.current = firebaseObject;
     //!Big performance hit needs to be optmised ASAP
     dispatch(setFirebaseObjectReducer(firebaseObj));
-    if (backendStatus.isUserAuthed && backendStatus.userEmail) {
-      const valuesThatChanged = Object.entries(firebaseObj)
-        .map((x) => {
-          const key = x[0] as keysOfFirebaseObject;
-          const value = x[1];
-          if (!isEqual(prevStateOfFirebaseObject.current[key], value)) {
-            return key;
-          }
-        })
-        .filter(Boolean);
-      try {
-        if (
-          valuesThatChanged.length === 1 &&
-          valuesThatChanged.some((x) => x === "cookieCount")
-        )
-          throw new Error("No imporant data was changed");
-        if (
-          valuesThatChanged.some((x) => x === "crystals") &&
-          valuesThatChanged.some((x) => x === "cookieCount") &&
-          valuesThatChanged.length === 2
-        )
-          throw new Error("No imporant data was changed");
-        // saveUserDocumentInDatabase(
-        //   backendStatus.userEmail as string,
-        //   firebaseObj
-        // );
-      } catch (error) {}
-    }
-
-    //!Big performance hit needs to be optimised ASAP
     setFirebaseObject(firebaseObj);
   }, [gameLogicReducer]);
   useEffect(() => {
