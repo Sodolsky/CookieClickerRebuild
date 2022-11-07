@@ -389,7 +389,7 @@ export const MainPage = () => {
           </div>
           <div className="drawer-side">
             <label htmlFor="my-drawer" className="drawer-overlay"></label>
-            <ul className="menu p-4 gap-2 overflow-y-auto w-80 bg-base-100 text-base-content">
+            <ul className="menu p-4 gap-2 w-80 bg-base-100 text-base-content">
               <MobileCookieCountWrapper />
               {Object.values(upgrades)
                 .filter((x) => {
@@ -405,6 +405,9 @@ export const MainPage = () => {
                     return x;
                   }
                 })
+                .sort((a: UpgradeInterface, b: UpgradeInterface) =>
+                  a.CookiesPerClickBonus > b.CookiesPerClickBonus ? 1 : -1
+                )
                 .map((x) => {
                   return (
                     <li key={x.upgradeName}>

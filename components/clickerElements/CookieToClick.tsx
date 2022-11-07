@@ -165,6 +165,10 @@ export const CookieToClick: React.FC<CookieToClickProps> = ({
         multiplier *
         timeBombMultiplier *
         ((100 - generateRandomNumber(0, 30)) / 100);
+      setStatsStateWrapper(
+        "cookiesGainedFromExplosion",
+        cookiesGainedFromExplosion
+      );
       //?Here we handle the logic when peaceAroundTheWorld skill node was bought
       if (isPeaceBought) {
         const boughtUpgrades: UpgradesNames[] = Object.values(upgrades)

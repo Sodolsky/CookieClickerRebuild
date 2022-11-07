@@ -13,6 +13,7 @@ export interface userStats {
   totalTimePlay: number;
   totalCookiesCollected: number;
   totalNumberOfExplosions: number;
+  cookiesGainedFromExplosion: number;
 }
 export interface firebaseObjectAndUserEmail {
   email: string;
