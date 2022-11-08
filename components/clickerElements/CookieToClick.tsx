@@ -305,8 +305,8 @@ export const CookieToClick: React.FC<CookieToClickProps> = ({
   const handleClickIncrementation = () => {
     if (bgMusicRef?.paused) bgMusicRef.play();
     const cookiesGained = CPC * multiplier;
-    dispatch(addCookie(Math.round(cookiesGained)));
     setStatsStateWrapper("totalCookiesCollected", cookiesGained);
+    dispatch(addCookie(Math.round(cookiesGained)));
   };
   return (
     <>
