@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { auth, db } from "../../firebase";
 import { setUserEmail } from "../../redux/authAndBackendReducer";
 import { setReducerDataFromFirebaseObject } from "../../redux/gameLogicReducer";
+import { baseGameLogicObject } from "../../utils/hooks/useConvertDataToFirebaseObject";
 import { firebaseObjectInterface } from "../../utils/interfaces";
 import {
   defaultDataValidity,
@@ -57,7 +58,9 @@ export const LogInForm: React.FC<LogInFormProps> = ({ setAuth }) => {
         const firebaseData: firebaseObjectInterface = await getDoc(
           doc(db, "Users", userCredential.user.email as string)
         ).then((doc) => doc.data() as firebaseObjectInterface);
-        dispatch(setReducerDataFromFirebaseObject(firebaseData));
+        dispatch(
+          setReducerDataFromFirebaseObject(firebaseData ?? baseGameLogicObject)
+        );
         dispatch(setUserEmail(userCredential.user.email as string));
         setAuth(true);
       })
@@ -100,8 +103,8 @@ export const LogInForm: React.FC<LogInFormProps> = ({ setAuth }) => {
         className="text-center text-blue-500 cursor-pointer hover:animate-pulse transition-opacity"
         onClick={() => setShowSignIn(true)}
       >
-        Don{"'"}t have a account? Create one to synchronize your progress across all
-        devices.
+        Don{"'"}t have a account? Create one to synchronize your progress across
+        all devices.
       </span>
     </div>
   ) : (

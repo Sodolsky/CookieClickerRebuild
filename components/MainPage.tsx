@@ -82,7 +82,9 @@ import {
   initialStateOfUserStats,
   setStatsState,
 } from "../redux/userStatsReducer";
+import { Menu } from "./Menu";
 export const MainPage = () => {
+  //! GIANT BUG RESULTING IN SHOP UPGRADES NOT WORKING PROPERLY (NOT ADDING COOKIES)
   const resetGameLogic = (skillPointsCount: number) => {
     intervalRef.current && clearInterval(intervalRef.current);
     dispatch(addExplosionCookiesCount(0));
@@ -120,9 +122,7 @@ export const MainPage = () => {
       ) as singleSkillTreeNode
   ).wasBought;
   const upgrades = useSelector((state: RootState) => state.gameLogic.upgrades);
-  const shopItems = useSelector(
-    (state: RootState) => state.gameLogic.shopItems
-  );
+
   const CPS = useSelector(
     (state: RootState) => state.gameLogic.cookiesLogic.CPS
   );
@@ -136,12 +136,7 @@ export const MainPage = () => {
   const statesWereLoaded = useSelector(
     (state: RootState) => state.gameLogic.areStatesLoaded
   );
-  const isChakraBought = useSelector(
-    (state: RootState) =>
-      state.gameLogic.skillTreeLogic.skillTreeNodes.find(
-        (x) => x.name === "chakra"
-      ) as singleSkillTreeNode
-  ).wasBought;
+
   const isTrashToTreasureBought = useSelector(
     (state: RootState) =>
       state.gameLogic.skillTreeLogic.skillTreeNodes.find(
@@ -373,148 +368,141 @@ export const MainPage = () => {
   }, [upgrades, isTrashToTreasureBought, CPS]);
   return (
     <>
-      <audio src="bgmusic.mp3" ref={bgMusicRef}></audio>
-      <audio src="explosionSound.wav" ref={explosionSoundRef}></audio>
-      {isMobile && (
-        //?When user screen size is less than 768px we render drawer with upgrades
-        <div className="drawer absolute w-full rounded">
-          <input id="my-drawer" type="checkbox" className="drawer-toggle" />
-          <div className="drawer-content">
-            <label
-              htmlFor="my-drawer"
-              className="cursor-pointer absolute top-4 left-4"
-            >
-              <AiOutlineMenu className="text-2xl" />
-            </label>
-          </div>
-          <div className="drawer-side">
-            <label htmlFor="my-drawer" className="drawer-overlay"></label>
-            <ul className="menu p-4 gap-2 w-80 bg-base-100 text-base-content">
-              <MobileCookieCountWrapper />
-              {Object.values(upgrades)
-                .filter((x) => {
-                  const upgrade = x as UpgradeInterface;
-                  if (
-                    upgrade.upgradeName === "upgrade11" ||
-                    upgrade.upgradeName === "upgrade12"
-                  ) {
-                    if (isQPBought) {
+      <>
+        <audio src="bgmusic.mp3" ref={bgMusicRef}></audio>
+        <audio src="explosionSound.wav" ref={explosionSoundRef}></audio>
+        {isMobile && (
+          //?When user screen size is less than 768px we render drawer with upgrades
+          <div className="drawer absolute w-full rounded">
+            <input id="my-drawer" type="checkbox" className="drawer-toggle" />
+            <div className="drawer-content">
+              <label
+                htmlFor="my-drawer"
+                className="cursor-pointer absolute top-4 left-4"
+              >
+                <AiOutlineMenu className="text-2xl" />
+              </label>
+            </div>
+            <div className="drawer-side">
+              <label htmlFor="my-drawer" className="drawer-overlay"></label>
+              <ul className="menu p-4 gap-2 w-80 bg-base-100 text-base-content">
+                <MobileCookieCountWrapper />
+                {Object.values(upgrades)
+                  .filter((x) => {
+                    const upgrade = x as UpgradeInterface;
+                    if (
+                      upgrade.upgradeName === "upgrade11" ||
+                      upgrade.upgradeName === "upgrade12"
+                    ) {
+                      if (isQPBought) {
+                        return x;
+                      }
+                    } else {
                       return x;
                     }
-                  } else {
+                  })
+                  .sort((a: UpgradeInterface, b: UpgradeInterface) =>
+                    a.CookiesPerClickBonus > b.CookiesPerClickBonus ? 1 : -1
+                  )
+                  .map((x) => {
+                    return (
+                      <li key={x.upgradeName}>
+                        <Upgrade {...x} />
+                      </li>
+                    );
+                  })}
+              </ul>
+            </div>
+          </div>
+        )}
+        <aside className="absolute md:top-4 md:bottom-0 bottom-2 right-2">
+          <div className="flex justify-center items-center gap-1">
+            <CrystalsModal />
+            <CrystalsDisplay />
+          </div>
+        </aside>
+
+        <main className="min-h-screen">
+          <div className="flex flex-col gap-2 justify-center items-center">
+            {/* <button className="btn" onClick={() => resetGameLogic()}>
+      Test
+    </button> */}
+            <Header />
+            <CookiesDisplay
+              CPS={Number(CPS.toFixed(2))}
+              CPC={Number(CPC.toFixed(2))}
+            />
+            <CookieToClick
+              upgrades={upgrades}
+              bgMusicRef={bgMusicRef.current}
+              explosionSoundRef={explosionSoundRef.current}
+            />
+            {/* This Code is checking if player has bought 10 upgrades of type */}
+            {Object.values(upgrades)
+              .filter((x) => {
+                const upgrade = x as UpgradeInterface;
+                if (
+                  upgrade.upgradeName === "upgrade11" ||
+                  upgrade.upgradeName === "upgrade12"
+                ) {
+                  if (isQPBought) {
                     return x;
                   }
-                })
-                .sort((a: UpgradeInterface, b: UpgradeInterface) =>
-                  a.CookiesPerClickBonus > b.CookiesPerClickBonus ? 1 : -1
-                )
-                .map((x) => {
-                  return (
-                    <li key={x.upgradeName}>
-                      <Upgrade {...x} />
-                    </li>
-                  );
-                })}
-            </ul>
-          </div>
-        </div>
-      )}
-      <aside className="absolute md:top-4 md:bottom-0 bottom-2 right-2">
-        <div className="flex justify-center items-center gap-1">
-          <CrystalsModal />
-          <CrystalsDisplay />
-          <Store />
-        </div>
-      </aside>
-      <PerformanceModal />
-      <BackendSynchronizationModal />
-      {shopItems.find((x) => x.name === "unlockSkillTree")?.wasBought &&
-      !isSkillTreeUnlocked ? (
-        <EternalTalk resetGameLogic={() => resetGameLogic(10)} />
-      ) : (
-        isSkillTreeUnlocked && <SkillTreeModal />
-      )}
-      {isChakraBought && <Chakra />}
-      {isEqualibrumBought && (
-        <div className="absolute bottom-60 left-2 md:top-60 md:left-4">
-          <EqualibrumStacksDisplay />
-        </div>
-      )}
-      <main className="min-h-screen">
-        <div className="flex flex-col gap-2 justify-center items-center">
-          {/* <button className="btn" onClick={() => resetGameLogic()}>
-            Test
-          </button> */}
-          <Header />
-          <CookiesDisplay
-            CPS={Number(CPS.toFixed(2))}
-            CPC={Number(CPC.toFixed(2))}
-          />
-          <CookieToClick
-            upgrades={upgrades}
-            bgMusicRef={bgMusicRef.current}
-            explosionSoundRef={explosionSoundRef.current}
-          />
-          {/* This Code is checking if player has bought 10 upgrades of type */}
-          {Object.values(upgrades)
-            .filter((x) => {
-              const upgrade = x as UpgradeInterface;
-              if (
-                upgrade.upgradeName === "upgrade11" ||
-                upgrade.upgradeName === "upgrade12"
-              ) {
-                if (isQPBought) {
+                } else {
                   return x;
                 }
-              } else {
-                return x;
-              }
-            })
-            .reduce((acc, a) => {
-              if (acc && a.numberOfUpgrades >= 10) return acc;
-              return (acc = false);
-            }, true) && <ResetModal resetGameLogic={resetGameLogic} />}
+              })
+              .reduce((acc, a) => {
+                if (acc && a.numberOfUpgrades >= 10) return acc;
+                return (acc = false);
+              }, true) && <ResetModal resetGameLogic={resetGameLogic} />}
 
-          <div className="grid place-items-center  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 grid-rows-1 gap-2 mt-6 w-full xl:w-3/4">
-            {isMobile !== null &&
-              !isMobile &&
-              //Otherwise we render  upgrades in grid container
-              Object.values(upgrades)
-                .filter((x) => {
-                  const upgrade = x as UpgradeInterface;
-                  if (
-                    upgrade.upgradeName === "upgrade11" ||
-                    upgrade.upgradeName === "upgrade12"
-                  ) {
-                    if (isQPBought) {
+            <div className="grid place-items-center  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 grid-rows-1 gap-2 mt-6 w-full xl:w-3/4">
+              {isMobile !== null &&
+                !isMobile &&
+                //Otherwise we render  upgrades in grid container
+                Object.values(upgrades)
+                  .filter((x) => {
+                    const upgrade = x as UpgradeInterface;
+                    if (
+                      upgrade.upgradeName === "upgrade11" ||
+                      upgrade.upgradeName === "upgrade12"
+                    ) {
+                      if (isQPBought) {
+                        return x;
+                      }
+                    } else {
                       return x;
                     }
-                  } else {
-                    return x;
-                  }
-                })
-                .sort(
-                  (a: UpgradeInterface, b: UpgradeInterface) =>
-                    a.CookiesPerClickBonus - b.CookiesPerClickBonus
-                )
-                .map((x: UpgradeInterface) => {
-                  return (
-                    <Upgrade
-                      {...x}
-                      cost={
-                        isTheoryOfEverythingBought
-                          ? isEvenMoreQuestionsBought
-                            ? Math.floor(x.cost / 4)
-                            : Math.floor(x.cost / 2)
-                          : x.cost
-                      }
-                      key={x.upgradeName}
-                    />
-                  );
-                })}
+                  })
+                  .sort(
+                    (a: UpgradeInterface, b: UpgradeInterface) =>
+                      a.CookiesPerClickBonus - b.CookiesPerClickBonus
+                  )
+                  .map((x: UpgradeInterface) => {
+                    return (
+                      <Upgrade
+                        {...x}
+                        cost={
+                          isTheoryOfEverythingBought
+                            ? isEvenMoreQuestionsBought
+                              ? Math.floor(x.cost / 4)
+                              : Math.floor(x.cost / 2)
+                            : x.cost
+                        }
+                        key={x.upgradeName}
+                      />
+                    );
+                  })}
+            </div>
           </div>
-        </div>
-      </main>
+          <Menu
+            isEqualibrumBought={isEqualibrumBought}
+            isSkillTreeUnlocked={isSkillTreeUnlocked}
+            resetGameLogic={() => resetGameLogic(10)}
+          />
+        </main>
+      </>
     </>
   );
 };

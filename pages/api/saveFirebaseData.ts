@@ -15,7 +15,7 @@ export default async function handler(
     res.status(500).json({
       success: false,
       message:
-        "Something on our side, went terribly wrong. If you expierience any form of progress loss, send and email to mateuszsodolskiofficial@gmail.com",
+        "Something on our side, went terribly wrong. If you expierience any form of progress loss, send an email to mateuszsodolskiofficial@gmail.com",
     });
   }
 }

@@ -23,9 +23,7 @@ export const PerformanceModal = () => {
   return (
     <>
       <label htmlFor="PerformanceModal">
-        <figure
-          className={`absolute bottom-24 right-20 md:top-24 md:right-20 cursor-pointer`}
-        >
+        <figure className={` cursor-pointer`}>
           <Image src={PerformanceIcon.src} width={64} height={64} />
         </figure>
       </label>

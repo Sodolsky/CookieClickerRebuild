@@ -11,7 +11,7 @@ interface ImageSettings {
   showImage: boolean;
 }
 interface EternalTalkProps {
-  resetGameLogic: () => void;
+  resetGameLogic: (skillPointsCount: number) => void;
 }
 export const EternalTalk: React.FC<EternalTalkProps> = ({ resetGameLogic }) => {
   const [showAndPulseImage, setShowAndPuLseImage] = useState<ImageSettings>({
@@ -40,7 +40,7 @@ export const EternalTalk: React.FC<EternalTalkProps> = ({ resetGameLogic }) => {
     setCurrentStep(1);
     setShowAndPuLseImage({ showImage: true, pulseImage: false });
     if (dealOutcome === "accepted") {
-      resetGameLogic();
+      resetGameLogic(10);
     } else {
       console.log("Declined");
     }
