@@ -84,7 +84,6 @@ import {
 } from "../redux/userStatsReducer";
 import { Menu } from "./Menu";
 export const MainPage = () => {
-  //! GIANT BUG RESULTING IN SHOP UPGRADES NOT WORKING PROPERLY (NOT ADDING COOKIES)
   const resetGameLogic = (skillPointsCount: number) => {
     intervalRef.current && clearInterval(intervalRef.current);
     dispatch(addExplosionCookiesCount(0));

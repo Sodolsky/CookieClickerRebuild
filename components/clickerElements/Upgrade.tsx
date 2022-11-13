@@ -118,8 +118,18 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
   const upgradeCPS = () => {
     if (currentCookies >= realPrice) {
       dispatch(removeCookies(price));
-      dispatch(changeCPS({ type: "increase", amount: CookiesPerSecondBonus }));
-      dispatch(changeCPC({ type: "increase", amount: CookiesPerClickBonus }));
+      dispatch(
+        changeCPS({
+          type: "increase",
+          amount: CookiesPerSecondBonus * multiplier,
+        })
+      );
+      dispatch(
+        changeCPC({
+          type: "increase",
+          amount: CookiesPerClickBonus * multiplier,
+        })
+      );
       dispatch(buyUpgrade({ name: upgradeName, number: 1 }));
       isCrystalBallBought && dispatch(addNewUpgrade());
     } else {

@@ -6,7 +6,7 @@ import {
   singleSkillTreeNode,
 } from "../../../utils/interfaces";
 import { FcCheckmark } from "react-icons/fc";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   addBonusesForUpgrades,
   buyShopItem,
@@ -30,6 +30,10 @@ export const StoreItem: React.FC<CookiesShopItemLocal> = ({
   buySound,
 }) => {
   const [shakeImage, setShakeImage] = useState(false);
+  const allStatesWereLoaded = useSelector(
+    (state: RootState) => state.gameLogic.areStatesLoaded
+  );
+  const wasLoaded = useRef<boolean>(false);
   const dispatch = useDispatch();
   const buyItem = () => {
     if (isLocked) return;
@@ -46,6 +50,14 @@ export const StoreItem: React.FC<CookiesShopItemLocal> = ({
       }
     }
   };
+  useEffect(() => {
+    if (type == "double" && allStatesWereLoaded) {
+      if (wasBought && !wasLoaded.current) {
+        upgradeFor && dispatch(addBonusesForUpgrades(upgradeFor));
+      }
+      wasLoaded.current = true;
+    }
+  }, [wasBought, allStatesWereLoaded]);
   const cookieCount = useSelector(
     (state: RootState) => state.gameLogic.cookiesLogic.cookieCount
   );
