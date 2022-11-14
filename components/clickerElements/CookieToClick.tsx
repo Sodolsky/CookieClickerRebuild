@@ -309,25 +309,25 @@ export const CookieToClick: React.FC<CookieToClickProps> = ({
     dispatch(addCookie(Math.round(cookiesGained)));
   };
   return (
-    <>
-      <Image
-        src={
-          cookieSkin?.wasBought && cookieSkin.inUse
-            ? cookieSkin.image
-            : CookieImage
-        }
-        priority={true}
-        className={`cursor-pointer transition-all ${
-          explosionAnimationPlayState ? "ShakeAnimationXL" : ""
-        }`}
-        onAnimationEnd={() => setExplosionAnimationPlayState(false)}
-        onClick={(e) => {
-          handleClickIncrementation();
-          pop(e);
-        }}
-        height={256}
-        width={256}
-      />
-    </>
+    // <figure className="border-2 border-sky-300 rounded-full p-2">
+    <Image
+      src={
+        cookieSkin?.wasBought && cookieSkin.inUse
+          ? cookieSkin.image
+          : CookieImage
+      }
+      priority={true}
+      className={`cursor-pointer transition-all ${
+        explosionAnimationPlayState ? "ShakeAnimationXL" : ""
+      }`}
+      onAnimationEnd={() => setExplosionAnimationPlayState(false)}
+      onClick={(e) => {
+        handleClickIncrementation();
+        pop(e);
+      }}
+      height={256}
+      width={256}
+    />
+    // </figure>
   );
 };
