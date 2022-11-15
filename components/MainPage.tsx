@@ -83,6 +83,7 @@ import {
   setStatsState,
 } from "../redux/userStatsReducer";
 import { Menu } from "./Menu";
+import { switchHolyCrossState } from "../redux/holyCrossReducer";
 export const MainPage = () => {
   const resetGameLogic = (skillPointsCount: number) => {
     intervalRef.current && clearInterval(intervalRef.current);
@@ -152,6 +153,12 @@ export const MainPage = () => {
         (x) => x.name === "equalibrum"
       ) as singleSkillTreeNode
   ).wasBought;
+  const isHolyCrossBought = useSelector(
+    (state: RootState) =>
+      state.gameLogic.skillTreeLogic.skillTreeNodes.find(
+        (x) => x.name === "holyCross"
+      ) as singleSkillTreeNode
+  ).wasBought;
   const equalibrumState = useSelector(
     (state: RootState) => state.eqalibrum.state
   );
@@ -159,6 +166,15 @@ export const MainPage = () => {
     equlibrumState: equalibrumState,
     isEqualibrumBought: isEqualibrumBought,
   });
+  useEffect(() => {
+    if (isHolyCrossBought) {
+      dispatch(switchHolyCrossState(true));
+      const holyCrossEndTime = setTimeout(
+        () => dispatch(switchHolyCrossState(false)),
+        5000
+      );
+    }
+  }, [isHolyCrossBought]);
   const { firebaseObject } = useConvertDataToFirebaseObject();
   useEffect(() => {
     dispatch(setFirebaseObjectReducer(firebaseObject));

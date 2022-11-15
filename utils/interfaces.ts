@@ -24,6 +24,12 @@ export interface skillTreeWrapper {
   skillTreeNodes: singleSkillTreeNode[];
   isSkillTreeUnlocked: boolean;
 }
+export interface holyCrossBonuses {
+  CPSMultiplier: number;
+  CPCMultiplier: number;
+  skillPoints: number;
+  crystals: number;
+}
 export type nodeNames =
   | "starterNode"
   | "clickingTalent"

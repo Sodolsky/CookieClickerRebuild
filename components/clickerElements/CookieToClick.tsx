@@ -8,6 +8,7 @@ import {
 } from "../../redux/gameLogicReducer";
 import Image from "next/image";
 import CookieImage from "../../public/cookie.png";
+import CrossImage from "../../public/Cross.png";
 import { RootState } from "../../redux/store";
 import { useClickMultiplier } from "../../utils/hooks/useClickMultiplier";
 import {
@@ -27,6 +28,7 @@ import { useEffect, useState } from "react";
 import { addExplosionCookiesCount } from "../../redux/explosionCookiesReducer";
 import { useCPSMultiplier } from "../../utils/hooks/useCPSMultiplier";
 import { addClickStacks } from "../../redux/equalibrumReducer";
+import { switchHolyCrossState } from "../../redux/holyCrossReducer";
 export interface CookieToClickProps {
   upgrades: UpgradesInterface;
   bgMusicRef: HTMLAudioElement | null;
@@ -48,6 +50,9 @@ export const CookieToClick: React.FC<CookieToClickProps> = ({
   );
   const performanceReducerState = useSelector(
     (state: RootState) => state.performance
+  );
+  const isHolyCrossActive = useSelector(
+    (state: RootState) => state.holyCross.isActive
   );
   const isPickaxeBought = useSelector(
     (state: RootState) =>
@@ -309,25 +314,38 @@ export const CookieToClick: React.FC<CookieToClickProps> = ({
     dispatch(addCookie(Math.round(cookiesGained)));
   };
   return (
-    // <figure className="border-2 border-sky-300 rounded-full p-2">
-    <Image
-      src={
-        cookieSkin?.wasBought && cookieSkin.inUse
-          ? cookieSkin.image
-          : CookieImage
-      }
-      priority={true}
-      className={`cursor-pointer transition-all ${
-        explosionAnimationPlayState ? "ShakeAnimationXL" : ""
+    <fieldset
+      className={`${
+        isHolyCrossActive &&
+        "opacity-100 border-2 border-sky-300 rounded-full px-3 py-1"
       }`}
-      onAnimationEnd={() => setExplosionAnimationPlayState(false)}
-      onClick={(e) => {
-        handleClickIncrementation();
-        pop(e);
-      }}
-      height={256}
-      width={256}
-    />
-    // </figure>
+    >
+      <legend
+        className={`mx-auto transition-opacity ${
+          isHolyCrossActive ? "opacity-100" : "opacity-0"
+        }`}
+      >
+        <Image src={CrossImage} height={32} width={32} />
+      </legend>
+
+      <Image
+        src={
+          cookieSkin?.wasBought && cookieSkin.inUse
+            ? cookieSkin.image
+            : CookieImage
+        }
+        priority={true}
+        className={`cursor-pointer transition-all ${
+          explosionAnimationPlayState ? "ShakeAnimationXL" : ""
+        }`}
+        onAnimationEnd={() => setExplosionAnimationPlayState(false)}
+        onClick={(e) => {
+          handleClickIncrementation();
+          pop(e);
+        }}
+        height={256}
+        width={256}
+      />
+    </fieldset>
   );
 };
