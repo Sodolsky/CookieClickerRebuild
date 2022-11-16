@@ -29,6 +29,7 @@ export interface holyCrossBonuses {
   CPCMultiplier: number;
   skillPoints: number;
   crystals: number;
+  upgrades: number;
 }
 export type nodeNames =
   | "starterNode"

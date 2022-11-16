@@ -2,6 +2,7 @@ import { cloneDeep } from "lodash";
 import { store } from "../redux/store";
 import { setStatsState } from "../redux/userStatsReducer";
 import {
+  holyCrossBonuses,
   ShopUpgradesNames,
   UpgradeInterface,
   UpgradesInterface,
@@ -129,4 +130,18 @@ export const setStatsStateWrapper = (stat: keyof userStats, value: number) => {
   store.dispatch(
     setStatsState({ ...stateClone, [stat]: (stateClone[stat] += value) })
   );
+};
+export const rollHolyCrossBonus = (): keyof holyCrossBonuses => {
+  const rand = Math.floor(Math.random() * (100 - 1) + 1);
+  if (rand <= 35) {
+    return "crystals";
+  } else if (rand > 35 && rand <= 60) {
+    return "CPCMultiplier";
+  } else if (rand > 60 && rand <= 85) {
+    return "CPSMultiplier";
+  } else if (rand > 85 && rand < 98) {
+    return "upgrades";
+  } else {
+    return "skillPoints";
+  }
 };

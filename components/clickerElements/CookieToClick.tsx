@@ -14,21 +14,27 @@ import { useClickMultiplier } from "../../utils/hooks/useClickMultiplier";
 import {
   generateRandomNumber,
   getBoughtUpgrades,
+  rollHolyCrossBonus,
   setStatsStateWrapper,
 } from "../../utils/utils";
 import ShardIcon from "../../public/crystal.png";
 import AimIcon from "../../public/aim.png";
 import {
+  holyCrossBonuses,
   singleSkillTreeNode,
   UpgradeInterface,
   UpgradesInterface,
   UpgradesNames,
 } from "../../utils/interfaces";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { addExplosionCookiesCount } from "../../redux/explosionCookiesReducer";
 import { useCPSMultiplier } from "../../utils/hooks/useCPSMultiplier";
 import { addClickStacks } from "../../redux/equalibrumReducer";
-import { switchHolyCrossState } from "../../redux/holyCrossReducer";
+import {
+  addHolyCrossBonuses,
+  initialHolyCrossBonuses,
+} from "../../redux/holyCrossReducer";
+import { cloneDeep } from "lodash";
 export interface CookieToClickProps {
   upgrades: UpgradesInterface;
   bgMusicRef: HTMLAudioElement | null;
@@ -47,6 +53,9 @@ export const CookieToClick: React.FC<CookieToClickProps> = ({
   const dispatch = useDispatch();
   const CPC = useSelector(
     (state: RootState) => state.gameLogic.cookiesLogic.CPC
+  );
+  const holyCrossObject = useRef<holyCrossBonuses>(
+    cloneDeep(initialHolyCrossBonuses)
   );
   const performanceReducerState = useSelector(
     (state: RootState) => state.performance
@@ -153,13 +162,20 @@ export const CookieToClick: React.FC<CookieToClickProps> = ({
           }
         }
       }
+
       //? To optimise we don't create particles when player opt-out of them
       if (!performanceReducerState.disableParticlesFromClicking) {
         createParticle(e.clientX, e.clientY, generateShard, secondChance);
       }
     }
+    const boughtUpgrades = getBoughtUpgrades(upgrades, false);
+    const bestUpgrade: UpgradeInterface =
+      boughtUpgrades[boughtUpgrades?.length - 1];
     if (isEqualibrumBought && equalibrumState === "idle") {
       dispatch(addClickStacks(5));
+    }
+    if (isHolyCrossActive) {
+      holyCrossObject.current[rollHolyCrossBonus()] += 1;
     }
     //?Here we handle logic when explosion happens
     if (didExplosionHappen) {
@@ -204,10 +220,7 @@ export const CookieToClick: React.FC<CookieToClickProps> = ({
           );
         }
       }
-      const boughtUpgrades = getBoughtUpgrades(upgrades, false);
       if (isOneUpgradeBought && boughtUpgrades) {
-        const bestUpgrade: UpgradeInterface =
-          boughtUpgrades[boughtUpgrades?.length - 1];
         const numberOfAddedUpgrades = 4;
         dispatch(
           changeCPC({
@@ -257,6 +270,16 @@ export const CookieToClick: React.FC<CookieToClickProps> = ({
       explosionSoundRef.volume = performanceReducerState.soundVolume / 100;
     }
   }, [performanceReducerState.soundVolume, explosionSoundRef]);
+
+  useEffect(() => {
+    if (!isHolyCrossActive) {
+      if (!Object.values(holyCrossObject.current).every((x) => x === 0)) {
+        dispatch(addHolyCrossBonuses(holyCrossObject.current));
+        //TODO addCurrentBonus(holyCrossObject.current)
+        holyCrossObject.current = initialHolyCrossBonuses;
+      }
+    }
+  }, [isHolyCrossActive]);
   function createParticle(
     x: number,
     y: number,

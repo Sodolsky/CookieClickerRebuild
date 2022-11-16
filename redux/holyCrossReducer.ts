@@ -6,15 +6,16 @@ interface holyCrossReducerInterface {
   isActive: boolean;
   currentBonuses: holyCrossBonuses;
 }
-
+export const initialHolyCrossBonuses: holyCrossBonuses = {
+  CPCMultiplier: 0,
+  CPSMultiplier: 0,
+  crystals: 0,
+  skillPoints: 0,
+  upgrades: 0,
+};
 const initialState: holyCrossReducerInterface = {
   isActive: false,
-  currentBonuses: {
-    CPCMultiplier: 0,
-    CPSMultiplier: 0,
-    crystals: 0,
-    skillPoints: 0,
-  },
+  currentBonuses: initialHolyCrossBonuses,
 };
 export const initialStateOfHolyCross = cloneDeep(initialState);
 export const holyCrossReducer = createSlice({
