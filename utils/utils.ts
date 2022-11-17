@@ -109,7 +109,7 @@ export function secondsToTime(seconds: number) {
 export const getBoughtUpgrades = (
   upgrades: UpgradesInterface,
   excludeFirstUpgrade: boolean
-): any[] => {
+): UpgradeInterface[] => {
   const boughtUpgrades = Object.values(upgrades)
     .filter((x: UpgradeInterface) => x.numberOfUpgrades > 0)
     .sort((a: UpgradeInterface, b: UpgradeInterface) =>

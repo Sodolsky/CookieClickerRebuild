@@ -64,7 +64,11 @@ import {
 } from "../redux/equalibrumReducer";
 import useEqualibrumTimer from "../utils/hooks/useEqualibrumTImer";
 import { EqualibrumStacksDisplay } from "./skillTree/EqualibrumStacksDisplay";
-import { getBoughtUpgrades, setStatsStateWrapper } from "../utils/utils";
+import {
+  generateRandomNumber,
+  getBoughtUpgrades,
+  setStatsStateWrapper,
+} from "../utils/utils";
 import { BackendSynchronizationModal } from "./backendSynchronization/BackendSynchronizationModal";
 import { useAuthStatus } from "../utils/hooks/useAuthStatus";
 import { getDoc, doc } from "firebase/firestore";
@@ -159,7 +163,7 @@ export const MainPage = () => {
         (x) => x.name === "holyCross"
       ) as singleSkillTreeNode
   ).wasBought;
-  const isHolyCrossReady = useRef<boolean>(true);
+  const isHolyCrossReady = useRef<boolean>(false);
   const equalibrumState = useSelector(
     (state: RootState) => state.eqalibrum.state
   );
@@ -168,21 +172,23 @@ export const MainPage = () => {
     isEqualibrumBought: isEqualibrumBought,
   });
   useEffect(() => {
+    const min = 30;
+    const max = 120;
+    const holyCrossDuration = 15000;
+    const randTime = generateRandomNumber(min, max);
+
+    const switchHolyCrossStateAfterRandomTime = setTimeout(() => {
+      isHolyCrossReady.current = true;
+    }, randTime * 1000 + holyCrossDuration);
     if (isHolyCrossBought && isHolyCrossReady.current) {
-      const min = 1;
-      const max = 10;
-      const holyCrossDuration = 15000;
       dispatch(switchHolyCrossState(true));
       const holyCrossEndTime = setTimeout(
         () => dispatch(switchHolyCrossState(false)),
         holyCrossDuration
       );
-      const randTime = Math.floor(Math.random() * (max - min) + min);
       isHolyCrossReady.current = false;
-      const switchHolyCrossStateAfterRandomTime = setTimeout(() => {
-        isHolyCrossReady.current = true;
-      }, randTime * 1000 + holyCrossDuration);
     }
+    return () => clearInterval(switchHolyCrossStateAfterRandomTime);
   }, [isHolyCrossBought, isHolyCrossReady.current]);
   const { firebaseObject } = useConvertDataToFirebaseObject();
   useEffect(() => {

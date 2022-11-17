@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   addCookie,
   addCrystals,
+  addSkillPoints,
   buyUpgrade,
   changeCPC,
   changeCPS,
@@ -35,6 +36,8 @@ import {
   initialHolyCrossBonuses,
 } from "../../redux/holyCrossReducer";
 import { cloneDeep } from "lodash";
+import { toast } from "react-toastify";
+import { HolyCrossBonusToast } from "../skillTree/HolyCrossBonusToast";
 export interface CookieToClickProps {
   upgrades: UpgradesInterface;
   bgMusicRef: HTMLAudioElement | null;
@@ -134,6 +137,72 @@ export const CookieToClick: React.FC<CookieToClickProps> = ({
       ) as singleSkillTreeNode
   ).wasBought;
   const userStatsState = useSelector((state: RootState) => state.userStats);
+  const addRandomUpgrade = (upgrade: UpgradeInterface) => {
+    dispatch(
+      changeCPC({
+        type: "increase",
+        amount: upgrade.CookiesPerClickBonus,
+      })
+    );
+    dispatch(
+      changeCPS({
+        type: "increase",
+        amount: upgrade.CookiesPerSecondBonus,
+      })
+    );
+    dispatch(buyUpgrade({ name: upgrade.upgradeName, number: 1 }));
+  };
+  const boughtUpgrades = getBoughtUpgrades(upgrades, false);
+  const addCurrentHolyCrossBonusesBonus = (
+    holyCrossObject: holyCrossBonuses
+  ) => {
+    //? CPC/CPS multipliers are applied via multiplier counters reading holyCrossReducer data
+    //? Upgrades are applied here, same deal with crystals and with skillPoints;
+
+    if (boughtUpgrades.length > 0) {
+      const numberOfUpgradesNeededToBeAdded = holyCrossObject.upgrades;
+      for (let i = numberOfUpgradesNeededToBeAdded; i >= 0; i--) {
+        const randomUpgrade =
+          boughtUpgrades[generateRandomNumber(0, boughtUpgrades.length - 1)];
+        addRandomUpgrade(randomUpgrade);
+      }
+    }
+    dispatch(addSkillPoints(holyCrossObject.skillPoints * 2));
+    dispatch(addCrystals(holyCrossObject.crystals * 25));
+
+    toast.info(
+      <>
+        <div className="text-sm font-bold flex gap-1 justify-center items-center">
+          <span>Holy Cross Bonuses Gained</span>
+          <Image src={CrossImage} height={32} width={32} />
+        </div>
+        <div className="flex flex-col justify-center items-center">
+          <HolyCrossBonusToast
+            imagePath={"/idleeq.png"}
+            text={`
+          CPSMulti: ${holyCrossObject.CPSMultiplier / 100}`}
+          />
+          <HolyCrossBonusToast
+            imagePath={"/clickeq.png"}
+            text={`
+          CPCMulti: ${holyCrossObject.CPCMultiplier / 100}`}
+          />
+          <HolyCrossBonusToast
+            imagePath={"/crystal.png"}
+            text={`Crystals: ${holyCrossObject.crystals * 25}`}
+          />
+          <HolyCrossBonusToast
+            imagePath={"/upgrade16x16.png"}
+            text={`Upgrades: ${holyCrossObject.upgrades}`}
+          />
+          <HolyCrossBonusToast
+            imagePath={"/skillPoint16x16.png"}
+            text={`Skill Points ${holyCrossObject.skillPoints * 2}`}
+          />
+        </div>
+      </>
+    );
+  };
   function pop(e: React.MouseEvent) {
     let shardsGenerated: number = 0;
     let didExplosionHappen: boolean = false;
@@ -168,7 +237,6 @@ export const CookieToClick: React.FC<CookieToClickProps> = ({
         createParticle(e.clientX, e.clientY, generateShard, secondChance);
       }
     }
-    const boughtUpgrades = getBoughtUpgrades(upgrades, false);
     const bestUpgrade: UpgradeInterface =
       boughtUpgrades[boughtUpgrades?.length - 1];
     if (isEqualibrumBought && equalibrumState === "idle") {
@@ -220,7 +288,7 @@ export const CookieToClick: React.FC<CookieToClickProps> = ({
           );
         }
       }
-      if (isOneUpgradeBought && boughtUpgrades) {
+      if (isOneUpgradeBought && boughtUpgrades.length > 0) {
         const numberOfAddedUpgrades = 4;
         dispatch(
           changeCPC({
@@ -275,8 +343,8 @@ export const CookieToClick: React.FC<CookieToClickProps> = ({
     if (!isHolyCrossActive) {
       if (!Object.values(holyCrossObject.current).every((x) => x === 0)) {
         dispatch(addHolyCrossBonuses(holyCrossObject.current));
-        //TODO addCurrentBonus(holyCrossObject.current)
-        holyCrossObject.current = initialHolyCrossBonuses;
+        addCurrentHolyCrossBonusesBonus(holyCrossObject.current);
+        holyCrossObject.current = cloneDeep(initialHolyCrossBonuses);
       }
     }
   }, [isHolyCrossActive]);

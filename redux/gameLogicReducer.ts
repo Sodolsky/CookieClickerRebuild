@@ -366,6 +366,21 @@ export const gameMechanicSlice = createSlice({
       };
       return returnObject;
     },
+    addSkillPoints(state, action: PayloadAction<number>) {
+      localStorage.setItem(
+        "skillPoints",
+        `${state.skillTreeLogic.skillPoints + action.payload}`
+      );
+      let oldSkillPoints = state.skillTreeLogic.skillPoints;
+      const newSkillPoints = (oldSkillPoints += action.payload);
+      return {
+        ...state,
+        skillTreeLogic: {
+          ...state.skillTreeLogic,
+          skillPoints: newSkillPoints,
+        },
+      };
+    },
     resetSkillTree(state) {
       const numberOfPoints = state.skillTreeLogic.skillTreeNodes.reduce(
         (acc, a) => (a.wasBought ? (acc += a.price) : acc),
@@ -415,5 +430,6 @@ export const {
   resetSkillTree,
   setSkillTreeFromDB,
   setReducerDataFromFirebaseObject,
+  addSkillPoints,
 } = gameMechanicSlice.actions;
 export default gameMechanicSlice.reducer;
