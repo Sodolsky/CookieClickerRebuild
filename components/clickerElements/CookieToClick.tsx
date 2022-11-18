@@ -408,7 +408,7 @@ export const CookieToClick: React.FC<CookieToClickProps> = ({
     <fieldset
       className={`${
         isHolyCrossActive &&
-        "opacity-100 border-2 border-sky-300 rounded-full px-3 py-1"
+        "SpinHolyCross opacity-100 border-2 border-sky-300 rounded-full px-3 py-1"
       }`}
     >
       <legend
