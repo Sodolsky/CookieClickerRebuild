@@ -28,6 +28,7 @@ import {
   UpgradeInterface,
   firebaseObjectInterface,
   userStats,
+  holyCrossBonuses,
 } from "../utils/interfaces";
 import { CookieToClick } from "./clickerElements/CookieToClick";
 import { Upgrade } from "./clickerElements/Upgrade";
@@ -87,7 +88,11 @@ import {
   setStatsState,
 } from "../redux/userStatsReducer";
 import { Menu } from "./Menu";
-import { switchHolyCrossState } from "../redux/holyCrossReducer";
+import {
+  initialHolyCrossBonuses,
+  setHolyCrossBonusesFromLocalStorage,
+  switchHolyCrossState,
+} from "../redux/holyCrossReducer";
 export const MainPage = () => {
   const resetGameLogic = (skillPointsCount: number) => {
     intervalRef.current && clearInterval(intervalRef.current);
@@ -163,7 +168,7 @@ export const MainPage = () => {
         (x) => x.name === "holyCross"
       ) as singleSkillTreeNode
   ).wasBought;
-  const isHolyCrossReady = useRef<boolean>(false);
+  const isHolyCrossReady = useRef<boolean>(true);
   const equalibrumState = useSelector(
     (state: RootState) => state.eqalibrum.state
   );
@@ -268,6 +273,13 @@ export const MainPage = () => {
           localStorage.getItem("performance")!
         ) as performanceReducerInterface) ?? initialPerformanceReducerState;
       dispatch(setInitialPerformanceOptions(localStoragePerformanceOptions));
+      const localStorageHolyCrossBonuses =
+        (JSON.parse(
+          localStorage.getItem("holyCrossBonuses")!
+        ) as holyCrossBonuses) ?? initialHolyCrossBonuses;
+      dispatch(
+        setHolyCrossBonusesFromLocalStorage(localStorageHolyCrossBonuses)
+      );
     }
   }, [authStatus]);
   useEffect(() => {

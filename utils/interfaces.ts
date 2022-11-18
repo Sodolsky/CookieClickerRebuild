@@ -325,7 +325,7 @@ export const initialSkillTreeNodes: singleSkillTreeNode[] = [
     description:
       "At random, there is a chance for Eternal God to watch your clicking speed for next 15 seconds. For each click you gain a random benefit.",
     explanation:
-      "Benefits are: Higher CPC/CPS multipliers, Random upgrades,Crystals,SkillPoints.",
+      "Benefits are: Higher CPC/CPS MULTIPLIERS, Random upgrades,Crystals,SkillPoints.",
     connectedNodes: ["equalibrum", "trashToTreasure"],
     image: "cross.png",
     positionObject: { right: "20%", bottom: "65%" },

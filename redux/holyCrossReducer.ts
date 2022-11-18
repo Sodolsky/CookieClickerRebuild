@@ -25,11 +25,35 @@ export const holyCrossReducer = createSlice({
     switchHolyCrossState: (state, action: PayloadAction<boolean>) => {
       state.isActive = action.payload;
     },
-    addHolyCrossBonuses: (state, action: PayloadAction<holyCrossBonuses>) => {},
+    setHolyCrossBonusesFromLocalStorage: (
+      state,
+      action: PayloadAction<holyCrossBonuses>
+    ) => {
+      return {
+        ...state,
+        currentBonuses: action.payload,
+      };
+    },
+    addHolyCrossBonuses: (state, action: PayloadAction<holyCrossBonuses>) => {
+      const newBonuses = cloneDeep(state.currentBonuses);
+      Object.entries(action.payload).forEach((entry) => {
+        const key = entry[0];
+        const value = entry[1];
+        newBonuses[key as keyof holyCrossBonuses] += value;
+      });
+      localStorage.setItem("holyCrossBonuses", JSON.stringify(newBonuses));
+      return {
+        ...state,
+        currentBonuses: newBonuses,
+      };
+    },
   },
 });
 
-export const { switchHolyCrossState, addHolyCrossBonuses } =
-  holyCrossReducer.actions;
+export const {
+  switchHolyCrossState,
+  addHolyCrossBonuses,
+  setHolyCrossBonusesFromLocalStorage,
+} = holyCrossReducer.actions;
 
 export default holyCrossReducer.reducer;

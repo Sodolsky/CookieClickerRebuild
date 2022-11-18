@@ -32,9 +32,22 @@ export const useCPSMultiplier = () => {
         (x) => x.name === "crystalBall"
       ) as singleSkillTreeNode
   ).wasBought;
+
   const bonusFromCrystalBall = useSelector(
     (state: RootState) => state.crystalBall.bonus
   );
+  const bonusFromHolyCross =
+    useSelector(
+      (state: RootState) => state.holyCross.currentBonuses.CPSMultiplier
+    ) /
+      100 +
+    1;
+  const isHolyCrossBought = useSelector(
+    (state: RootState) =>
+      state.gameLogic.skillTreeLogic.skillTreeNodes.find(
+        (x) => x.name === "holyCross"
+      ) as singleSkillTreeNode
+  ).wasBought;
   const isEqualibrumBought = useSelector(
     (state: RootState) =>
       state.gameLogic.skillTreeLogic.skillTreeNodes.find(
@@ -52,6 +65,8 @@ export const useCPSMultiplier = () => {
       else multiplier += 3;
     }
     if (isCrystalBallBought) multiplier *= bonusFromCrystalBall;
+    if (isTimeMachineBought) multiplier *= 2;
+    if (isHolyCrossBought) multiplier *= bonusFromHolyCross;
     if (isEqualibrumBought && equalibrumState === "clickExhaustion")
       multiplier *= 3;
     setMultiplierCPS(multiplier);
@@ -64,6 +79,8 @@ export const useCPSMultiplier = () => {
     isCrystalBallBought,
     isEqualibrumBought,
     equalibrumState,
+    isHolyCrossBought,
+    bonusFromHolyCross,
   ]);
   return { multiplierCPS };
 };

@@ -5,6 +5,14 @@
 .ShakeAnimationXL {
   animation: shakeXL 1s;
 }
+.SpinHolyCross {
+  animation: SpinHolyCrossAnimation 15000ms 1;
+}
+@keyframes SpinHolyCrossAnimation {
+  to {
+    transform: rotate(-360deg);
+  }
+}
 @keyframes shake {
   0% {
     transform: translate(1px, 1px) rotate(0deg);
