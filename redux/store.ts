@@ -5,6 +5,7 @@ import crystalBallReducer from "./crystalBallReducer";
 import equalibrumReducer from "./equalibrumReducer";
 import explosionCookiesReducer from "./explosionCookiesReducer";
 import gameLogicReducer from "./gameLogicReducer";
+import holyCrossReducer from "./holyCrossReducer";
 import performanceReducer from "./performanceReducer";
 import trashToTreasureReducer from "./trashToTreasureReducer";
 import userStatsReducer from "./userStatsReducer";
@@ -19,6 +20,7 @@ export const store = configureStore({
     eqalibrum: equalibrumReducer,
     authAndBackend: authAndBackendReducer,
     userStats: userStatsReducer,
+    holyCross: holyCrossReducer,
   },
 });
 export type RootState = ReturnType<typeof store.getState>;

@@ -22,9 +22,7 @@ export const BackendSynchronizationModal = () => {
   return (
     <>
       <label htmlFor="BackendModal">
-        <figure
-          className={`absolute bottom-24 right-20 md:top-24 md:right-40 cursor-pointer`}
-        >
+        <figure className={` cursor-pointer`}>
           <Image src={SynchronizeIcon.src} width={64} height={64} />
         </figure>
       </label>

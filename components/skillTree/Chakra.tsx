@@ -54,10 +54,7 @@ export const Chakra = () => {
     }
   }, [stateOfChakra]);
   return (
-    <figure
-      className="absolute bottom-24 left-2 md:top-24 md:left-4 cursor-pointer h-32 w-32"
-      onClick={turnChakraOn}
-    >
+    <figure className="cursor-pointer h-32 w-32" onClick={turnChakraOn}>
       <CircularProgressbarWithChildren
         value={stateOfChakra === "cooldown" ? timers.waitTime : timers.timer}
         maxValue={stateOfChakra === "cooldown" ? 90 : 30}

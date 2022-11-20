@@ -24,6 +24,13 @@ export interface skillTreeWrapper {
   skillTreeNodes: singleSkillTreeNode[];
   isSkillTreeUnlocked: boolean;
 }
+export interface holyCrossBonuses {
+  CPSMultiplier: number;
+  CPCMultiplier: number;
+  skillPoints: number;
+  crystals: number;
+  upgrades: number;
+}
 export type nodeNames =
   | "starterNode"
   | "clickingTalent"
@@ -48,7 +55,8 @@ export type nodeNames =
   | "perfectAim"
   | "oneUpgrade"
   | "debt"
-  | "eternity";
+  | "eternity"
+  | "holyCross";
 export interface singleSkillTreeNode {
   name: nodeNames;
   isNotable: boolean;
@@ -265,7 +273,7 @@ export const initialSkillTreeNodes: singleSkillTreeNode[] = [
     price: 100,
     wasBought: false,
     description: "Unlocks the ending.",
-    connectedNodes: ["starterNode"],
+    connectedNodes: [],
     image: "eternity.png",
     positionObject: { left: "50%", bottom: "90%" },
   },
@@ -307,6 +315,20 @@ export const initialSkillTreeNodes: singleSkillTreeNode[] = [
     connectedNodes: ["clickingWithLove", "heartOfTheEternal"],
     image: "yin-yang.png",
     positionObject: { right: "12.5%", bottom: "50%" },
+  },
+  {
+    name: "holyCross",
+    isNotable: false,
+    nameForPlayer: "Holy Cross",
+    price: 40,
+    wasBought: false,
+    description:
+      "At random, there is a chance for Eternal God to watch your clicking speed for next 15 seconds. For each click you gain a random benefit.",
+    explanation:
+      "Benefits are: Higher CPC/CPS MULTIPLIERS, Random upgrades,Crystals,SkillPoints.",
+    connectedNodes: ["equalibrum", "trashToTreasure"],
+    image: "cross.png",
+    positionObject: { right: "20%", bottom: "65%" },
   },
   {
     name: "crystalBall",

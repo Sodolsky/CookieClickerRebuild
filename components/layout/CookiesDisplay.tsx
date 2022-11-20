@@ -28,7 +28,6 @@ export const CookiesDisplay: React.FC<CookiesDisplayProps> = ({ CPS, CPC }) => {
     (state: RootState) => state.gameLogic.cookiesLogic.cookieCount
   );
   const timerRef = useRef<null | NodeJS.Timer>(null);
-
   function hideExplosionsCookies() {
     if (explosionDivRef.current) {
       explosionDivRef.current.style.display = "none";

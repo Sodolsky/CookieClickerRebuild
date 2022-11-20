@@ -44,6 +44,7 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
   const shopItems = useSelector(
     (state: RootState) => state.gameLogic.shopItems
   );
+  //!To be added code for contributions from one of the upgrades
   // const contributions = {
   //   CPSContribution: CookiesPerSecondBonus * numberOfUpgrades,
   //   CPCContribution: CookiesPerClickBonus * numberOfUpgrades,
@@ -117,8 +118,18 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
   const upgradeCPS = () => {
     if (currentCookies >= realPrice) {
       dispatch(removeCookies(price));
-      dispatch(changeCPS({ type: "increase", amount: CookiesPerSecondBonus }));
-      dispatch(changeCPC({ type: "increase", amount: CookiesPerClickBonus }));
+      dispatch(
+        changeCPS({
+          type: "increase",
+          amount: CookiesPerSecondBonus * multiplier,
+        })
+      );
+      dispatch(
+        changeCPC({
+          type: "increase",
+          amount: CookiesPerClickBonus * multiplier,
+        })
+      );
       dispatch(buyUpgrade({ name: upgradeName, number: 1 }));
       isCrystalBallBought && dispatch(addNewUpgrade());
     } else {

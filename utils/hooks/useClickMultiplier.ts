@@ -49,6 +49,18 @@ export const useClickMultiplier = () => {
   const equalibrumState = useSelector(
     (state: RootState) => state.eqalibrum.state
   );
+  const bonusFromHolyCross =
+    useSelector(
+      (state: RootState) => state.holyCross.currentBonuses.CPCMultiplier
+    ) /
+      100 +
+    1;
+  const isHolyCrossBought = useSelector(
+    (state: RootState) =>
+      state.gameLogic.skillTreeLogic.skillTreeNodes.find(
+        (x) => x.name === "holyCross"
+      ) as singleSkillTreeNode
+  ).wasBought;
   useEffect(() => {
     let multiplier: number = 1;
     if (isClickDoubled) multiplier += 1;
@@ -59,6 +71,7 @@ export const useClickMultiplier = () => {
     }
     if (isCrystalBallBought) multiplier *= bonusFromCrystalBall;
     if (isClickingWithLoveBought) multiplier *= 2;
+    if (isHolyCrossBought) multiplier *= bonusFromHolyCross;
     if (isEqualibrumBought && equalibrumState === "idleExhaustion")
       multiplier *= 3;
     setMultiplier(multiplier);
@@ -72,6 +85,8 @@ export const useClickMultiplier = () => {
     isCrystalBallBought,
     isEqualibrumBought,
     equalibrumState,
+    isHolyCrossBought,
+    bonusFromHolyCross,
   ]);
   return { isClickDoubled, multiplier };
 };
