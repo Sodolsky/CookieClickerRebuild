@@ -94,7 +94,7 @@ export const initialSkillTreeNodes: singleSkillTreeNode[] = [
     wasBought: false,
     description: "Doubles your multiplier for cookies per second.",
     explanation:
-      "This upgrade doubles your MULTIPLIER so if you bought idle player and nothing else it doubles it so your CPS multiplier is 8",
+      "This upgrade doubles your MULTIPLIER so if you bought idle player and nothing else it doubles it so your CPS multiplier is 8.",
     connectedNodes: ["clickingTalent"],
     image: "stopwatch.png",
     positionObject: { left: "50%", bottom: "30%" },
@@ -122,7 +122,7 @@ export const initialSkillTreeNodes: singleSkillTreeNode[] = [
     image: "conversion-rate.png",
     positionObject: { left: "37.5%", bottom: "25%" },
     explanation:
-      "Formula for the amount of cookies you get is [Crystals Gained / 2 * CPC]",
+      "Formula for the amount of cookies you get is [Crystals Gained / 2 * CPC].",
   },
 
   //?Left side of the tree
@@ -144,7 +144,7 @@ export const initialSkillTreeNodes: singleSkillTreeNode[] = [
     price: 16,
     wasBought: false,
     description:
-      "Adds 2 new upgrades and doubles the number of skill points you get from game resets",
+      "Adds 2 new upgrades and doubles the number of skill points you get from game resets.",
     connectedNodes: ["crystalMine"],
     image: "physics.png",
     positionObject: { left: "6%", bottom: "16%" },
@@ -217,7 +217,7 @@ export const initialSkillTreeNodes: singleSkillTreeNode[] = [
     price: 20,
     wasBought: false,
     description:
-      "Every explosion you generate adds 2 random upgrades to a upgrade that you have bought",
+      "Every explosion you generate adds 2 random upgrades to a upgrade that you have bought.",
     connectedNodes: ["carpetBombing", "nuclearBomb"],
     image: "peace.png",
     positionObject: { left: "25%", bottom: "50%" },
@@ -252,7 +252,7 @@ export const initialSkillTreeNodes: singleSkillTreeNode[] = [
     nameForPlayer: "One Upgrade",
     price: 40,
     wasBought: false,
-    description: "Your Explosions add 4 of your current best upgrade",
+    description: "Your Explosions add 4 of your current best upgrade.",
     connectedNodes: ["trashToTreasure", "peaceAroundTheWorld"],
     image: "ring.png",
     explanation: '"To Rule Them All..."',
@@ -302,7 +302,7 @@ export const initialSkillTreeNodes: singleSkillTreeNode[] = [
     price: 20,
     wasBought: false,
     description:
-      "Everytime you click or gain CPS you gain stacks of each type. When you reach 100 stacks of certain type the other method of gaining cookies multiplier becomes tripled. Until stacks reach zero",
+      "Everytime you click or gain CPS you gain stacks of each type. When you reach 100 stacks of certain type the other method of gaining cookies multiplier becomes tripled. Until stacks reach zero.",
     explanation: "Lightning Click cannot be bought.",
     connectedNodes: ["clickingWithLove", "heartOfTheEternal"],
     image: "yin-yang.png",
