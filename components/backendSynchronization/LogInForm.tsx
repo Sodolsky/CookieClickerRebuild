@@ -40,7 +40,7 @@ export const LogInForm: React.FC<LogInFormProps> = ({ setAuth }) => {
     const isPasswordValid = formData.password.length > 0;
 
     if (!isPasswordValid) {
-      toast.error("Fill out your password field!");
+      toast.error("Provide us with your password field!");
       return setFormDataValidityOutline((prev) => ({
         ...prev,
         password: true,
