@@ -36,15 +36,10 @@ import { CookiesDisplay } from "./layout/CookiesDisplay";
 import { Header } from "./layout/Header";
 import { AiOutlineMenu } from "react-icons/ai";
 import useMediaQuery from "../utils/hooks/useMediaQuery";
-import { Store } from "./clickerElements/store/Store";
-import { EternalTalk } from "./skillTree/EternalTalk";
-import { SkillTreeModal } from "./skillTree/SkillTreeModal";
 import { useClickMultiplier } from "../utils/hooks/useClickMultiplier";
 import { CrystalsDisplay } from "./clickerElements/crystals/CrystalsDisplay";
 import { CrystalsModal } from "./clickerElements/crystals/CrystalsModal";
 import { useCPSMultiplier } from "../utils/hooks/useCPSMultiplier";
-import { Chakra } from "./skillTree/Chakra";
-import { ResetModal } from "./skillTree/ResetModal";
 import { addExplosionCookiesCount } from "../redux/explosionCookiesReducer";
 import { clearAllCrystalBallStates } from "../redux/crystalBallReducer";
 import {
@@ -52,7 +47,6 @@ import {
   performanceReducerInterface,
   setInitialPerformanceOptions,
 } from "../redux/performanceReducer";
-import { PerformanceModal } from "./performance/PerformanceModal";
 import { MobileCookieCountWrapper } from "./clickerElements/MobileCookieCountWrapper";
 import {
   changeBestUpgrade,
@@ -64,13 +58,11 @@ import {
   clearEqualibrumState,
 } from "../redux/equalibrumReducer";
 import useEqualibrumTimer from "../utils/hooks/useEqualibrumTImer";
-import { EqualibrumStacksDisplay } from "./skillTree/EqualibrumStacksDisplay";
 import {
   generateRandomNumber,
   getBoughtUpgrades,
   setStatsStateWrapper,
 } from "../utils/utils";
-import { BackendSynchronizationModal } from "./backendSynchronization/BackendSynchronizationModal";
 import { useAuthStatus } from "../utils/hooks/useAuthStatus";
 import { getDoc, doc } from "firebase/firestore";
 import { db } from "../firebase";
@@ -168,7 +160,7 @@ export const MainPage = () => {
         (x) => x.name === "holyCross"
       ) as singleSkillTreeNode
   ).wasBought;
-  const isHolyCrossReady = useRef<boolean>(true);
+  const isHolyCrossReady = useRef<boolean>(false);
   const equalibrumState = useSelector(
     (state: RootState) => state.eqalibrum.state
   );
@@ -223,9 +215,6 @@ export const MainPage = () => {
           initialStateOfShopItems;
         const localStorageSkillTreeUnlocked =
           localStorage.getItem("skillTreeUnlocked") === "true" ? true : false;
-        const userStats =
-          (JSON.parse(localStorage.getItem("userStats")!) as userStats) ??
-          initialStateOfUserStats;
         Object.values(localStorageUpgrades).forEach((item) => {
           const obj = item;
           dispatch(
@@ -245,7 +234,6 @@ export const MainPage = () => {
             (acc += a.numberOfUpgrades * a.CookiesPerClickBonus),
           1
         );
-        dispatch(setStatsState(userStats));
         dispatch(setInitialSkillTree(localStorageSkillTreeUnlocked));
         dispatch(setInitialShopitems(localStorageShopItems));
         dispatch(setInitialCookieCount(localStorageCookieCount));
@@ -280,6 +268,10 @@ export const MainPage = () => {
       dispatch(
         setHolyCrossBonusesFromLocalStorage(localStorageHolyCrossBonuses)
       );
+      const userStats =
+        (JSON.parse(localStorage.getItem("userStats")!) as userStats) ??
+        initialStateOfUserStats;
+      dispatch(setStatsState(userStats));
     }
   }, [authStatus]);
   useEffect(() => {

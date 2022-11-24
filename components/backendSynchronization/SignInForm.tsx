@@ -6,7 +6,7 @@ import Image from "next/image";
 import BackArrowImage from "../../public/back.png";
 import Nprogress from "nprogress";
 import { doc, setDoc } from "firebase/firestore";
-import { firebaseObjectInterface } from "../../utils/interfaces";
+import { firebaseObjectInterface, utilityObject } from "../../utils/interfaces";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { useConvertDataToFirebaseObject } from "../../utils/hooks/useConvertDataToFirebaseObject";
@@ -36,6 +36,11 @@ export const saveUserDocumentInDatabase = async (
   const ref = doc(db, "Users", email);
   await setDoc(ref, firebaseObj, { merge: true });
 };
+//Todo Add saving user utilities in database
+export const saveUserUtilsInDatabase = async (
+  email: string,
+  utilityObject: utilityObject
+) => {};
 export const SignInForm: React.FC<SignInFormInterface> = ({
   setShowSignIn,
 }) => {

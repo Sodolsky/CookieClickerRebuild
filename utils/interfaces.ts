@@ -31,6 +31,9 @@ export interface holyCrossBonuses {
   crystals: number;
   upgrades: number;
 }
+export interface utilityObject {
+  userStats: userStats;
+}
 export type nodeNames =
   | "starterNode"
   | "clickingTalent"
@@ -56,7 +59,8 @@ export type nodeNames =
   | "oneUpgrade"
   | "debt"
   | "eternity"
-  | "holyCross";
+  | "holyCross"
+  | "totalWar";
 export interface singleSkillTreeNode {
   name: nodeNames;
   isNotable: boolean;
@@ -180,6 +184,18 @@ export const initialSkillTreeNodes: singleSkillTreeNode[] = [
     positionObject: { left: "6%", bottom: "50%" },
   },
   {
+    name: "totalWar",
+    isNotable: false,
+    nameForPlayer: "Total War",
+    price: 40,
+    wasBought: false,
+    description:
+      "Every explosion that you create, makes next explosions 5% stronger.",
+    connectedNodes: ["carpetBombing", "nuclearBomb"],
+    image: "totalWar.png",
+    positionObject: { left: "25%", bottom: "50%" },
+  },
+  {
     name: "cookieExplosion",
     isNotable: false,
     nameForPlayer: "Cookie Explosion",
@@ -226,9 +242,9 @@ export const initialSkillTreeNodes: singleSkillTreeNode[] = [
     wasBought: false,
     description:
       "Every explosion you generate adds 2 random upgrades to a upgrade that you have bought.",
-    connectedNodes: ["carpetBombing", "nuclearBomb"],
+    connectedNodes: ["evenMoreQuestions", "totalWar"],
     image: "peace.png",
-    positionObject: { left: "25%", bottom: "50%" },
+    positionObject: { left: "12%", bottom: "65%" },
   },
   {
     name: "debt",
@@ -261,7 +277,7 @@ export const initialSkillTreeNodes: singleSkillTreeNode[] = [
     price: 40,
     wasBought: false,
     description: "Your Explosions add 4 of your current best upgrade.",
-    connectedNodes: ["trashToTreasure", "peaceAroundTheWorld"],
+    connectedNodes: ["trashToTreasure", "totalWar"],
     image: "ring.png",
     explanation: '"To Rule Them All..."',
     positionObject: { left: "45%", bottom: "65%" },

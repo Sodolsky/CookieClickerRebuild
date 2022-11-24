@@ -2,10 +2,12 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface explosionCookiesReducerInterface {
   cookies: number;
+  numberOfGeneratedExplosions: number;
 }
 
 const initialState: explosionCookiesReducerInterface = {
   cookies: 0,
+  numberOfGeneratedExplosions: 0,
 };
 
 export const explosionCookiesReducer = createSlice({

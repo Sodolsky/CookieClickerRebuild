@@ -12,14 +12,15 @@ import {
   initialStateOfShopItems,
   initialUpgradesState,
 } from "../interfaces";
+//Todo Change this to normal values
 export const baseGameLogicObject: firebaseObjectInterface = {
   upgrades: initialUpgradesState,
   cookieCount: 0,
   crystalItems: initialStateOfCrystalShopItems,
   crystals: 0,
-  skillPoints: 0,
+  skillPoints: 100213123,
   skillTreeNodes: initialSkillTreeNodes,
-  skillTreeUnlocked: false,
+  skillTreeUnlocked: true,
   shopItems: initialStateOfShopItems,
 };
 type keysOfFirebaseObject = keyof firebaseObjectInterface;

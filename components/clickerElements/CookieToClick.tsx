@@ -130,6 +130,12 @@ export const CookieToClick: React.FC<CookieToClickProps> = ({
         (x) => x.name === "perfectAim"
       ) as singleSkillTreeNode
   ).wasBought;
+  const isTotalWarBought = useSelector(
+    (state: RootState) =>
+      state.gameLogic.skillTreeLogic.skillTreeNodes.find(
+        (x) => x.name === "totalWar"
+      ) as singleSkillTreeNode
+  ).wasBought;
   const isOneUpgradeBought = useSelector(
     (state: RootState) =>
       state.gameLogic.skillTreeLogic.skillTreeNodes.find(
@@ -248,12 +254,16 @@ export const CookieToClick: React.FC<CookieToClickProps> = ({
     //?Here we handle logic when explosion happens
     if (didExplosionHappen) {
       const timeBombMultiplier = isTimeBombBought ? multiplierCPS : 1;
+      const totalWarMultiplier = isTotalWarBought
+        ? userStatsState.totalNumberOfExplosions * 0.05 + 1
+        : 1;
       const cookiesGainedFromExplosion =
         (nuclearBombBought ? 60 : 20) *
         CPC *
         multiplier *
         timeBombMultiplier *
-        ((100 - generateRandomNumber(0, 30)) / 100);
+        ((100 - generateRandomNumber(0, 30)) / 100) *
+        totalWarMultiplier;
       setStatsStateWrapper(
         "cookiesGainedFromExplosion",
         cookiesGainedFromExplosion
