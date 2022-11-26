@@ -29,6 +29,7 @@ import {
   firebaseObjectInterface,
   userStats,
   holyCrossBonuses,
+  utilityObject,
 } from "../utils/interfaces";
 import { CookieToClick } from "./clickerElements/CookieToClick";
 import { Upgrade } from "./clickerElements/Upgrade";
@@ -68,6 +69,7 @@ import { getDoc, doc } from "firebase/firestore";
 import { db } from "../firebase";
 import {
   baseGameLogicObject,
+  baseUtilityObject,
   useConvertDataToFirebaseObject,
 } from "../utils/hooks/useConvertDataToFirebaseObject";
 import {
@@ -234,6 +236,23 @@ export const MainPage = () => {
             (acc += a.numberOfUpgrades * a.CookiesPerClickBonus),
           1
         );
+        const localStoragePerformanceOptions =
+          (JSON.parse(
+            localStorage.getItem("performance")!
+          ) as performanceReducerInterface) ?? initialPerformanceReducerState;
+        const localStorageHolyCrossBonuses =
+          (JSON.parse(
+            localStorage.getItem("holyCrossBonuses")!
+          ) as holyCrossBonuses) ?? initialHolyCrossBonuses;
+
+        const userStats =
+          (JSON.parse(localStorage.getItem("userStats")!) as userStats) ??
+          initialStateOfUserStats;
+        dispatch(setInitialPerformanceOptions(localStoragePerformanceOptions));
+        dispatch(
+          setHolyCrossBonusesFromLocalStorage(localStorageHolyCrossBonuses)
+        );
+        dispatch(setStatsState(userStats));
         dispatch(setInitialSkillTree(localStorageSkillTreeUnlocked));
         dispatch(setInitialShopitems(localStorageShopItems));
         dispatch(setInitialCookieCount(localStorageCookieCount));
@@ -249,29 +268,25 @@ export const MainPage = () => {
               doc(db, "Users", auth.currentUser?.email as string)
             ).then((doc) => doc.data() as firebaseObjectInterface)) ??
             baseGameLogicObject;
+          const firebaseUserUtils: utilityObject =
+            (await getDoc(
+              doc(db, "UsersUtils", auth.currentUser?.email as string)
+            ).then((doc) => doc.data() as utilityObject)) ?? baseUtilityObject;
+          dispatch(setInitialPerformanceOptions(firebaseUserUtils.performance));
+          dispatch(
+            setHolyCrossBonusesFromLocalStorage(
+              firebaseUserUtils.holyCrossBonuses
+            )
+          );
+          dispatch(setStatsState(firebaseUserUtils.userStats));
           dispatch(setReducerDataFromFirebaseObject(firebaseData));
+
           dispatch(setAuthStatus(true));
           dispatch(setUserEmail(auth.currentUser?.email as string));
           dispatch(stateWereLoaded(true));
         };
         getFirebaseData();
       }
-      const localStoragePerformanceOptions =
-        (JSON.parse(
-          localStorage.getItem("performance")!
-        ) as performanceReducerInterface) ?? initialPerformanceReducerState;
-      dispatch(setInitialPerformanceOptions(localStoragePerformanceOptions));
-      const localStorageHolyCrossBonuses =
-        (JSON.parse(
-          localStorage.getItem("holyCrossBonuses")!
-        ) as holyCrossBonuses) ?? initialHolyCrossBonuses;
-      dispatch(
-        setHolyCrossBonusesFromLocalStorage(localStorageHolyCrossBonuses)
-      );
-      const userStats =
-        (JSON.parse(localStorage.getItem("userStats")!) as userStats) ??
-        initialStateOfUserStats;
-      dispatch(setStatsState(userStats));
     }
   }, [authStatus]);
   useEffect(() => {

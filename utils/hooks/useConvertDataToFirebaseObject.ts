@@ -3,14 +3,18 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { saveUserDocumentInDatabase } from "../../components/backendSynchronization/SignInForm";
 import { setFirebaseObjectReducer } from "../../redux/authAndBackendReducer";
+import { initialHolyCrossBonuses } from "../../redux/holyCrossReducer";
+import { initialPerformanceReducerState } from "../../redux/performanceReducer";
 import { RootState } from "../../redux/store";
+import { initialStateOfUserStats } from "../../redux/userStatsReducer";
 import {
-  firebaseObjectAndUserEmail,
+  firebaseAndUtilityObjectWithEmail,
   firebaseObjectInterface,
   initialSkillTreeNodes,
   initialStateOfCrystalShopItems,
   initialStateOfShopItems,
   initialUpgradesState,
+  utilityObject,
 } from "../interfaces";
 //Todo Change this to normal values
 export const baseGameLogicObject: firebaseObjectInterface = {
@@ -23,6 +27,11 @@ export const baseGameLogicObject: firebaseObjectInterface = {
   skillTreeUnlocked: true,
   shopItems: initialStateOfShopItems,
 };
+export const baseUtilityObject: utilityObject = {
+  holyCrossBonuses: initialHolyCrossBonuses,
+  performance: initialPerformanceReducerState,
+  userStats: initialStateOfUserStats,
+};
 type keysOfFirebaseObject = keyof firebaseObjectInterface;
 export const useConvertDataToFirebaseObject = () => {
   const [firebaseObject, setFirebaseObject] =
@@ -32,11 +41,22 @@ export const useConvertDataToFirebaseObject = () => {
   const dispatch = useDispatch();
   const gameLogicReducer = useSelector((state: RootState) => state.gameLogic);
   const backendStatus = useSelector((state: RootState) => state.authAndBackend);
+  const userStats = useSelector((state: RootState) => state.userStats);
+  const holyCrossBonuses = useSelector(
+    (state: RootState) => state.holyCross.currentBonuses
+  );
+  const performance = useSelector((state: RootState) => state.performance);
+  const utilityObject: utilityObject = {
+    userStats: userStats,
+    holyCrossBonuses: holyCrossBonuses,
+    performance: performance,
+  };
   const handleSavingUserWhenWebPageCloses = () => {
     if (document.visibilityState === "hidden") {
-      const reqObject: firebaseObjectAndUserEmail = {
+      const reqObject: firebaseAndUtilityObjectWithEmail = {
         email: backendStatus.userEmail as string,
         firebaseObject: firebaseObject,
+        utilityObject: utilityObject,
       };
       const saveUser = async () => {
         try {

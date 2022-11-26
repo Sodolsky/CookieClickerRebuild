@@ -37,10 +37,13 @@ export const saveUserDocumentInDatabase = async (
   await setDoc(ref, firebaseObj, { merge: true });
 };
 //Todo Add saving user utilities in database
-// export const saveUserUtilsInDatabase = async (
-//   email: string,
-//   utilityObject: utilityObject
-// ) => {};
+export const saveUserUtilsInDatabase = async (
+  email: string,
+  utilityObject: utilityObject
+) => {
+  const ref = doc(db, "UsersUtils", email);
+  await setDoc(ref, utilityObject, { merge: true });
+};
 export const SignInForm: React.FC<SignInFormInterface> = ({
   setShowSignIn,
 }) => {
