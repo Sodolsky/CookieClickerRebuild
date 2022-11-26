@@ -1,4 +1,5 @@
 import { CSSProperties } from "react";
+import { performanceReducerInterface } from "../redux/performanceReducer";
 export interface firebaseObjectInterface {
   upgrades: UpgradesInterface;
   shopItems: ShopItems;
@@ -15,9 +16,10 @@ export interface userStats {
   totalNumberOfExplosions: number;
   cookiesGainedFromExplosion: number;
 }
-export interface firebaseObjectAndUserEmail {
+export interface firebaseAndUtilityObjectWithEmail {
   email: string;
   firebaseObject: firebaseObjectInterface;
+  utilityObject: utilityObject;
 }
 export interface skillTreeWrapper {
   skillPoints: number;
@@ -33,7 +35,10 @@ export interface holyCrossBonuses {
 }
 export interface utilityObject {
   userStats: userStats;
+  performance: performanceReducerInterface;
+  holyCrossBonuses: holyCrossBonuses;
 }
+
 export type nodeNames =
   | "starterNode"
   | "clickingTalent"
