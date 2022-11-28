@@ -9,7 +9,7 @@ import {
 } from "../../redux/gameLogicReducer";
 import Image from "next/image";
 import CookieImage from "../../public/cookie.png";
-import CrossImage from "../../public/Cross.png";
+import CrossImage from "../../public/cross.png";
 import { RootState } from "../../redux/store";
 import { useClickMultiplier } from "../../utils/hooks/useClickMultiplier";
 import {
