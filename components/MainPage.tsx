@@ -87,6 +87,7 @@ import {
   setHolyCrossBonusesFromLocalStorage,
   switchHolyCrossState,
 } from "../redux/holyCrossReducer";
+import { Loader } from "./layout/Loader";
 export const MainPage = () => {
   const resetGameLogic = (skillPointsCount: number) => {
     intervalRef.current && clearInterval(intervalRef.current);
@@ -415,7 +416,12 @@ export const MainPage = () => {
       }
     }
   }, [upgrades, isTrashToTreasureBought, CPS]);
-  return (
+  return !statesWereLoaded ? (
+    <div className="h-screen w-screen flex items-center justify-center flex-col gap-2">
+      <Loader />
+      <span>Loading...</span>
+    </div>
+  ) : (
     <>
       <>
         <audio src="bgmusic.mp3" ref={bgMusicRef}></audio>
@@ -467,7 +473,6 @@ export const MainPage = () => {
         <aside className="absolute md:top-4 md:bottom-0 bottom-2 right-2">
           <div className="flex justify-center items-center gap-1">
             <CrystalsModal />
-            <CrystalsDisplay />
           </div>
         </aside>
 
@@ -533,6 +538,7 @@ export const MainPage = () => {
             resetGameLogic={() => resetGameLogic(10)}
             isQPBought={isQPBought}
             upgrades={upgrades}
+            isMobile={isMobile}
           />
         </main>
       </>
