@@ -6,6 +6,7 @@ import {
   UpgradesInterface,
 } from "../utils/interfaces";
 import { BackendSynchronizationModal } from "./backendSynchronization/BackendSynchronizationModal";
+import { CrystalsDisplay } from "./clickerElements/crystals/CrystalsDisplay";
 import { Store } from "./clickerElements/store/Store";
 import { PerformanceModal } from "./performance/PerformanceModal";
 import { Chakra } from "./skillTree/Chakra";
@@ -19,6 +20,7 @@ interface MenuProps {
   isQPBought: boolean;
   upgrades: UpgradesInterface;
   resetGameLogic: (skillPoints: number) => void;
+  isMobile: boolean | null;
 }
 export const Menu: React.FC<MenuProps> = ({
   isEqualibrumBought,
@@ -26,6 +28,7 @@ export const Menu: React.FC<MenuProps> = ({
   resetGameLogic,
   isQPBought,
   upgrades,
+  isMobile,
 }) => {
   const isChakraBought = useSelector(
     (state: RootState) =>
@@ -36,8 +39,15 @@ export const Menu: React.FC<MenuProps> = ({
   const shopItems = useSelector(
     (state: RootState) => state.gameLogic.shopItems
   );
+  console.error("FIX MENU ON MEDIUM SCREEN SIZE DEVICES");
   return (
-    <footer className="abosule bottom-0  h-auto flex items-center justify-center gap-8 overflow-x-auto border-t-2 pt-2 border-black">
+    <footer
+      className={`absolute ${
+        isMobile
+          ? "bottom-0 h-auto border-t-2 pt-2 overflow-x-auto"
+          : "flex-col w-auto right-0 top-0 border-l-2 border-b-2 p-2 overflow-y-auto"
+      } flex items-center justify-center gap-8 flex-wrap border-black `}
+    >
       <PerformanceModal />
       <BackendSynchronizationModal />
       <Store />
@@ -67,6 +77,7 @@ export const Menu: React.FC<MenuProps> = ({
       ) : (
         isSkillTreeUnlocked && <SkillTreeModal />
       )}
+      <CrystalsDisplay />
     </footer>
   );
 };

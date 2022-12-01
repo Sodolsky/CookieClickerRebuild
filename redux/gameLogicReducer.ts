@@ -149,7 +149,7 @@ export const gameMechanicSlice = createSlice({
         ...state.upgrades,
         [name]: { ...oldUpgrade, numberOfUpgrades: newNumberOfUpgrades },
       };
-      state = { ...state, upgrades: savedUpgrades };
+      state.upgrades = savedUpgrades;
       localStorage.setItem("upgrades", JSON.stringify(savedUpgrades));
     },
     //!Here are reducers for the Shop

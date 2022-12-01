@@ -192,7 +192,7 @@ export const initialSkillTreeNodes: singleSkillTreeNode[] = [
     name: "totalWar",
     isNotable: false,
     nameForPlayer: "Total War",
-    price: 40,
+    price: 20,
     wasBought: false,
     description:
       "Every explosion that you create, makes next explosions 5% stronger.",
@@ -243,7 +243,7 @@ export const initialSkillTreeNodes: singleSkillTreeNode[] = [
     name: "peaceAroundTheWorld",
     isNotable: false,
     nameForPlayer: "Peace Around The World",
-    price: 20,
+    price: 40,
     wasBought: false,
     description:
       "Every explosion you generate adds 2 random upgrades to a upgrade that you have bought.",

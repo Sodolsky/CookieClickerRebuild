@@ -13,7 +13,7 @@ export const SkillTreeModal = () => {
   return (
     <>
       <label htmlFor="skillTreeModal">
-        <figure className="absolute bottom-2 left-2 md:top-4 md:left-4 cursor-pointer">
+        <figure className="cursor-pointer">
           <Image
             className="absolute t-2 l-2"
             src={"/skillTree.png"}
