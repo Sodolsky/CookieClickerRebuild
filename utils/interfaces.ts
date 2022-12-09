@@ -319,7 +319,7 @@ export const initialSkillTreeNodes: singleSkillTreeNode[] = [
     wasBought: false,
     description: "Doubles your multiplier for CPC.",
     explanation:
-      "This upgrade doubles your MULTIPLIER so if you bought Clicking Talent and nothing else it doubles it so your CPC multiplier is 6",
+      "This upgrade doubles your MULTIPLIER so if you bought Clicking Talent and nothing else it doubles it so your CPC multiplier is 6.",
     connectedNodes: ["idlePlayer"],
     image: "heart.png",
     positionObject: { right: "25%", bottom: "30%" },
