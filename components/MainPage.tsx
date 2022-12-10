@@ -172,8 +172,8 @@ export const MainPage = () => {
     isEqualibrumBought: isEqualibrumBought,
   });
   useEffect(() => {
-    const min = 20;
-    const max = 90;
+    const min = 15;
+    const max = 60;
     const holyCrossDuration = 15000;
     const randTime = generateRandomNumber(min, max);
 
