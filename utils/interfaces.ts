@@ -65,7 +65,8 @@ export type nodeNames =
   | "debt"
   | "eternity"
   | "holyCross"
-  | "totalWar";
+  | "totalWar"
+  | "wheelOfFortune";
 export interface singleSkillTreeNode {
   name: nodeNames;
   isNotable: boolean;
@@ -250,6 +251,18 @@ export const initialSkillTreeNodes: singleSkillTreeNode[] = [
     connectedNodes: ["evenMoreQuestions", "totalWar"],
     image: "peace.png",
     positionObject: { left: "12%", bottom: "65%" },
+  },
+  {
+    name: "wheelOfFortune",
+    isNotable: false,
+    nameForPlayer: "Wheel Of Fortune",
+    price: 75,
+    wasBought: false,
+    description:
+      "Every time you reset a game you will roll a new bonus for next one.",
+    connectedNodes: ["peaceAroundTheWorld", "perfectAim"],
+    image: "wheelOfFortune.png",
+    positionObject: { left: "30%", bottom: "80%" },
   },
   {
     name: "debt",

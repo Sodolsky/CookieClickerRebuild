@@ -39,7 +39,9 @@ export const Menu: React.FC<MenuProps> = ({
   const shopItems = useSelector(
     (state: RootState) => state.gameLogic.shopItems
   );
-  console.error("FIX MENU ON MEDIUM SCREEN SIZE DEVICES");
+  console.error(
+    "FIX MENU ON MEDIUM SCREEN SIZE DEVICES AND OVERFLOWING IN SKILL TREE"
+  );
   return (
     <footer
       className={`absolute ${
