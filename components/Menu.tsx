@@ -70,7 +70,7 @@ export const Menu: React.FC<MenuProps> = ({
           }
         })
         .reduce((acc, a) => {
-          if (acc && a.numberOfUpgrades >= 10) return acc;
+          if (acc && a.numberOfUpgrades >= 0) return acc;
           return (acc = false);
         }, true) && <ResetModal resetGameLogic={resetGameLogic} />}
       {shopItems.find((x) => x.name === "unlockSkillTree")?.wasBought &&

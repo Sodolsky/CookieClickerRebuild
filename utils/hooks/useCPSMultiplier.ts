@@ -57,6 +57,9 @@ export const useCPSMultiplier = () => {
   const equalibrumState = useSelector(
     (state: RootState) => state.eqalibrum.state
   );
+  const wheelOfFortuneBonus =
+    useSelector((state: RootState) => state.wheelOfFortune.currentBonus) ===
+    "CPS";
   useEffect(() => {
     let multiplier: number = 1;
     if (isIdlePlayerBought) multiplier += 4;
@@ -66,6 +69,7 @@ export const useCPSMultiplier = () => {
     }
     if (isCrystalBallBought) multiplier *= bonusFromCrystalBall;
     if (isTimeMachineBought) multiplier *= 2;
+    if (wheelOfFortuneBonus) multiplier *= 3;
     if (isHolyCrossBought) multiplier *= bonusFromHolyCross;
     if (isEqualibrumBought && equalibrumState === "clickExhaustion")
       multiplier *= 3;
@@ -81,6 +85,7 @@ export const useCPSMultiplier = () => {
     equalibrumState,
     isHolyCrossBought,
     bonusFromHolyCross,
+    wheelOfFortuneBonus,
   ]);
   return { multiplierCPS };
 };

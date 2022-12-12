@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface explosionCookiesReducerInterface {
+interface chakraReducerInterface {
   isActive: boolean;
 }
 
-const initialState: explosionCookiesReducerInterface = {
+const initialState: chakraReducerInterface = {
   isActive: false,
 };
 

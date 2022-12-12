@@ -46,6 +46,9 @@ export const useClickMultiplier = () => {
         (x) => x.name === "equalibrum"
       ) as singleSkillTreeNode
   ).wasBought;
+  const wheelOfFortuneBonus =
+    useSelector((state: RootState) => state.wheelOfFortune.currentBonus) ===
+    "CPC";
   const equalibrumState = useSelector(
     (state: RootState) => state.eqalibrum.state
   );
@@ -71,6 +74,7 @@ export const useClickMultiplier = () => {
     }
     if (isCrystalBallBought) multiplier *= bonusFromCrystalBall;
     if (isClickingWithLoveBought) multiplier *= 2;
+    if (wheelOfFortuneBonus) multiplier *= 3;
     if (isHolyCrossBought) multiplier *= bonusFromHolyCross;
     if (isEqualibrumBought && equalibrumState === "idleExhaustion")
       multiplier *= 3;
@@ -87,6 +91,7 @@ export const useClickMultiplier = () => {
     equalibrumState,
     isHolyCrossBought,
     bonusFromHolyCross,
+    wheelOfFortuneBonus,
   ]);
   return { isClickDoubled, multiplier };
 };

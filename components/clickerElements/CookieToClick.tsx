@@ -142,6 +142,12 @@ export const CookieToClick: React.FC<CookieToClickProps> = ({
         (x) => x.name === "oneUpgrade"
       ) as singleSkillTreeNode
   ).wasBought;
+  const wheelOfFortuneBonusExplosions =
+    useSelector((state: RootState) => state.wheelOfFortune.currentBonus) ===
+    "moreFrequentExplosions";
+  const wheelOfFortuneBonusCrystals =
+    useSelector((state: RootState) => state.wheelOfFortune.currentBonus) ===
+    "moreCrystals";
   const userStatsState = useSelector((state: RootState) => state.userStats);
   const addRandomUpgrade = (upgrade: UpgradeInterface) => {
     dispatch(
@@ -216,7 +222,9 @@ export const CookieToClick: React.FC<CookieToClickProps> = ({
       //?Every click there are 30 particles created there is a chance that one of these particle will be crystal particle here we handle this chance
       let generateShard =
         generateRandomNumber(0, 10000) >
-        (!isPickaxeBought ? 9700 : 9600) - 200 * crystalMineMultiplier;
+        (!isPickaxeBought ? 9700 : 9600) -
+          200 * crystalMineMultiplier -
+          (wheelOfFortuneBonusCrystals ? 500 : 0);
       let secondChance: boolean = false;
       //?If perfect aim skill tree node has been bought we roll th crystal one morem time.
       if (isPerfectAimBought && !generateShard) {
@@ -230,7 +238,9 @@ export const CookieToClick: React.FC<CookieToClickProps> = ({
         //?We need to check if explosion node was bought
         if (cookiesExplosionBought) {
           if (
-            generateRandomNumber(0, 100) > (wasCarpetBombingBought ? 97 : 99)
+            generateRandomNumber(0, 100) >
+            (wasCarpetBombingBought ? 97 : 99) -
+              (wheelOfFortuneBonusExplosions ? 4 : 0)
           ) {
             didExplosionHappen = true;
             setStatsStateWrapper("totalNumberOfExplosions", 1);

@@ -65,6 +65,9 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
         (x) => x.name === "evenMoreQuestions"
       ) as singleSkillTreeNode
   ).wasBought;
+  const wheelOfFortuneBonus =
+    useSelector((state: RootState) => state.wheelOfFortune.currentBonus) ===
+    "cheaperUpgrades";
   const isCrystalBallBought = useSelector(
     (state: RootState) =>
       state.gameLogic.skillTreeLogic.skillTreeNodes.find(
@@ -90,7 +93,11 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
       price = price * feeIndex;
     }
     setPrice(price);
-  }, [isTheoryOfEverythingBought, isEvenMoreQuestionsBought]);
+  }, [
+    isTheoryOfEverythingBought,
+    isEvenMoreQuestionsBought,
+    wheelOfFortuneBonus,
+  ]);
   useEffect(() => {
     if (numberOfUpgrades > 0) {
       //When we first load the component we need to calculate current price
@@ -166,11 +173,13 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
         >
           <GrCircleInformation />
         </div>
-        {isDebtBought && currentCookies >= realPrice && currentCookies < price && (
-          <figure className="absolute -left-6 -top-2 ">
-            <BsCash />
-          </figure>
-        )}
+        {isDebtBought &&
+          currentCookies >= realPrice &&
+          currentCookies < price && (
+            <figure className="absolute -left-6 -top-2 ">
+              <BsCash />
+            </figure>
+          )}
       </div>
 
       <span className="text-2xl font-bold">
@@ -222,11 +231,13 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
       <legend className="text-center border p-1 border-primary bg-blue-500 -skew-x-12">
         Upgrades: {numberOfUpgrades}
       </legend>
-      {isDebtBought && currentCookies >= realPrice && currentCookies < price && (
-        <figure className="absolute right-4 top-0 ">
-          <BsCash />
-        </figure>
-      )}
+      {isDebtBought &&
+        currentCookies >= realPrice &&
+        currentCookies < price && (
+          <figure className="absolute right-4 top-0 ">
+            <BsCash />
+          </figure>
+        )}
       <Image
         src={
           crystalShopUpgradeObject?.wasBought && crystalShopUpgradeObject.inUse

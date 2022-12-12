@@ -38,6 +38,13 @@ export interface utilityObject {
   performance: performanceReducerInterface;
   holyCrossBonuses: holyCrossBonuses;
 }
+export type wheelOfFortuneBonuses =
+  | "CPC"
+  | "CPS"
+  | "moreFrequentExplosions"
+  | "moreCrystals"
+  | "cheaperUpgrades"
+  | "moreSkillPointsNextRestart";
 
 export type nodeNames =
   | "starterNode"

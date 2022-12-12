@@ -167,6 +167,9 @@ export const MainPage = () => {
   const equalibrumState = useSelector(
     (state: RootState) => state.eqalibrum.state
   );
+  const wheelOfFortuneBonus =
+    useSelector((state: RootState) => state.wheelOfFortune.currentBonus) ===
+    "cheaperUpgrades";
   const equalibrumTimer = useEqualibrumTimer({
     equlibrumState: equalibrumState,
     isEqualibrumBought: isEqualibrumBought,
@@ -416,6 +419,17 @@ export const MainPage = () => {
       }
     }
   }, [upgrades, isTrashToTreasureBought, CPS]);
+  const getUpgradeCost = (x: number) => {
+    //?Here i handle every upgrade cost reduction from skill tree nodes;
+    let upgradeCost = isTheoryOfEverythingBought
+      ? isEvenMoreQuestionsBought
+        ? Math.floor(x / 4)
+        : Math.floor(x / 2)
+      : x;
+    //?Here i handle wheel of fortune upgrade discount;
+    return wheelOfFortuneBonus ? Math.floor(upgradeCost / 2) : upgradeCost;
+  };
+
   return !statesWereLoaded ? (
     <div className="h-screen w-screen flex items-center justify-center flex-col gap-2">
       <Loader />
@@ -462,7 +476,7 @@ export const MainPage = () => {
                   .map((x) => {
                     return (
                       <li key={x.upgradeName}>
-                        <Upgrade {...x} />
+                        <Upgrade {...x} cost={getUpgradeCost(x.cost)} />
                       </li>
                     );
                   })}
@@ -519,13 +533,7 @@ export const MainPage = () => {
                     return (
                       <Upgrade
                         {...x}
-                        cost={
-                          isTheoryOfEverythingBought
-                            ? isEvenMoreQuestionsBought
-                              ? Math.floor(x.cost / 4)
-                              : Math.floor(x.cost / 2)
-                            : x.cost
-                        }
+                        cost={getUpgradeCost(x.cost)}
                         key={x.upgradeName}
                       />
                     );

@@ -9,6 +9,7 @@ import holyCrossReducer from "./holyCrossReducer";
 import performanceReducer from "./performanceReducer";
 import trashToTreasureReducer from "./trashToTreasureReducer";
 import userStatsReducer from "./userStatsReducer";
+import wheelOfFortuneReducer from "./wheelOfFortuneReducer";
 export const store = configureStore({
   reducer: {
     gameLogic: gameLogicReducer,
@@ -21,6 +22,7 @@ export const store = configureStore({
     authAndBackend: authAndBackendReducer,
     userStats: userStatsReducer,
     holyCross: holyCrossReducer,
+    wheelOfFortune: wheelOfFortuneReducer,
   },
 });
 export type RootState = ReturnType<typeof store.getState>;
