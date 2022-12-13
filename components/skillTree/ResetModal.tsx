@@ -10,6 +10,7 @@ import {
 import { generateRandomNumber } from "../../utils/utils";
 import skillPointIcon from "../../public/skillPoint16x16.png";
 import { changeWheelOfFortuneBonus } from "../../redux/wheelOfFortuneReducer";
+import { WheelOfFortune } from "./WheelOfFortune";
 export interface ResetModalProps {
   resetGameLogic: (skillPointsCount: number) => void;
 }
@@ -28,15 +29,15 @@ export const ResetModal: React.FC<ResetModalProps> = ({ resetGameLogic }) => {
   ).wasBought;
   const [wasWheelOfFortuneRolled, setWasWheelOfFortuneRolled] = useState(false);
   const dispatch = useDispatch();
+  const wheelOfFortuneBonuses: wheelOfFortuneBonuses[] = [
+    "CPC",
+    "CPS",
+    "cheaperUpgrades",
+    "moreCrystals",
+    "moreFrequentExplosions",
+    "moreSkillPointsNextRestart",
+  ];
   const rollWheelOfFortune = () => {
-    const wheelOfFortuneBonuses: wheelOfFortuneBonuses[] = [
-      "CPC",
-      "CPS",
-      "cheaperUpgrades",
-      "moreCrystals",
-      "moreFrequentExplosions",
-      "moreSkillPointsNextRestart",
-    ];
     const rolledBonus =
       wheelOfFortuneBonuses[
         generateRandomNumber(0, wheelOfFortuneBonuses.length - 1)
@@ -63,6 +64,7 @@ export const ResetModal: React.FC<ResetModalProps> = ({ resetGameLogic }) => {
       <label htmlFor="resetModal" className={`modal`}>
         <div className="modal-box">
           <div className="flex gap-2 justify-center items-center flex-col">
+            <WheelOfFortune arrayOfOptions={wheelOfFortuneBonuses} />
             {isWheelOfFortuneBought && (
               <button
                 className="btn"
