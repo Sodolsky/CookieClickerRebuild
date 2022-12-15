@@ -15,7 +15,7 @@ export const WheelOfFortune: React.FC<wheelOfFortuneInterface> = ({
 }) => {
   return (
     <div className="">
-      <div className="z-10 bg-black h-32 w-60 flex justify-center items-center overflow-auto">
+      <div className="z-10 bg-black h-32 w-60 flex justify-center items-center overflow-hidden">
         {arrayOfOptions.map((x, i) => {
           const divColor = `${colorsArray[i]}`;
           return <div className={`${divColor} z-0 h-28`} key={x}></div>;
