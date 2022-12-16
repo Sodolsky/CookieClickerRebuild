@@ -38,7 +38,6 @@ import { Header } from "./layout/Header";
 import { AiOutlineMenu } from "react-icons/ai";
 import useMediaQuery from "../utils/hooks/useMediaQuery";
 import { useClickMultiplier } from "../utils/hooks/useClickMultiplier";
-import { CrystalsDisplay } from "./clickerElements/crystals/CrystalsDisplay";
 import { CrystalsModal } from "./clickerElements/crystals/CrystalsModal";
 import { useCPSMultiplier } from "../utils/hooks/useCPSMultiplier";
 import { addExplosionCookiesCount } from "../redux/explosionCookiesReducer";
@@ -88,6 +87,8 @@ import {
   switchHolyCrossState,
 } from "../redux/holyCrossReducer";
 import { Loader } from "./layout/Loader";
+import { CrystalsDisplay } from "./clickerElements/crystals/CrystalsDisplay";
+import { Chakra } from "./skillTree/Chakra";
 export const MainPage = () => {
   const resetGameLogic = (skillPointsCount: number) => {
     intervalRef.current && clearInterval(intervalRef.current);
@@ -111,6 +112,7 @@ export const MainPage = () => {
   const { isClickDoubled } = useClickMultiplier();
   const { multiplierCPS } = useCPSMultiplier();
   const isMobile = useMediaQuery("(max-width:768px)");
+  const isUserOnLaptop = useMediaQuery("(max-width:1280px)");
   const intervalRef = useRef<null | NodeJS.Timer>(null);
 
   const isTheoryOfEverythingBought = useSelector(
@@ -145,6 +147,12 @@ export const MainPage = () => {
     (state: RootState) =>
       state.gameLogic.skillTreeLogic.skillTreeNodes.find(
         (x) => x.name === "trashToTreasure"
+      ) as singleSkillTreeNode
+  ).wasBought;
+  const isChakraBought = useSelector(
+    (state: RootState) =>
+      state.gameLogic.skillTreeLogic.skillTreeNodes.find(
+        (x) => x.name === "chakra"
       ) as singleSkillTreeNode
   ).wasBought;
   const TTTStats = useSelector((state: RootState) => state.trashToTreasure);
@@ -505,8 +513,12 @@ export const MainPage = () => {
               bgMusicRef={bgMusicRef.current}
               explosionSoundRef={explosionSoundRef.current}
             />
-            {/* This Code is checking if player has bought 10 upgrades of type */}
-
+            {!isMobile && isUserOnLaptop && (
+              <div className="absolute top-2 flex flex-col gap-8 justify-center items-center left-2">
+                <CrystalsDisplay />
+                {isChakraBought && <Chakra />}
+              </div>
+            )}
             <div className="grid place-items-center  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 grid-rows-1 gap-2 mt-6 w-full xl:w-3/4">
               {isMobile !== null &&
                 !isMobile &&
@@ -547,6 +559,8 @@ export const MainPage = () => {
             isQPBought={isQPBought}
             upgrades={upgrades}
             isMobile={isMobile}
+            isUserOnLaptop={isUserOnLaptop}
+            isChakraBought={isChakraBought}
           />
         </main>
       </>

@@ -11,7 +11,7 @@ interface timers {
   waitTime: number;
 }
 
-export const Chakra = () => {
+export const Chakra: React.FC = () => {
   const dispatch = useDispatch();
   const isChakraActive = useSelector(
     (state: RootState) => state.chakra.isActive
@@ -54,7 +54,7 @@ export const Chakra = () => {
     }
   }, [stateOfChakra]);
   return (
-    <figure className="cursor-pointer h-32 w-32" onClick={turnChakraOn}>
+    <figure className={`cursor-pointer h-32 w-32`} onClick={turnChakraOn}>
       <CircularProgressbarWithChildren
         value={stateOfChakra === "cooldown" ? timers.waitTime : timers.timer}
         maxValue={stateOfChakra === "cooldown" ? 90 : 30}

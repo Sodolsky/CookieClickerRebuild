@@ -1,5 +1,7 @@
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
+import useMediaQuery from "../utils/hooks/useMediaQuery";
 import {
   singleSkillTreeNode,
   UpgradeInterface,
@@ -21,6 +23,8 @@ interface MenuProps {
   upgrades: UpgradesInterface;
   resetGameLogic: (skillPoints: number) => void;
   isMobile: boolean | null;
+  isUserOnLaptop: boolean | null;
+  isChakraBought: boolean;
 }
 export const Menu: React.FC<MenuProps> = ({
   isEqualibrumBought,
@@ -29,22 +33,23 @@ export const Menu: React.FC<MenuProps> = ({
   isQPBought,
   upgrades,
   isMobile,
+  isUserOnLaptop,
+  isChakraBought,
 }) => {
-  const isChakraBought = useSelector(
-    (state: RootState) =>
-      state.gameLogic.skillTreeLogic.skillTreeNodes.find(
-        (x) => x.name === "chakra"
-      ) as singleSkillTreeNode
-  ).wasBought;
   const shopItems = useSelector(
     (state: RootState) => state.gameLogic.shopItems
   );
-  console.error(
-    "FIX MENU ON MEDIUM SCREEN SIZE DEVICES AND OVERFLOWING IN SKILL TREE"
-  );
+  /* To avoid Menu overflowing upgrades view on devices with screen size between 768px-1280px we render
+  bigger menu elements such as Chakra and CrystalCount in top left screen in MainMenu component otherwise
+  we render them here in menu
+  */
+  const renderBiggerElements = isMobile || (!isMobile && !isUserOnLaptop);
+  useEffect(() => {
+    console.error("FIX OVERFLOWING IN SKILL TREE");
+  }, []);
   return (
     <footer
-      className={`absolute ${
+      className={`absolute overflow-hidden ${
         isMobile
           ? "bottom-0 h-auto border-t-2 pt-2 overflow-x-auto"
           : "flex-col w-auto right-0 top-0 border-l-2 border-b-2 p-2 overflow-y-auto"
@@ -53,7 +58,6 @@ export const Menu: React.FC<MenuProps> = ({
       <PerformanceModal />
       <BackendSynchronizationModal />
       <Store />
-      {isChakraBought && <Chakra />}
       {isEqualibrumBought && <EqualibrumStacksDisplay />}
       {Object.values(upgrades)
         .filter((x) => {
@@ -79,7 +83,8 @@ export const Menu: React.FC<MenuProps> = ({
       ) : (
         isSkillTreeUnlocked && <SkillTreeModal />
       )}
-      <CrystalsDisplay />
+      {isChakraBought && renderBiggerElements && <Chakra />}
+      {renderBiggerElements && <CrystalsDisplay />}
     </footer>
   );
 };

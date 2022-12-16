@@ -10,7 +10,6 @@ import {
 import { generateRandomNumber } from "../../utils/utils";
 import skillPointIcon from "../../public/skillPoint16x16.png";
 import { changeWheelOfFortuneBonus } from "../../redux/wheelOfFortuneReducer";
-import { WheelOfFortune } from "./WheelOfFortune";
 export interface ResetModalProps {
   resetGameLogic: (skillPointsCount: number) => void;
 }
@@ -28,6 +27,7 @@ export const ResetModal: React.FC<ResetModalProps> = ({ resetGameLogic }) => {
       ) as singleSkillTreeNode
   ).wasBought;
   const [wasWheelOfFortuneRolled, setWasWheelOfFortuneRolled] = useState(false);
+  const [wheelOfFortuneText, setWheelOfFortuneText] = useState<string>("");
   const dispatch = useDispatch();
   const wheelOfFortuneBonuses: wheelOfFortuneBonuses[] = [
     "CPC",
@@ -43,6 +43,9 @@ export const ResetModal: React.FC<ResetModalProps> = ({ resetGameLogic }) => {
         generateRandomNumber(0, wheelOfFortuneBonuses.length - 1)
       ];
     dispatch(changeWheelOfFortuneBonus(rolledBonus));
+    setWheelOfFortuneText(
+      convertWheelOfFortuneBonusToUserFriendlyText(rolledBonus)
+    );
     setWasWheelOfFortuneRolled(true);
   };
   const wheelOfFortuneBonusSkillPoints =
@@ -53,9 +56,7 @@ export const ResetModal: React.FC<ResetModalProps> = ({ resetGameLogic }) => {
   return (
     <>
       <label htmlFor="resetModal">
-        <figure
-          className={`absolute bottom-24 right-2 md:top-24 md:right-4 cursor-pointer`}
-        >
+        <figure className={`cursor-pointer`}>
           <Image src={ResetIcon.src} width={64} height={64} />
         </figure>
       </label>
@@ -64,7 +65,6 @@ export const ResetModal: React.FC<ResetModalProps> = ({ resetGameLogic }) => {
       <label htmlFor="resetModal" className={`modal`}>
         <div className="modal-box">
           <div className="flex gap-2 justify-center items-center flex-col">
-            <WheelOfFortune arrayOfOptions={wheelOfFortuneBonuses} />
             {isWheelOfFortuneBought && (
               <button
                 className="btn"
@@ -74,6 +74,9 @@ export const ResetModal: React.FC<ResetModalProps> = ({ resetGameLogic }) => {
                 Roll Wheel Of Fortune
               </button>
             )}
+            <span className="text-green-400 font-bold text-xl text-center">
+              {wasWheelOfFortuneRolled && wheelOfFortuneText}
+            </span>
             <div className="flex justify-center items-center flex-col gap-1">
               <div className="flex gap-1 justify-center items-center">
                 <span>
@@ -110,4 +113,22 @@ export const ResetModal: React.FC<ResetModalProps> = ({ resetGameLogic }) => {
       </label>
     </>
   );
+};
+const convertWheelOfFortuneBonusToUserFriendlyText = (
+  rolledBonus: wheelOfFortuneBonuses
+): string => {
+  switch (rolledBonus) {
+    case "CPC":
+      return "Your CPC multiplier will be tripled for the next game.";
+    case "CPS":
+      return "Your CPS multiplier will be tripled for the next game.";
+    case "cheaperUpgrades":
+      return "Your Upgrades will cost halve the price for the next game.";
+    case "moreCrystals":
+      return "You will gain significantly more crystals next game.";
+    case "moreFrequentExplosions":
+      return "Your explosion chance will be significantly increased.";
+    case "moreSkillPointsNextRestart":
+      return "Next game restart will earn you 3x more Skill Points.";
+  }
 };
