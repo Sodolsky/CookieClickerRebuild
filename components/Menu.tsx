@@ -41,7 +41,7 @@ export const Menu: React.FC<MenuProps> = ({
   );
   /* To avoid Menu overflowing upgrades view on devices with screen size between 768px-1280px we render
   bigger menu elements such as Chakra and CrystalCount in top left screen in MainMenu component otherwise
-  we render them here in menu
+  we render them here in menu.
   */
   const renderBiggerElements = isMobile || (!isMobile && !isUserOnLaptop);
   useEffect(() => {
