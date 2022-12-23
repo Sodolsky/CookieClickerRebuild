@@ -45,6 +45,7 @@ export const Node: React.FC<localNodeInterface> = ({
       <Tippy
         allowHTML={true}
         interactive={true}
+        placement={"auto"}
         content={
           name !== "starterNode" ? (
             <div className="bg-black p-2 rounded-xl text-white w-72 relative">

@@ -44,15 +44,12 @@ export const Menu: React.FC<MenuProps> = ({
   we render them here in menu.
   */
   const renderBiggerElements = isMobile || (!isMobile && !isUserOnLaptop);
-  useEffect(() => {
-    console.error("FIX OVERFLOWING IN SKILL TREE");
-  }, []);
   return (
     <footer
-      className={`absolute overflow-hidden ${
+      className={`absolute ${
         isMobile
           ? "bottom-0 h-auto border-t-2 pt-2 overflow-x-auto"
-          : "flex-col w-auto right-0 top-0 border-l-2 border-b-2 p-2 overflow-y-auto"
+          : "flex-col w-auto right-0 top-0 border-l-2 border-b-2 p-2 "
       } flex items-center justify-center gap-8 flex-wrap border-black `}
     >
       <PerformanceModal />

@@ -143,7 +143,6 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
       setShakeImage(true);
     }
   };
-
   return !isMobile ? (
     <section className="flex  text-center flex-col gap-2 justify-center items-center p-4 border-black  rounded-xl relative">
       <div className="relative">
