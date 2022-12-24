@@ -39,7 +39,7 @@ export const Menu: React.FC<MenuProps> = ({
   const shopItems = useSelector(
     (state: RootState) => state.gameLogic.shopItems
   );
-  /* To avoid Menu overflowing upgrades view on devices with screen size between 768px-1280px we render
+  /* To avoid Menu overflowing certain upgrades view on devices with screen size between 768px-1280px we render
   bigger menu elements such as Chakra and CrystalCount in top left screen in MainMenu component otherwise
   we render them here in menu.
   */
