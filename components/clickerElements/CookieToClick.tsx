@@ -237,11 +237,11 @@ export const CookieToClick: React.FC<CookieToClickProps> = ({
         shardsGenerated += 1;
         //?We need to check if explosion node was bought
         if (cookiesExplosionBought) {
-          if (
+          const explosionChance =
             generateRandomNumber(0, 100) >
             (wasCarpetBombingBought ? 97 : 99) -
-              (wheelOfFortuneBonusExplosions ? 4 : 0)
-          ) {
+              (wheelOfFortuneBonusExplosions ? 4 : 0);
+          if (explosionChance) {
             didExplosionHappen = true;
             setStatsStateWrapper("totalNumberOfExplosions", 1);
           }
