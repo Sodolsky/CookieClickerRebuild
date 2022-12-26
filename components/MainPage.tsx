@@ -37,7 +37,7 @@ import { CookiesDisplay } from "./layout/CookiesDisplay";
 import { Header } from "./layout/Header";
 import { AiOutlineMenu } from "react-icons/ai";
 import useMediaQuery from "../utils/hooks/useMediaQuery";
-import { useClickMultiplier } from "../utils/hooks/useClickMultiplier";
+import { useCPCMultiplier } from "../utils/hooks/useCPCMultiplier";
 import { CrystalsModal } from "./clickerElements/crystals/CrystalsModal";
 import { useCPSMultiplier } from "../utils/hooks/useCPSMultiplier";
 import { addExplosionCookiesCount } from "../redux/explosionCookiesReducer";
@@ -109,7 +109,7 @@ export const MainPage = () => {
         (x) => x.name === "quantumPhysics"
       ) as singleSkillTreeNode
   ).wasBought;
-  const { isClickDoubled } = useClickMultiplier();
+  const { isClickDoubled } = useCPCMultiplier();
   const { multiplierCPS } = useCPSMultiplier();
   const isMobile = useMediaQuery("(max-width:768px)");
   const isUserOnLaptop = useMediaQuery("(max-width:1280px)");

@@ -11,7 +11,7 @@ import Image from "next/image";
 import CookieImage from "../../public/cookie.png";
 import CrossImage from "../../public/cross.png";
 import { RootState } from "../../redux/store";
-import { useClickMultiplier } from "../../utils/hooks/useClickMultiplier";
+import { useCPCMultiplier } from "../../utils/hooks/useCPCMultiplier";
 import {
   generateRandomNumber,
   getBoughtUpgrades,
@@ -335,6 +335,7 @@ export const CookieToClick: React.FC<CookieToClickProps> = ({
       explosionSoundRef?.play();
       dispatch(addExplosionCookiesCount(cookiesGainedFromExplosion));
     }
+    setStatsStateWrapper("totalCrystalsCollected", shardsGenerated);
     dispatch(addCrystals(shardsGenerated));
     if (isCrystalConversionBought) {
       const cookiesGainFromCrystalConversion =
@@ -416,7 +417,7 @@ export const CookieToClick: React.FC<CookieToClickProps> = ({
       particle.remove();
     };
   }
-  const { isClickDoubled, multiplier } = useClickMultiplier();
+  const { isClickDoubled, multiplier } = useCPCMultiplier();
   const { multiplierCPS } = useCPSMultiplier();
   const handleClickIncrementation = () => {
     if (bgMusicRef?.paused) bgMusicRef.play();

@@ -15,6 +15,7 @@ export interface userStats {
   totalCookiesCollected: number;
   totalNumberOfExplosions: number;
   cookiesGainedFromExplosion: number;
+  totalCrystalsCollected: number;
 }
 export interface firebaseAndUtilityObjectWithEmail {
   email: string;
@@ -73,7 +74,8 @@ export type nodeNames =
   | "eternity"
   | "holyCross"
   | "totalWar"
-  | "wheelOfFortune";
+  | "wheelOfFortune"
+  | "collector";
 export interface singleSkillTreeNode {
   name: nodeNames;
   isNotable: boolean;
@@ -130,7 +132,7 @@ export const initialSkillTreeNodes: singleSkillTreeNode[] = [
     nameForPlayer: "Time Bomb",
     price: 10,
     wasBought: false,
-    description: "Explosions give you bonus from CPS.",
+    description: "Your CPS bonus is making your explosions stronger.",
     connectedNodes: ["timeMachine", "carpetBombing"],
     image: "time-bomb.png",
     positionObject: { left: "50%", bottom: "40%" },
@@ -269,7 +271,7 @@ export const initialSkillTreeNodes: singleSkillTreeNode[] = [
       "Every time you reset a game you will roll a new bonus for next one.",
     connectedNodes: ["peaceAroundTheWorld", "perfectAim"],
     image: "wheelOfFortune.png",
-    positionObject: { left: "30%", bottom: "80%" },
+    positionObject: { left: "30%", bottom: "75%" },
   },
   {
     name: "debt",
@@ -316,7 +318,7 @@ export const initialSkillTreeNodes: singleSkillTreeNode[] = [
     description: "Unlocks the ending.",
     connectedNodes: [],
     image: "eternity.png",
-    positionObject: { left: "50%", bottom: "90%" },
+    positionObject: { left: "45%", bottom: "90%" },
   },
 
   //?Right side of the tree
@@ -396,6 +398,18 @@ export const initialSkillTreeNodes: singleSkillTreeNode[] = [
     image: "treasure.png",
     positionObject: { right: "32.5%", bottom: "50%" },
   },
+  {
+    name: "collector",
+    isNotable: false,
+    nameForPlayer: "The Collector",
+    price: 70,
+    wasBought: false,
+    description:
+      "Every 250 crystals that you collected since the start of your journey increase your CPS/CPC base rate by 1.",
+    connectedNodes: ["holyCross", "oneUpgrade"],
+    image: "collector.png",
+    positionObject: { right: "30%", bottom: "75%" },
+  },
 
   {
     name: "chakra",
@@ -407,7 +421,7 @@ export const initialSkillTreeNodes: singleSkillTreeNode[] = [
       "Adds new active that let's multiplies cookies you gain for 30 seconds.",
     connectedNodes: ["idlePlayer"],
     explanation:
-      "Chakra can be activated every 2 minutes. The amount of cookies you gain is multiplied by 3 times during it's duration.",
+      "Chakra can be activated every 2 minutes. The amount of cookies you gain is 3 times your base rate during it's duration.",
     image: "chakra.png",
     positionObject: { right: "6%", bottom: "16%" },
   },
@@ -417,7 +431,7 @@ export const initialSkillTreeNodes: singleSkillTreeNode[] = [
     nameForPlayer: "Heart Of The Eternal",
     price: 14,
     wasBought: false,
-    description: "Chakra multiplier becomes 10x.",
+    description: "Chakra cookies gained base rate becomes 10x.",
     connectedNodes: ["chakra"],
     image: "sacred-heart.png",
     positionObject: { right: "6%", bottom: "30%" },

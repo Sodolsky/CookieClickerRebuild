@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { singleSkillTreeNode } from "../interfaces";
-
+//? CPS stands for Cookies Per Second
 export const useCPSMultiplier = () => {
   const [multiplierCPS, setMultiplierCPS] = useState<number>(1);
   const isIdlePlayerBought = useSelector(
@@ -57,12 +57,26 @@ export const useCPSMultiplier = () => {
   const equalibrumState = useSelector(
     (state: RootState) => state.eqalibrum.state
   );
+  const totalCollectedCrystals = useSelector(
+    (state: RootState) => state.userStats.totalCrystalsCollected
+  );
+  const isCollectorBought = useSelector(
+    (state: RootState) =>
+      state.gameLogic.skillTreeLogic.skillTreeNodes.find(
+        (x) => x.name === "collector"
+      ) as singleSkillTreeNode
+  ).wasBought;
+  const collectorMultiplier = useMemo(
+    () => Math.floor(totalCollectedCrystals / 1000) * 1,
+    [totalCollectedCrystals]
+  );
   const wheelOfFortuneBonus =
     useSelector((state: RootState) => state.wheelOfFortune.currentBonus) ===
     "CPS";
   useEffect(() => {
     let multiplier: number = 1;
     if (isIdlePlayerBought) multiplier += 4;
+    if (isCollectorBought) multiplier += collectorMultiplier;
     if (isChakraActive) {
       if (isChakraUpgraded) multiplier += 10;
       else multiplier += 3;
@@ -86,6 +100,7 @@ export const useCPSMultiplier = () => {
     isHolyCrossBought,
     bonusFromHolyCross,
     wheelOfFortuneBonus,
+    isCollectorBought,
   ]);
   return { multiplierCPS };
 };

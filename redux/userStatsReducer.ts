@@ -7,6 +7,7 @@ export const initialStateOfUserStats: userStats = {
   totalNumberOfExplosions: 0,
   totalTimePlay: 0,
   cookiesGainedFromExplosion: 0,
+  totalCrystalsCollected: 0,
 };
 const initialState = cloneDeep(initialStateOfUserStats);
 export const userStatsReducer = createSlice({

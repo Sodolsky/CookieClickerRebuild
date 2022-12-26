@@ -1,6 +1,6 @@
 import CountUp from "react-countup";
 import { useCallback, useEffect, useRef } from "react";
-import { useClickMultiplier } from "../../utils/hooks/useClickMultiplier";
+import { useCPCMultiplier } from "../../utils/hooks/useCPCMultiplier";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import Image from "next/image";
@@ -11,7 +11,7 @@ interface CookiesDisplayProps {
   CPC: number;
 }
 export const CookiesDisplay: React.FC<CookiesDisplayProps> = ({ CPS, CPC }) => {
-  const { isClickDoubled, multiplier } = useClickMultiplier();
+  const { isClickDoubled, multiplier } = useCPCMultiplier();
   const explosionDivRef = useRef<HTMLDivElement | null>(null);
   const { multiplierCPS } = useCPSMultiplier();
   const formatCookieCount = useCallback((n: number) => {

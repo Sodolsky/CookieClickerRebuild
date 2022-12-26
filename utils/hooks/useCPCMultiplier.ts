@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { CookiesShopItem, singleSkillTreeNode } from "../interfaces";
-
-export const useClickMultiplier = () => {
+//? CPC stands for Cookies Per Click
+export const useCPCMultiplier = () => {
   const [multiplier, setMultiplier] = useState<number>(1);
   const doubleClickShopItemState = useSelector((state: RootState) =>
     state.gameLogic.shopItems.find((x) => x.name === "doubleClick")
@@ -64,9 +64,23 @@ export const useClickMultiplier = () => {
         (x) => x.name === "holyCross"
       ) as singleSkillTreeNode
   ).wasBought;
+  const totalCollectedCrystals = useSelector(
+    (state: RootState) => state.userStats.totalCrystalsCollected
+  );
+  const isCollectorBought = useSelector(
+    (state: RootState) =>
+      state.gameLogic.skillTreeLogic.skillTreeNodes.find(
+        (x) => x.name === "collector"
+      ) as singleSkillTreeNode
+  ).wasBought;
+  const collectorMultiplier = useMemo(
+    () => Math.floor(totalCollectedCrystals / 1000) * 1,
+    [totalCollectedCrystals]
+  );
   useEffect(() => {
     let multiplier: number = 1;
     if (isClickDoubled) multiplier += 1;
+    if (isCollectorBought) multiplier += collectorMultiplier;
     if (isClickTripledFromSkillTreeUpgrades) multiplier += 3;
     if (isChakraActive) {
       if (isChakraUpgraded) multiplier += 10;
