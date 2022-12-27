@@ -16,6 +16,7 @@ import { EqualibrumStacksDisplay } from "./skillTree/EqualibrumStacksDisplay";
 import { EternalTalk } from "./skillTree/EternalTalk";
 import { ResetModal } from "./skillTree/ResetModal";
 import { SkillTreeModal } from "./skillTree/SkillTreeModal";
+import { StatsModal } from "./stats/StatsModal";
 interface MenuProps {
   isEqualibrumBought: boolean;
   isSkillTreeUnlocked: boolean;
@@ -53,6 +54,7 @@ export const Menu: React.FC<MenuProps> = ({
       } flex items-center justify-center gap-8 flex-wrap border-black `}
     >
       <PerformanceModal />
+      <StatsModal />
       <BackendSynchronizationModal />
       <Store />
       {isEqualibrumBought && <EqualibrumStacksDisplay />}
