@@ -101,6 +101,7 @@ export const useCPSMultiplier = () => {
     bonusFromHolyCross,
     wheelOfFortuneBonus,
     isCollectorBought,
+    collectorMultiplier,
   ]);
   return { multiplierCPS };
 };

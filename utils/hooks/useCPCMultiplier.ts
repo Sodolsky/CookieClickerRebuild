@@ -106,6 +106,8 @@ export const useCPCMultiplier = () => {
     isHolyCrossBought,
     bonusFromHolyCross,
     wheelOfFortuneBonus,
+    isCollectorBought,
+    collectorMultiplier,
   ]);
   return { isClickDoubled, multiplier };
 };
