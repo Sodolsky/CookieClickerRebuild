@@ -115,7 +115,7 @@ export const StatsModal = () => {
     () => Math.floor(totalCollectedCrystals / 1000) * 1,
     [totalCollectedCrystals]
   );
-  //?Use Effect that counts base rate of CPC
+  //? Use Effect that counts base rate of CPC
   useEffect(() => {
     let baseRate: number = 1;
     if (isClickDoubled) baseRate += 1;
@@ -133,7 +133,7 @@ export const StatsModal = () => {
     isChakraActive,
     isChakraUpgraded,
   ]);
-  //?Use Effect that counts multiplier of CPC
+  //? Use Effect that counts multiplier of CPC
   useEffect(() => {
     let multiplier: number = 1;
     if (isCrystalBallBought) multiplier += bonusFromCrystalBall;
@@ -154,7 +154,7 @@ export const StatsModal = () => {
     isEqualibrumBought,
     equalibrumState,
   ]);
-  //?Use Effect that counts base rate of CPS
+  //? Use Effect that counts base rate of CPS
   useEffect(() => {
     let baseRate: number = 1;
     if (isIdlePlayerBought) baseRate += 4;
@@ -168,7 +168,7 @@ export const StatsModal = () => {
       CPSBaseRate: baseRate,
     }));
   }, [isCollectorBought, isIdlePlayerBought, isChakraActive, isChakraUpgraded]);
-  //?Use Effect that counts multiplier of CPS
+  //? Use Effect that counts multiplier of CPS
   useEffect(() => {
     let multiplier: number = 1;
     if (isCrystalBallBought) multiplier += bonusFromCrystalBall;
