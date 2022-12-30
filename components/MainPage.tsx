@@ -429,7 +429,7 @@ export const MainPage = () => {
   }, [upgrades, isTrashToTreasureBought, CPS]);
   useEffect(() => {
     console.error(
-      "Fix a bug with incorrect amount of skillPoints | FIX CRYSTAL BALL AFTER RESET"
+      "Fix a bug with incorrect amount of skillPoints | FIX CRYSTAL BALL AFTER RESET | ADD WHEEL OF FORTUNE STATE SAVING"
     );
   }, []);
   const getUpgradeCost = (x: number) => {
