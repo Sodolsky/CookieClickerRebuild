@@ -428,7 +428,9 @@ export const MainPage = () => {
     }
   }, [upgrades, isTrashToTreasureBought, CPS]);
   useEffect(() => {
-    console.error("Fix a bug with incorrect amount of skillPoints");
+    console.error(
+      "Fix a bug with incorrect amount of skillPoints | FIX CRYSTAL BALL AFTER RESET"
+    );
   }, []);
   const getUpgradeCost = (x: number) => {
     //?Here we handle every upgrade cost reduction from skill tree nodes;
