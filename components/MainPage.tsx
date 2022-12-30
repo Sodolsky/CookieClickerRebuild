@@ -428,13 +428,13 @@ export const MainPage = () => {
     }
   }, [upgrades, isTrashToTreasureBought, CPS]);
   const getUpgradeCost = (x: number) => {
-    //?Here i handle every upgrade cost reduction from skill tree nodes;
+    //?Here we handle every upgrade cost reduction from skill tree nodes;
     let upgradeCost = isTheoryOfEverythingBought
       ? isEvenMoreQuestionsBought
         ? Math.floor(x / 4)
         : Math.floor(x / 2)
       : x;
-    //?Here i handle wheel of fortune upgrade discount;
+    //?Here we handle wheel of fortune upgrade discount;
     return wheelOfFortuneBonus ? Math.floor(upgradeCost / 2) : upgradeCost;
   };
 

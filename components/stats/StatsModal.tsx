@@ -8,6 +8,11 @@ import { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { CookiesShopItem, singleSkillTreeNode } from "../../utils/interfaces";
+import TimeIcon from "../../public/time.png";
+import CookieIcon from "../../public/cookie.png";
+import ExplosionIcon from "../../public/explosion.png";
+import { InlineStat, inlineStatInterface } from "./InlineStat";
+import { numberFormatter, secondsToHms } from "../../utils/utils";
 interface multiplierBreakDownInterface {
   CPCBaseRate: number;
   CPCMultiplier: number;
@@ -25,6 +30,29 @@ export const StatsModal = () => {
   const { isClickDoubled, multiplier } = useCPCMultiplier();
   const [multipliersBreakdown, setMultipliersBreakdown] =
     useState<multiplierBreakDownInterface>(baseMultipliersBreakdownObject);
+  const userStats = useSelector((state: RootState) => state.userStats);
+  const inlineUserStats: inlineStatInterface[] = [
+    {
+      img: TimeIcon,
+      text: `Time played: ${secondsToHms(userStats.totalTimePlay)}`,
+    },
+    {
+      img: CookieIcon,
+      text: `Total Cookies Collected: ${numberFormatter.format(
+        userStats.totalCookiesCollected
+      )}`,
+    },
+    {
+      img: ExplosionIcon,
+      text: `Total number of generated explosions: ${userStats.totalNumberOfExplosions}`,
+    },
+    {
+      img: [ExplosionIcon, CookieIcon],
+      text: `Total number of cookies gained from explosions: ${numberFormatter.format(
+        userStats.cookiesGainedFromExplosion
+      )}`,
+    },
+  ];
   const doubleClickShopItemState = useSelector((state: RootState) =>
     state.gameLogic.shopItems.find((x) => x.name === "doubleClick")
   ) as CookiesShopItem;
@@ -203,7 +231,7 @@ export const StatsModal = () => {
       <label htmlFor="StatsModal" className={`modal`}>
         <label className="modal-box bg-white" htmlFor="">
           <h1 className="text-2xl font-bold text-center">Stats</h1>
-          <div className="flex flex-col gap-2 justify-center items-center">
+          <div className="flex flex-col gap-2 justify-center items-center text-center">
             <div
               tabIndex={0}
               className="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box"
@@ -242,6 +270,9 @@ export const StatsModal = () => {
                 </div>
               </div>
             </div>
+            {inlineUserStats.map((x) => (
+              <InlineStat {...x} key={x.text} />
+            ))}
           </div>
         </label>
       </label>
