@@ -31,6 +31,7 @@ export const baseUtilityObject: utilityObject = {
   holyCrossBonuses: initialHolyCrossBonuses,
   performance: initialPerformanceReducerState,
   userStats: initialStateOfUserStats,
+  wheelOfFortuneBonus: null,
 };
 type keysOfFirebaseObject = keyof firebaseObjectInterface;
 export const useConvertDataToFirebaseObject = () => {
@@ -45,11 +46,15 @@ export const useConvertDataToFirebaseObject = () => {
   const holyCrossBonuses = useSelector(
     (state: RootState) => state.holyCross.currentBonuses
   );
+  const wheelOfFortuneBonus = useSelector(
+    (state: RootState) => state.wheelOfFortune.currentBonus
+  );
   const performance = useSelector((state: RootState) => state.performance);
   const utilityObject: utilityObject = {
     userStats: userStats,
     holyCrossBonuses: holyCrossBonuses,
     performance: performance,
+    wheelOfFortuneBonus: wheelOfFortuneBonus,
   };
   const handleSavingUserWhenWebPageCloses = () => {
     if (document.visibilityState === "hidden") {

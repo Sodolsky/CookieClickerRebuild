@@ -78,7 +78,7 @@ export const Menu: React.FC<MenuProps> = ({
         }, true) && <ResetModal resetGameLogic={resetGameLogic} />}
       {shopItems.find((x) => x.name === "unlockSkillTree")?.wasBought &&
       !isSkillTreeUnlocked ? (
-        <EternalTalk resetGameLogic={() => resetGameLogic(10)} />
+        <EternalTalk resetGameLogic={resetGameLogic} />
       ) : (
         isSkillTreeUnlocked && <SkillTreeModal />
       )}

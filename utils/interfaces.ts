@@ -38,6 +38,7 @@ export interface utilityObject {
   userStats: userStats;
   performance: performanceReducerInterface;
   holyCrossBonuses: holyCrossBonuses;
+  wheelOfFortuneBonus: wheelOfFortuneBonuses | null;
 }
 export type wheelOfFortuneBonuses =
   | "CPC"

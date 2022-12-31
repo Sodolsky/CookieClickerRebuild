@@ -17,6 +17,7 @@ export const wheelOfFortuneReducer = createSlice({
       state,
       action: PayloadAction<Exclude<wheelOfFortuneBonuses, null>>
     ) => {
+      localStorage.setItem("wheelOfFortuneBonus", action.payload);
       state.currentBonus = action.payload;
     },
   },

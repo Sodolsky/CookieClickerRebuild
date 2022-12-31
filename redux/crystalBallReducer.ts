@@ -19,7 +19,7 @@ export const crystalBallReducer = createSlice({
       state.bonus += 0.01;
     },
     clearAllCrystalBallStates: (state) => {
-      state = initialState;
+      return (state = initialState);
     },
   },
 });

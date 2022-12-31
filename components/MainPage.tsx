@@ -30,6 +30,7 @@ import {
   userStats,
   holyCrossBonuses,
   utilityObject,
+  wheelOfFortuneBonuses,
 } from "../utils/interfaces";
 import { CookieToClick } from "./clickerElements/CookieToClick";
 import { Upgrade } from "./clickerElements/Upgrade";
@@ -89,8 +90,10 @@ import {
 import { Loader } from "./layout/Loader";
 import { CrystalsDisplay } from "./clickerElements/crystals/CrystalsDisplay";
 import { Chakra } from "./skillTree/Chakra";
+import { changeWheelOfFortuneBonus } from "../redux/wheelOfFortuneReducer";
 export const MainPage = () => {
   const resetGameLogic = (skillPointsCount: number) => {
+    console.log(skillPointsCount);
     intervalRef.current && clearInterval(intervalRef.current);
     dispatch(addExplosionCookiesCount(0));
     dispatch(clearAllCrystalBallStates());
@@ -256,7 +259,10 @@ export const MainPage = () => {
           (JSON.parse(
             localStorage.getItem("holyCrossBonuses")!
           ) as holyCrossBonuses) ?? initialHolyCrossBonuses;
-
+        const localStorageWheelOfFortuneBonus = localStorage.getItem(
+          "wheelOfFortuneBonus"
+        ) as wheelOfFortuneBonuses;
+        console.log(localStorageWheelOfFortuneBonus);
         const userStats =
           (JSON.parse(localStorage.getItem("userStats")!) as userStats) ??
           initialStateOfUserStats;
@@ -264,6 +270,7 @@ export const MainPage = () => {
         dispatch(
           setHolyCrossBonusesFromLocalStorage(localStorageHolyCrossBonuses)
         );
+        dispatch(changeWheelOfFortuneBonus(localStorageWheelOfFortuneBonus));
         dispatch(setStatsState(userStats));
         dispatch(setInitialSkillTree(localStorageSkillTreeUnlocked));
         dispatch(setInitialShopitems(localStorageShopItems));
@@ -290,6 +297,11 @@ export const MainPage = () => {
               firebaseUserUtils.holyCrossBonuses
             )
           );
+          if (firebaseUserUtils.wheelOfFortuneBonus) {
+            dispatch(
+              changeWheelOfFortuneBonus(firebaseUserUtils.wheelOfFortuneBonus)
+            );
+          }
           dispatch(setStatsState(firebaseUserUtils.userStats));
           dispatch(setReducerDataFromFirebaseObject(firebaseData));
 
@@ -429,7 +441,7 @@ export const MainPage = () => {
   }, [upgrades, isTrashToTreasureBought, CPS]);
   useEffect(() => {
     console.error(
-      "Fix a bug with incorrect amount of skillPoints | FIX CRYSTAL BALL AFTER RESET | ADD WHEEL OF FORTUNE STATE SAVING"
+      "Fix a lot of small bugs of states being wrong when logging in and out"
     );
   }, []);
   const getUpgradeCost = (x: number) => {
@@ -560,7 +572,7 @@ export const MainPage = () => {
           <Menu
             isEqualibrumBought={isEqualibrumBought}
             isSkillTreeUnlocked={isSkillTreeUnlocked}
-            resetGameLogic={() => resetGameLogic(10)}
+            resetGameLogic={resetGameLogic}
             isQPBought={isQPBought}
             upgrades={upgrades}
             isMobile={isMobile}
