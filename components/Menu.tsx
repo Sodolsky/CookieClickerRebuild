@@ -1,12 +1,6 @@
-import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import useMediaQuery from "../utils/hooks/useMediaQuery";
-import {
-  singleSkillTreeNode,
-  UpgradeInterface,
-  UpgradesInterface,
-} from "../utils/interfaces";
+import { UpgradeInterface, UpgradesInterface } from "../utils/interfaces";
 import { BackendSynchronizationModal } from "./backendSynchronization/BackendSynchronizationModal";
 import { CrystalsDisplay } from "./clickerElements/crystals/CrystalsDisplay";
 import { Store } from "./clickerElements/store/Store";
