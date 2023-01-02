@@ -262,7 +262,6 @@ export const MainPage = () => {
         const localStorageWheelOfFortuneBonus = localStorage.getItem(
           "wheelOfFortuneBonus"
         ) as wheelOfFortuneBonuses;
-        console.log(localStorageWheelOfFortuneBonus);
         const userStats =
           (JSON.parse(localStorage.getItem("userStats")!) as userStats) ??
           initialStateOfUserStats;
