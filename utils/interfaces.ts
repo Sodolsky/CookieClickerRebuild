@@ -317,7 +317,7 @@ export const initialSkillTreeNodes: singleSkillTreeNode[] = [
     price: 100,
     wasBought: false,
     description: "Unlocks the ending.",
-    connectedNodes: [],
+    connectedNodes: ["collector", "wheelOfFortune"],
     image: "eternity.png",
     positionObject: { left: "45%", bottom: "90%" },
   },
