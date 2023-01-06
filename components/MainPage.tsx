@@ -93,7 +93,6 @@ import { Chakra } from "./skillTree/Chakra";
 import { changeWheelOfFortuneBonus } from "../redux/wheelOfFortuneReducer";
 export const MainPage = () => {
   const resetGameLogic = (skillPointsCount: number) => {
-    console.log(skillPointsCount);
     intervalRef.current && clearInterval(intervalRef.current);
     dispatch(addExplosionCookiesCount(0));
     dispatch(clearAllCrystalBallStates());
@@ -312,18 +311,19 @@ export const MainPage = () => {
       }
     }
   }, [authStatus]);
+  //?This UEF clears the CPS if the lightning click shop item was bought
   useEffect(() => {
     if (isClickDoubled) {
       intervalRef.current && clearInterval(intervalRef.current);
     }
   }, [isClickDoubled, intervalRef.current]);
+  //? This UEF controls the main logic of CPS gains
   useEffect(() => {
     if (!statesWereLoaded || isClickDoubled) return;
     const gameLoopInterval = setInterval(() => {
       const cookiesGained = CPS * multiplierCPS;
       dispatch(addCookie(cookiesGained));
       setStatsStateWrapper("totalCookiesCollected", cookiesGained);
-      setStatsStateWrapper("totalTimePlay", 1);
       if (isEqualibrumBought && equalibrumState === "idle") {
         dispatch(addIdleStacks(10));
       }
@@ -338,6 +338,14 @@ export const MainPage = () => {
     equalibrumState,
     isClickDoubled,
   ]);
+  //? This UEF is responsible for tracking the number of time that user has played the game
+  useEffect(() => {
+    if (!statesWereLoaded) return;
+    const playTimeInterval = setInterval(() => {
+      setStatsStateWrapper("totalTimePlay", 1);
+    }, 1000);
+    return () => clearInterval(playTimeInterval);
+  }, [statesWereLoaded]);
   //?This UEF is for changing best Upgrade for TrashToTreasureReducer
   useEffect(() => {
     if (isTrashToTreasureBought) {

@@ -284,7 +284,7 @@ export const initialSkillTreeNodes: singleSkillTreeNode[] = [
       "If you don't have enough cookies. You can buy upgrade with only 3/4 of it's price. Buy you will need to pay your debt.",
     connectedNodes: ["carpetBombing", "timeBomb"],
     image: "debt.png",
-    positionObject: { left: "42.5%", bottom: "50%" },
+    positionObject: { left: "45%", bottom: "50%" },
   },
   {
     name: "perfectAim",
@@ -308,7 +308,7 @@ export const initialSkillTreeNodes: singleSkillTreeNode[] = [
     connectedNodes: ["trashToTreasure", "totalWar"],
     image: "ring.png",
     explanation: '"To Rule Them All..."',
-    positionObject: { left: "45%", bottom: "65%" },
+    positionObject: { left: "45%", bottom: "75%" },
   },
   {
     name: "eternity",
@@ -317,7 +317,7 @@ export const initialSkillTreeNodes: singleSkillTreeNode[] = [
     price: 100,
     wasBought: false,
     description: "Unlocks the ending.",
-    connectedNodes: ["collector", "wheelOfFortune"],
+    connectedNodes: ["collector", "wheelOfFortune", "oneUpgrade"],
     image: "eternity.png",
     positionObject: { left: "45%", bottom: "90%" },
   },
@@ -407,7 +407,7 @@ export const initialSkillTreeNodes: singleSkillTreeNode[] = [
     wasBought: false,
     description:
       "Every 250 crystals that you collected since the start of your journey increase your CPS/CPC base rate by 1.",
-    connectedNodes: ["holyCross", "oneUpgrade"],
+    connectedNodes: ["holyCross"],
     image: "collector.png",
     positionObject: { right: "30%", bottom: "75%" },
   },

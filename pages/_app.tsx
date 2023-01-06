@@ -5,6 +5,8 @@ import "../styles/linedivs.css";
 import "nprogress/nprogress.css";
 import "react-toastify/dist/ReactToastify.css";
 import "react-circular-progressbar/dist/styles.css";
+import "tippy.js/animations/scale.css";
+import "tippy.js/animations/scale-subtle.css";
 import type { AppProps } from "next/app";
 import { Provider } from "react-redux";
 import { store } from "../redux/store";

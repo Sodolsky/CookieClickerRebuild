@@ -45,6 +45,7 @@ export const Node: React.FC<localNodeInterface> = ({
       <Tippy
         allowHTML={true}
         interactive={true}
+        animation={"scale"}
         placement={"auto"}
         content={
           name !== "starterNode" ? (
