@@ -93,7 +93,6 @@ import { Chakra } from "./skillTree/Chakra";
 import { changeWheelOfFortuneBonus } from "../redux/wheelOfFortuneReducer";
 export const MainPage = () => {
   const resetGameLogic = (skillPointsCount: number) => {
-    console.log(skillPointsCount);
     intervalRef.current && clearInterval(intervalRef.current);
     dispatch(addExplosionCookiesCount(0));
     dispatch(clearAllCrystalBallStates());
