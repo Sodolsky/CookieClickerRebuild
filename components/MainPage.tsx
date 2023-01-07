@@ -447,7 +447,7 @@ export const MainPage = () => {
     }
   }, [upgrades, isTrashToTreasureBought, CPS]);
   useEffect(() => {
-    console.error(
+    console.log(
       "Fix a lot of small bugs of states being wrong when logging in and out"
     );
   }, []);
