@@ -461,7 +461,7 @@ export const MainPage = () => {
     //?Here we handle wheel of fortune upgrade discount;
     return wheelOfFortuneBonus ? Math.floor(upgradeCost / 2) : upgradeCost;
   };
-
+  //? If states weren't loaded we show spinner to a user otherwise we render UI
   return !statesWereLoaded ? (
     <div className="h-screen w-screen flex items-center justify-center flex-col gap-2">
       <Loader />
