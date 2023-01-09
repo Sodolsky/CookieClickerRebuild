@@ -7,10 +7,15 @@ import IdleIcon from "../../public/idle32x32.png";
 import { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { CookiesShopItem, singleSkillTreeNode } from "../../utils/interfaces";
+import {
+  CookiesShopItem,
+  nodeNames,
+  singleSkillTreeNode,
+} from "../../utils/interfaces";
 import TimeIcon from "../../public/time.png";
 import CookieIcon from "../../public/cookie.png";
 import ExplosionIcon from "../../public/explosion.png";
+import CrystalsIcon from "../../public/crystal.png";
 import { InlineStat, inlineStatInterface } from "./InlineStat";
 import { numberFormatter, secondsToHms } from "../../utils/utils";
 interface multiplierBreakDownInterface {
@@ -31,6 +36,7 @@ export const StatsModal = () => {
   const [multipliersBreakdown, setMultipliersBreakdown] =
     useState<multiplierBreakDownInterface>(baseMultipliersBreakdownObject);
   const userStats = useSelector((state: RootState) => state.userStats);
+
   const inlineUserStats: inlineStatInterface[] = [
     {
       img: TimeIcon,
@@ -43,6 +49,10 @@ export const StatsModal = () => {
       )}`,
     },
     {
+      img: CrystalsIcon,
+      text: `Total Crystals Collected: ${userStats.totalCrystalsCollected}`,
+    },
+    {
       img: ExplosionIcon,
       text: `Total number of generated explosions: ${userStats.totalNumberOfExplosions}`,
     },
@@ -53,6 +63,9 @@ export const StatsModal = () => {
       )}`,
     },
   ];
+  const allSkillTreeNodes = useSelector(
+    (state: RootState) => state.gameLogic.skillTreeLogic.skillTreeNodes
+  );
   const doubleClickShopItemState = useSelector((state: RootState) =>
     state.gameLogic.shopItems.find((x) => x.name === "doubleClick")
   ) as CookiesShopItem;
