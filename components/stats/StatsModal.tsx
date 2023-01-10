@@ -63,9 +63,9 @@ export const StatsModal = () => {
       )}`,
     },
   ];
-  const allSkillTreeNodes = useSelector(
-    (state: RootState) => state.gameLogic.skillTreeLogic.skillTreeNodes
-  );
+  // const allSkillTreeNodes = useSelector(
+  //   (state: RootState) => state.gameLogic.skillTreeLogic.skillTreeNodes
+  // );
   const doubleClickShopItemState = useSelector((state: RootState) =>
     state.gameLogic.shopItems.find((x) => x.name === "doubleClick")
   ) as CookiesShopItem;
