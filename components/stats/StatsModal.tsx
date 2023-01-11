@@ -63,7 +63,7 @@ export const StatsModal = () => {
       )}`,
     },
   ];
-  // const allSkillTreeNodes = useSelector(
+  // const allSkillTreeNodes = useSelector(`
   //   (state: RootState) => state.gameLogic.skillTreeLogic.skillTreeNodes
   // );
   const doubleClickShopItemState = useSelector((state: RootState) =>
