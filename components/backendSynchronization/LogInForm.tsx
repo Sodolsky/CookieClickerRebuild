@@ -8,8 +8,12 @@ import { toast } from "react-toastify";
 import { auth, db } from "../../firebase";
 import { setUserEmail } from "../../redux/authAndBackendReducer";
 import { setReducerDataFromFirebaseObject } from "../../redux/gameLogicReducer";
+import { setHolyCrossBonusesFromLocalStorage } from "../../redux/holyCrossReducer";
+import { setInitialPerformanceOptions } from "../../redux/performanceReducer";
+import { setStatsState } from "../../redux/userStatsReducer";
+import { changeWheelOfFortuneBonus } from "../../redux/wheelOfFortuneReducer";
 import { baseGameLogicObject } from "../../utils/hooks/useConvertDataToFirebaseObject";
-import { firebaseObjectInterface } from "../../utils/interfaces";
+import { firebaseObjectInterface, utilityObject } from "../../utils/interfaces";
 import {
   defaultDataValidity,
   defaultFormData,
@@ -58,9 +62,24 @@ export const LogInForm: React.FC<LogInFormProps> = ({ setAuth }) => {
         const firebaseData: firebaseObjectInterface = await getDoc(
           doc(db, "Users", userCredential.user.email as string)
         ).then((doc) => doc.data() as firebaseObjectInterface);
+        const firebaseUserUtils: utilityObject = await getDoc(
+          doc(db, "UsersUtils", userCredential.user.email as string)
+        ).then((doc) => doc.data() as utilityObject);
         dispatch(
           setReducerDataFromFirebaseObject(firebaseData ?? baseGameLogicObject)
         );
+        dispatch(setInitialPerformanceOptions(firebaseUserUtils.performance));
+        dispatch(
+          setHolyCrossBonusesFromLocalStorage(
+            firebaseUserUtils.holyCrossBonuses
+          )
+        );
+        if (firebaseUserUtils.wheelOfFortuneBonus) {
+          dispatch(
+            changeWheelOfFortuneBonus(firebaseUserUtils.wheelOfFortuneBonus)
+          );
+        }
+        dispatch(setStatsState(firebaseUserUtils.userStats));
         dispatch(setUserEmail(userCredential.user.email as string));
         setAuth(true);
       })

@@ -18,9 +18,13 @@ export const userStatsReducer = createSlice({
       localStorage.setItem("userStats", JSON.stringify(action.payload));
       return action.payload;
     },
+    clearStats: (state) => {
+      localStorage.removeItem("userStats");
+      return initialStateOfUserStats;
+    },
   },
 });
 
-export const { setStatsState } = userStatsReducer.actions;
+export const { setStatsState, clearStats } = userStatsReducer.actions;
 
 export default userStatsReducer.reducer;

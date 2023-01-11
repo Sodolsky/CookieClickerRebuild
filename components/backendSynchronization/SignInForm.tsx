@@ -7,9 +7,9 @@ import BackArrowImage from "../../public/back.png";
 import Nprogress from "nprogress";
 import { doc, setDoc } from "firebase/firestore";
 import { firebaseObjectInterface, utilityObject } from "../../utils/interfaces";
-import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
+import { useDispatch, useSelector } from "react-redux";
 import { useConvertDataToFirebaseObject } from "../../utils/hooks/useConvertDataToFirebaseObject";
+import { setUserEmail } from "../../redux/authAndBackendReducer";
 export interface formDataInterface {
   email: string;
   password: string;
@@ -49,7 +49,7 @@ export const SignInForm: React.FC<SignInFormInterface> = ({
 }) => {
   const { firebaseObject } = useConvertDataToFirebaseObject();
   const [formData, setFormData] = useState<formDataInterface>(defaultFormData);
-  const gamelogicReducer = useSelector((state: RootState) => state.gameLogic);
+  const dispatch = useDispatch();
   const [formDataValidityOutline, setFormDataValidityOutline] =
     useState<formDataValidityInterface>(defaultDataValidity);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -81,6 +81,7 @@ export const SignInForm: React.FC<SignInFormInterface> = ({
           userCredential.user.email as string,
           firebaseObject
         );
+        dispatch(setUserEmail(userCredential.user.email as string));
         Nprogress.done();
         toast.success(
           "Your account has been created from now on your progress will be saved across all devices!"

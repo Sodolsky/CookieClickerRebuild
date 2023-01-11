@@ -213,6 +213,7 @@ export const MainPage = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     if (typeof window !== "undefined") {
+      console.log(authStatus, auth.currentUser);
       if (authStatus === "ready" && !auth.currentUser) {
         const localStorageCookieCount =
           Number(localStorage.getItem("cookieCount")) ?? 0;
@@ -278,7 +279,7 @@ export const MainPage = () => {
         dispatch(setInitialCrystals(localStorageCrystalsCount));
         dispatch(setInitialCrystalShopItems(locaStorageCrystalUpgrades));
         dispatch(stateWereLoaded(true));
-      } else if (authStatus === "ready" && auth) {
+      } else if (authStatus === "ready" && auth.currentUser) {
         const getFirebaseData = async () => {
           const firebaseData: firebaseObjectInterface =
             (await getDoc(
@@ -310,7 +311,7 @@ export const MainPage = () => {
         getFirebaseData();
       }
     }
-  }, [authStatus]);
+  }, [authStatus, auth.currentUser]);
   //?This UEF clears the CPS if the lightning click shop item was bought
   useEffect(() => {
     if (isClickDoubled) {
@@ -448,7 +449,7 @@ export const MainPage = () => {
   }, [upgrades, isTrashToTreasureBought, CPS]);
   useEffect(() => {
     console.log(
-      "Fix a lot of small bugs of states being wrong when logging in and out"
+      "Fix a lot of small bugs of states being wrong when logging in and out | Change how wheel of fortune skill points bonus is saved"
     );
   }, []);
   const getUpgradeCost = (x: number) => {

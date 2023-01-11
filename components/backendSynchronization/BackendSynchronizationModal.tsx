@@ -1,9 +1,11 @@
 import { onAuthStateChanged } from "firebase/auth";
 import Image from "next/image";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { auth } from "../../firebase";
 import SynchronizeIcon from "../../public/synchronize.png";
+import { setAuthStatus } from "../../redux/authAndBackendReducer";
+import { RootState } from "../../redux/store";
 import { LoggedInModalView } from "./LoggedInModalView";
 import { LogInForm } from "./LogInForm";
 export const BackendSynchronizationModal = () => {
@@ -11,11 +13,15 @@ export const BackendSynchronizationModal = () => {
   const dispatch = useDispatch();
   const [userDataIsReady, setUserDataIsReady] = useState<boolean>(true);
   const [isUserAuthed, setIsUserAuthed] = useState<boolean>(false);
+  const backendData = useSelector((state: RootState) => state.authAndBackend);
+
   auth.onAuthStateChanged((user) => {
     if (user) {
       setIsUserAuthed(true);
+      dispatch(setAuthStatus(true));
     } else {
       setIsUserAuthed(false);
+      dispatch(setAuthStatus(false));
     }
     setUserDataIsReady(true);
   });
@@ -30,7 +36,7 @@ export const BackendSynchronizationModal = () => {
       <label htmlFor="BackendModal" className={`modal`}>
         <label className="modal-box relative bg-white">
           {userDataIsReady ? (
-            isUserAuthed ? (
+            isUserAuthed && backendData.userEmail ? (
               <LoggedInModalView setAuth={setIsUserAuthed} />
             ) : (
               <LogInForm setAuth={setIsUserAuthed} />
