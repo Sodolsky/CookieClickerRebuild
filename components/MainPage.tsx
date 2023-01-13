@@ -186,7 +186,7 @@ export const MainPage = () => {
   });
   useEffect(() => {
     const min = 15;
-    const max = 75;
+    const max = 100;
     const holyCrossDuration = 15000;
     const randTime = generateRandomNumber(min, max);
 
