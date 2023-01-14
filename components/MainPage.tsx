@@ -180,7 +180,7 @@ export const MainPage = () => {
   const wheelOfFortuneBonus =
     useSelector((state: RootState) => state.wheelOfFortune.currentBonus) ===
     "cheaperUpgrades";
-  const equalibrumTimer = useEqualibrumTimer({
+  const equalibrumTimer = useEqualibrumTimer({ 
     equlibrumState: equalibrumState,
     isEqualibrumBought: isEqualibrumBought,
   });
@@ -213,7 +213,6 @@ export const MainPage = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     if (typeof window !== "undefined") {
-      console.log(authStatus, auth.currentUser);
       if (authStatus === "ready" && !auth.currentUser) {
         const localStorageCookieCount =
           Number(localStorage.getItem("cookieCount")) ?? 0;

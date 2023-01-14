@@ -71,10 +71,7 @@ export const CookiesDisplay: React.FC<CookiesDisplayProps> = ({ CPS, CPC }) => {
           height={32}
           width={32}
         />
-        <span>
-          + {numberFormatter.format(explosionCookiesCount)}
-          COOKIES!
-        </span>
+        <span>+ {numberFormatter.format(explosionCookiesCount)} COOKIES!</span>
       </div>
 
       <div className="text-lg lg:text-xl">
