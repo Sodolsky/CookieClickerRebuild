@@ -4,12 +4,13 @@ import { useCPCMultiplier } from "../../utils/hooks/useCPCMultiplier";
 import { useCPSMultiplier } from "../../utils/hooks/useCPSMultiplier";
 import ClickIcon from "../../public/click32x32.png";
 import IdleIcon from "../../public/idle32x32.png";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import {
   CookiesShopItem,
   nodeNames,
+  ShopUpgradesNames,
   singleSkillTreeNode,
 } from "../../utils/interfaces";
 import TimeIcon from "../../public/time.png";
@@ -30,7 +31,12 @@ const baseMultipliersBreakdownObject: multiplierBreakDownInterface = {
   CPSBaseRate: 1,
   CPSMultiplier: 1,
 };
+interface statsDisplayItem {
+  [key: string]: number;
+}
 export const StatsModal = () => {
+  // const statsDisplayArrayCPC = useRef<statsDisplayItem>({});
+  // const statsDisplayArrayCPS: statsDisplayItem[] = [];
   const { multiplierCPS } = useCPSMultiplier();
   const { isClickDoubled, multiplier } = useCPCMultiplier();
   const [multipliersBreakdown, setMultipliersBreakdown] =
@@ -177,12 +183,21 @@ export const StatsModal = () => {
   //? Use Effect that counts multiplier of CPC
   useEffect(() => {
     let multiplier: number = 1;
-    if (isCrystalBallBought) multiplier += bonusFromCrystalBall;
-    if (isClickingWithLoveBought) multiplier += 2;
-    if (wheelOfFortuneBonus) multiplier += 3;
-    if (isHolyCrossBought) multiplier += bonusFromHolyCrossCPC;
-    if (isEqualibrumBought && equalibrumState === "idleExhaustion")
+    if (isCrystalBallBought) {
+      multiplier += bonusFromCrystalBall;
+    }
+    if (isClickingWithLoveBought) {
+      multiplier += 2;
+    }
+    if (wheelOfFortuneBonus) {
       multiplier += 3;
+    }
+    if (isHolyCrossBought) {
+      multiplier += bonusFromHolyCrossCPC;
+    }
+    if (isEqualibrumBought && equalibrumState === "idleExhaustion") {
+      multiplier += 3;
+    }
     setMultipliersBreakdown((prev) => ({ ...prev, CPCMultiplier: multiplier }));
   }, [
     isCrystalBallBought,
