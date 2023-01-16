@@ -180,7 +180,7 @@ export const MainPage = () => {
   const wheelOfFortuneBonus =
     useSelector((state: RootState) => state.wheelOfFortune.currentBonus) ===
     "cheaperUpgrades";
-  const equalibrumTimer = useEqualibrumTimer({ 
+  const equalibrumTimer = useEqualibrumTimer({
     equlibrumState: equalibrumState,
     isEqualibrumBought: isEqualibrumBought,
   });
@@ -447,9 +447,7 @@ export const MainPage = () => {
     }
   }, [upgrades, isTrashToTreasureBought, CPS]);
   useEffect(() => {
-    console.log(
-      "Fix a lot of small bugs of states being wrong when logging in and out | Change how wheel of fortune skill points bonus is saved"
-    );
+    console.log("FChange how wheel of fortune skill points bonus is saved");
   }, []);
   const getUpgradeCost = (x: number) => {
     //?Here we handle every upgrade cost reduction from skill tree nodes;
