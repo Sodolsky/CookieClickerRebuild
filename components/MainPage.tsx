@@ -447,7 +447,7 @@ export const MainPage = () => {
     }
   }, [upgrades, isTrashToTreasureBought, CPS]);
   useEffect(() => {
-    console.log("FChange how wheel of fortune skill points bonus is saved");
+    console.log("Change how wheel of fortune skill points bonus is saved");
   }, []);
   const getUpgradeCost = (x: number) => {
     //?Here we handle every upgrade cost reduction from skill tree nodes;
