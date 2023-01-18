@@ -6,6 +6,7 @@ import { CrystalsDisplay } from "./clickerElements/crystals/CrystalsDisplay";
 import { Store } from "./clickerElements/store/Store";
 import { PerformanceModal } from "./performance/PerformanceModal";
 import { Chakra } from "./skillTree/Chakra";
+import { EndgameModal } from "./skillTree/EndgameModal";
 import { EqualibrumStacksDisplay } from "./skillTree/EqualibrumStacksDisplay";
 import { EternalTalk } from "./skillTree/EternalTalk";
 import { ResetModal } from "./skillTree/ResetModal";
@@ -20,6 +21,7 @@ interface MenuProps {
   isMobile: boolean | null;
   isUserOnLaptop: boolean | null;
   isChakraBought: boolean;
+  isEternityBought: boolean;
 }
 export const Menu: React.FC<MenuProps> = ({
   isEqualibrumBought,
@@ -30,10 +32,12 @@ export const Menu: React.FC<MenuProps> = ({
   isMobile,
   isUserOnLaptop,
   isChakraBought,
+  isEternityBought,
 }) => {
   const shopItems = useSelector(
     (state: RootState) => state.gameLogic.shopItems
   );
+
   /* To avoid Menu overflowing certain upgrades view on devices with screen size between 768px-1280px we render
   bigger menu elements such as Chakra and CrystalCount in top left screen in MainMenu component otherwise
   we render them here in menu.
@@ -51,6 +55,7 @@ export const Menu: React.FC<MenuProps> = ({
       <StatsModal />
       <BackendSynchronizationModal />
       <Store />
+      {isEternityBought && <EndgameModal />}
       {isEqualibrumBought && <EqualibrumStacksDisplay />}
       {Object.values(upgrades)
         .filter((x) => {
@@ -69,7 +74,8 @@ export const Menu: React.FC<MenuProps> = ({
         .reduce((acc, a) => {
           if (acc && a.numberOfUpgrades >= 10) return acc;
           return (acc = false);
-        }, true) && <ResetModal resetGameLogic={resetGameLogic} />}
+        }, true) &&
+        !isEternityBought && <ResetModal resetGameLogic={resetGameLogic} />}
       {shopItems.find((x) => x.name === "unlockSkillTree")?.wasBought &&
       !isSkillTreeUnlocked ? (
         <EternalTalk resetGameLogic={resetGameLogic} />

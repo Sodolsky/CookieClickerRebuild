@@ -123,6 +123,12 @@ export const MainPage = () => {
         (x) => x.name === "theoryOfEverything"
       ) as singleSkillTreeNode
   ).wasBought;
+  const isEternityBought = useSelector(
+    (state: RootState) =>
+      state.gameLogic.skillTreeLogic.skillTreeNodes.find(
+        (x) => x.name === "eternity"
+      ) as singleSkillTreeNode
+  ).wasBought;
   const isEvenMoreQuestionsBought = useSelector(
     (state: RootState) =>
       state.gameLogic.skillTreeLogic.skillTreeNodes.find(
@@ -583,6 +589,7 @@ export const MainPage = () => {
             isMobile={isMobile}
             isUserOnLaptop={isUserOnLaptop}
             isChakraBought={isChakraBought}
+            isEternityBought={isEternityBought}
           />
         </main>
       </>

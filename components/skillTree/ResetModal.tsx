@@ -10,6 +10,7 @@ import {
 import { generateRandomNumber } from "../../utils/utils";
 import skillPointIcon from "../../public/skillPoint16x16.png";
 import { changeWheelOfFortuneBonus } from "../../redux/wheelOfFortuneReducer";
+const randomQuote: string[] = [];
 export interface ResetModalProps {
   resetGameLogic: (skillPointsCount: number) => void;
 }
