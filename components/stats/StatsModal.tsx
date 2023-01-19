@@ -35,8 +35,7 @@ interface statsDisplayItem {
   [key: string]: number;
 }
 export const StatsModal = () => {
-  // const statsDisplayArrayCPC = useRef<statsDisplayItem>({});
-  // const statsDisplayArrayCPS: statsDisplayItem[] = [];
+  
   const { multiplierCPS } = useCPSMultiplier();
   const { isClickDoubled, multiplier } = useCPCMultiplier();
   const [multipliersBreakdown, setMultipliersBreakdown] =
