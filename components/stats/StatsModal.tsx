@@ -31,11 +31,8 @@ const baseMultipliersBreakdownObject: multiplierBreakDownInterface = {
   CPSBaseRate: 1,
   CPSMultiplier: 1,
 };
-interface statsDisplayItem {
-  [key: string]: number;
-}
+
 export const StatsModal = () => {
-  
   const { multiplierCPS } = useCPSMultiplier();
   const { isClickDoubled, multiplier } = useCPCMultiplier();
   const [multipliersBreakdown, setMultipliersBreakdown] =
