@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addCookie,
+  addGameResets,
   changeCPC,
   changeCPS,
   resetGameAndAddSkillPoints,
@@ -99,7 +100,6 @@ export const MainPage = () => {
     dispatch(clearTTTState());
     dispatch(clearEqualibrumState());
     dispatch(resetGameAndAddSkillPoints(skillPointsCount));
-
     dispatch(setInitialSkillTree(true));
   };
   const bgMusicRef = useRef<null | HTMLAudioElement>(null);
@@ -222,6 +222,8 @@ export const MainPage = () => {
       if (authStatus === "ready" && !auth.currentUser) {
         const localStorageCookieCount =
           Number(localStorage.getItem("cookieCount")) ?? 0;
+        const localStorageNumberOfGameResets =
+          Number(localStorage.getItem("numberOfResets")) ?? 0;
         const localStorageCrystalsCount =
           Number(localStorage.getItem("crystals")) ?? 0;
         const locaStorageCrystalUpgrades =
@@ -281,6 +283,7 @@ export const MainPage = () => {
         dispatch(setInitialCookieCount(localStorageCookieCount));
         dispatch(setInitialCPS(CPSCount));
         dispatch(setInitialCPC(CPCCount));
+        dispatch(addGameResets(localStorageNumberOfGameResets));
         dispatch(setInitialCrystals(localStorageCrystalsCount));
         dispatch(setInitialCrystalShopItems(locaStorageCrystalUpgrades));
         dispatch(stateWereLoaded(true));

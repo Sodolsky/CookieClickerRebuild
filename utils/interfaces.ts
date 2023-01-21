@@ -8,6 +8,7 @@ export interface firebaseObjectInterface {
   cookieCount: number;
   skillTreeUnlocked: boolean;
   skillPoints: number;
+  numberOfResets: number;
   skillTreeNodes: singleSkillTreeNode[];
 }
 export interface userStats {

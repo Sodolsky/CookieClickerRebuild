@@ -26,6 +26,7 @@ export const baseGameLogicObject: firebaseObjectInterface = {
   skillTreeNodes: initialSkillTreeNodes,
   skillTreeUnlocked: true,
   shopItems: initialStateOfShopItems,
+  numberOfResets: 0,
 };
 export const baseUtilityObject: utilityObject = {
   holyCrossBonuses: initialHolyCrossBonuses,
@@ -87,6 +88,7 @@ export const useConvertDataToFirebaseObject = () => {
       skillTreeNodes: gameLogicReducer.skillTreeLogic.skillTreeNodes,
       skillTreeUnlocked: gameLogicReducer.skillTreeLogic.isSkillTreeUnlocked,
       shopItems: gameLogicReducer.shopItems,
+      numberOfResets: gameLogicReducer.numberOfResets,
     };
     prevStateOfFirebaseObject.current = firebaseObject;
     //!Big performance hit needs to be optmised ASAP

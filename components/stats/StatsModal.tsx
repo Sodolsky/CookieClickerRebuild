@@ -4,19 +4,15 @@ import { useCPCMultiplier } from "../../utils/hooks/useCPCMultiplier";
 import { useCPSMultiplier } from "../../utils/hooks/useCPSMultiplier";
 import ClickIcon from "../../public/click32x32.png";
 import IdleIcon from "../../public/idle32x32.png";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import {
-  CookiesShopItem,
-  nodeNames,
-  ShopUpgradesNames,
-  singleSkillTreeNode,
-} from "../../utils/interfaces";
+import { CookiesShopItem, singleSkillTreeNode } from "../../utils/interfaces";
 import TimeIcon from "../../public/time.png";
 import CookieIcon from "../../public/cookie.png";
 import ExplosionIcon from "../../public/explosion.png";
 import CrystalsIcon from "../../public/crystal.png";
+import ResetGameIcon from "../../public/reset.png";
 import { InlineStat, inlineStatInterface } from "./InlineStat";
 import { numberFormatter, secondsToHms } from "../../utils/utils";
 interface multiplierBreakDownInterface {
@@ -38,7 +34,9 @@ export const StatsModal = () => {
   const [multipliersBreakdown, setMultipliersBreakdown] =
     useState<multiplierBreakDownInterface>(baseMultipliersBreakdownObject);
   const userStats = useSelector((state: RootState) => state.userStats);
-
+  const numberOfGameResets = useSelector(
+    (state: RootState) => state.gameLogic.numberOfResets
+  );
   const inlineUserStats: inlineStatInterface[] = [
     {
       img: TimeIcon,
@@ -64,6 +62,10 @@ export const StatsModal = () => {
         userStats.cookiesGainedFromExplosion
       )}`,
     },
+    {
+      img: ResetGameIcon,
+      text: `Number of game resets: ${numberOfGameResets}`,
+    },
   ];
   // const allSkillTreeNodes = useSelector(`
   //   (state: RootState) => state.gameLogic.skillTreeLogic.skillTreeNodes
@@ -71,8 +73,13 @@ export const StatsModal = () => {
   const doubleClickShopItemState = useSelector((state: RootState) =>
     state.gameLogic.shopItems.find((x) => x.name === "doubleClick")
   ) as CookiesShopItem;
+
   const isClickDoubledFromShop =
     doubleClickShopItemState.wasBought && !doubleClickShopItemState.isLocked;
+  const isSkillTreeUnlocked = useSelector(
+    (state: RootState) => state.gameLogic.skillTreeLogic.isSkillTreeUnlocked
+  );
+
   const isClickTripledFromSkillTreeUpgrades = useSelector(
     (state: RootState) =>
       state.gameLogic.skillTreeLogic.skillTreeNodes.find(

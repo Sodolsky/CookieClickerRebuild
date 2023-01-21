@@ -35,6 +35,7 @@ interface InitialGameLogicStateInterface {
   crystalShopItems: CrystalShopItems;
   shopItems: ShopItems;
   areStatesLoaded: boolean;
+  numberOfResets: number;
 }
 interface InitialNumberOfUpgradesInterface {
   number: number;
@@ -60,6 +61,7 @@ const initialGameLogicState: InitialGameLogicStateInterface = {
   upgrades: initialUpgradesState,
   crystalShopItems: initialStateOfCrystalShopItems,
   shopItems: initialStateOfShopItems,
+  numberOfResets: 0,
   areStatesLoaded: false,
 };
 export const gameMechanicSlice = createSlice({
@@ -311,6 +313,7 @@ export const gameMechanicSlice = createSlice({
           skillTreeNodes: action.payload.skillTreeNodes,
         },
         upgrades: action.payload.upgrades,
+        numberOfResets: action.payload.numberOfResets,
       };
     },
     buySkillTreeUpgrade(state, action: PayloadAction<nodeNames>) {
@@ -346,11 +349,14 @@ export const gameMechanicSlice = createSlice({
         "skillPoints",
         `${state.skillTreeLogic.skillPoints + action.payload}`
       );
+      localStorage.setItem("numberOfResets", `${state.numberOfResets + 1}`);
       clearLocalStorageFromPreviousState();
       const skillTreeLogicCopy = cloneDeep(state.skillTreeLogic);
       const crystalCount = state.cookiesLogic.crystals;
+      const numberOfResets = state.numberOfResets + 1;
       const crystalShopItems = state.crystalShopItems;
       const newSkillPoints = state.skillTreeLogic.skillPoints + action.payload;
+
       const returnObject: InitialGameLogicStateInterface = {
         ...initialGameLogicState,
         skillTreeLogic: {
@@ -362,6 +368,7 @@ export const gameMechanicSlice = createSlice({
           crystals: crystalCount,
         },
         crystalShopItems: crystalShopItems,
+        numberOfResets: numberOfResets,
         areStatesLoaded: true,
       };
       return returnObject;
@@ -379,6 +386,16 @@ export const gameMechanicSlice = createSlice({
           ...state.skillTreeLogic,
           skillPoints: newSkillPoints,
         },
+      };
+    },
+    addGameResets(state, action: PayloadAction<number>) {
+      localStorage.setItem(
+        "numberOfResets",
+        `${state.numberOfResets + action.payload}`
+      );
+      return {
+        ...state,
+        numberOfResets: action.payload,
       };
     },
     resetSkillTree(state) {
@@ -431,5 +448,6 @@ export const {
   setSkillTreeFromDB,
   setReducerDataFromFirebaseObject,
   addSkillPoints,
+  addGameResets,
 } = gameMechanicSlice.actions;
 export default gameMechanicSlice.reducer;
