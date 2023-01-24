@@ -10,7 +10,17 @@ import {
 import { generateRandomNumber } from "../../utils/utils";
 import skillPointIcon from "../../public/skillPoint16x16.png";
 import { changeWheelOfFortuneBonus } from "../../redux/wheelOfFortuneReducer";
-const randomQuote: string[] = [];
+interface resetGameQuote {
+  quote: string;
+  resetsRequired: number;
+}
+const loreQuotes: resetGameQuote[] = [
+  {
+    quote:
+      "Your only starting to gather some of my POWER! Do you feel it? Do you feel the pain? You made an sacrifice you won't last long...",
+    resetsRequired: 1,
+  },
+];
 export interface ResetModalProps {
   resetGameLogic: (skillPointsCount: number) => void;
 }
@@ -29,6 +39,9 @@ export const ResetModal: React.FC<ResetModalProps> = ({ resetGameLogic }) => {
   ).wasBought;
   const [wasWheelOfFortuneRolled, setWasWheelOfFortuneRolled] = useState(false);
   const [wheelOfFortuneText, setWheelOfFortuneText] = useState<string>("");
+  const numberOfResets = useSelector(
+    (state: RootState) => state.gameLogic.numberOfResets
+  );
   const dispatch = useDispatch();
   const wheelOfFortuneBonuses: wheelOfFortuneBonuses[] = [
     "CPC",
@@ -66,6 +79,10 @@ export const ResetModal: React.FC<ResetModalProps> = ({ resetGameLogic }) => {
       <label htmlFor="resetModal" className={`modal`}>
         <div className="modal-box">
           <div className="flex gap-2 justify-center items-center flex-col">
+            <q className="text-xl text-center">
+              {loreQuotes.find((x) => x.resetsRequired === numberOfResets)
+                ?.quote ?? "Soon it will be over! You will get consumed"}
+            </q>
             {isWheelOfFortuneBought && (
               <button
                 className="btn"
