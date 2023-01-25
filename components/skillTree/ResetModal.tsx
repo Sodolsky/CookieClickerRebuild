@@ -20,6 +20,11 @@ const loreQuotes: resetGameQuote[] = [
       "Your only starting to gather some of my POWER! Do you feel it? Do you feel the pain? You made an sacrifice you won't last long...",
     resetsRequired: 1,
   },
+  {
+    quote:
+      "I bet that you are feeeling it? Do you like it? Do you like my power? You won't survive for long tho!",
+    resetsRequired: 2,
+  },
 ];
 export interface ResetModalProps {
   resetGameLogic: (skillPointsCount: number) => void;
