@@ -14,6 +14,7 @@ interface resetGameQuote {
   quote: string;
   resetsRequired: number;
 }
+//TODO Add new Upgrades every couple of resets
 const loreQuotes: resetGameQuote[] = [
   {
     quote:
@@ -24,6 +25,11 @@ const loreQuotes: resetGameQuote[] = [
     quote:
       "I bet that you are feeeling it? Do you like it? Do you like my power? You won't survive for long tho!",
     resetsRequired: 2,
+  },
+  {
+    quote:
+      "Hmmm i see that you are resisting the power pretty well... I guess i'll make it a little bit difficult for you to obtain more of it! Soon you will be dead anyways",
+    resetsRequired: 3,
   },
 ];
 export interface ResetModalProps {
