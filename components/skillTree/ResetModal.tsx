@@ -14,7 +14,7 @@ interface resetGameQuote {
   quote: string;
   resetsRequired: number;
 }
-//TODO Add new Upgrades every couple of resets
+
 const loreQuotes: resetGameQuote[] = [
   {
     quote:
