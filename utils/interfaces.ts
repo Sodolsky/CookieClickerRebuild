@@ -172,8 +172,7 @@ export const initialSkillTreeNodes: singleSkillTreeNode[] = [
     nameForPlayer: "Quantum Physics",
     price: 16,
     wasBought: false,
-    description:
-      "Adds 2 new upgrades and doubles the number of skill points you get from game resets.",
+    description: "Doubles the number of skill points you get from game resets.",
     connectedNodes: ["crystalMine"],
     image: "physics.png",
     positionObject: { left: "6%", bottom: "16%" },

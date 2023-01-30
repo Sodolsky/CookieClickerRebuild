@@ -186,6 +186,9 @@ export const MainPage = () => {
   const wheelOfFortuneBonus =
     useSelector((state: RootState) => state.wheelOfFortune.currentBonus) ===
     "cheaperUpgrades";
+  const numberOfResets = useSelector(
+    (state: RootState) => state.gameLogic.numberOfResets
+  );
   const equalibrumTimer = useEqualibrumTimer({
     equlibrumState: equalibrumState,
     isEqualibrumBought: isEqualibrumBought,
