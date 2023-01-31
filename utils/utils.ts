@@ -6,6 +6,7 @@ import {
   ShopUpgradesNames,
   UpgradeInterface,
   UpgradesInterface,
+  UpgradesNames,
   userStats,
 } from "./interfaces";
 
@@ -155,4 +156,18 @@ export const secondsToHms = (d: number): string => {
   let mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
   let sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
   return hDisplay + mDisplay + sDisplay;
+};
+export const upgradesFilterFunction = (
+  upgrade: UpgradeInterface,
+  numberOfResets: number
+) => {
+  const allUnlockableUpgradesNames: UpgradesNames[] = [
+    "upgrade11",
+    "upgrade12",
+  ];
+  if (!allUnlockableUpgradesNames.some((x) => x === upgrade.upgradeName))
+    return true;
+  if (upgrade.upgradeName === "upgrade11" && numberOfResets > 3) return true;
+  if (upgrade.upgradeName === "upgrade12" && numberOfResets > 5) return true;
+  return false;
 };

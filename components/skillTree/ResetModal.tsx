@@ -36,6 +36,11 @@ const loreQuotes: resetGameQuote[] = [
       "Hmm you menaged to beat my helpers! Congratulations! Still soon it will be all over... ",
     resetsRequired: 4,
   },
+  {
+    quote:
+      "You little fucker! You are getting a little annoying! Time to put you in your place... Lets see how you will handle that!",
+    resetsRequired: 5,
+  },
 ];
 export interface ResetModalProps {
   resetGameLogic: (skillPointsCount: number) => void;

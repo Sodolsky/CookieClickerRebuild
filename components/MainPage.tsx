@@ -64,6 +64,7 @@ import {
   generateRandomNumber,
   getBoughtUpgrades,
   setStatsStateWrapper,
+  upgradesFilterFunction,
 } from "../utils/utils";
 import { useAuthStatus } from "../utils/hooks/useAuthStatus";
 import { getDoc, doc } from "firebase/firestore";
@@ -501,16 +502,7 @@ export const MainPage = () => {
                 {Object.values(upgrades)
                   .filter((x) => {
                     const upgrade = x as UpgradeInterface;
-                    if (
-                      upgrade.upgradeName === "upgrade11" ||
-                      upgrade.upgradeName === "upgrade12"
-                    ) {
-                      if (isQPBought) {
-                        return x;
-                      }
-                    } else {
-                      return x;
-                    }
+                    return upgradesFilterFunction(upgrade, numberOfResets);
                   })
                   .sort((a: UpgradeInterface, b: UpgradeInterface) =>
                     a.CookiesPerClickBonus > b.CookiesPerClickBonus ? 1 : -1
@@ -560,16 +552,7 @@ export const MainPage = () => {
                 Object.values(upgrades)
                   .filter((x) => {
                     const upgrade = x as UpgradeInterface;
-                    if (
-                      upgrade.upgradeName === "upgrade11" ||
-                      upgrade.upgradeName === "upgrade12"
-                    ) {
-                      if (isQPBought) {
-                        return x;
-                      }
-                    } else {
-                      return x;
-                    }
+                    return upgradesFilterFunction(upgrade, numberOfResets);
                   })
                   .sort(
                     (a: UpgradeInterface, b: UpgradeInterface) =>
@@ -590,12 +573,12 @@ export const MainPage = () => {
             isEqualibrumBought={isEqualibrumBought}
             isSkillTreeUnlocked={isSkillTreeUnlocked}
             resetGameLogic={resetGameLogic}
-            isQPBought={isQPBought}
             upgrades={upgrades}
             isMobile={isMobile}
             isUserOnLaptop={isUserOnLaptop}
             isChakraBought={isChakraBought}
             isEternityBought={isEternityBought}
+            numberOfResets={numberOfResets}
           />
         </main>
       </>

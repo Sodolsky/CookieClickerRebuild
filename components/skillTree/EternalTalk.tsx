@@ -53,7 +53,7 @@ export const EternalTalk: React.FC<EternalTalkProps> = ({ resetGameLogic }) => {
   return (
     <>
       <figure
-        className={`absolute bottom-2 left-2 md:top-4 md:left-4 cursor-pointer ${
+        className={`cursor-pointer ${
           showAndPulseImage.pulseImage && "animate-pulse "
         } ${showAndPulseImage.showImage ? "block" : "hidden"}`}
         onClick={showEternalTalk}

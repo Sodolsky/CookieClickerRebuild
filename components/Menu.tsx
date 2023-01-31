@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { UpgradeInterface, UpgradesInterface } from "../utils/interfaces";
+import { upgradesFilterFunction } from "../utils/utils";
 import { BackendSynchronizationModal } from "./backendSynchronization/BackendSynchronizationModal";
 import { CrystalsDisplay } from "./clickerElements/crystals/CrystalsDisplay";
 import { Store } from "./clickerElements/store/Store";
@@ -15,24 +16,24 @@ import { StatsModal } from "./stats/StatsModal";
 interface MenuProps {
   isEqualibrumBought: boolean;
   isSkillTreeUnlocked: boolean;
-  isQPBought: boolean;
   upgrades: UpgradesInterface;
   resetGameLogic: (skillPoints: number) => void;
   isMobile: boolean | null;
   isUserOnLaptop: boolean | null;
   isChakraBought: boolean;
   isEternityBought: boolean;
+  numberOfResets: number;
 }
 export const Menu: React.FC<MenuProps> = ({
   isEqualibrumBought,
   isSkillTreeUnlocked,
   resetGameLogic,
-  isQPBought,
   upgrades,
   isMobile,
   isUserOnLaptop,
   isChakraBought,
   isEternityBought,
+  numberOfResets,
 }) => {
   const shopItems = useSelector(
     (state: RootState) => state.gameLogic.shopItems
@@ -57,24 +58,16 @@ export const Menu: React.FC<MenuProps> = ({
       <Store />
       {isEternityBought && <EndgameModal />}
       {isEqualibrumBought && <EqualibrumStacksDisplay />}
-      {Object.values(upgrades)
-        .filter((x) => {
-          const upgrade = x as UpgradeInterface;
-          if (
-            upgrade.upgradeName === "upgrade11" ||
-            upgrade.upgradeName === "upgrade12"
-          ) {
-            if (isQPBought) {
-              return x;
-            }
-          } else {
-            return x;
-          }
-        })
-        .reduce((acc, a) => {
-          if (acc && a.numberOfUpgrades >= 0) return acc;
-          return (acc = false);
-        }, true) &&
+      {isSkillTreeUnlocked &&
+        Object.values(upgrades)
+          .filter((x) => {
+            const upgrade = x as UpgradeInterface;
+            return upgradesFilterFunction(upgrade, numberOfResets);
+          })
+          .reduce((acc, a) => {
+            if (acc && a.numberOfUpgrades >= 0) return acc;
+            return (acc = false);
+          }, true) &&
         !isEternityBought && <ResetModal resetGameLogic={resetGameLogic} />}
       {shopItems.find((x) => x.name === "unlockSkillTree")?.wasBought &&
       !isSkillTreeUnlocked ? (
