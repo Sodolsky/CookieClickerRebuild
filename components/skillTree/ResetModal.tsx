@@ -33,7 +33,7 @@ const loreQuotes: resetGameQuote[] = [
   },
   {
     quote:
-      "Hmm you menaged to beat my helpers! Congratulations! Still soon it will be all over... ",
+      "Hmm you menaged to beat my helpers! Congratulations! Still soon it will be all over...",
     resetsRequired: 4,
   },
   {
