@@ -125,7 +125,7 @@ export const numberFormatter = Intl.NumberFormat("en", {
   maximumSignificantDigits: 3,
 });
 export const setStatsStateWrapper = (stat: keyof userStats, value: number) => {
-  //?Creating stateOfStats clone so it isnt read only;
+  //?Creating stateOfStats clone so it isnt read only and we can overwrite it;
   const stateOfStats = store.getState().userStats;
   const stateClone = cloneDeep(stateOfStats);
   store.dispatch(
