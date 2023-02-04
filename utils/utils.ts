@@ -80,7 +80,7 @@ export const shouldShopItemBeShown = (
       }
       break;
     default:
-      console.log("Something went wrong with switch statement");
+      console.error("Something went wrong with switch statement ");
   }
   return returnResult;
 };
