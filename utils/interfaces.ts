@@ -451,7 +451,8 @@ export type UpgradesNames =
   | "upgrade10"
   | "upgrade11"
   | "upgrade12"
-  | "upgrade13";
+  | "upgrade13"
+  | "upgrade14";
 export type ShopUpgradesNames =
   | "upgrade1Double"
   | "upgrade2Double"
@@ -737,6 +738,7 @@ export interface UpgradesInterface {
   upgrade11: UpgradeInterface;
   upgrade12: UpgradeInterface;
   upgrade13: UpgradeInterface;
+  upgrade14: UpgradeInterface;
 }
 export const initialUpgradesState: UpgradesInterface = {
   upgrade1: {
@@ -868,5 +870,15 @@ export const initialUpgradesState: UpgradesInterface = {
     upgradeName: "upgrade13",
     upgradeNameForPlayer: "Unknown Civilization",
     image: "/upgrade13.png",
+  },
+  upgrade14: {
+    CookiesPerClickBonus: 13_230_000_000_000_000_000_000,
+    CookiesPerSecondBonus: 43_384_000_000_000_000_000_000,
+    cost: 135_000_000_000_000_000_000_000,
+    feeIndex: 1.15,
+    numberOfUpgrades: 0,
+    upgradeName: "upgrade14",
+    upgradeNameForPlayer: "Yourself",
+    image: "/upgrade14.png",
   },
 };

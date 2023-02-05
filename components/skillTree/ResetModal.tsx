@@ -51,6 +51,11 @@ const loreQuotes: resetGameQuote[] = [
       "You know what? I get it you won this time, but honestly its time to bring the big guns! There is no way you can achive full control over Aliens, this time you will give up!",
     resetsRequired: 7,
   },
+  {
+    quote:
+      "THERE IS NO WAY THERE IS NO WAY! HMM... The aliens couldn't control you, well its time to see if you can control yourself that well...",
+    resetsRequired: 8,
+  },
 ];
 export interface ResetModalProps {
   resetGameLogic: (skillPointsCount: number) => void;
