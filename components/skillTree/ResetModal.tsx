@@ -159,7 +159,7 @@ export const ResetModal: React.FC<ResetModalProps> = ({ resetGameLogic }) => {
                   setWasWheelOfFortuneRolled(false);
                 }}
               >
-                Reset
+                Reset Game
               </button>
             </div>
           </div>
