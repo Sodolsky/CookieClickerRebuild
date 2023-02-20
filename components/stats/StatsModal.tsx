@@ -13,6 +13,7 @@ import CookieIcon from "../../public/cookie.png";
 import ExplosionIcon from "../../public/explosion.png";
 import CrystalsIcon from "../../public/crystal.png";
 import ResetGameIcon from "../../public/reset.png";
+import SkillPointIcon from "../../public/skillPoint16x16.png";
 import { InlineStat, inlineStatInterface } from "./InlineStat";
 import { numberFormatter, secondsToHms } from "../../utils/utils";
 interface multiplierBreakDownInterface {
@@ -34,8 +35,15 @@ export const StatsModal = () => {
   const [multipliersBreakdown, setMultipliersBreakdown] =
     useState<multiplierBreakDownInterface>(baseMultipliersBreakdownObject);
   const userStats = useSelector((state: RootState) => state.userStats);
+
   const numberOfGameResets = useSelector(
     (state: RootState) => state.gameLogic.numberOfResets
+  );
+  const holyCrossSkillPoints = useSelector(
+    (state: RootState) => state.holyCross.currentBonuses.skillPoints
+  );
+  const crystalsGainedFromHolyCross = useSelector(
+    (state: RootState) => state.holyCross.currentBonuses.crystals
   );
   const inlineUserStats: inlineStatInterface[] = [
     {
@@ -65,6 +73,16 @@ export const StatsModal = () => {
     {
       img: ResetGameIcon,
       text: `Number of game resets: ${numberOfGameResets}`,
+    },
+    {
+      img: SkillPointIcon,
+      text: `Skill Points gain from Holy Cross: ${holyCrossSkillPoints * 2}`,
+    },
+    {
+      img: CrystalsIcon,
+      text: `Crystals gained from Holy Cross: ${
+        crystalsGainedFromHolyCross * 25
+      }`,
     },
   ];
   // const allSkillTreeNodes = useSelector(`
@@ -122,6 +140,7 @@ export const StatsModal = () => {
   const equalibrumState = useSelector(
     (state: RootState) => state.eqalibrum.state
   );
+
   const bonusFromHolyCrossCPC =
     useSelector(
       (state: RootState) => state.holyCross.currentBonuses.CPCMultiplier
