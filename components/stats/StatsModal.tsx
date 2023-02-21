@@ -16,6 +16,21 @@ import ResetGameIcon from "../../public/reset.png";
 import SkillPointIcon from "../../public/skillPoint16x16.png";
 import { InlineStat, inlineStatInterface } from "./InlineStat";
 import { numberFormatter, secondsToHms } from "../../utils/utils";
+type commonMultiplierTypes =
+  | "Crystal Ball"
+  | "Wheel Of Fortune"
+  | "Equalibrum"
+  | "Holy Cross";
+type CPCMultiplierTypes = "Clicking With Love" | commonMultiplierTypes;
+type CPSMultiplierTypes = "Time Machine" | commonMultiplierTypes;
+interface multiplierTableCPC {
+  multiplierUpgrade: CPCMultiplierTypes;
+  number: number;
+}
+interface multiplierTableCPS {
+  multiplierUpgrade: CPSMultiplierTypes;
+  number: number;
+}
 interface multiplierBreakDownInterface {
   CPCBaseRate: number;
   CPCMultiplier: number;
@@ -204,22 +219,50 @@ export const StatsModal = () => {
   ]);
   //? Use Effect that counts multiplier of CPC
   useEffect(() => {
+    const steps: multiplierTableCPC[] = [];
     let multiplier: number = 1;
     if (isCrystalBallBought) {
       multiplier += bonusFromCrystalBall;
+      const previousValue = multipliersBreakdown.CPCBaseRate;
+      steps.push({
+        number: previousValue * bonusFromCrystalBall,
+        multiplierUpgrade: "Crystal Ball",
+      });
     }
     if (isClickingWithLoveBought) {
       multiplier += 2;
+      const previousValue = steps[steps.length - 1].number;
+      steps.push({
+        number: previousValue * 2,
+        multiplierUpgrade: "Clicking With Love",
+      });
     }
+
     if (wheelOfFortuneBonus) {
+      const previousValue = steps[steps.length - 1].number;
+      steps.push({
+        number: previousValue * 3,
+        multiplierUpgrade: "Wheel Of Fortune",
+      });
       multiplier += 3;
     }
     if (isHolyCrossBought) {
       multiplier += bonusFromHolyCrossCPC;
+      const previousValue = steps[steps.length - 1].number;
+      steps.push({
+        number: previousValue * bonusFromHolyCrossCPC,
+        multiplierUpgrade: "Holy Cross",
+      });
     }
     if (isEqualibrumBought && equalibrumState === "idleExhaustion") {
       multiplier += 3;
+      const previousValue = steps[steps.length - 1].number;
+      steps.push({
+        number: previousValue * 3,
+        multiplierUpgrade: "Equalibrum",
+      });
     }
+    console.log(steps);
     setMultipliersBreakdown((prev) => ({ ...prev, CPCMultiplier: multiplier }));
   }, [
     isCrystalBallBought,
@@ -249,12 +292,48 @@ export const StatsModal = () => {
   //? Use Effect that counts multiplier of CPS
   useEffect(() => {
     let multiplier: number = 1;
-    if (isCrystalBallBought) multiplier += bonusFromCrystalBall;
-    if (isTimeMachineBought) multiplier += 2;
-    if (wheelOfFortuneBonus) multiplier += 3;
-    if (isHolyCrossBought) multiplier += bonusFromHolyCrossCPS;
-    if (isEqualibrumBought && equalibrumState === "clickExhaustion")
+    const steps: multiplierTableCPS[] = [];
+    if (isCrystalBallBought) {
+      const previousValue = multipliersBreakdown.CPSBaseRate;
+      steps.push({
+        number: previousValue * bonusFromCrystalBall,
+        multiplierUpgrade: "Crystal Ball",
+      });
+      multiplier += bonusFromCrystalBall;
+    }
+    if (isTimeMachineBought) {
+      const previousValue = steps[steps.length - 1].number;
+      steps.push({
+        number: previousValue * 2,
+        multiplierUpgrade: "Time Machine",
+      });
+      multiplier += 2;
+    }
+    if (wheelOfFortuneBonus) {
+      const previousValue = steps[steps.length - 1].number;
+      steps.push({
+        number: previousValue * 3,
+        multiplierUpgrade: "Wheel Of Fortune",
+      });
       multiplier += 3;
+    }
+    if (isHolyCrossBought) {
+      const previousValue = steps[steps.length - 1].number;
+      steps.push({
+        number: previousValue * bonusFromHolyCrossCPS,
+        multiplierUpgrade: "Holy Cross",
+      });
+      multiplier += bonusFromHolyCrossCPS;
+    }
+    if (isEqualibrumBought && equalibrumState === "clickExhaustion") {
+      const previousValue = steps[steps.length - 1].number;
+      steps.push({
+        number: previousValue * 3,
+        multiplierUpgrade: "Equalibrum",
+      });
+      multiplier += 3;
+    }
+    console.log(steps);
     setMultipliersBreakdown((prev) => ({
       ...prev,
       CPSMultiplier: multiplier,
