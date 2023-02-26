@@ -91,7 +91,7 @@ export const StatsModal = () => {
     },
     {
       img: SkillPointIcon,
-      text: `Skill Points gain from Holy Cross: ${holyCrossSkillPoints * 2}`,
+      text: `Skill Points gained from Holy Cross: ${holyCrossSkillPoints * 2}`,
     },
     {
       img: CrystalsIcon,
@@ -100,7 +100,7 @@ export const StatsModal = () => {
       }`,
     },
   ];
- 
+
   const doubleClickShopItemState = useSelector((state: RootState) =>
     state.gameLogic.shopItems.find((x) => x.name === "doubleClick")
   ) as CookiesShopItem;
