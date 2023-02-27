@@ -16,19 +16,38 @@ import ResetGameIcon from "../../public/reset.png";
 import SkillPointIcon from "../../public/skillPoint16x16.png";
 import { InlineStat, inlineStatInterface } from "./InlineStat";
 import { numberFormatter, secondsToHms } from "../../utils/utils";
+type commonBaseRateTypes =
+  | "The Collector"
+  | "Chakra"
+  | "Heart Of The Eternal"
+  | "Starting Rate";
 type commonMultiplierTypes =
   | "Crystal Ball"
   | "Wheel Of Fortune"
   | "Equalibrum"
-  | "Holy Cross";
+  | "Holy Cross"
+  | "Base Multiplier";
 type CPCMultiplierTypes = "Clicking With Love" | commonMultiplierTypes;
 type CPSMultiplierTypes = "Time Machine" | commonMultiplierTypes;
+type CPCBaseRateTypes =
+  | commonBaseRateTypes
+  | "Clicking Talent"
+  | "Lightning Click";
+type CPSBaseRateTypes = commonBaseRateTypes | "Idle Player";
 interface multiplierTableCPC {
   multiplierUpgrade: CPCMultiplierTypes;
   number: number;
 }
 interface multiplierTableCPS {
   multiplierUpgrade: CPSMultiplierTypes;
+  number: number;
+}
+interface baseRateTableCPC {
+  baseRate: CPCBaseRateTypes;
+  number: number;
+}
+interface baseRateTableCPS {
+  baseRate: CPSBaseRateTypes;
   number: number;
 }
 interface multiplierBreakDownInterface {
@@ -200,13 +219,48 @@ export const StatsModal = () => {
   //? Use Effect that counts base rate of CPC
   useEffect(() => {
     let baseRate: number = 1;
-    if (isClickDoubled) baseRate += 1;
-    if (isCollectorBought) baseRate += collectorMultiplier;
-    if (isClickTripledFromSkillTreeUpgrades) baseRate += 3;
-    if (isChakraActive) {
-      if (isChakraUpgraded) baseRate += 10;
-      else baseRate += 3;
+    const steps: baseRateTableCPC[] = [
+      { baseRate: "Starting Rate", number: 1 },
+    ];
+    if (isClickDoubled) {
+      const previousValue = steps[steps.length - 1].number;
+      steps.push({ baseRate: "Lightning Click", number: previousValue + 1 });
+      baseRate += 1;
     }
+    if (isCollectorBought) {
+      const previousValue = steps[steps.length - 1].number;
+      steps.push({
+        baseRate: "The Collector",
+        number: previousValue + collectorMultiplier,
+      });
+
+      baseRate += collectorMultiplier;
+    }
+    if (isClickTripledFromSkillTreeUpgrades) {
+      const previousValue = steps[steps.length - 1].number;
+      steps.push({
+        baseRate: "Clicking Talent",
+        number: previousValue + 3,
+      });
+      baseRate += 3;
+    }
+    if (isChakraActive) {
+      const previousValue = steps[steps.length - 1].number;
+      if (!isChakraUpgraded) {
+        steps.push({
+          baseRate: "Chakra",
+          number: previousValue + 3,
+        });
+        baseRate += 3;
+      } else {
+        steps.push({
+          baseRate: "Heart Of The Eternal",
+          number: previousValue + 10,
+        });
+        baseRate += 10;
+      }
+    }
+    console.log(steps);
     setMultipliersBreakdown((prev) => ({ ...prev, CPCBaseRate: baseRate }));
   }, [
     isClickDoubled,
@@ -217,11 +271,13 @@ export const StatsModal = () => {
   ]);
   //? Use Effect that counts multiplier of CPC
   useEffect(() => {
-    const steps: multiplierTableCPC[] = [];
+    const steps: multiplierTableCPC[] = [
+      { multiplierUpgrade: "Base Multiplier", number: 1 },
+    ];
     let multiplier: number = 1;
     if (isCrystalBallBought) {
       multiplier += bonusFromCrystalBall;
-      const previousValue = multipliersBreakdown.CPCBaseRate;
+      const previousValue = steps[steps.length - 1].number;
       steps.push({
         number: previousValue * bonusFromCrystalBall,
         multiplierUpgrade: "Crystal Ball",
@@ -260,7 +316,6 @@ export const StatsModal = () => {
         multiplierUpgrade: "Equalibrum",
       });
     }
-    console.log(steps);
     setMultipliersBreakdown((prev) => ({ ...prev, CPCMultiplier: multiplier }));
   }, [
     isCrystalBallBought,
@@ -276,11 +331,37 @@ export const StatsModal = () => {
   //? Use Effect that counts base rate of CPS
   useEffect(() => {
     let baseRate: number = 1;
-    if (isIdlePlayerBought) baseRate += 4;
-    if (isCollectorBought) baseRate += collectorMultiplier;
+    const steps: baseRateTableCPS[] = [
+      { baseRate: "Starting Rate", number: 1 },
+    ];
+    if (isIdlePlayerBought) {
+      const previousValue = steps[steps.length - 1].number;
+      steps.push({ baseRate: "Idle Player", number: previousValue + 4 });
+      baseRate += 4;
+    }
+    if (isCollectorBought) {
+      const previousValue = steps[steps.length - 1].number;
+      steps.push({
+        baseRate: "Idle Player",
+        number: previousValue + collectorMultiplier,
+      });
+      baseRate += collectorMultiplier;
+    }
     if (isChakraActive) {
-      if (isChakraUpgraded) baseRate += 10;
-      else baseRate += 3;
+      const previousValue = steps[steps.length - 1].number;
+      if (!isChakraUpgraded) {
+        steps.push({
+          baseRate: "Chakra",
+          number: previousValue + 3,
+        });
+        baseRate += 3;
+      } else {
+        steps.push({
+          baseRate: "Heart Of The Eternal",
+          number: previousValue + 10,
+        });
+        baseRate += 10;
+      }
     }
     setMultipliersBreakdown((prev) => ({
       ...prev,
@@ -290,9 +371,11 @@ export const StatsModal = () => {
   //? Use Effect that counts multiplier of CPS
   useEffect(() => {
     let multiplier: number = 1;
-    const steps: multiplierTableCPS[] = [];
+    const steps: multiplierTableCPS[] = [
+      { multiplierUpgrade: "Base Multiplier", number: 1 },
+    ];
     if (isCrystalBallBought) {
-      const previousValue = multipliersBreakdown.CPSBaseRate;
+      const previousValue = steps[steps.length - 1].number;
       steps.push({
         number: previousValue * bonusFromCrystalBall,
         multiplierUpgrade: "Crystal Ball",
@@ -331,7 +414,6 @@ export const StatsModal = () => {
       });
       multiplier += 3;
     }
-    console.log(steps);
     setMultipliersBreakdown((prev) => ({
       ...prev,
       CPSMultiplier: multiplier,
