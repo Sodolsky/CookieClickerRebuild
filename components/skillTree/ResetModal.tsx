@@ -18,7 +18,7 @@ interface resetGameQuote {
 const loreQuotes: resetGameQuote[] = [
   {
     quote:
-      "Your only starting to gather some of my POWER! Do you feel it? Do you feel the pain? You made an sacrifice you won't last long...",
+      "Your only starting to gather some of my POWER! Do you feel it? Do you feel the pain? You made an sacrifice you won't last that long...",
     resetsRequired: 1,
   },
   {
