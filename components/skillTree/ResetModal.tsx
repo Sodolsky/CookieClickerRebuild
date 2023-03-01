@@ -117,7 +117,8 @@ export const ResetModal: React.FC<ResetModalProps> = ({ resetGameLogic }) => {
           <div className="flex gap-2 justify-center items-center flex-col">
             <q className="text-xl text-center">
               {loreQuotes.find((x) => x.resetsRequired === numberOfResets)
-                ?.quote ?? "Soon it will be over! You will get consumed"}
+                ?.quote ??
+                "Soon it will be over! You can't get over with it forever! You will get consumed"}
             </q>
             {isWheelOfFortuneBought && (
               <button
