@@ -16,6 +16,7 @@ import ResetGameIcon from "../../public/reset.png";
 import SkillPointIcon from "../../public/skillPoint16x16.png";
 import { InlineStat, inlineStatInterface } from "./InlineStat";
 import { numberFormatter, secondsToHms } from "../../utils/utils";
+import { TableStat } from "./TableStat";
 type commonBaseRateTypes =
   | "The Collector"
   | "Chakra"
@@ -34,6 +35,8 @@ type CPCBaseRateTypes =
   | "Clicking Talent"
   | "Lightning Click";
 type CPSBaseRateTypes = commonBaseRateTypes | "Idle Player";
+export type allCPCBonuses = CPCBaseRateTypes | CPCMultiplierTypes;
+export type allCPSBonuses = CPSBaseRateTypes | CPSMultiplierTypes;
 interface multiplierTableCPC {
   multiplierUpgrade: CPCMultiplierTypes;
   number: number;
@@ -62,12 +65,29 @@ const baseMultipliersBreakdownObject: multiplierBreakDownInterface = {
   CPSBaseRate: 1,
   CPSMultiplier: 1,
 };
-
+interface CPCBonusesBreakdownInterface {
+  CPCBaseRate: baseRateTableCPC[];
+  CPCMultipliers: multiplierTableCPC[];
+}
+interface CPSBonusesBreakdownInterface {
+  CPSBaseRate: baseRateTableCPS[];
+  CPSMultipliers: multiplierTableCPS[];
+}
 export const StatsModal = () => {
   const { multiplierCPS } = useCPSMultiplier();
   const { isClickDoubled, multiplier } = useCPCMultiplier();
   const [multipliersBreakdown, setMultipliersBreakdown] =
     useState<multiplierBreakDownInterface>(baseMultipliersBreakdownObject);
+  const [CPCBonusesBreakdown, setCPCBonusesBreakdown] =
+    useState<CPCBonusesBreakdownInterface>({
+      CPCBaseRate: [],
+      CPCMultipliers: [],
+    });
+  const [CPSBonusesBreakdown, setCPSBonusesBreakdown] =
+    useState<CPSBonusesBreakdownInterface>({
+      CPSBaseRate: [],
+      CPSMultipliers: [],
+    });
   const userStats = useSelector((state: RootState) => state.userStats);
 
   const numberOfGameResets = useSelector(
@@ -260,7 +280,7 @@ export const StatsModal = () => {
         baseRate += 10;
       }
     }
-    console.log(steps);
+    setCPCBonusesBreakdown((prev) => ({ ...prev, CPCBaseRate: steps }));
     setMultipliersBreakdown((prev) => ({ ...prev, CPCBaseRate: baseRate }));
   }, [
     isClickDoubled,
@@ -316,6 +336,7 @@ export const StatsModal = () => {
         multiplierUpgrade: "Equalibrum",
       });
     }
+    setCPCBonusesBreakdown((prev) => ({ ...prev, CPCMultipliers: steps }));
     setMultipliersBreakdown((prev) => ({ ...prev, CPCMultiplier: multiplier }));
   }, [
     isCrystalBallBought,
@@ -363,6 +384,8 @@ export const StatsModal = () => {
         baseRate += 10;
       }
     }
+    setCPSBonusesBreakdown((prev) => ({ ...prev, CPSBaseRate: steps }));
+
     setMultipliersBreakdown((prev) => ({
       ...prev,
       CPSBaseRate: baseRate,
@@ -414,6 +437,7 @@ export const StatsModal = () => {
       });
       multiplier += 3;
     }
+    setCPSBonusesBreakdown((prev) => ({ ...prev, CPSMultipliers: steps }));
     setMultipliersBreakdown((prev) => ({
       ...prev,
       CPSMultiplier: multiplier,
@@ -452,12 +476,24 @@ export const StatsModal = () => {
                 </div>
               </div>
               <div className="collapse-content">
-                <div className="flex flex-col gap-1 justify-center items-center">
-                  <div>Base Rate: {multipliersBreakdown.CPCBaseRate}</div>
-                  <div>
-                    Multiplier: {multipliersBreakdown.CPCMultiplier.toFixed(2)}
-                  </div>
-                </div>
+                <table>
+                  {CPCBonusesBreakdown.CPCBaseRate.map((x) => (
+                    <TableStat
+                      key={x.baseRate}
+                      bonus={x.baseRate}
+                      number={x.number}
+                      operator={"+"}
+                    />
+                  ))}
+                  {CPCBonusesBreakdown.CPCMultipliers.map((x) => (
+                    <TableStat
+                      key={x.multiplierUpgrade}
+                      bonus={x.multiplierUpgrade}
+                      number={x.number}
+                      operator={"*"}
+                    />
+                  ))}
+                </table>
               </div>
             </div>
             <div
@@ -471,12 +507,24 @@ export const StatsModal = () => {
                 </div>
               </div>
               <div className="collapse-content">
-                <div className="flex flex-col gap-1 justify-center items-center">
-                  <div>Base Rate: {multipliersBreakdown.CPSBaseRate}</div>
-                  <div>
-                    Multiplier: {multipliersBreakdown.CPSMultiplier.toFixed(2)}
-                  </div>
-                </div>
+                <table>
+                  {CPSBonusesBreakdown.CPSBaseRate.map((x) => (
+                    <TableStat
+                      key={x.baseRate}
+                      bonus={x.baseRate}
+                      number={x.number}
+                      operator={"+"}
+                    />
+                  ))}
+                  {CPSBonusesBreakdown.CPSMultipliers.map((x) => (
+                    <TableStat
+                      key={x.multiplierUpgrade}
+                      bonus={x.multiplierUpgrade}
+                      number={x.number}
+                      operator={"*"}
+                    />
+                  ))}
+                </table>
               </div>
             </div>
             {inlineUserStats.map((x) => (
