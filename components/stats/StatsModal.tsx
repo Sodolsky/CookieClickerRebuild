@@ -146,9 +146,9 @@ export const StatsModal = () => {
 
   const isClickDoubledFromShop =
     doubleClickShopItemState.wasBought && !doubleClickShopItemState.isLocked;
-  const isSkillTreeUnlocked = useSelector(
-    (state: RootState) => state.gameLogic.skillTreeLogic.isSkillTreeUnlocked
-  );
+  // const isSkillTreeUnlocked = useSelector(
+  //   (state: RootState) => state.gameLogic.skillTreeLogic.isSkillTreeUnlocked
+  // );
 
   const isClickTripledFromSkillTreeUpgrades = useSelector(
     (state: RootState) =>
