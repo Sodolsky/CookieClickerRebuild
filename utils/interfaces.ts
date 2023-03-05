@@ -153,7 +153,6 @@ export const initialSkillTreeNodes: singleSkillTreeNode[] = [
     explanation:
       "Formula for the amount of cookies you get is [Crystals Gained / 2 * CPC].",
   },
-
   //?Left side of the tree
   {
     name: "crystalMine",
