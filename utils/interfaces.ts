@@ -90,7 +90,7 @@ export interface singleSkillTreeNode {
   positionObject: CSSProperties;
   explanation?: string;
 }
-//! Idea za kazda explozje którą wywołasz coś się dzieje więcej ciastek / upgrady.
+
 export const initialSkillTreeNodes: singleSkillTreeNode[] = [
   {
     name: "starterNode",
