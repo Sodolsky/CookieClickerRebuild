@@ -17,6 +17,7 @@ import SkillPointIcon from "../../public/skillPoint16x16.png";
 import { InlineStat, inlineStatInterface } from "./InlineStat";
 import { numberFormatter, secondsToHms } from "../../utils/utils";
 import { TableStat } from "./TableStat";
+import { TableScheme } from "./TableScheme";
 type commonBaseRateTypes =
   | "The Collector"
   | "Chakra"
@@ -39,18 +40,22 @@ export type allCPCBonuses = CPCBaseRateTypes | CPCMultiplierTypes;
 export type allCPSBonuses = CPSBaseRateTypes | CPSMultiplierTypes;
 interface multiplierTableCPC {
   multiplierUpgrade: CPCMultiplierTypes;
+  bonus: number;
   number: number;
 }
 interface multiplierTableCPS {
   multiplierUpgrade: CPSMultiplierTypes;
+  bonus: number;
   number: number;
 }
 interface baseRateTableCPC {
   baseRate: CPCBaseRateTypes;
+  bonus: number;
   number: number;
 }
 interface baseRateTableCPS {
   baseRate: CPSBaseRateTypes;
+  bonus: number;
   number: number;
 }
 interface multiplierBreakDownInterface {
@@ -146,9 +151,9 @@ export const StatsModal = () => {
 
   const isClickDoubledFromShop =
     doubleClickShopItemState.wasBought && !doubleClickShopItemState.isLocked;
-  const isSkillTreeUnlocked = useSelector(
-    (state: RootState) => state.gameLogic.skillTreeLogic.isSkillTreeUnlocked
-  );
+  // const isSkillTreeUnlocked = useSelector(
+  //   (state: RootState) => state.gameLogic.skillTreeLogic.isSkillTreeUnlocked
+  // );
 
   const isClickTripledFromSkillTreeUpgrades = useSelector(
     (state: RootState) =>
@@ -240,11 +245,15 @@ export const StatsModal = () => {
   useEffect(() => {
     let baseRate: number = 1;
     const steps: baseRateTableCPC[] = [
-      { baseRate: "Starting Rate", number: 1 },
+      { baseRate: "Starting Rate", number: 1, bonus: 1 },
     ];
     if (isClickDoubled) {
       const previousValue = steps[steps.length - 1].number;
-      steps.push({ baseRate: "Lightning Click", number: previousValue + 1 });
+      steps.push({
+        baseRate: "Lightning Click",
+        number: previousValue + 1,
+        bonus: 1,
+      });
       baseRate += 1;
     }
     if (isCollectorBought) {
@@ -252,6 +261,7 @@ export const StatsModal = () => {
       steps.push({
         baseRate: "The Collector",
         number: previousValue + collectorMultiplier,
+        bonus: collectorMultiplier,
       });
 
       baseRate += collectorMultiplier;
@@ -261,6 +271,7 @@ export const StatsModal = () => {
       steps.push({
         baseRate: "Clicking Talent",
         number: previousValue + 3,
+        bonus: 3,
       });
       baseRate += 3;
     }
@@ -270,12 +281,14 @@ export const StatsModal = () => {
         steps.push({
           baseRate: "Chakra",
           number: previousValue + 3,
+          bonus: 3,
         });
         baseRate += 3;
       } else {
         steps.push({
           baseRate: "Heart Of The Eternal",
           number: previousValue + 10,
+          bonus: 10,
         });
         baseRate += 10;
       }
@@ -292,7 +305,7 @@ export const StatsModal = () => {
   //? Use Effect that counts multiplier of CPC
   useEffect(() => {
     const steps: multiplierTableCPC[] = [
-      { multiplierUpgrade: "Base Multiplier", number: 1 },
+      { multiplierUpgrade: "Base Multiplier", number: 1, bonus: 1 },
     ];
     let multiplier: number = 1;
     if (isCrystalBallBought) {
@@ -301,6 +314,7 @@ export const StatsModal = () => {
       steps.push({
         number: previousValue * bonusFromCrystalBall,
         multiplierUpgrade: "Crystal Ball",
+        bonus: bonusFromCrystalBall,
       });
     }
     if (isClickingWithLoveBought) {
@@ -309,6 +323,7 @@ export const StatsModal = () => {
       steps.push({
         number: previousValue * 2,
         multiplierUpgrade: "Clicking With Love",
+        bonus: 2,
       });
     }
 
@@ -317,6 +332,7 @@ export const StatsModal = () => {
       steps.push({
         number: previousValue * 3,
         multiplierUpgrade: "Wheel Of Fortune",
+        bonus: 3,
       });
       multiplier += 3;
     }
@@ -326,6 +342,7 @@ export const StatsModal = () => {
       steps.push({
         number: previousValue * bonusFromHolyCrossCPC,
         multiplierUpgrade: "Holy Cross",
+        bonus: bonusFromHolyCrossCPC,
       });
     }
     if (isEqualibrumBought && equalibrumState === "idleExhaustion") {
@@ -334,6 +351,7 @@ export const StatsModal = () => {
       steps.push({
         number: previousValue * 3,
         multiplierUpgrade: "Equalibrum",
+        bonus: 3,
       });
     }
     setCPCBonusesBreakdown((prev) => ({ ...prev, CPCMultipliers: steps }));
@@ -353,18 +371,23 @@ export const StatsModal = () => {
   useEffect(() => {
     let baseRate: number = 1;
     const steps: baseRateTableCPS[] = [
-      { baseRate: "Starting Rate", number: 1 },
+      { baseRate: "Starting Rate", number: 1, bonus: 1 },
     ];
     if (isIdlePlayerBought) {
       const previousValue = steps[steps.length - 1].number;
-      steps.push({ baseRate: "Idle Player", number: previousValue + 4 });
+      steps.push({
+        baseRate: "Idle Player",
+        number: previousValue + 4,
+        bonus: 4,
+      });
       baseRate += 4;
     }
     if (isCollectorBought) {
       const previousValue = steps[steps.length - 1].number;
       steps.push({
-        baseRate: "Idle Player",
+        baseRate: "The Collector",
         number: previousValue + collectorMultiplier,
+        bonus: collectorMultiplier,
       });
       baseRate += collectorMultiplier;
     }
@@ -374,12 +397,14 @@ export const StatsModal = () => {
         steps.push({
           baseRate: "Chakra",
           number: previousValue + 3,
+          bonus: 3,
         });
         baseRate += 3;
       } else {
         steps.push({
           baseRate: "Heart Of The Eternal",
           number: previousValue + 10,
+          bonus: 10,
         });
         baseRate += 10;
       }
@@ -395,13 +420,14 @@ export const StatsModal = () => {
   useEffect(() => {
     let multiplier: number = 1;
     const steps: multiplierTableCPS[] = [
-      { multiplierUpgrade: "Base Multiplier", number: 1 },
+      { multiplierUpgrade: "Base Multiplier", number: 1, bonus: 1 },
     ];
     if (isCrystalBallBought) {
       const previousValue = steps[steps.length - 1].number;
       steps.push({
         number: previousValue * bonusFromCrystalBall,
         multiplierUpgrade: "Crystal Ball",
+        bonus: bonusFromCrystalBall,
       });
       multiplier += bonusFromCrystalBall;
     }
@@ -410,6 +436,7 @@ export const StatsModal = () => {
       steps.push({
         number: previousValue * 2,
         multiplierUpgrade: "Time Machine",
+        bonus: 2,
       });
       multiplier += 2;
     }
@@ -418,6 +445,7 @@ export const StatsModal = () => {
       steps.push({
         number: previousValue * 3,
         multiplierUpgrade: "Wheel Of Fortune",
+        bonus: 3,
       });
       multiplier += 3;
     }
@@ -426,6 +454,7 @@ export const StatsModal = () => {
       steps.push({
         number: previousValue * bonusFromHolyCrossCPS,
         multiplierUpgrade: "Holy Cross",
+        bonus: bonusFromHolyCrossCPC,
       });
       multiplier += bonusFromHolyCrossCPS;
     }
@@ -434,6 +463,7 @@ export const StatsModal = () => {
       steps.push({
         number: previousValue * 3,
         multiplierUpgrade: "Equalibrum",
+        bonus: 3,
       });
       multiplier += 3;
     }
@@ -476,24 +506,39 @@ export const StatsModal = () => {
                 </div>
               </div>
               <div className="collapse-content">
-                <table>
+                <TableScheme
+                  totalBaseRate={multipliersBreakdown.CPCBaseRate}
+                  totalMultiplier={
+                    CPCBonusesBreakdown.CPCMultipliers[
+                      CPCBonusesBreakdown.CPCMultipliers.length - 1
+                    ]?.number ?? 1
+                  }
+                >
                   {CPCBonusesBreakdown.CPCBaseRate.map((x) => (
                     <TableStat
                       key={x.baseRate}
                       bonus={x.baseRate}
                       number={x.number}
                       operator={"+"}
+                      singleBonus={x.bonus}
+                      baseRate={multipliersBreakdown.CPCBaseRate}
                     />
                   ))}
-                  {CPCBonusesBreakdown.CPCMultipliers.map((x) => (
-                    <TableStat
-                      key={x.multiplierUpgrade}
-                      bonus={x.multiplierUpgrade}
-                      number={x.number}
-                      operator={"*"}
-                    />
-                  ))}
-                </table>
+                  {CPCBonusesBreakdown.CPCMultipliers.filter(
+                    (x) => x.multiplierUpgrade !== "Base Multiplier"
+                  ).map((x) => {
+                    return (
+                      <TableStat
+                        key={x.multiplierUpgrade}
+                        bonus={x.multiplierUpgrade}
+                        number={x.number}
+                        operator={"*"}
+                        singleBonus={x.bonus}
+                        baseRate={multipliersBreakdown.CPCBaseRate}
+                      />
+                    );
+                  })}
+                </TableScheme>
               </div>
             </div>
             <div
@@ -507,24 +552,37 @@ export const StatsModal = () => {
                 </div>
               </div>
               <div className="collapse-content">
-                <table>
+                <TableScheme
+                  totalBaseRate={multipliersBreakdown.CPSBaseRate}
+                  totalMultiplier={
+                    CPSBonusesBreakdown.CPSMultipliers[
+                      CPSBonusesBreakdown.CPSMultipliers.length - 1
+                    ]?.number ?? 1
+                  }
+                >
                   {CPSBonusesBreakdown.CPSBaseRate.map((x) => (
                     <TableStat
                       key={x.baseRate}
                       bonus={x.baseRate}
                       number={x.number}
                       operator={"+"}
+                      singleBonus={x.bonus}
+                      baseRate={multipliersBreakdown.CPSBaseRate}
                     />
                   ))}
-                  {CPSBonusesBreakdown.CPSMultipliers.map((x) => (
+                  {CPSBonusesBreakdown.CPSMultipliers.filter(
+                    (x) => x.multiplierUpgrade !== "Base Multiplier"
+                  ).map((x) => (
                     <TableStat
                       key={x.multiplierUpgrade}
                       bonus={x.multiplierUpgrade}
                       number={x.number}
                       operator={"*"}
+                      singleBonus={x.bonus}
+                      baseRate={multipliersBreakdown.CPSBaseRate}
                     />
                   ))}
-                </table>
+                </TableScheme>
               </div>
             </div>
             {inlineUserStats.map((x) => (
