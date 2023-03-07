@@ -171,7 +171,8 @@ export const initialSkillTreeNodes: singleSkillTreeNode[] = [
     nameForPlayer: "Quantum Physics",
     price: 16,
     wasBought: false,
-    description: "Doubles the number of skill points you get from game resets.",
+    description:
+      "Doubles the number of skill points you get from every game reset.",
     connectedNodes: ["crystalMine"],
     image: "physics.png",
     positionObject: { left: "6%", bottom: "16%" },
