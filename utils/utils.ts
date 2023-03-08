@@ -166,6 +166,7 @@ export const upgradesFilterFunction = (
     "upgrade12",
     "upgrade13",
     "upgrade14",
+    "upgrade15",
   ];
   if (!allUnlockableUpgradesNames.some((x) => x === upgrade.upgradeName))
     return true;
@@ -173,5 +174,6 @@ export const upgradesFilterFunction = (
   if (upgrade.upgradeName === "upgrade12" && numberOfResets > 5) return true;
   if (upgrade.upgradeName === "upgrade13" && numberOfResets > 7) return true;
   if (upgrade.upgradeName === "upgrade14" && numberOfResets > 8) return true;
+  if (upgrade.upgradeName === "upgrade15" && numberOfResets > 10) return true;
   return false;
 };

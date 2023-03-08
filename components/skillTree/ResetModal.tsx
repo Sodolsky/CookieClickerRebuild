@@ -56,6 +56,16 @@ const loreQuotes: resetGameQuote[] = [
       "THERE IS NO WAY THERE IS NO WAY! HMM... The aliens couldn't control you, well its time to see if you can control yourself that well...",
     resetsRequired: 8,
   },
+  {
+    quote:
+      "You menaged to beat your mental obstacles. Not gonna lie i kinda expected you to do that... I spoke with my old friend tho he is interested in meeting YOU in person. He just needs a little bit of time",
+    resetsRequired: 9,
+  },
+  {
+    quote:
+      "At the end everyone meets HIM. HE is here your time has came to an end. Say hello to a Grim Reaper. You will LOSE this time!",
+    resetsRequired: 10,
+  },
 ];
 export interface ResetModalProps {
   resetGameLogic: (skillPointsCount: number) => void;

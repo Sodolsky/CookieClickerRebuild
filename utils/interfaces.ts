@@ -452,7 +452,8 @@ export type UpgradesNames =
   | "upgrade11"
   | "upgrade12"
   | "upgrade13"
-  | "upgrade14";
+  | "upgrade14"
+  | "upgrade15";
 export type ShopUpgradesNames =
   | "upgrade1Double"
   | "upgrade2Double"
@@ -739,6 +740,7 @@ export interface UpgradesInterface {
   upgrade12: UpgradeInterface;
   upgrade13: UpgradeInterface;
   upgrade14: UpgradeInterface;
+  upgrade15: UpgradeInterface;
 }
 export const initialUpgradesState: UpgradesInterface = {
   upgrade1: {
@@ -852,9 +854,9 @@ export const initialUpgradesState: UpgradesInterface = {
     image: "/upgrade11.png",
   },
   upgrade12: {
-    CookiesPerClickBonus: 420000000000000, //420 000 000 000 000
-    CookiesPerSecondBonus: 319000000000000, //319 000 000 000 000
-    cost: 250000000000000000, // 250 000 000 000 000 000
+    CookiesPerClickBonus: 115_000_000_000_000,
+    CookiesPerSecondBonus: 200_000_000_000_000,
+    cost: 250000000000000000,
     feeIndex: 1.15,
     numberOfUpgrades: 0,
     upgradeName: "upgrade12",
@@ -862,8 +864,8 @@ export const initialUpgradesState: UpgradesInterface = {
     image: "/upgrade12.png",
   },
   upgrade13: {
-    CookiesPerClickBonus: 37_800_000_000_000_000_000,
-    CookiesPerSecondBonus: 21_692_000_000_000_000_000_00,
+    CookiesPerClickBonus: 378_000_000_000_000_00,
+    CookiesPerSecondBonus: 62_000_000_000_000_000,
     cost: 225_000_000_000_000_000_000,
     feeIndex: 1.15,
     numberOfUpgrades: 0,
@@ -872,13 +874,23 @@ export const initialUpgradesState: UpgradesInterface = {
     image: "/upgrade13.png",
   },
   upgrade14: {
-    CookiesPerClickBonus: 13_230_000_000_000_000_000_000,
-    CookiesPerSecondBonus: 43_384_000_000_000_000_000_000,
+    CookiesPerClickBonus: 13_230_000_000_000_000_000,
+    CookiesPerSecondBonus: 23_250_000_000_000_000_000,
     cost: 135_000_000_000_000_000_000_000,
     feeIndex: 1.15,
     numberOfUpgrades: 0,
     upgradeName: "upgrade14",
     upgradeNameForPlayer: "Yourself",
     image: "/upgrade14.png",
+  },
+  upgrade15: {
+    CookiesPerClickBonus: 5_292_000_000_000_000_000_000_000,
+    CookiesPerSecondBonus: 13_950_000_000_000_000_000_000,
+    cost: 168_750_000_000_000_000_000_000_000,
+    feeIndex: 1.15,
+    numberOfUpgrades: 0,
+    upgradeName: "upgrade15",
+    upgradeNameForPlayer: "Death",
+    image: "/upgrade15.png",
   },
 };

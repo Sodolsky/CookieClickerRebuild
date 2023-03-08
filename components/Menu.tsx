@@ -65,7 +65,7 @@ export const Menu: React.FC<MenuProps> = ({
             return upgradesFilterFunction(upgrade, numberOfResets);
           })
           .reduce((acc, a) => {
-            if (acc && a.numberOfUpgrades >= 0) return acc;
+            if (acc && a.numberOfUpgrades >= 10) return acc;
             return (acc = false);
           }, true) &&
         !isEternityBought && <ResetModal resetGameLogic={resetGameLogic} />}
