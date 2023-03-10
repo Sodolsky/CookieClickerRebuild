@@ -71,7 +71,7 @@ export const ConnectingLine: React.FC<ConnectingLineProps> = ({
       document.getElementById(to) as HTMLDivElement,
       document.getElementById(connectionName) as HTMLDivElement
     );
-  }, []);
+  }, [window.screen.width, window.screen.height]);
   return (
     <div
       id={connectionName}
