@@ -408,7 +408,6 @@ export const CookieToClick: React.FC<CookieToClickProps> = ({
       {
         duration: Math.random() * 1000 + (!generateShard ? 500 : 1500),
         easing: "cubic-bezier(0, .9, .57, 1)",
-        // Delay every particle with a random value of 200ms
         delay: Math.random() * 200,
       }
     );
