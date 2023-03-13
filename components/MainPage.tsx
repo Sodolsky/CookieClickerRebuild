@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addCookie,
@@ -93,6 +93,7 @@ import { Loader } from "./layout/Loader";
 import { CrystalsDisplay } from "./clickerElements/crystals/CrystalsDisplay";
 import { Chakra } from "./skillTree/Chakra";
 import { changeWheelOfFortuneBonus } from "../redux/wheelOfFortuneReducer";
+import { EndgameView } from "./skillTree/EndgameView";
 export const MainPage = () => {
   const resetGameLogic = (skillPointsCount: number) => {
     intervalRef.current && clearInterval(intervalRef.current);
@@ -104,6 +105,8 @@ export const MainPage = () => {
     dispatch(setInitialSkillTree(true));
   };
   const bgMusicRef = useRef<null | HTMLAudioElement>(null);
+  const [isEndGameEventActive, setIsEndGameEventActive] =
+    useState<boolean>(false);
   const { authStatus, auth } = useAuthStatus();
   const explosionSoundRef = useRef<null | HTMLAudioElement>(null);
   const isQPBought = useSelector(
@@ -478,6 +481,8 @@ export const MainPage = () => {
       <Loader />
       <span>Loading...</span>
     </div>
+  ) : isEndGameEventActive ? (
+    <EndgameView />
   ) : (
     <>
       <>
@@ -579,6 +584,7 @@ export const MainPage = () => {
             isChakraBought={isChakraBought}
             isEternityBought={isEternityBought}
             numberOfResets={numberOfResets}
+            setIsEndGameActive={setIsEndGameEventActive}
           />
         </main>
       </>

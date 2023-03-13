@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { UpgradeInterface, UpgradesInterface } from "../utils/interfaces";
@@ -23,6 +24,7 @@ interface MenuProps {
   isChakraBought: boolean;
   isEternityBought: boolean;
   numberOfResets: number;
+  setIsEndGameActive: Dispatch<SetStateAction<boolean>>;
 }
 export const Menu: React.FC<MenuProps> = ({
   isEqualibrumBought,
@@ -34,6 +36,7 @@ export const Menu: React.FC<MenuProps> = ({
   isChakraBought,
   isEternityBought,
   numberOfResets,
+  setIsEndGameActive,
 }) => {
   const shopItems = useSelector(
     (state: RootState) => state.gameLogic.shopItems
@@ -56,7 +59,9 @@ export const Menu: React.FC<MenuProps> = ({
       <StatsModal />
       <BackendSynchronizationModal />
       <Store />
-      {isEternityBought && <EndgameModal />}
+      {isEternityBought && (
+        <EndgameModal setIsEndGameActive={setIsEndGameActive} />
+      )}
       {isEqualibrumBought && <EqualibrumStacksDisplay />}
       {isSkillTreeUnlocked &&
         Object.values(upgrades)
