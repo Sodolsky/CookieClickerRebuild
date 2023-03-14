@@ -11,7 +11,7 @@ export const EndgameView = () => {
   return (
     <div className="h-screen w-screen bg-black">
       <video ref={videoRef} className="h-full w-full">
-        <source src="/path/to/video.mp4" type="video/mp4" />
+        <source src="galaxyVideo.mp4" type="video/mp4" />
       </video>
     </div>
   );
