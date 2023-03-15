@@ -18,13 +18,15 @@ export const TableScheme: React.FC<TableSchemeProps> = ({
         </span>
       </div>
       <table className="">
-        <tr>
-          <th>Icon</th>
-          <th>Name</th>
-          <th>Bonus</th>
-          <th className="px-3">Total</th>
-        </tr>
-        {children}
+        <thead>
+          <tr>
+            <th>Icon</th>
+            <th>Name</th>
+            <th>Bonus</th>
+            <th className="px-3">Total</th>
+          </tr>
+        </thead>
+        <tbody>{children}</tbody>
       </table>
     </>
   );
