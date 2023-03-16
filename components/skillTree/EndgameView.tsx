@@ -12,7 +12,7 @@ export const EndgameView = () => {
       <video
         ref={videoRef}
         className="h-full w-full"
-        onEnded={() => console.log("test")}
+        onEnded={() => console.log("video ended")}
       >
         <source src="galaxyVideo.mp4" type="video/mp4" />
       </video>
