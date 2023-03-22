@@ -33,7 +33,7 @@ export const EndgameView = () => {
         <Image
           src={EternalImage}
           alt={"Image of The Eternal"}
-          className={`opacity-0 z-10 ${
+          className={`opacity-0 z-30 ${
             animationObject.fadeInEternal && "opacity-100 duration-500"
           } `}
           layout={"fill"}
