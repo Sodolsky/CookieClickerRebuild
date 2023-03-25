@@ -40,6 +40,14 @@
     pointer-events: auto;
   }
 }
+.star {
+  position: absolute;
+  width: 5px;
+  height: 15px;
+  border-radius: 20%;
+  background-color: white;
+}
+
 .animatedBodyBG {
   background: linear-gradient(270deg, #a88beb, #f8ceec);
   background-size: 400% 400%;
@@ -107,6 +115,7 @@ img {
 .absoluteCenterTranslate {
   transform: translate(-50%, 0);
 }
+
 .lds-circle {
   display: inline-block;
   transform: translateZ(1px);
