@@ -7,7 +7,14 @@ interface textBlock {
   duration: number;
 }
 const text: textBlock[] = [
-  { textLines: ["Spierdalaj", "Ty stara kurwo"], duration: 4000 },
+  {
+    textLines: [
+      "You have grown strong, but you are not the first to claim eternity.",
+      "The path to victory is treacherous, and many have fallen before you.",
+      "Do you have what it takes to surpass them?",
+    ],
+    duration: 4000,
+  },
 ];
 const initialDelay = 500;
 export const ImageWithTextLines = () => {
