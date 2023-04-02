@@ -6,6 +6,7 @@ interface textBlock {
   textLines: string[];
   duration: number;
 }
+
 const text: textBlock[] = [
   {
     textLines: [
