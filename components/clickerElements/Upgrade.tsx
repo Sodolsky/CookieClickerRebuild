@@ -81,7 +81,7 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
       ) as singleSkillTreeNode
   ).wasBought;
   useEffect(() => {
-    //?Here is the Shop item that doubles the bonuses from single upgrade we handle multiplier logic here
+    //?Here is the Shop item that if bought doubles the bonuses from single upgrade we handle multiplier logic here
     const doubleUpgrade = shopItems.find((x) => x.upgradeFor === upgradeName);
     if (doubleUpgrade) {
       doubleUpgrade.wasBought && setMultiplier(2);
