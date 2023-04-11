@@ -44,15 +44,7 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
   const shopItems = useSelector(
     (state: RootState) => state.gameLogic.shopItems
   );
-  //!To be added code for contributions from one of the upgrades
-  // const contributions = {
-  //   CPSContribution: CookiesPerSecondBonus * numberOfUpgrades,
-  //   CPCContribution: CookiesPerClickBonus * numberOfUpgrades,
-  //   CPCContributionWithTTT:
-  //     CookiesPerClickBonus * numberOfUpgrades * currentBestUpgradeBonus,
-  //   CPSContributionWithTTT:
-  //     CookiesPerSecondBonus * numberOfUpgrades * currentBestUpgradeBonus,
-  // };
+
   const isTheoryOfEverythingBought = useSelector(
     (state: RootState) =>
       state.gameLogic.skillTreeLogic.skillTreeNodes.find(
@@ -81,7 +73,7 @@ export const Upgrade: React.FC<UpgradeInterface> = ({
       ) as singleSkillTreeNode
   ).wasBought;
   useEffect(() => {
-    //?Here is the Shop item that doubles the bonuses from single upgrade we handle multiplier logic here
+    //?Here is the Shop item that if bought doubles the bonuses from single upgrade we handle multiplier logic here
     const doubleUpgrade = shopItems.find((x) => x.upgradeFor === upgradeName);
     if (doubleUpgrade) {
       doubleUpgrade.wasBought && setMultiplier(2);
