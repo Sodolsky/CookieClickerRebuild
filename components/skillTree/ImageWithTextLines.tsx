@@ -14,7 +14,7 @@ const text: textBlock[] = [
       "The path to victory is treacherous, and many have fallen before you.",
       "Do you have what it takes to surpass them?",
     ],
-    duration: 3500,
+    duration: 400,
   },
 ];
 const initialDelay = 500;
@@ -40,7 +40,9 @@ export const ImageWithTextLines = () => {
       <div className="text-white text-3xl font-bold flex flex-col gap-2">
         {text.map((x) => {
           return x.textLines.map((x, i) => {
-            return <SingleTextLine text={x} delay={i * 500 + initialDelay} />;
+            return (
+              <SingleTextLine key={x} text={x} delay={i * 500 + initialDelay} />
+            );
           });
         })}
       </div>
