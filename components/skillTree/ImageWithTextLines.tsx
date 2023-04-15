@@ -40,7 +40,7 @@ export const ImageWithTextLines = () => {
       <div className="text-white text-3xl font-bold">
         {text.map((x) => {
           return (
-            <div className={`flex flex-col gap-1`}>
+            <div className={`flex flex-col gap-2`}>
               {x.textLines.map((x, i) => {
                 return (
                   <SingleTextLine
