@@ -14,7 +14,7 @@ const text: textBlock[] = [
       "The path to victory is treacherous, and many have fallen before you.",
       "Do you have what it takes to surpass them?",
     ],
-    duration: 4000,
+    duration: 3000,
   },
 ];
 const initialDelay = 500;
@@ -46,7 +46,7 @@ export const ImageWithTextLines = () => {
                   <SingleTextLine
                     key={x}
                     text={x}
-                    delay={i * 1500 + initialDelay}
+                    delay={i * 2000 + initialDelay}
                   />
                 );
               })}
