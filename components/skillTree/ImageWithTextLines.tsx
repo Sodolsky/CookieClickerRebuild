@@ -14,7 +14,7 @@ const text: textBlock[] = [
       "The path to victory is treacherous, and many have fallen before you.",
       "Do you have what it takes to surpass them?",
     ],
-    duration: 3000,
+    duration: 4000,
   },
 ];
 const initialDelay = 500;
