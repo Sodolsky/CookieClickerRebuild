@@ -46,7 +46,7 @@ export const ImageWithTextLines = () => {
                   <SingleTextLine
                     key={x}
                     text={x}
-                    delay={i * 2000 + initialDelay}
+                    delay={i * (2000 + initialDelay)}
                   />
                 );
               })}
