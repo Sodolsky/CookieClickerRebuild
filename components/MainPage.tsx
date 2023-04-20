@@ -105,8 +105,7 @@ export const MainPage = () => {
     dispatch(setInitialSkillTree(true));
   };
   const bgMusicRef = useRef<null | HTMLAudioElement>(null);
-  const [isEndGameEventActive, setIsEndGameEventActive] =
-    useState<boolean>(false);
+
   const { authStatus, auth } = useAuthStatus();
   const explosionSoundRef = useRef<null | HTMLAudioElement>(null);
   const isQPBought = useSelector(
@@ -120,7 +119,10 @@ export const MainPage = () => {
   const isMobile = useMediaQuery("(max-width:768px)");
   const isUserOnLaptop = useMediaQuery("(max-width:1280px)");
   const intervalRef = useRef<null | NodeJS.Timer>(null);
-
+  const [isEndGameEventActive, setIsEndGameEventActive] =
+    useState<boolean>(false);
+  const [renderEndgameMinigame, setRenderEndgameMinigame] =
+    useState<boolean>(false);
   const isTheoryOfEverythingBought = useSelector(
     (state: RootState) =>
       state.gameLogic.skillTreeLogic.skillTreeNodes.find(
@@ -482,7 +484,7 @@ export const MainPage = () => {
       <span>Loading...</span>
     </div>
   ) : isEndGameEventActive ? (
-    <EndgameView />
+    <EndgameView setRenderEndgameMinigame={setRenderEndgameMinigame} />
   ) : (
     <>
       <>

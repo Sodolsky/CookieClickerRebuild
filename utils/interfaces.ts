@@ -1,5 +1,7 @@
 import { CSSProperties } from "react";
 import { performanceReducerInterface } from "../redux/performanceReducer";
+export type SetStateWrapper<T> = React.Dispatch<React.SetStateAction<T>>;
+
 export interface firebaseObjectInterface {
   upgrades: UpgradesInterface;
   shopItems: ShopItems;

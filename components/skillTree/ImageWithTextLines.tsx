@@ -1,10 +1,10 @@
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import EternalImage from "../../public/eternalone.jpg";
 import { SingleTextLine } from "./SingleTextLine";
+import { SetStateWrapper } from "../../utils/interfaces";
 interface textBlock {
   textLines: string[];
-  duration: number;
 }
 
 const text: textBlock[] = [
@@ -14,11 +14,15 @@ const text: textBlock[] = [
       "The path to victory is treacherous, and many have fallen before you.",
       "Do you have what it takes to surpass them?",
     ],
-    duration: 4000,
   },
 ];
+interface ImageWithTextLinesProps {
+  setRenderEndgameMinigame: SetStateWrapper<boolean>;
+}
 const initialDelay = 500;
-export const ImageWithTextLines = () => {
+export const ImageWithTextLines: FC<ImageWithTextLinesProps> = ({
+  setRenderEndgameMinigame,
+}) => {
   const [initialFade, setinitialFade] = useState(false);
   useEffect(() => {
     setTimeout(() => setinitialFade(true), initialDelay);

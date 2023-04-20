@@ -1,5 +1,6 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, FC } from "react";
 import { ImageWithTextLines } from "./ImageWithTextLines";
+import { SetStateWrapper } from "../../utils/interfaces";
 interface animationObject {
   fadeOutGalaxy: boolean;
   fadeInEternal: boolean;
@@ -8,7 +9,12 @@ const baseAnimationObject: animationObject = {
   fadeOutGalaxy: false,
   fadeInEternal: false,
 };
-export const EndgameView = () => {
+interface EndgameViewProps {
+  setRenderEndgameMinigame: SetStateWrapper<boolean>;
+}
+export const EndgameView: FC<EndgameViewProps> = ({
+  setRenderEndgameMinigame,
+}) => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const defaultFadeOutDuration = 500;
@@ -35,7 +41,9 @@ export const EndgameView = () => {
       ref={containerRef}
     >
       {animationObject.fadeInEternal ? (
-        <ImageWithTextLines />
+        <ImageWithTextLines
+          setRenderEndgameMinigame={setRenderEndgameMinigame}
+        />
       ) : (
         <video
           ref={videoRef}
