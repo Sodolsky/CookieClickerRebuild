@@ -121,8 +121,7 @@ export const MainPage = () => {
   const intervalRef = useRef<null | NodeJS.Timer>(null);
   const [isEndGameEventActive, setIsEndGameEventActive] =
     useState<boolean>(false);
-  const [renderEndgameMinigame, setRenderEndgameMinigame] =
-    useState<boolean>(false);
+
   const isTheoryOfEverythingBought = useSelector(
     (state: RootState) =>
       state.gameLogic.skillTreeLogic.skillTreeNodes.find(
@@ -484,7 +483,7 @@ export const MainPage = () => {
       <span>Loading...</span>
     </div>
   ) : isEndGameEventActive ? (
-    <EndgameView setRenderEndgameMinigame={setRenderEndgameMinigame} />
+    <EndgameView />
   ) : (
     <>
       <>

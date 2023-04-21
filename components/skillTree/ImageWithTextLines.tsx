@@ -26,6 +26,7 @@ export const ImageWithTextLines: FC<ImageWithTextLinesProps> = ({
   const [initialFade, setinitialFade] = useState(false);
   useEffect(() => {
     setTimeout(() => setinitialFade(true), initialDelay);
+    setTimeout(() => setRenderEndgameMinigame(true), 10000);
   }, []);
   return (
     <div className="flex flex-col justify-center items-center">
@@ -50,7 +51,7 @@ export const ImageWithTextLines: FC<ImageWithTextLinesProps> = ({
                   <SingleTextLine
                     key={x}
                     text={x}
-                    delay={i * (2000 + initialDelay)}
+                    delay={i * 2000 + initialDelay}
                   />
                 );
               })}
