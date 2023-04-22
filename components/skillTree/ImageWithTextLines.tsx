@@ -51,7 +51,7 @@ export const ImageWithTextLines: FC<ImageWithTextLinesProps> = ({
                   <SingleTextLine
                     key={x}
                     text={x}
-                    delay={i * 2000 + initialDelay}
+                    delay={i * 1500 + initialDelay}
                   />
                 );
               })}
