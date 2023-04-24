@@ -14,7 +14,7 @@ const baseAnimationObject: animationObject = {
 export const EndgameView: FC = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [renderEndgameMinigame, setRenderEndgameMinigame] =
-    useState<boolean>(false);
+    useState<boolean>(true);
   const defaultFadeOutDuration = 500;
   const [animationObject, setAnimationObject] =
     useState<animationObject>(baseAnimationObject);

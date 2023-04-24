@@ -45,7 +45,7 @@ export const ImageWithTextLines: FC<ImageWithTextLinesProps> = ({
       <div className="text-white text-3xl font-bold">
         {text.map((x) => {
           return (
-            <div className={`flex flex-col gap-2`}>
+            <div className={`flex flex-col gap-2`} key={x.textLines[0]}>
               {x.textLines.map((x, i) => {
                 return (
                   <SingleTextLine
