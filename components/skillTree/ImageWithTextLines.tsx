@@ -45,13 +45,13 @@ export const ImageWithTextLines: FC<ImageWithTextLinesProps> = ({
       <div className="text-white text-3xl font-bold">
         {text.map((x) => {
           return (
-            <div className={`flex flex-col gap-2`} key={x.textLines[0]}>
+            <div className={`flex flex-col gap-2`} key={"First Dialogue"}>
               {x.textLines.map((x, i) => {
                 return (
                   <SingleTextLine
                     key={x}
                     text={x}
-                    delay={i * 1500 + initialDelay}
+                    delay={i * 2000 + initialDelay}
                   />
                 );
               })}

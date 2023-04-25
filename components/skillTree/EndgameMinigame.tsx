@@ -10,7 +10,7 @@ export const EndgameMinigame = () => {
       const context = canvas.getContext("2d");
       if (context) {
         // Draw something on the canvas
-        context.fillStyle = "blue";
+        context.fillStyle = "black";
         context.fillRect(0, 0, canvas.width, canvas.height);
       }
     }
