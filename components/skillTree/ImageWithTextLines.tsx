@@ -39,7 +39,7 @@ export const ImageWithTextLines: FC<ImageWithTextLinesProps> = ({
           src={EternalImage}
           alt={"Image of The Eternal"}
           width={640}
-          height={650}
+          height={640}
         />
       </figure>
       <div className="text-white text-3xl font-bold">
