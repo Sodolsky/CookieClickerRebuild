@@ -10,7 +10,7 @@ interface textBlock {
 const text: textBlock[] = [
   {
     textLines: [
-      "You have grown strong, but you are not the first to claim eternity.",
+      "You have grown strong, but you are not the first to claim the eternity.",
       "The path to victory is treacherous, and many have fallen before you.",
       "Do you think you have what it takes to surpass them?",
     ],
