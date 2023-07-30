@@ -42,7 +42,7 @@ export const EternalTalk: React.FC<EternalTalkProps> = ({ resetGameLogic }) => {
     if (dealOutcome === "accepted") {
       resetGameLogic(10);
     } else {
-      console.log("Declined");
+      console.log("Deal was declined");
     }
   }, [dealOutcome]);
   const showEternalTalk = () => {
